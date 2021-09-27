@@ -1,4 +1,4 @@
-import { Engine as BabylonjsEngine, Engine, EngineOptions } from "@babylonjs/core";
+import { Engine as BabylonEngine, EngineOptions } from "@babylonjs/core";
 import  React, { ReactNode, useEffect, useRef, useState } from "react";
 
 type IEngineInitial = {
@@ -10,25 +10,27 @@ type IEngineInitial = {
     children?: ReactNode
 }
 
-export type IEngineContextOptions = {
-    engine?: BabylonjsEngine
+type IEngineContextOptions = {
+    engine?: BabylonEngine
 };
-export const EngineContext = React.createContext<IEngineContextOptions>({engine: undefined});
+export const EngineContext = React.createContext<IEngineContextOptions>({});
 
 export const P2PEngine = (props: IEngineInitial) => {
     const { antialias, options, adaptToDeviceRatio } = props;
+
     const canvasRef = useRef(null);
-    const [instance, setInstance] = useState<BabylonjsEngine>();
+
+    const [instance, setInstance] = useState<BabylonEngine>();
 
     useEffect(() => {
-        let obj = new BabylonjsEngine(canvasRef.current, antialias, options, adaptToDeviceRatio );
+        let obj = new BabylonEngine(canvasRef.current, antialias, options, adaptToDeviceRatio );
         setInstance(obj);
 
         const onResizeWindow = () => {
             obj.resize();
         }
-
         window.addEventListener('resize', onResizeWindow);
+        
         return () => {
             canvasRef.current = null;
             window.removeEventListener('resize', onResizeWindow);

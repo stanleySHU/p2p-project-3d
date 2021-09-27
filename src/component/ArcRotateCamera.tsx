@@ -18,7 +18,7 @@ export const P2PArcRotateCamera = (props: IArcRotateCameraInitial) => {
     const [instance, setInstance] = useState<ArcRotateCamera>();
 
     useEffect(() => {
-
+        
     }, []);
 
     return <>{props.children}</>;

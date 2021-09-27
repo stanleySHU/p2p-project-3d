@@ -1,43 +1,74 @@
-import { Scene as BaybylonjsScene, Scene } from "@babylonjs/core";
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import { Scene as BaybylonScene, Scene, AbstractAssetTask } from "@babylonjs/core";
+import React, { Children, ReactElement, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { EngineContext } from "./Engine";
-
+import { IAssetsManagerInitial } from '../resource/AssetsManager'
+import { NavControllerContext } from "./NavController";
 
 export type IScenePropsInitial = {
     id: string,
     next?: string,
-    children?: ReactNode
+    children: ReactElement | ReactElement[]
 }
 
 export type ISceneStateOptions = {
     loaded: boolean,
-    scene?: BaybylonjsScene
+    scene?: BaybylonScene
 }
 
-export type ISceneContextOptions = {
-    scene?: BaybylonjsScene
+type ISceneContextOptions = {
+    scene?: BaybylonScene,
+    onProgress?: (remainingCount: number, totalCount: number, task: AbstractAssetTask) => void,
+    onFinish?: (tasks: AbstractAssetTask[]) => void
 }
-
-export const SceneContext = React.createContext<ISceneContextOptions>({
-    scene: undefined
-});
+export const SceneContext = React.createContext<ISceneContextOptions>({});
 
 export const P2PScene = (props: IScenePropsInitial) => {
     const { engine } = useContext(EngineContext);
-    const [instance, setInstance] = useState<BaybylonjsScene>();
-    const [loaded, setLoaded] = useState(false);
+    const { push, pop, sceneLoaded, sceneDispose } = useContext(NavControllerContext);
+
+    const loadRef = useRef<ReactElement>();
+    const viewRef = useRef<ReactElement[]>([]);
+    const sceneRef = useRef<BaybylonScene>();
+    
+    const [instance, setInstance] = useState<BaybylonScene>();
+    const [loaded, setLoaded] = useState<boolean>();
+
+    function onProgress(remainingCount: number, totalCount: number, task: AbstractAssetTask) {
+
+    }
+
+    function onFinish(tasks: AbstractAssetTask[]) {
+        setLoaded(true);
+        if (props.next) {
+            push!(props.next);
+        } else {
+            sceneLoaded!(sceneRef.current!);
+        }
+    }
 
     useEffect(() => {
-        let scene = new BaybylonjsScene(engine!);
+        const children: ReactElement[] = Array.isArray(props.children) ? props.children : [props.children];
+        let scene = new BaybylonScene(engine!);
         setInstance(scene);
+        sceneRef.current = scene;
+
+        for (let child of children) {
+            if ((child.type as any).name == 'AssetsManager') {
+                loadRef.current = child;
+            } else {
+                viewRef.current.push(child);
+            }
+        }
+
         return () => {
             scene.dispose();
         };
     }, []);
 
-    return <SceneContext.Provider value={{scene: instance}}>
+    return <SceneContext.Provider value={{scene: instance, onProgress: onProgress, onFinish: onFinish}}>
         {
-            instance !== undefined && props.children
+            loaded ? viewRef.current : loadRef.current
         }
     </SceneContext.Provider>
 }
+

@@ -1,4 +1,5 @@
-import React, { ReactElement, ReactNode, useContext, useEffect, useState } from "react"
+import { Scene as BabylonScene, Scene } from "@babylonjs/core";
+import React, { ReactElement, ReactNode, useContext, useEffect, useRef, useState } from "react"
 import { EngineContext } from "./Engine";
 import { IScenePropsInitial } from './Scene';
 
@@ -7,9 +8,20 @@ type INavControllerOptions = {
     children?: ReactElement<IScenePropsInitial> | ReactElement<IScenePropsInitial>[]
 }
 
+type INavControllerContextOptions = {
+    push?: (id: string) => void,
+    pop?: () => void,
+    replace?: (id: string) => void,
+    sceneLoaded?: (scene: BabylonScene) => void,
+    sceneDispose?: (scene: BabylonScene) => void
+}
+
+export const NavControllerContext = React.createContext<INavControllerContextOptions>({});
+
 export const NavController = (props: INavControllerOptions) => {
     const { engine } = useContext(EngineContext);
-    const [scenes, setScenes] = useState<ReactElement<IScenePropsInitial>[]>([]);
+    const [sceneEls, setSceneEls] = useState<ReactElement<IScenePropsInitial>[]>([]);
+    const scenesRef = useRef<BabylonScene[]>([]);
 
     function push(id: string) {
         const children = Array.isArray(props.children) ? props.children : [props.children];
@@ -17,7 +29,7 @@ export const NavController = (props: INavControllerOptions) => {
             return e?.props.id == id;
         })[0];
         if (preloadScene) {
-            setScenes([preloadScene]);
+            setSceneEls([preloadScene]);
         }
     }
 
@@ -25,12 +37,26 @@ export const NavController = (props: INavControllerOptions) => {
 
     }
 
+    function replace(id: string) {
+
+    }
+
+    function sceneLoaded(scene: BabylonScene) {
+        scenesRef.current.push(scene);
+    }
+
+    function sceneDispose(scene: BabylonScene) {
+        scenesRef.current = scenesRef.current.filter(e => {
+            return e != scene;
+        })
+    }
+
     useEffect(() => {
         const enterId = props.enter || 'preload';
         push(enterId);
 
         engine!.runRenderLoop(() => {
-            engine!.scenes.forEach(e => {
+            scenesRef.current.forEach(e => {
                 e.render();
             })
         });
@@ -40,7 +66,7 @@ export const NavController = (props: INavControllerOptions) => {
         };
     }, []);
 
-    return <>
-        {scenes}
-    </>
+    return <NavControllerContext.Provider value={{push: push, pop: pop, replace: replace, sceneLoaded: sceneLoaded, sceneDispose: sceneDispose}}>
+        {sceneEls}
+    </NavControllerContext.Provider>
 }
