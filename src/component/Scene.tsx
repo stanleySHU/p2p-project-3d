@@ -7,7 +7,7 @@ import { NavControllerContext } from "./NavController";
 export type IScenePropsInitial = {
     id: string,
     next?: string,
-    children: ReactElement | ReactElement[]
+    children?: ReactElement | ReactElement[]
 }
 
 export type ISceneStateOptions = {
@@ -24,7 +24,7 @@ export const SceneContext = React.createContext<ISceneContextOptions>({});
 
 export const P2PScene = (props: IScenePropsInitial) => {
     const { engine } = useContext(EngineContext);
-    const { push, pop, sceneLoaded, sceneDispose } = useContext(NavControllerContext);
+    const { push, pop, replace, sceneLoaded, sceneDispose } = useContext(NavControllerContext);
 
     const loadRef = useRef<ReactElement>();
     const viewRef = useRef<ReactElement[]>([]);
@@ -40,14 +40,14 @@ export const P2PScene = (props: IScenePropsInitial) => {
     function onFinish(tasks: AbstractAssetTask[]) {
         setLoaded(true);
         if (props.next) {
-            push!(props.next);
+            replace!(props.next);
         } else {
             sceneLoaded!(sceneRef.current!);
         }
     }
 
     useEffect(() => {
-        const children: ReactElement[] = Array.isArray(props.children) ? props.children : [props.children];
+        const children: ReactElement[] = Array.isArray(props.children) ? props.children : props.children ? [props.children] : [];
         let scene = new BaybylonScene(engine!);
         setInstance(scene);
         sceneRef.current = scene;

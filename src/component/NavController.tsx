@@ -5,7 +5,7 @@ import { IScenePropsInitial } from './Scene';
 
 type INavControllerOptions = {
     enter: string,
-    children?: ReactElement<IScenePropsInitial> | ReactElement<IScenePropsInitial>[]
+    children: ReactElement<IScenePropsInitial> | ReactElement<IScenePropsInitial>[]
 }
 
 type INavControllerContextOptions = {
@@ -21,24 +21,34 @@ export const NavControllerContext = React.createContext<INavControllerContextOpt
 export const NavController = (props: INavControllerOptions) => {
     const { engine } = useContext(EngineContext);
     const [sceneEls, setSceneEls] = useState<ReactElement<IScenePropsInitial>[]>([]);
+    const sceneIdsRef = useRef<string[]>([]);
     const scenesRef = useRef<BabylonScene[]>([]);
 
-    function push(id: string) {
+    function update() {
         const children = Array.isArray(props.children) ? props.children : [props.children];
-        const preloadScene = children.filter(e => {
-            return e?.props.id == id;
-        })[0];
-        if (preloadScene) {
-            setSceneEls([preloadScene]);
-        }
+        const scenes =  children.filter(e => {
+            return sceneIdsRef.current.indexOf(e?.props.id!) >= 0;
+        });
+        console.log(scenes)
+        setSceneEls(scenes);
+    }
+    
+    function push(id: string) {
+        sceneIdsRef.current.push(id);
+        update();
     }
 
     function pop() {
-
+        sceneIdsRef.current.pop();
+        update();
     }
 
-    function replace(id: string) {
-
+    function replace(id: string, depth: number = 1) {
+        for (let i = 0; i < depth; i++) {
+            sceneIdsRef.current.pop();
+        }
+        sceneIdsRef.current.push(id);
+        update();
     }
 
     function sceneLoaded(scene: BabylonScene) {

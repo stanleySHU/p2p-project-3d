@@ -27,7 +27,8 @@
       "array-callback-return": "off",
       "import/no-anonymous-default-export": "off",
       "no-throw-literal": "off",
-      "warn": "off"
+      "warn": "off",
+      "react-hooks/rules-of-hooks": "off"
     }
   },
   "browserslist": {

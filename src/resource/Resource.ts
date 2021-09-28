@@ -7,8 +7,6 @@ export type IResourceInitial = {
 }
 
 export abstract class Resource {
-
-
     addTask(loader: AssetsManager, props: IResourceInitial) {
         let task = this.getTask(loader, props);
         task.onSuccess = this.onSuccess.bind(this);
