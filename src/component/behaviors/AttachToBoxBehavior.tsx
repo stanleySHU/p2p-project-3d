@@ -1,0 +1,1 @@
+import { AttachToBoxBehavior as BabylonAttachToBoxBehavior } from '@babylonjs/core';

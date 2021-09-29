@@ -4,14 +4,14 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type IDashedLinesInitial<T> = {
+export type IDashedLinesInitial<T> = IMeshInitial<T> & {
     points: Vector3[];
     dashSize?: number;
     gapSize?: number;
     dashNb?: number;
     updatable?: boolean;
     instance?: LinesMesh;
-} & IMeshInitial<T>;
+};
 export type IDashedLinesProps = IDashedLinesInitial<BabylonMesh> & IDashedLinesOptions;
 
 const DashedLinesHOC = (EL: Nullable<React.FC<IDashedLinesProps>>) => {

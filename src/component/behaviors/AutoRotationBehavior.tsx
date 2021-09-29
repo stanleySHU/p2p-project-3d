@@ -1,0 +1,1 @@
+import { AutoRotationBehavior as BabylonAutoRotationBehavior } from "@babylonjs/core";

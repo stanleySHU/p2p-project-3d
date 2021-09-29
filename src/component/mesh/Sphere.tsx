@@ -4,7 +4,7 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type ISphereInitial<T> = {
+export type ISphereInitial<T> = IMeshInitial<T> & {
     segments?: number;
     diameter?: number;
     diameterX?: number;
@@ -16,7 +16,7 @@ export type ISphereInitial<T> = {
     frontUVs?: Vector4;
     backUVs?: Vector4;
     updatable?: boolean;
-} & IMeshInitial<T>;
+};
 export type ISphereProps = ISphereInitial<BabylonMesh> & ISphereOptions;
 
 const SphereHOC = (EL: Nullable<React.FC<ISphereProps>>) => {

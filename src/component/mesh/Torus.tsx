@@ -4,7 +4,7 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type ITorusInitial<T> = {
+export type ITorusInitial<T> = IMeshInitial<T> & {
     diameter?: number;
     thickness?: number;
     tessellation?: number;
@@ -12,7 +12,7 @@ export type ITorusInitial<T> = {
     sideOrientation?: number;
     frontUVs?: Vector4;
     backUVs?: Vector4;
-} & IMeshInitial<T>;
+} ;
 export type ITorusProps = ITorusInitial<BabylonMesh> & ITorusOptions;
 
 const TorusHOC = (EL: Nullable<React.FC<ITorusProps>>) => {

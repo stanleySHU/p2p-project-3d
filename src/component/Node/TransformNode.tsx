@@ -4,9 +4,9 @@ import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
 import { INodeInitial, extendsFrom as _extendsFrom } from './Node';
 
-export type ITransformNodeInitial<T> = {
+export type ITransformNodeInitial<T> = INodeInitial<T> & {
     isPure?: boolean
-} & INodeInitial<T>;
+};
 export type ITransformNodeProps = ITransformNodeInitial<BabylonTransformNode> & ITransformNodeOptions;
 
 export const TransformNodeHOC = (EL: Nullable<React.FC<ITransformNodeProps>>) => {

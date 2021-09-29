@@ -4,9 +4,9 @@ import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
 import { ITargetCameraInitial, extendsFrom as _extendsFrom } from './TargetCamera';
 
-export type IFollowCameraInitial<T> = {
+export type IFollowCameraInitial<T> = ITargetCameraInitial<T> & {
     lockedTarget?: Nullable<AbstractMesh>
-} & ITargetCameraInitial<T>;
+};
 export type IFollowCameraProps = IFollowCameraInitial<BabylonFollowCamera> & IFollowCameraOptions;
 
 export const FollowCameraHOC = (EL: Nullable<React.FC<IFollowCameraProps>>) => {

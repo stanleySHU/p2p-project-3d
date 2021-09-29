@@ -4,7 +4,7 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type IPlaneInitial<T> = {
+export type IPlaneInitial<T> = IMeshInitial<T> & {
     size?: number;
     width?: number;
     height?: number;
@@ -13,7 +13,7 @@ export type IPlaneInitial<T> = {
     backUVs?: Vector4;
     updatable?: boolean;
     sourcePlane?: Plane;
-} & IMeshInitial<T>;
+};
 export type IPlaneProps = IPlaneInitial<BabylonMesh> & IPlaneOptions;
 
 const PlaneHOC = (EL: Nullable<React.FC<IPlaneProps>>) => {

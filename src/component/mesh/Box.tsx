@@ -4,7 +4,7 @@ import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
 import { IMeshInitial, extendsFrom as _extendsFrom } from './Mesh';
 
-export type IBoxInitial<T> = {
+export type IBoxInitial<T> = IMeshInitial<T> & {
     size?: number,
     width?: number,
     height?: number,
@@ -18,7 +18,7 @@ export type IBoxInitial<T> = {
     topBaseAt?: number,
     bottomBaseAt?: number,
     updatable?: boolean
-} & IMeshInitial<T>;
+};
 export type IBoxProps = IBoxInitial<BabylonMesh>;
 
 export const BoxHOC = (EL: Nullable<React.FC<IBoxProps>>) => {

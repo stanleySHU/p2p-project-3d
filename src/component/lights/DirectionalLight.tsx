@@ -4,9 +4,9 @@ import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
 import { IShadowLightInitial, extendsFrom as _extendsFrom } from './ShadowLight';
  
-export type IDirectionalLightInitial<T> = {
+export type IDirectionalLightInitial<T> = IShadowLightInitial<T> & {
     direction: Vector3
-} & IShadowLightInitial<T>;
+};
 export type IDirectionalLightProps = IDirectionalLightInitial<BabylonDirectionalLight> & IDirectionalLightOptions; 
 
 export const DirectionalLightHOC = (EL: Nullable<React.FC<IDirectionalLightProps>>) => {

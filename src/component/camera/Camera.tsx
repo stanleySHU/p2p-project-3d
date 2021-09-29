@@ -4,10 +4,10 @@ import { Nullable } from '../../utils/customType';
 import { INodeInitial, extendsFrom as _extendsFrom } from '../node/Node';
 import { SceneContext } from '../Scene';
 
-export type ICameraInitial<T> = {
+export type ICameraInitial<T> = INodeInitial<T> & {
     position: Vector3,
     setActiveOnSceneIfNoneActive?: boolean
-} & INodeInitial<T>;
+};
 export type ICameraProps = ICameraInitial<BabylonCamera> & ICameraOptions;
 
 export const CameraHOC = (EL: Nullable<React.FC<ICameraProps>>) => {

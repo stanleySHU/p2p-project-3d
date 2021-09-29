@@ -4,12 +4,12 @@ import { SceneContext } from "../Scene";
 import { ITargetCameraInitial, extendsFrom as _extendsFrom } from "./TargetCamera";
 import { Nullable } from "../../utils/customType";
 
-export type IArcRotateCameraInitial<T> = {
+export type IArcRotateCameraInitial<T> = ITargetCameraInitial<T> & {
     alpha: number,
     beta: number,
     radius: number,
     target: Vector3,
-} & ITargetCameraInitial<T>;
+};
 export type IArcRotateCameraProps = IArcRotateCameraInitial<BabylonArcRotateCamera> & IArcRotateCameraOptions;
 
 export const ArcRotateCameraHOC = (EL: Nullable<React.FC<IArcRotateCameraProps>>) => {

@@ -4,9 +4,9 @@ import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
 import { IFreeCameraInitial, extendsFrom as _extendsFrom } from './FreeCamera';
 
-export type IDeviceOrientationCameraInitial<T> = {
+export type IDeviceOrientationCameraInitial<T> = IFreeCameraInitial<T> & {
 
-} & IFreeCameraInitial<T>;
+};
 export type IDeviceOrientationCameraProps = IDeviceOrientationCameraInitial<BabylonDeviceOrientationCamera> & IDeviceOrientationCameraOptions;
 
 export const DeviceOrientationCameraHOC = (EL: Nullable<React.FC<IDeviceOrientationCameraProps>>) => {

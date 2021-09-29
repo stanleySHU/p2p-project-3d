@@ -4,12 +4,12 @@ import { Nullable } from "../../utils/customType";
 import { ITransformNodeInitial, extendsFrom as _extendsFrom  } from "../node/TransformNode";
 import { SceneContext } from "../Scene";
 
-export type IMeshInitial<T> = {
+export type IMeshInitial<T> = ITransformNodeInitial<T> & {
     source?: Nullable<BabylonMesh>,
     parent?: Nullable<Node>, //这个怎么处理。。。
     doNotCloneChildren?: boolean,
     clonePhysicsImpostor?: boolean
-} & ITransformNodeInitial<T>
+};
 export type IMeshProps = IMeshInitial<BabylonMesh> & IMeshOptions;
 
 export function MeshHOC<T>(EL: Nullable<React.FC<IMeshProps>>) {

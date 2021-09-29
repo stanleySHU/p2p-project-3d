@@ -4,7 +4,7 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type ICylinderInitial<T> = {
+export type ICylinderInitial<T> = IMeshInitial<T> & {
     height?: number;
     diameterTop?: number;
     diameterBottom?: number;
@@ -21,7 +21,7 @@ export type ICylinderInitial<T> = {
     sideOrientation?: number;
     frontUVs?: Vector4;
     backUVs?: Vector4;
-} & IMeshInitial<T>;
+};
 export type ICylinderProps = ICylinderInitial<BabylonMesh> & ICylinderOptions;
 
 const CylinderHOC = (EL: Nullable<React.FC<ICylinderProps>>) => {

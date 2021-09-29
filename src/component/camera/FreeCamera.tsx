@@ -5,9 +5,9 @@ import { ITargetCameraInitial, extendsFrom as _extendsFrom } from "./TargetCamer
 import { Nullable } from "../../utils/customType";
 import { EngineContext } from "../Engine";
 
-export type IFreeCameraInitial<T> = {
+export type IFreeCameraInitial<T> = ITargetCameraInitial<T> & {
     
-} & ITargetCameraInitial<T>;
+};
 export type IFreeCameraProps = IFreeCameraInitial<BabylonFreeCamera> & IFreeCameraOptions;
 
 export const FreeCameraHOC = (EL: Nullable<React.FC<IFreeCameraProps>>) => {

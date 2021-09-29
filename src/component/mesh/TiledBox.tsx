@@ -4,7 +4,7 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type ITiledBoxInitial<T> = {
+export type ITiledBoxInitial<T> = IMeshInitial<T> & {
     pattern?: number;
     size?: number;
     width?: number;
@@ -19,7 +19,7 @@ export type ITiledBoxInitial<T> = {
     alignVertical?: number;
     sideOrientation?: number;
     updatable?: boolean;
-} & IMeshInitial<T>;
+};
 export type ITiledBoxProps = ITiledBoxInitial<BabylonMesh> & IGroupOptions;
 
 const TiledBoxHOC = (EL: Nullable<React.FC<ITiledBoxProps>>) => {

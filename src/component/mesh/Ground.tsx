@@ -4,14 +4,14 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type IGroundInitial<T> = {
+export type IGroundInitial<T> = IMeshInitial<T> & {
     width?: number,
     height?: number,
     subdivisions?: number,
     subdivisionsX?: number,
     subdivisionsY?: number,
     updatable?: boolean
-} & IMeshInitial<T>;
+};
 export type IGroundProps = IGroundInitial<BabylonMesh> & IGroundOptions;
 
 const GroundHOC = (EL: Nullable<React.FC<IGroundProps>>) => {

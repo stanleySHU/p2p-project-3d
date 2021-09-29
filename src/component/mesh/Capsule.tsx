@@ -4,7 +4,7 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type ICapsuleInitial<T> = ICreateCapsuleOptions & IMeshInitial<T>;
+export type ICapsuleInitial<T> = IMeshInitial<T> & ICreateCapsuleOptions;
 export type ICapsuleProps = ICapsuleInitial<BabylonMesh> & ICapsuleOptions;
 
 const CapsuleHOC = (EL: Nullable<React.FC<ICapsuleProps>>) => {

@@ -4,7 +4,7 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type IDiscInitial<T> = {
+export type IDiscInitial<T> = IMeshInitial<T> & {
     radius?: number;
     tessellation?: number;
     arc?: number;
@@ -12,7 +12,7 @@ export type IDiscInitial<T> = {
     sideOrientation?: number;
     frontUVs?: Vector4;
     backUVs?: Vector4;
-} & IMeshInitial<T>;
+};
 export type IDiscProps = IDiscInitial<BabylonMesh> & IDiscOptions;
 
 const DiscHOC = (EL: Nullable<React.FC<IDiscProps>>) => {

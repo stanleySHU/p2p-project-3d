@@ -4,9 +4,9 @@ import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
 import { ILightInitial, extendsFrom as _extendsFrom } from './Light';
 
-export type IHemisphericLightInitial<T> = {
+export type IHemisphericLightInitial<T> = ILightInitial<T> & {
     direction: Vector3
-} & ILightInitial<T>;
+};
 export type IHemisphericLightProps = IHemisphericLightInitial<BabylonHemisphericLight> & IHemisphericLightOptions;
 
 export const HemisphericLightHOC = (EL: Nullable<React.FC<IHemisphericLightProps>>) => {

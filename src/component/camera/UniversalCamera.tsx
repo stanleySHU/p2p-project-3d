@@ -4,9 +4,9 @@ import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
 import { ITouchCameraInitial, extendsFrom as _extendsFrom } from './TouchCamera';
 
-export type IUniversalCameraInitial<T> = {
+export type IUniversalCameraInitial<T> = ITouchCameraInitial<T> & {
 
-} & ITouchCameraInitial<T>;
+};
 export type IUniversalCameraProps = IUniversalCameraInitial<BabylonUniversalCamera> & IUniversalCameraOptions;
 
 export const UniversalCameraHOC = (EL: Nullable<React.FC<IUniversalCameraProps>>) => {

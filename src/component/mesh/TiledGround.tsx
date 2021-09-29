@@ -4,7 +4,7 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type ITiledGroundInitial<T> = {
+export type ITiledGroundInitial<T> = IMeshInitial<T> & {
     xmin: number;
     zmin: number;
     xmax: number;
@@ -18,7 +18,7 @@ export type ITiledGroundInitial<T> = {
         h: number;
     };
     updatable?: boolean;
-} & IMeshInitial<T>;
+};
 export type ITiledGroundProps = ITiledGroundInitial<BabylonMesh> & ITiledGroundOptions;
 
 const TiledGroundHOC = (EL: Nullable<React.FC<ITiledGroundProps>>) => {

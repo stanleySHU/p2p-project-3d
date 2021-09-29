@@ -4,9 +4,9 @@ import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
 import { IShadowLightInitial, extendsFrom as _extendsFrom } from './ShadowLight';
 
-export type IPointLightInitial<T> = {
+export type IPointLightInitial<T> = IShadowLightInitial<T> & {
     position: Vector3
-} & IShadowLightInitial<T>;
+};
 export type IPointLightProps = IPointLightInitial<BabylonPointLight> & IPointLightOptions;
 
 export const PointLightHOC = (EL: Nullable<React.FC<IPointLightProps>> ) => {

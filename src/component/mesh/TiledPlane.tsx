@@ -4,7 +4,7 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type ITiledPlaneInitial<T> = {
+export type ITiledPlaneInitial<T> = IMeshInitial<T> & {
     pattern?: number;
     tileSize?: number;
     tileWidth?: number;
@@ -18,7 +18,7 @@ export type ITiledPlaneInitial<T> = {
     frontUVs?: Vector4;
     backUVs?: Vector4;
     updatable?: boolean;
-} & IMeshInitial<T>;
+};
 export type ITiledPlaneProps = ITiledPlaneInitial<BabylonMesh> & ITiledPlaneOptions;
 
 const TiledPlaneHOC = (EL: Nullable<React.FC<ITiledPlaneProps>>) => {

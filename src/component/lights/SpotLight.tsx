@@ -4,12 +4,12 @@ import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
 import { IShadowLightInitial, extendsFrom as _extendsFrom } from './ShadowLight';
 
-export type ISpotLightInitial<T> = {
+export type ISpotLightInitial<T> = IShadowLightInitial<T> & {
     position: Vector3,
     direction: Vector3,
     angle: number,
     exponent: number
-} & IShadowLightInitial<T>;
+};
 export type ISpotLightProps = ISpotLightInitial<BabylonSpotLight> & ISpotLightOptions;
 
 export const SpotLightHOC = (EL: Nullable<React.FC<ISpotLightProps>>) => {

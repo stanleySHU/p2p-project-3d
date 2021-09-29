@@ -4,13 +4,13 @@ import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
 
-export type ILinesInitial<T> = {
+export type ILinesInitial<T> = IMeshInitial<T> & {
     points: Vector3[];
     updatable?: boolean;
     instance?: Nullable<LinesMesh>;  //?
     colors?: Color4[];
     useVertexAlpha?: boolean;
-} & IMeshInitial<T>;
+};
 export type ILinesProps = ILinesInitial<BabylonMesh> & ILinesOptions;
 
 const LinesHOC = (EL: Nullable<React.FC<ILinesProps>>) => {
