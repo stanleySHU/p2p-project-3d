@@ -1,0 +1,40 @@
+import { Color4, LinesMesh, Mesh as BabylonMesh, MeshBuilder, Vector3 } from "@babylonjs/core";
+import React, { useContext, useEffect } from "react";
+import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
+import { SceneContext } from "../Scene";
+import { Nullable } from "../../utils/customType";
+
+export type ILineSystemInitial<T> = {
+    lines: Vector3[][];
+    updatable?: boolean;
+    instance?: Nullable<LinesMesh>;
+    colors?: Nullable<Color4[][]>;
+    useVertexAlpha?: boolean;
+} & IMeshInitial<T>;
+export type ILineSystemProps = ILineSystemInitial<BabylonMesh> & ILineSystemOptions;
+
+const LineSystemHOC = (EL: Nullable<React.FC<ILineSystemProps>>) => {
+    return (props: ILineSystemProps) => {
+        const { scene } = useContext(SceneContext);
+        const { instanceRef, name } = props;
+
+        useEffect(() => {
+            if (instanceRef && !instanceRef.current) {
+                instanceRef.current = MeshBuilder.CreateLineSystem(name, props, scene!);
+                console.log(`LineSystem ${name} created`);
+            }
+        }, []);
+
+        return EL && <EL {...props}/>
+    }
+};
+
+export function extendsFrom<T>(e: any) {
+    return _extendsFrom<T>(LineSystemHOC(e));
+}
+
+export const P2PLineSystem = extendsFrom<ILineSystemProps>(null);
+
+export type ILineSystemOptions = {
+
+}

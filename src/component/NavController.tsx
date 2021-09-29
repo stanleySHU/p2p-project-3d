@@ -29,7 +29,6 @@ export const NavController = (props: INavControllerOptions) => {
         const scenes =  children.filter(e => {
             return sceneIdsRef.current.indexOf(e?.props.id!) >= 0;
         });
-        console.log(scenes)
         setSceneEls(scenes);
     }
     
@@ -67,7 +66,7 @@ export const NavController = (props: INavControllerOptions) => {
 
         engine!.runRenderLoop(() => {
             scenesRef.current.forEach(e => {
-                e.render();
+                e.cameras.length !=0 && e.render();
             })
         });
 

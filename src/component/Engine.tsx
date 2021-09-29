@@ -11,7 +11,8 @@ type IEngineInitial = {
 }
 
 type IEngineContextOptions = {
-    engine?: BabylonEngine
+    engine?: BabylonEngine,
+    canvas?: HTMLCanvasElement
 };
 export const EngineContext = React.createContext<IEngineContextOptions>({});
 
@@ -38,7 +39,7 @@ export const P2PEngine = (props: IEngineInitial) => {
     }, []);
 
 
-    return <EngineContext.Provider value={{engine: instance}}>
+    return <EngineContext.Provider value={{engine: instance, canvas: canvasRef.current!}}>
             <canvas id="Game" ref={canvasRef} width={props.width} height={props.height}>
                 {instance !== undefined && props.children}
             </canvas>

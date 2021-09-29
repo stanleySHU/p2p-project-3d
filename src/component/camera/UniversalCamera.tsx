@@ -2,12 +2,12 @@ import { UniversalCamera as BabylonUniversalCamera } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
-import { ITouchCameraInitial } from './TouchCamera';
+import { ITouchCameraInitial, extendsFrom as _extendsFrom } from './TouchCamera';
 
 export type IUniversalCameraInitial<T> = {
 
 } & ITouchCameraInitial<T>;
-export type IUniversalCameraProps = IUniversalCameraInitial<BabylonUniversalCamera>;
+export type IUniversalCameraProps = IUniversalCameraInitial<BabylonUniversalCamera> & IUniversalCameraOptions;
 
 export const UniversalCameraHOC = (EL: Nullable<React.FC<IUniversalCameraProps>>) => {
     return (props: IUniversalCameraProps) => {
@@ -17,10 +17,20 @@ export const UniversalCameraHOC = (EL: Nullable<React.FC<IUniversalCameraProps>>
         useEffect(() => {
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonUniversalCamera(name, position, scene!);
-                console.log('UniversalCamera created');
+                console.log(`UniversalCamera ${name} created`);
             }
         }, []);
 
-        return EL &&  <EL {...props}/>
+        return EL && <EL {...props}/>
     };
 };
+
+export function extendsFrom<T>(e: any) {
+    return _extendsFrom<T>(UniversalCameraHOC(e));
+};
+
+export const P2PUniversalCamera = extendsFrom<IUniversalCameraProps>(null);
+
+export type IUniversalCameraOptions = {
+    
+}

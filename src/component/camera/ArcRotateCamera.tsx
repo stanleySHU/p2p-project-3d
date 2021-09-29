@@ -1,7 +1,7 @@
 import React, {useContext, useEffect } from "react"
 import { ArcRotateCamera as BabylonArcRotateCamera, Vector3 } from '@babylonjs/core'
 import { SceneContext } from "../Scene";
-import { ITargetCameraInitial } from "./TargetCamera";
+import { ITargetCameraInitial, extendsFrom as _extendsFrom } from "./TargetCamera";
 import { Nullable } from "../../utils/customType";
 
 export type IArcRotateCameraInitial<T> = {
@@ -10,7 +10,7 @@ export type IArcRotateCameraInitial<T> = {
     radius: number,
     target: Vector3,
 } & ITargetCameraInitial<T>;
-export type IArcRotateCameraProps = IArcRotateCameraInitial<BabylonArcRotateCamera>;
+export type IArcRotateCameraProps = IArcRotateCameraInitial<BabylonArcRotateCamera> & IArcRotateCameraOptions;
 
 export const ArcRotateCameraHOC = (EL: Nullable<React.FC<IArcRotateCameraProps>>) => {
     return (props: IArcRotateCameraProps) => {
@@ -20,11 +20,20 @@ export const ArcRotateCameraHOC = (EL: Nullable<React.FC<IArcRotateCameraProps>>
         useEffect(() => {
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonArcRotateCamera(name, alpha, beta, radius, target, scene!, setActiveOnSceneIfNoneActive);
-                console.log('ArcRotateCamera created');
+                console.log(`ArcRotateCamera ${name} created`);
             }
         }, []);
+        
         return EL && <EL {...props}/>
     }
 }
 
-export const P2PRotateCamera = ArcRotateCameraHOC(null);
+export function extendsFrom<T>(e: any) {
+    return _extendsFrom<T>(ArcRotateCameraHOC(e));
+};
+
+export const P2PArcRotateCamera = extendsFrom<IArcRotateCameraProps>(null);
+
+export type IArcRotateCameraOptions = {
+
+};

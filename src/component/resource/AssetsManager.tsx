@@ -1,9 +1,9 @@
 import { ReactElement, useContext, useEffect, useRef, useState } from "react";
 import { AbstractAssetTask, AssetsManager as BabylonAssetsManager, ImageAssetTask} from '@babylonjs/core';
-import { SceneContext } from "../component/Scene";
+import { SceneContext } from "../Scene";
 import { ImageResource } from "./ImageResource";
 import { IResourceInitial, Resource } from "./Resource";
-import { Nullable, UndefinedAble } from "../utils/customType";
+import { Nullable, UndefinedAble } from "../../utils/customType";
 
 export type IAssetsManagerInitial = {
     children: any | any[], //ReactElement<IResourceInitial> | ReactElement<IResourceInitial>[],

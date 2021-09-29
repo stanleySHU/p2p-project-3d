@@ -1,30 +1,27 @@
 import { Node as BabylonNode } from '@babylonjs/core';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { ReactNode, useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
 
 export type INodeInitial<T> = {
     name: string,
-    instanceRef?: React.MutableRefObject<T>
+    instanceRef?: React.MutableRefObject<T>,
+    children?: ReactNode
 }
 
-export type INodeProps = INodeInitial<BabylonNode>;
+export type INodeProps = INodeInitial<BabylonNode> & INodeOptions;
 
-export type INodeOptions = {
-    
-}
-
-export const NodeHOC = (EL: Nullable<React.FC<INodeProps>>) => {
-    return (props: INodeProps) => {
+export const NodeHOC = function<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T) => {
         const { scene } = useContext(SceneContext);
-        const { name } = props;
+        const { name } = props as any;
 
         const instanceRef = useRef<any>();
 
         useEffect(() => {
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonNode(name, scene);
-                console.log('node created');
+                console.log(`Node ${name} created`);
             }
 
             return () => {
@@ -32,6 +29,19 @@ export const NodeHOC = (EL: Nullable<React.FC<INodeProps>>) => {
             };
         }, []);
 
-        return EL &&  <EL {...props} instanceRef={instanceRef}/>
+        if (EL == null) return (props as any).children;
+        return <EL {...props} instanceRef={instanceRef}>
+            {(props as any).children}
+        </EL>
     }
+}
+
+export function extendsFrom<T>(e: any) {
+    return NodeHOC<T>(e);
+}
+
+export const P2PNode = extendsFrom<INodeProps>(null);
+
+export type INodeOptions = {
+    
 }

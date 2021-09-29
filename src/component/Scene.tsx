@@ -1,7 +1,7 @@
-import { Scene as BaybylonScene, Scene, AbstractAssetTask } from "@babylonjs/core";
+import { Scene as BaybylonScene, Scene, AbstractAssetTask, Observable } from "@babylonjs/core";
 import React, { Children, ReactElement, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { EngineContext } from "./Engine";
-import { IAssetsManagerInitial } from '../resource/AssetsManager'
+import { IAssetsManagerInitial } from './resource/AssetsManager'
 import { NavControllerContext } from "./NavController";
 
 export type IScenePropsInitial = {
@@ -59,7 +59,7 @@ export const P2PScene = (props: IScenePropsInitial) => {
                 viewRef.current.push(child);
             }
         }
-
+        !loadRef.current && onFinish([]);
         return () => {
             scene.dispose();
         };

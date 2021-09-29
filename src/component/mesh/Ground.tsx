@@ -1,22 +1,41 @@
-import { Mesh, MeshBuilder } from "@babylonjs/core";
-import React, { Component, ReactNode, useContext, useEffect, useRef } from "react";
-import { IMeshInitial, MeshHOC } from "./Mesh";
+import { Mesh as BabylonMesh, MeshBuilder } from "@babylonjs/core";
+import React, { useContext, useEffect } from "react";
+import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
 import { SceneContext } from "../Scene";
+import { Nullable } from "../../utils/customType";
 
-export type IGroupInitial = {
-    width: number,
-    height: number,
-    subdivisions?: number
-} & IMeshInitial;
+export type IGroundInitial<T> = {
+    width?: number,
+    height?: number,
+    subdivisions?: number,
+    subdivisionsX?: number,
+    subdivisionsY?: number,
+    updatable?: boolean
+} & IMeshInitial<T>;
+export type IGroundProps = IGroundInitial<BabylonMesh> & IGroundOptions;
 
+const GroundHOC = (EL: Nullable<React.FC<IGroundProps>>) => {
+    return (props: IGroundProps) => {
+        const { scene } = useContext(SceneContext);
+        const { instanceRef, name } = props;
 
-const Ground = (props: IGroupInitial) => {
-    
+        useEffect(() => {
+            if (instanceRef && !instanceRef.current) {
+                instanceRef.current = MeshBuilder.CreateGround(name, props, scene); 
+                console.log(`Ground ${name} created`);
+            }
+        }, []); 
 
-    useEffect(() => {
-        
-    });
-    return null;
+        return EL && <EL {...props}/>
+    }
 };
 
-export const P2PGround = MeshHOC<IGroupInitial>(Ground);
+export function extendsFrom<T>(e: any) {
+    return _extendsFrom<T>(GroundHOC(e));
+}
+
+export const P2PGround = extendsFrom<IGroundProps>(null);
+
+export type IGroundOptions = {
+    
+}

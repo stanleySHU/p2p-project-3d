@@ -2,7 +2,7 @@ import { SpotLight as BabylonSpotLight, Vector3 } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
-import { IShadowLightInitial } from './ShadowLight';
+import { IShadowLightInitial, extendsFrom as _extendsFrom } from './ShadowLight';
 
 export type ISpotLightInitial<T> = {
     position: Vector3,
@@ -10,7 +10,7 @@ export type ISpotLightInitial<T> = {
     angle: number,
     exponent: number
 } & IShadowLightInitial<T>;
-export type ISpotLightProps = ISpotLightInitial<BabylonSpotLight>;
+export type ISpotLightProps = ISpotLightInitial<BabylonSpotLight> & ISpotLightOptions;
 
 export const SpotLightHOC = (EL: Nullable<React.FC<ISpotLightProps>>) => {
     return (props: ISpotLightProps) => {
@@ -20,10 +20,20 @@ export const SpotLightHOC = (EL: Nullable<React.FC<ISpotLightProps>>) => {
         useEffect(() => {
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonSpotLight(name, position, direction, angle, exponent, scene!);
-                console.log('SpotLight created');
+                console.log(`SpotLight ${name} created`);
             }
         }, [])
 
         return EL && <EL {...props}/>
     }
+}
+
+export function extendsFrom<T>(e: any) {
+    return _extendsFrom<T>(SpotLightHOC(e));
+};
+
+export const P2PSpotLight = extendsFrom<ISpotLightProps>(null);
+
+export type ISpotLightOptions = {
+    
 }
