@@ -27,13 +27,17 @@ function TiledGroundHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name } = props;
 
         useEffect(() => {
+            console.log(`TiledGround ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = MeshBuilder.CreateTiledGround(name, props, scene);
                 console.log(`TiledGround ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     }
 };
 

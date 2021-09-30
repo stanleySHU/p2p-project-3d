@@ -15,13 +15,17 @@ function UniversalCameraHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name, position } = props;
 
         useEffect(() => {
+            console.log(`UniversalCamera ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonUniversalCamera(name, position, scene!);
                 console.log(`UniversalCamera ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     };
 };
 

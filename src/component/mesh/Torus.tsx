@@ -21,13 +21,17 @@ function TorusHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name } = props;
 
         useEffect(() => {
+            console.log(`Torus ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = MeshBuilder.CreateTorus(name, props, scene);
                 console.log(`Torus ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     }
 };
 

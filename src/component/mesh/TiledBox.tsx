@@ -28,13 +28,17 @@ function TiledBoxHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name } = props;
 
         useEffect(() => {
+            console.log(`TiledBox ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = MeshBuilder.CreateTiledBox(name, props, scene);
                 console.log(`TiledBox ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     }
 };
 

@@ -17,6 +17,7 @@ function FreeCameraHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name, position, setActiveOnSceneIfNoneActive } = props;
 
         useEffect(() => {
+            console.log(`FreeCamera ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonFreeCamera(name, position, scene!, setActiveOnSceneIfNoneActive);
                 instanceRef.current.setTarget(Vector3.Zero())
@@ -25,7 +26,10 @@ function FreeCameraHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     };  
 };
 

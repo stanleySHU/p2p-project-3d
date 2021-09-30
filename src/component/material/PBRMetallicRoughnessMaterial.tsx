@@ -13,13 +13,17 @@ function PBRMetallicRoughnessMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name } = props as any;
 
         useEffect(() => {
+            console.log(`PBRMetallicRoughnessMaterial ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonPBRMetallicRoughnessMaterial(name, scene!);
                 console.log(`PBRMetallicRoughnessMaterial ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     };
 } 
 

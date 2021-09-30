@@ -13,13 +13,17 @@ function CapsuleHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name } = props;
 
         useEffect(() => {
+            console.log(`Capsule ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = MeshBuilder.CreateCapsule(name, props, scene); 
                 console.log(`Capsule ${name} created`);
             }
         }, []); 
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     }
 };
 

@@ -15,14 +15,17 @@ function TransformNodeHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name, isPure } = props;
 
         useEffect(() => {
-            console.log('translate')
+            console.log(`TransformNode ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonTransformNode(name, scene, isPure);
                 console.log(`TransformNode ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     }
 }
 

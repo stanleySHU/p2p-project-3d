@@ -18,7 +18,7 @@ function NodeHOC<T>(EL: Nullable<React.FC<T>>) {
         const instanceRef = useRef<any>();
 
         useEffect(() => {
-            console.log('node')
+            console.log(`Node ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonNode(name, scene);
                 console.log(`Node ${name} created`);

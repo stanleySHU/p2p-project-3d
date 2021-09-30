@@ -15,13 +15,17 @@ function TouchCameraHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name, position } = props;
 
         useEffect(() => {
+            console.log(`TouchCamera ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonTouchCamera(name, position, scene!);
                 console.log(`TouchCamera ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     }
 }
 

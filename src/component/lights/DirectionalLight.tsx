@@ -15,12 +15,16 @@ function DirectionalLightHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name, direction } = props;
         
         useEffect(() => {
+            console.log(`DirectionalLight ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonDirectionalLight(name, direction, scene!);
                 console.log(`DirectionalLight ${name} created`);
             }
         }, [])
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     };
 };
 

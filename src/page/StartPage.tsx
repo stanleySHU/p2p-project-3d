@@ -12,15 +12,6 @@ export const StartPage = (props: IScenePropsInitial) => {
             <P2PGround name="bg" width={6} height={6} >
                 <P2PStandardMaterial name="material"/>
             </P2PGround>
-            <P2PTransformNode name="111"/>
-            <P2PTransformNode name="111"/>
-            <P2PTransformNode name="111"/>
-            <P2PTransformNode name="111"/>
-            <P2PTransformNode name="111"/>
-            <P2PTransformNode name="111"/>
-            <P2PTransformNode name="111"/>
-            <P2PTransformNode name="111"/>
-            <P2PTransformNode name="111"/>
         </P2PNode>
     </P2PScene>
 }

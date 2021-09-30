@@ -15,13 +15,17 @@ function FollowCameraHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name, position, lockedTarget } = props;
 
         useEffect(() => {
+            console.log(`FollowCamera ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonFollowCamera(name, position, scene!, lockedTarget);
                 console.log(`FollowCamera ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     }
 };
 

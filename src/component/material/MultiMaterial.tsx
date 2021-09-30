@@ -13,13 +13,17 @@ function MultiMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name } = props as any;
 
         useEffect(() => {
+            console.log(`MultiMaterial ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonMultiMaterial(name, scene!);
                 console.log(`MultiMaterial ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     };
 } 
 

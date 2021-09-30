@@ -15,13 +15,17 @@ function HemisphericLightHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name, direction } = props;
 
         useEffect(() => {
+            console.log(`HemisphericLight ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonHemisphericLight(name, direction, scene!);
                 console.log(`HemisphericLight ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     }
 }
 

@@ -20,13 +20,17 @@ function DashedLinesHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name } = props;
 
         useEffect(() => {
+            console.log(`DashedLines ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = MeshBuilder.CreateDashedLines(name, props, scene);
                 console.log(`DashedLines ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     }
 };
 

@@ -15,13 +15,17 @@ function NodeMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name, options } = props as any;
 
         useEffect(() => {
+            console.log(`NodeMaterial ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonNodeMaterial(name, scene!, options);
                 console.log(`NodeMaterial ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     };
 } 
 

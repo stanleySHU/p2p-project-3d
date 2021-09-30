@@ -15,13 +15,17 @@ function PointLightHOC<T>(EL: Nullable<React.FC<T>> ) {
         const { instanceRef, name, position } = props;
 
         useEffect(() => {
+            console.log(`PointLight ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonPointLight(name, position, scene!);
                 console.log(`PointLight ${name} created`);
             }
         }, []);
 
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     }
 }
 

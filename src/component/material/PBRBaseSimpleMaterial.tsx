@@ -8,7 +8,10 @@ export type IPBRBaseSimpleMaterialProps = IPBRBaseSimpleMaterialInitial<BabylonP
 
 function PBRBaseSimpleMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
     return (props: T & IPBRBaseSimpleMaterialProps) => {
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     };
 } 
 

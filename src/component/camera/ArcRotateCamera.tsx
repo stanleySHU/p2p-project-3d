@@ -18,13 +18,17 @@ function ArcRotateCameraHOC<T>(EL: Nullable<React.FC<T>>) {
         const { instanceRef, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
 
         useEffect(() => {
+            console.log(`ArcRotateCamera ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonArcRotateCamera(name, alpha, beta, radius, target, scene!, setActiveOnSceneIfNoneActive);
                 console.log(`ArcRotateCamera ${name} created`);
             }
         }, []);
         
-        return EL && <EL {...props}/>
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props}>
+            {props.children}
+        </EL>
     }
 }
 

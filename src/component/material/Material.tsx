@@ -1,5 +1,5 @@
 import { Material as BabylonMaterial } from '@babylonjs/core';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { ReactNode, useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
 import { SceneContext } from '../Scene';
 
@@ -7,6 +7,7 @@ export type IMaterialInitial<T> = {
     name: string,
     doNotAdd?: boolean,
     instanceRef?: React.MutableRefObject<T>,
+    children?: ReactNode
 };
 export type IMaterialProps = IMaterialInitial<BabylonMaterial> & IMaterialOptions;
 
@@ -18,13 +19,17 @@ function MaterialHOC<T>(EL: Nullable<React.FC<T>>) {
         const instanceRef = useRef<any>();
 
         useEffect(() => {
+            console.log(`Material ${name} called`);
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonMaterial(name, scene!, doNotAdd);
                 console.log(`Material ${name} created`);
             }
         }, []);
-        
-        return EL && <EL {...props} instanceRef={instanceRef}/>
+
+        if (EL == null) return <>{props.children}</>
+        return <EL {...props} instanceRef={instanceRef}>
+            {props.children}
+        </EL>
     };
 } 
 
