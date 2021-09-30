@@ -13,8 +13,8 @@ export type ILinesInitial<T> = IMeshInitial<T> & {
 };
 export type ILinesProps = ILinesInitial<BabylonMesh> & ILinesOptions;
 
-const LinesHOC = (EL: Nullable<React.FC<ILinesProps>>) => {
-    return (props: ILinesProps) => {
+function LinesHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ILinesProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

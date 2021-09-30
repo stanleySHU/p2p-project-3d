@@ -9,12 +9,10 @@ export type INodeMaterialInitial<T> = IPushMaterialInitial<T> & {
 };
 export type INodeMaterialProps = INodeMaterialInitial<BabylonNodeMaterial>;
 
-export const NodeMaterialHOC = (EL: Nullable<React.FC<INodeMaterialProps>>) => {
-    return (props: INodeMaterialProps) => {
+function NodeMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & INodeMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { name, options } = props as any;
-
-        const instanceRef = useRef<any>();
+        const { instanceRef, name, options } = props as any;
 
         useEffect(() => {
             if (instanceRef && !instanceRef.current) {

@@ -21,8 +21,8 @@ export type ITiledGroundInitial<T> = IMeshInitial<T> & {
 };
 export type ITiledGroundProps = ITiledGroundInitial<BabylonMesh> & ITiledGroundOptions;
 
-const TiledGroundHOC = (EL: Nullable<React.FC<ITiledGroundProps>>) => {
-    return (props: ITiledGroundProps) => {
+function TiledGroundHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ITiledGroundProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

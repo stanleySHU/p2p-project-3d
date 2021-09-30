@@ -7,8 +7,8 @@ import { Nullable } from "../../utils/customType";
 export type ICapsuleInitial<T> = IMeshInitial<T> & ICreateCapsuleOptions;
 export type ICapsuleProps = ICapsuleInitial<BabylonMesh> & ICapsuleOptions;
 
-const CapsuleHOC = (EL: Nullable<React.FC<ICapsuleProps>>) => {
-    return (props: ICapsuleProps) => {
+function CapsuleHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ICapsuleProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

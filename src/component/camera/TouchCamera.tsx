@@ -9,8 +9,8 @@ export type ITouchCameraInitial<T> = IFreeCameraInitial<T> & {
 };
 export type ITouchCameraProps = ITouchCameraInitial<BabylonTouchCamera> & ITouchCameraOptions;
 
-export const TouchCameraHOC = (EL: Nullable<React.FC<ITouchCameraProps>>) => {
-    return (props: ITouchCameraProps) => {
+function TouchCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ITouchCameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position } = props;
 

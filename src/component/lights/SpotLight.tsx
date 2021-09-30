@@ -12,8 +12,8 @@ export type ISpotLightInitial<T> = IShadowLightInitial<T> & {
 };
 export type ISpotLightProps = ISpotLightInitial<BabylonSpotLight> & ISpotLightOptions;
 
-export const SpotLightHOC = (EL: Nullable<React.FC<ISpotLightProps>>) => {
-    return (props: ISpotLightProps) => {
+function SpotLightHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ISpotLightProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position, direction, angle, exponent } = props;
 

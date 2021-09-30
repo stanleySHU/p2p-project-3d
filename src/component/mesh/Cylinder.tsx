@@ -24,8 +24,8 @@ export type ICylinderInitial<T> = IMeshInitial<T> & {
 };
 export type ICylinderProps = ICylinderInitial<BabylonMesh> & ICylinderOptions;
 
-const CylinderHOC = (EL: Nullable<React.FC<ICylinderProps>>) => {
-    return (props: ICylinderProps) => {
+function CylinderHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ICylinderProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

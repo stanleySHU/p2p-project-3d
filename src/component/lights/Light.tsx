@@ -7,8 +7,8 @@ export type ILightInitial<T> = INodeInitial<T> & {
 };
 export type ILightProps = ILightInitial<BabylonLight> & ILightOptions;
 
-export const LightHOC = (EL: React.FC<ILightProps>) => {
-    return (props: ILightProps) => {
+function LightHOC<T>(EL: React.FC<T>) {
+    return (props: T & ILightProps) => {
         return <EL {...props}/>
     }
 }

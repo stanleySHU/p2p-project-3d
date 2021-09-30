@@ -14,8 +14,8 @@ export type IGroundInitial<T> = IMeshInitial<T> & {
 };
 export type IGroundProps = IGroundInitial<BabylonMesh> & IGroundOptions;
 
-const GroundHOC = (EL: Nullable<React.FC<IGroundProps>>) => {
-    return (props: IGroundProps) => {
+function GroundHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IGroundProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 
@@ -35,7 +35,6 @@ export function extendsFrom<T>(e: any) {
 }
 
 export const P2PGround = extendsFrom<IGroundProps>(null);
-
 export type IGroundOptions = {
     
 }

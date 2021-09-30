@@ -9,8 +9,8 @@ export type IDeviceOrientationCameraInitial<T> = IFreeCameraInitial<T> & {
 };
 export type IDeviceOrientationCameraProps = IDeviceOrientationCameraInitial<BabylonDeviceOrientationCamera> & IDeviceOrientationCameraOptions;
 
-export const DeviceOrientationCameraHOC = (EL: Nullable<React.FC<IDeviceOrientationCameraProps>>) => {
-    return (props: IDeviceOrientationCameraProps) => {
+function DeviceOrientationCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IDeviceOrientationCameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position } = props;
 

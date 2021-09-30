@@ -7,12 +7,10 @@ import { IPBRBaseSimpleMaterialInitial, extendsFrom as _extendsFrom } from './PB
 export type IPBRSpecularGlossinessMaterialInitial<T> = IPBRBaseSimpleMaterialInitial<T> & {};
 export type IPBRSpecularGlossinessMaterialProps = IPBRSpecularGlossinessMaterialInitial<BabylonPBRSpecularGlossinessMaterial>;
 
-export const PBRSpecularGlossinessMaterialHOC = (EL: Nullable<React.FC<IPBRSpecularGlossinessMaterialProps>>) => {
-    return (props: IPBRSpecularGlossinessMaterialProps) => {
+function PBRSpecularGlossinessMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IPBRSpecularGlossinessMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { name } = props as any;
-
-        const instanceRef = useRef<any>();
+        const { instanceRef, name } = props as any;
 
         useEffect(() => {
             if (instanceRef && !instanceRef.current) {

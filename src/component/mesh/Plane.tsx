@@ -16,8 +16,8 @@ export type IPlaneInitial<T> = IMeshInitial<T> & {
 };
 export type IPlaneProps = IPlaneInitial<BabylonMesh> & IPlaneOptions;
 
-const PlaneHOC = (EL: Nullable<React.FC<IPlaneProps>>) => {
-    return (props: IPlaneProps) => {
+function PlaneHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IPlaneProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

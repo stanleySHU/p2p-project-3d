@@ -8,12 +8,12 @@ export type IMaterialInitial<T> = {
     doNotAdd?: boolean,
     instanceRef?: React.MutableRefObject<T>,
 };
-export type IMaterialProps = IMaterialInitial<BabylonMaterial>;
+export type IMaterialProps = IMaterialInitial<BabylonMaterial> & IMaterialOptions;
 
-export const MaterialHOC = function<T>(EL: Nullable<React.FC<T>>) {
-    return (props: T) => {
+function MaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { name, doNotAdd } = props as any;
+        const { name, doNotAdd } = props;
 
         const instanceRef = useRef<any>();
 
@@ -23,8 +23,8 @@ export const MaterialHOC = function<T>(EL: Nullable<React.FC<T>>) {
                 console.log(`Material ${name} created`);
             }
         }, []);
-
-        return EL && <EL {...props}/>
+        
+        return EL && <EL {...props} instanceRef={instanceRef}/>
     };
 } 
 
@@ -33,3 +33,7 @@ export function extendsFrom<T>(e: any) {
 }
 
 export const P2PMaterial = extendsFrom<IMaterialProps>(null);
+
+export type IMaterialOptions = {
+
+}

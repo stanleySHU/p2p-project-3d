@@ -13,8 +13,8 @@ export type ILineSystemInitial<T> = IMeshInitial<T> & {
 };
 export type ILineSystemProps = ILineSystemInitial<BabylonMesh> & ILineSystemOptions;
 
-const LineSystemHOC = (EL: Nullable<React.FC<ILineSystemProps>>) => {
-    return (props: ILineSystemProps) => {
+function LineSystemHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ILineSystemProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

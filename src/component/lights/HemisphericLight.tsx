@@ -9,8 +9,8 @@ export type IHemisphericLightInitial<T> = ILightInitial<T> & {
 };
 export type IHemisphericLightProps = IHemisphericLightInitial<BabylonHemisphericLight> & IHemisphericLightOptions;
 
-export const HemisphericLightHOC = (EL: Nullable<React.FC<IHemisphericLightProps>>) => {
-    return (props: IHemisphericLightProps) => {
+function HemisphericLightHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IHemisphericLightProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, direction } = props;
 

@@ -12,8 +12,8 @@ export type IArcRotateCameraInitial<T> = ITargetCameraInitial<T> & {
 };
 export type IArcRotateCameraProps = IArcRotateCameraInitial<BabylonArcRotateCamera> & IArcRotateCameraOptions;
 
-export const ArcRotateCameraHOC = (EL: Nullable<React.FC<IArcRotateCameraProps>>) => {
-    return (props: IArcRotateCameraProps) => {
+function ArcRotateCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IArcRotateCameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
 

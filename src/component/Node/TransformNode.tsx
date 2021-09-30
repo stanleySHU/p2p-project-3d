@@ -9,12 +9,13 @@ export type ITransformNodeInitial<T> = INodeInitial<T> & {
 };
 export type ITransformNodeProps = ITransformNodeInitial<BabylonTransformNode> & ITransformNodeOptions;
 
-export const TransformNodeHOC = (EL: Nullable<React.FC<ITransformNodeProps>>) => {
-    return (props: ITransformNodeProps) => {
+function TransformNodeHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ITransformNodeProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, isPure } = props;
 
         useEffect(() => {
+            console.log('translate')
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonTransformNode(name, scene, isPure);
                 console.log(`TransformNode ${name} created`);

@@ -7,12 +7,10 @@ import { IMaterialInitial, extendsFrom as _extendsFrom  } from './Material';
 export type IMultiMaterialInitial<T> = IMaterialInitial<T> & {};
 export type IMultiMaterialProps = IMultiMaterialInitial<BabylonMultiMaterial>;
 
-export const MultiMaterialHOC = (EL: Nullable<React.FC<IMultiMaterialProps>>) => {
-    return (props: IMultiMaterialProps) => {
+function MultiMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IMultiMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { name } = props as any;
-
-        const instanceRef = useRef<any>();
+        const { instanceRef, name } = props as any;
 
         useEffect(() => {
             if (instanceRef && !instanceRef.current) {

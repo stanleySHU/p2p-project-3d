@@ -6,12 +6,12 @@ import { IPBRBaseMaterialInitial, extendsFrom as _extendsFrom } from './PBRBaseM
 export type IPBRBaseSimpleMaterialInitial<T> = IPBRBaseMaterialInitial<T> & {};
 export type IPBRBaseSimpleMaterialProps = IPBRBaseSimpleMaterialInitial<BabylonPBRBaseSimpleMaterial>;
 
-export const PBRBaseSimpleMaterialHOC = (EL: Nullable<React.FC<IPBRBaseSimpleMaterialProps>>) => {
-    return (props: IPBRBaseSimpleMaterialProps) => {
+function PBRBaseSimpleMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IPBRBaseSimpleMaterialProps) => {
         return EL && <EL {...props}/>
     };
 } 
 
 export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(PBRBaseSimpleMaterialHOC(e));
+    return PBRBaseSimpleMaterialHOC(_extendsFrom<T>(e));
 }

@@ -10,12 +10,10 @@ export type IShaderMaterialInitial<T> = IMaterialInitial<T> & {
 };
 export type IShaderMaterialProps = IShaderMaterialInitial<BabylonShaderMaterial>;
 
-export const ShaderMaterialHOC = (EL: Nullable<React.FC<IShaderMaterialProps>>) => {
-    return (props: IShaderMaterialProps) => {
+function ShaderMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IShaderMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { name, shaderPath, options } = props as any;
-
-        const instanceRef = useRef<any>();
+        const { instanceRef, name, shaderPath, options } = props as any;
 
         useEffect(() => {
             if (instanceRef && !instanceRef.current) {

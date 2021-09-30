@@ -15,8 +15,8 @@ export type IDiscInitial<T> = IMeshInitial<T> & {
 };
 export type IDiscProps = IDiscInitial<BabylonMesh> & IDiscOptions;
 
-const DiscHOC = (EL: Nullable<React.FC<IDiscProps>>) => {
-    return (props: IDiscProps) => {
+function DiscHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IDiscProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

@@ -8,17 +8,17 @@ export type INodeInitial<T> = {
     instanceRef?: React.MutableRefObject<T>,
     children?: ReactNode
 }
-
 export type INodeProps = INodeInitial<BabylonNode> & INodeOptions;
 
-export const NodeHOC = function<T>(EL: Nullable<React.FC<T>>) {
-    return (props: T) => {
+function NodeHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & INodeProps) => {
         const { scene } = useContext(SceneContext);
-        const { name } = props as any;
+        const { name } = props;
 
         const instanceRef = useRef<any>();
 
         useEffect(() => {
+            console.log('node')
             if (instanceRef && !instanceRef.current) {
                 instanceRef.current = new BabylonNode(name, scene);
                 console.log(`Node ${name} created`);
@@ -29,9 +29,9 @@ export const NodeHOC = function<T>(EL: Nullable<React.FC<T>>) {
             };
         }, []);
 
-        if (EL == null) return (props as any).children;
+        if (EL == null) return <>{props.children}</>
         return <EL {...props} instanceRef={instanceRef}>
-            {(props as any).children}
+            {props.children}
         </EL>
     }
 }
@@ -41,7 +41,6 @@ export function extendsFrom<T>(e: any) {
 }
 
 export const P2PNode = extendsFrom<INodeProps>(null);
-
 export type INodeOptions = {
     
 }

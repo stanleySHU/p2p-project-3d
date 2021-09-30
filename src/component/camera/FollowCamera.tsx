@@ -9,8 +9,8 @@ export type IFollowCameraInitial<T> = ITargetCameraInitial<T> & {
 };
 export type IFollowCameraProps = IFollowCameraInitial<BabylonFollowCamera> & IFollowCameraOptions;
 
-export const FollowCameraHOC = (EL: Nullable<React.FC<IFollowCameraProps>>) => {
-    return (props: IFollowCameraProps) => {
+function FollowCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IFollowCameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position, lockedTarget } = props;
 

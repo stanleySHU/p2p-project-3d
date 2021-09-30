@@ -9,8 +9,8 @@ export type IUniversalCameraInitial<T> = ITouchCameraInitial<T> & {
 };
 export type IUniversalCameraProps = IUniversalCameraInitial<BabylonUniversalCamera> & IUniversalCameraOptions;
 
-export const UniversalCameraHOC = (EL: Nullable<React.FC<IUniversalCameraProps>>) => {
-    return (props: IUniversalCameraProps) => {
+function UniversalCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IUniversalCameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position } = props;
 

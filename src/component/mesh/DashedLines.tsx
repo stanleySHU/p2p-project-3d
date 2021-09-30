@@ -14,8 +14,8 @@ export type IDashedLinesInitial<T> = IMeshInitial<T> & {
 };
 export type IDashedLinesProps = IDashedLinesInitial<BabylonMesh> & IDashedLinesOptions;
 
-const DashedLinesHOC = (EL: Nullable<React.FC<IDashedLinesProps>>) => {
-    return (props: IDashedLinesProps) => {
+function DashedLinesHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IDashedLinesProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

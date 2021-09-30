@@ -15,8 +15,8 @@ export type ITorusInitial<T> = IMeshInitial<T> & {
 } ;
 export type ITorusProps = ITorusInitial<BabylonMesh> & ITorusOptions;
 
-const TorusHOC = (EL: Nullable<React.FC<ITorusProps>>) => {
-    return (props: ITorusProps) => {
+function TorusHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ITorusProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

@@ -9,8 +9,8 @@ export type IDirectionalLightInitial<T> = IShadowLightInitial<T> & {
 };
 export type IDirectionalLightProps = IDirectionalLightInitial<BabylonDirectionalLight> & IDirectionalLightOptions; 
 
-export const DirectionalLightHOC = (EL: Nullable<React.FC<IDirectionalLightProps>>) => {
-    return (props: IDirectionalLightProps) => {
+function DirectionalLightHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IDirectionalLightProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, direction } = props;
         

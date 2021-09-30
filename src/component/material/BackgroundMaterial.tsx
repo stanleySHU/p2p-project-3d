@@ -7,12 +7,10 @@ import { IPushMaterialInitial, extendsFrom as _extendsFrom  } from './PushMateri
 export type IBackgroundMaterialInitial<T> = IPushMaterialInitial<T> & {};
 export type IBackgroundMaterialProps = IBackgroundMaterialInitial<BabylonBackgroundMaterial>;
 
-export const BackgroundMaterialHOC = (EL: Nullable<React.FC<IBackgroundMaterialProps>>) => {
-    return (props: IBackgroundMaterialProps) => {
+function BackgroundMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IBackgroundMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { name } = props as any;
-
-        const instanceRef = useRef<any>();
+        const { instanceRef, name } = props as any;
 
         useEffect(() => {
             if (instanceRef && !instanceRef.current) {

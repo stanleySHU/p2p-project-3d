@@ -10,8 +10,8 @@ export type IFreeCameraInitial<T> = ITargetCameraInitial<T> & {
 };
 export type IFreeCameraProps = IFreeCameraInitial<BabylonFreeCamera> & IFreeCameraOptions;
 
-export const FreeCameraHOC = (EL: Nullable<React.FC<IFreeCameraProps>>) => {
-    return (props: IFreeCameraProps) => {
+function FreeCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IFreeCameraProps) => {
         const { canvas } = useContext(EngineContext);
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position, setActiveOnSceneIfNoneActive } = props;

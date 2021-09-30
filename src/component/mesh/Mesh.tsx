@@ -12,8 +12,8 @@ export type IMeshInitial<T> = ITransformNodeInitial<T> & {
 };
 export type IMeshProps = IMeshInitial<BabylonMesh> & IMeshOptions;
 
-export function MeshHOC<T>(EL: Nullable<React.FC<IMeshProps>>) {
-    return (props: IMeshProps) => {
+function MeshHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IMeshProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, source, doNotCloneChildren, clonePhysicsImpostor } = props;
 

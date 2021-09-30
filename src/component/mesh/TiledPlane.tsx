@@ -21,8 +21,8 @@ export type ITiledPlaneInitial<T> = IMeshInitial<T> & {
 };
 export type ITiledPlaneProps = ITiledPlaneInitial<BabylonMesh> & ITiledPlaneOptions;
 
-const TiledPlaneHOC = (EL: Nullable<React.FC<ITiledPlaneProps>>) => {
-    return (props: ITiledPlaneProps) => {
+function TiledPlaneHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ITiledPlaneProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

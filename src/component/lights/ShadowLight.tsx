@@ -7,8 +7,8 @@ export type IShadowLightInitial<T> = ILightInitial<T> & {
 };
 export type IShadowLightProps = IShadowLightInitial<BabylonShadowLight> & IShadowLightOptins;
 
-export const ShadowLightHOC = (EL: React.FC<IShadowLightProps>) => {
-    return (props: IShadowLightProps) => {
+function ShadowLightHOC<T>(EL: React.FC<T>) {
+    return (props: T & IShadowLightProps) => {
         return <EL {...props}/>
     }
 }

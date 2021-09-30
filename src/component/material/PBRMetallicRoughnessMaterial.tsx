@@ -7,12 +7,10 @@ import { IPBRBaseSimpleMaterialInitial, extendsFrom as _extendsFrom } from './PB
 export type IPBRMetallicRoughnessMaterialInitial<T> = IPBRBaseSimpleMaterialInitial<T> & {};
 export type IPBRMetallicRoughnessMaterialProps = IPBRMetallicRoughnessMaterialInitial<BabylonPBRMetallicRoughnessMaterial>;
 
-export const PBRMetallicRoughnessMaterialHOC = (EL: Nullable<React.FC<IPBRMetallicRoughnessMaterialProps>>) => {
-    return (props: IPBRMetallicRoughnessMaterialProps) => {
+function PBRMetallicRoughnessMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IPBRMetallicRoughnessMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { name } = props as any;
-
-        const instanceRef = useRef<any>();
+        const { instanceRef, name } = props as any;
 
         useEffect(() => {
             if (instanceRef && !instanceRef.current) {

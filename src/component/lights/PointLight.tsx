@@ -9,8 +9,8 @@ export type IPointLightInitial<T> = IShadowLightInitial<T> & {
 };
 export type IPointLightProps = IPointLightInitial<BabylonPointLight> & IPointLightOptions;
 
-export const PointLightHOC = (EL: Nullable<React.FC<IPointLightProps>> ) => {
-    return (props: IPointLightProps) => {
+function PointLightHOC<T>(EL: Nullable<React.FC<T>> ) {
+    return (props: T & IPointLightProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position } = props;
 

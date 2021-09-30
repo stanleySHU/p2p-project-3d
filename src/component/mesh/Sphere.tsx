@@ -19,8 +19,8 @@ export type ISphereInitial<T> = IMeshInitial<T> & {
 };
 export type ISphereProps = ISphereInitial<BabylonMesh> & ISphereOptions;
 
-const SphereHOC = (EL: Nullable<React.FC<ISphereProps>>) => {
-    return (props: ISphereProps) => {
+function SphereHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ISphereProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

@@ -6,12 +6,10 @@ import { IMaterialInitial, extendsFrom as _extendsFrom } from './Material';
 export type IPushMaterialInitial<T> = IMaterialInitial<T> & {};
 export type IPushMaterialProps = IPushMaterialInitial<BabylonPushMaterial>;
 
-export const PushMaterialHOC = (EL: Nullable<React.FC<IPushMaterialProps>>) => {
-    return (props: IPushMaterialProps) => {
+function PushMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IPushMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { name } = props as any;
-
-        const instanceRef = useRef<any>();
+        const { instanceRef, name } = props as any;
 
         useEffect(() => {
             if (instanceRef && !instanceRef.current) {

@@ -9,8 +9,8 @@ export type ITargetCameraInitial<T> = ICameraInitial<T> & {
 };
 export type ITargetCameraProps = ITargetCameraInitial<BabylonTargetCamera> & ITargetCameraOptions;
 
-export const TargetCameraHOC = (EL: Nullable<React.FC<ITargetCameraProps>>) => {
-    return (props: ITargetCameraProps) => {
+function TargetCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ITargetCameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position, setActiveOnSceneIfNoneActive } = props;
 

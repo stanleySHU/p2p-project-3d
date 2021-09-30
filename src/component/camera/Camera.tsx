@@ -10,8 +10,8 @@ export type ICameraInitial<T> = INodeInitial<T> & {
 };
 export type ICameraProps = ICameraInitial<BabylonCamera> & ICameraOptions;
 
-export const CameraHOC = (EL: Nullable<React.FC<ICameraProps>>) => {
-    return (props: ICameraProps) => {
+function CameraHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ICameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position, setActiveOnSceneIfNoneActive } = props;
 

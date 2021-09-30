@@ -21,8 +21,8 @@ export type IBoxInitial<T> = IMeshInitial<T> & {
 };
 export type IBoxProps = IBoxInitial<BabylonMesh>;
 
-export const BoxHOC = (EL: Nullable<React.FC<IBoxProps>>) => {
-    return (props: IBoxProps) => {
+function BoxHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IBoxProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 

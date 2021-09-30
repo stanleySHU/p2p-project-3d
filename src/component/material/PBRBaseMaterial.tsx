@@ -6,12 +6,12 @@ import { IPushMaterialInitial, extendsFrom as _extendsFrom } from './PushMateria
 export type IPBRBaseMaterialInitial<T> = IPushMaterialInitial<T> & {};
 export type IPBRBaseMaterialProps = IPBRBaseMaterialInitial<BabylonPBRBaseMaterial>;
 
-export const PBRBaseMaterialHOC = (EL: Nullable<React.FC<IPBRBaseMaterialProps>>) => {
-    return (props: IPBRBaseMaterialProps) => {
+function PBRBaseMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & IPBRBaseMaterialProps) => {
         return EL && <EL {...props}/>
     };
 } 
 
 export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(PBRBaseMaterialHOC(e));
+    return PBRBaseMaterialHOC(_extendsFrom<T>(e));
 }

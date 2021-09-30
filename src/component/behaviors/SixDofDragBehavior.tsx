@@ -1,1 +1,0 @@
-import { SixDofDragBehavior as BabylonSixDofDragBehavior } from "@babylonjs/core";

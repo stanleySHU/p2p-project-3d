@@ -22,8 +22,8 @@ export type ITiledBoxInitial<T> = IMeshInitial<T> & {
 };
 export type ITiledBoxProps = ITiledBoxInitial<BabylonMesh> & IGroupOptions;
 
-const TiledBoxHOC = (EL: Nullable<React.FC<ITiledBoxProps>>) => {
-    return (props: ITiledBoxProps) => {
+function TiledBoxHOC<T>(EL: Nullable<React.FC<T>>) {
+    return (props: T & ITiledBoxProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
 
