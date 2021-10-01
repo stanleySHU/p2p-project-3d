@@ -1,15 +1,16 @@
 import { UniversalCamera as BabylonUniversalCamera } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { ITouchCameraInitial, extendsFrom as _extendsFrom } from './TouchCamera';
+import { ITouchCameraInitial, buildExtends as _buildExtends } from './TouchCamera';
 
 export type IUniversalCameraInitial<T> = ITouchCameraInitial<T> & {
 
 };
 export type IUniversalCameraProps = IUniversalCameraInitial<BabylonUniversalCamera> & IUniversalCameraOptions;
 
-function UniversalCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+function UniversalCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IUniversalCameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position } = props;
@@ -22,18 +23,15 @@ function UniversalCameraHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(UniversalCameraHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(UniversalCameraHOC(e));
 };
 
-export const P2PUniversalCamera = extendsFrom<IUniversalCameraProps>(null);
+export const P2PUniversalCamera = buildExtends<IUniversalCameraProps>(ChildHOC(null));
 
 export type IUniversalCameraOptions = {
     

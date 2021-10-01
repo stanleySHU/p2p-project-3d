@@ -28,7 +28,8 @@
       "import/no-anonymous-default-export": "off",
       "no-throw-literal": "off",
       "warn": "off",
-      "react-hooks/rules-of-hooks": "off"
+      "react-hooks/rules-of-hooks": "off",
+      "react/jsx-pascal-case": "off"
     }
   },
   "browserslist": {

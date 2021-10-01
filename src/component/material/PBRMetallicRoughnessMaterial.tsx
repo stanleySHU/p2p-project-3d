@@ -1,13 +1,14 @@
 import { PBRMetallicRoughnessMaterial as BabylonPBRMetallicRoughnessMaterial } from '@babylonjs/core';
 import React, { useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IPBRBaseSimpleMaterialInitial, extendsFrom as _extendsFrom } from './PBRBaseSimpleMaterial';
+import { IPBRBaseSimpleMaterialInitial, buildExtends as _buildExtends } from './PBRBaseSimpleMaterial';
 
 export type IPBRMetallicRoughnessMaterialInitial<T> = IPBRBaseSimpleMaterialInitial<T> & {};
 export type IPBRMetallicRoughnessMaterialProps = IPBRMetallicRoughnessMaterialInitial<BabylonPBRMetallicRoughnessMaterial>;
 
-function PBRMetallicRoughnessMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+function PBRMetallicRoughnessMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IPBRMetallicRoughnessMaterialProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props as any;
@@ -20,15 +21,12 @@ function PBRMetallicRoughnessMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 } 
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(PBRMetallicRoughnessMaterialHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(PBRMetallicRoughnessMaterialHOC(e));
 }
 
-export const P2PPBRMetallicRoughnessMaterial = extendsFrom<IPBRMetallicRoughnessMaterialProps>(null);
+export const P2PPBRMetallicRoughnessMaterial = buildExtends<IPBRMetallicRoughnessMaterialProps>(ChildHOC(null));

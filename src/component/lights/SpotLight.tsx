@@ -1,8 +1,9 @@
 import { SpotLight as BabylonSpotLight, Vector3 } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IShadowLightInitial, extendsFrom as _extendsFrom } from './ShadowLight';
+import { IShadowLightInitial, buildExtends as _buildExtends } from './ShadowLight';
 
 export type ISpotLightInitial<T> = IShadowLightInitial<T> & {
     position: Vector3,
@@ -12,7 +13,7 @@ export type ISpotLightInitial<T> = IShadowLightInitial<T> & {
 };
 export type ISpotLightProps = ISpotLightInitial<BabylonSpotLight> & ISpotLightOptions;
 
-function SpotLightHOC<T>(EL: Nullable<React.FC<T>>) {
+function SpotLightHOC<T>(EL: React.FC<T>) {
     return (props: T & ISpotLightProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position, direction, angle, exponent } = props;
@@ -25,18 +26,15 @@ function SpotLightHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, [])
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 }
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(SpotLightHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(SpotLightHOC(e));
 };
 
-export const P2PSpotLight = extendsFrom<ISpotLightProps>(null);
+export const P2PSpotLight = buildExtends<ISpotLightProps>(ChildHOC(null));
 
 export type ISpotLightOptions = {
     

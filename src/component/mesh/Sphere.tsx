@@ -1,8 +1,9 @@
 import { Mesh as BabylonMesh, MeshBuilder, Vector4 } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
-import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
+import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
+import { ChildHOC } from "../Component";
 
 export type ISphereInitial<T> = IMeshInitial<T> & {
     segments?: number;
@@ -19,7 +20,7 @@ export type ISphereInitial<T> = IMeshInitial<T> & {
 };
 export type ISphereProps = ISphereInitial<BabylonMesh> & ISphereOptions;
 
-function SphereHOC<T>(EL: Nullable<React.FC<T>>) {
+function SphereHOC<T>(EL: React.FC<T>) {
     return (props: T & ISphereProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
@@ -32,18 +33,15 @@ function SphereHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(SphereHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(SphereHOC(e));
 }
 
-export const P2PSphere = extendsFrom<ISphereProps>(null);
+export const P2PSphere = buildExtends<ISphereProps>(ChildHOC(null));
 
 export type ISphereOptions = {
 

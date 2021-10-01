@@ -1,13 +1,14 @@
 import { BackgroundMaterial as BabylonBackgroundMaterial } from '@babylonjs/core';
 import React, { useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IPushMaterialInitial, extendsFrom as _extendsFrom  } from './PushMaterial';
+import { IPushMaterialInitial, buildExtends as _buildExtends  } from './PushMaterial';
 
 export type IBackgroundMaterialInitial<T> = IPushMaterialInitial<T> & {};
 export type IBackgroundMaterialProps = IBackgroundMaterialInitial<BabylonBackgroundMaterial>;
 
-function BackgroundMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+function BackgroundMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IBackgroundMaterialProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props as any;
@@ -20,15 +21,12 @@ function BackgroundMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 } 
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(BackgroundMaterialHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(BackgroundMaterialHOC(e));
 }
 
-export const P2PBackgroundMaterial = extendsFrom<IBackgroundMaterialProps>(null);
+export const P2PBackgroundMaterial = buildExtends<IBackgroundMaterialProps>(ChildHOC(null));

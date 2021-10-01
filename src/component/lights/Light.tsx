@@ -1,10 +1,8 @@
 import { Light as BabylonLight } from '@babylonjs/core';
 import React from 'react';
-import { INodeInitial, extendsFrom as _extendsFrom } from '../node/Node';
+import { INodeInitial, buildExtends as _buildExtends } from '../node/Node';
 
-export type ILightInitial<T> = INodeInitial<T> & {
-    
-};
+export type ILightInitial<T> = INodeInitial<T> & {};
 export type ILightProps = ILightInitial<BabylonLight> & ILightOptions;
 
 function LightHOC<T>(EL: React.FC<T>) {
@@ -13,8 +11,8 @@ function LightHOC<T>(EL: React.FC<T>) {
     }
 }
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(LightHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(LightHOC(e));
 };
 
 export type ILightOptions = {

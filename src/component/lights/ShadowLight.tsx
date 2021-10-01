@@ -1,10 +1,8 @@
 import { ShadowLight as BabylonShadowLight } from '@babylonjs/core';
 import React from 'react';
-import { ILightInitial, extendsFrom as _extendsFrom } from './Light';
+import { ILightInitial, buildExtends as _buildExtends } from './Light';
 
-export type IShadowLightInitial<T> = ILightInitial<T> & {
-    
-};
+export type IShadowLightInitial<T> = ILightInitial<T> & {};
 export type IShadowLightProps = IShadowLightInitial<BabylonShadowLight> & IShadowLightOptins;
 
 function ShadowLightHOC<T>(EL: React.FC<T>) {
@@ -13,8 +11,8 @@ function ShadowLightHOC<T>(EL: React.FC<T>) {
     }
 }
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(ShadowLightHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(ShadowLightHOC(e));
 };
 
 export type IShadowLightOptins = {

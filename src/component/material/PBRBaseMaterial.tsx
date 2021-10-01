@@ -1,20 +1,17 @@
 import { PBRBaseMaterial as BabylonPBRBaseMaterial } from '@babylonjs/core';
 import React from 'react';
 import { Nullable } from '../../utils/customType';
-import { IPushMaterialInitial, extendsFrom as _extendsFrom } from './PushMaterial';
+import { IPushMaterialInitial, buildExtends as _buildExtends } from './PushMaterial';
 
 export type IPBRBaseMaterialInitial<T> = IPushMaterialInitial<T> & {};
 export type IPBRBaseMaterialProps = IPBRBaseMaterialInitial<BabylonPBRBaseMaterial>;
 
-function PBRBaseMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+function PBRBaseMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IPBRBaseMaterialProps) => {
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 } 
 
-export function extendsFrom<T>(e: any) {
-    return PBRBaseMaterialHOC(_extendsFrom<T>(e));
+export function buildExtends<T>(e: any) {
+    return PBRBaseMaterialHOC(_buildExtends<T>(e));
 }

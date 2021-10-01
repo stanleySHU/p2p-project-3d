@@ -1,8 +1,9 @@
 import { Mesh as BabylonMesh, MeshBuilder } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
-import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
+import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
+import { ChildHOC } from "../Component";
 
 export type IGroundInitial<T> = IMeshInitial<T> & {
     width?: number,
@@ -14,7 +15,7 @@ export type IGroundInitial<T> = IMeshInitial<T> & {
 };
 export type IGroundProps = IGroundInitial<BabylonMesh> & IGroundOptions;
 
-function GroundHOC<T>(EL: Nullable<React.FC<T>>) {
+function GroundHOC<T>(EL: React.FC<T>) {
     return (props: T & IGroundProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
@@ -27,18 +28,15 @@ function GroundHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []); 
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(GroundHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(GroundHOC(e));
 }
 
-export const P2PGround = extendsFrom<IGroundProps>(null);
+export const P2PGround = buildExtends<IGroundProps>(ChildHOC(null));
 export type IGroundOptions = {
     
 }

@@ -1,8 +1,9 @@
 import { Color4, Mesh as BabylonMesh, MeshBuilder, Vector4 } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IMeshInitial, extendsFrom as _extendsFrom } from './Mesh';
+import { IMeshInitial, buildExtends as _buildExtends } from './Mesh';
 
 export type IBoxInitial<T> = IMeshInitial<T> & {
     size?: number,
@@ -21,7 +22,7 @@ export type IBoxInitial<T> = IMeshInitial<T> & {
 };
 export type IBoxProps = IBoxInitial<BabylonMesh>;
 
-function BoxHOC<T>(EL: Nullable<React.FC<T>>) {
+function BoxHOC<T>(EL: React.FC<T>) {
     return (props: T & IBoxProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
@@ -34,15 +35,12 @@ function BoxHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, [])
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(BoxHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(BoxHOC(e));
 }
 
-export const P2PBox = extendsFrom<IBoxProps>(null);
+export const P2PBox = buildExtends<IBoxProps>(ChildHOC(null));

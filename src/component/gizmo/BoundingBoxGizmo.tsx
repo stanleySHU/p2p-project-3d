@@ -1,0 +1,1 @@
+import { BoundingBoxGizmo as BabylonBoundingBoxGizmo } from '@babylonjs/core';

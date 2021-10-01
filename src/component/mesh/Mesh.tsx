@@ -1,7 +1,8 @@
 import { Mesh as BabylonMesh } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
 import { Nullable } from "../../utils/customType";
-import { ITransformNodeInitial, extendsFrom as _extendsFrom  } from "../node/TransformNode";
+import { ChildHOC } from "../Component";
+import { ITransformNodeInitial, buildExtends as _buildExtends  } from "../node/TransformNode";
 import { SceneContext } from "../Scene";
 
 export type IMeshInitial<T> = ITransformNodeInitial<T> & {
@@ -12,7 +13,7 @@ export type IMeshInitial<T> = ITransformNodeInitial<T> & {
 };
 export type IMeshProps = IMeshInitial<BabylonMesh> & IMeshOptions;
 
-function MeshHOC<T>(EL: Nullable<React.FC<T>>) {
+function MeshHOC<T>(EL: React.FC<T>) {
     return (props: T & IMeshProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, source, doNotCloneChildren, clonePhysicsImpostor } = props;
@@ -25,18 +26,15 @@ function MeshHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, [])
         
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 }
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(MeshHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(MeshHOC(e));
 }
 
-export const P2PMesh = extendsFrom<IMeshProps>(null);
+export const P2PMesh = buildExtends<IMeshProps>(ChildHOC(null));
 
 export type IMeshOptions = {
     

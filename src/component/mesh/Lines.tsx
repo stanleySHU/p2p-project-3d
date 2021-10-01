@@ -1,8 +1,9 @@
 import { Color4, LinesMesh, Mesh as BabylonMesh, MeshBuilder, Vector3 } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
-import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
+import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
+import { ChildHOC } from "../Component";
 
 export type ILinesInitial<T> = IMeshInitial<T> & {
     points: Vector3[];
@@ -13,7 +14,7 @@ export type ILinesInitial<T> = IMeshInitial<T> & {
 };
 export type ILinesProps = ILinesInitial<BabylonMesh> & ILinesOptions;
 
-function LinesHOC<T>(EL: Nullable<React.FC<T>>) {
+function LinesHOC<T>(EL: React.FC<T>) {
     return (props: T & ILinesProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
@@ -26,18 +27,15 @@ function LinesHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(LinesHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(LinesHOC(e));
 }
 
-export const P2PLines = extendsFrom<ILinesProps>(null);
+export const P2PLines = buildExtends<ILinesProps>(ChildHOC(null));
 
 export type ILinesOptions = {
 

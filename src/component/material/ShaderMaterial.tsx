@@ -1,8 +1,9 @@
 import { IShaderMaterialOptions, ShaderMaterial as BabylonShaderMaterial } from '@babylonjs/core';
 import React, { useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IMaterialInitial, extendsFrom as _extendsFrom } from './Material';
+import { IMaterialInitial, buildExtends as _buildExtends } from './Material';
 
 export type IShaderMaterialInitial<T> = IMaterialInitial<T> & {
     shaderPath: any,
@@ -10,7 +11,7 @@ export type IShaderMaterialInitial<T> = IMaterialInitial<T> & {
 };
 export type IShaderMaterialProps = IShaderMaterialInitial<BabylonShaderMaterial>;
 
-function ShaderMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+function ShaderMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IShaderMaterialProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, shaderPath, options } = props as any;
@@ -23,15 +24,12 @@ function ShaderMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 } 
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(ShaderMaterialHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(ShaderMaterialHOC(e));
 }
 
-export const P2PShaderMaterial = extendsFrom<IShaderMaterialProps>(null);
+export const P2PShaderMaterial = buildExtends<IShaderMaterialProps>(ChildHOC(null));

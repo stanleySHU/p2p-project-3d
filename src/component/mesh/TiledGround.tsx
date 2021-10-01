@@ -1,8 +1,9 @@
 import { Mesh as BabylonMesh, MeshBuilder } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
-import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
+import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
+import { ChildHOC } from "../Component";
 
 export type ITiledGroundInitial<T> = IMeshInitial<T> & {
     xmin: number;
@@ -21,7 +22,7 @@ export type ITiledGroundInitial<T> = IMeshInitial<T> & {
 };
 export type ITiledGroundProps = ITiledGroundInitial<BabylonMesh> & ITiledGroundOptions;
 
-function TiledGroundHOC<T>(EL: Nullable<React.FC<T>>) {
+function TiledGroundHOC<T>(EL: React.FC<T>) {
     return (props: T & ITiledGroundProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
@@ -34,18 +35,15 @@ function TiledGroundHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(TiledGroundHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(TiledGroundHOC(e));
 }
 
-export const P2PTiledGround = extendsFrom<ITiledGroundProps>(null);
+export const P2PTiledGround = buildExtends<ITiledGroundProps>(ChildHOC(null));
 
 export type ITiledGroundOptions = {
 

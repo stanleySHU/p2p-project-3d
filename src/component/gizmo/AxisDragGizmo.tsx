@@ -1,0 +1,1 @@
+import { AxisDragGizmo as BabylonAxisDragGizmo } from '@babylonjs/core';

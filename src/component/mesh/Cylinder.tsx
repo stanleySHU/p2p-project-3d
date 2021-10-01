@@ -1,8 +1,9 @@
 import { Color4, Mesh as BabylonMesh, MeshBuilder, Vector4 } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
-import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
+import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
+import { ChildHOC } from "../Component";
 
 export type ICylinderInitial<T> = IMeshInitial<T> & {
     height?: number;
@@ -24,7 +25,7 @@ export type ICylinderInitial<T> = IMeshInitial<T> & {
 };
 export type ICylinderProps = ICylinderInitial<BabylonMesh> & ICylinderOptions;
 
-function CylinderHOC<T>(EL: Nullable<React.FC<T>>) {
+function CylinderHOC<T>(EL: React.FC<T>) {
     return (props: T & ICylinderProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
@@ -37,18 +38,15 @@ function CylinderHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(CylinderHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(CylinderHOC(e));
 }
 
-export const P2PCylinder = extendsFrom<ICylinderProps>(null);
+export const P2PCylinder = buildExtends<ICylinderProps>(ChildHOC(null));
 
 export type ICylinderOptions = {
 

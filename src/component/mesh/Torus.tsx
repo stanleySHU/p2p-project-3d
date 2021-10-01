@@ -1,8 +1,9 @@
 import { Mesh as BabylonMesh, MeshBuilder, Vector4 } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
-import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
+import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
+import { ChildHOC } from "../Component";
 
 export type ITorusInitial<T> = IMeshInitial<T> & {
     diameter?: number;
@@ -15,7 +16,7 @@ export type ITorusInitial<T> = IMeshInitial<T> & {
 } ;
 export type ITorusProps = ITorusInitial<BabylonMesh> & ITorusOptions;
 
-function TorusHOC<T>(EL: Nullable<React.FC<T>>) {
+function TorusHOC<T>(EL: React.FC<T>) {
     return (props: T & ITorusProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
@@ -28,18 +29,15 @@ function TorusHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(TorusHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(TorusHOC(e));
 }
 
-export const P2PTorus = extendsFrom<ITorusProps>(null);
+export const P2PTorus = buildExtends<ITorusProps>(ChildHOC(null));
 
 export type ITorusOptions = {
 

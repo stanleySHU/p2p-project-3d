@@ -1,12 +1,13 @@
 import { PushMaterial as BabylonPushMaterial } from '@babylonjs/core';import React, { useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IMaterialInitial, extendsFrom as _extendsFrom } from './Material';
+import { IMaterialInitial, buildExtends as _buildExtends } from './Material';
 
 export type IPushMaterialInitial<T> = IMaterialInitial<T> & {};
 export type IPushMaterialProps = IPushMaterialInitial<BabylonPushMaterial>;
 
-function PushMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+function PushMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IPushMaterialProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props as any;
@@ -19,15 +20,12 @@ function PushMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 } 
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(PushMaterialHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(PushMaterialHOC(e));
 }
 
-export const P2PPushMaterial = extendsFrom<IPushMaterialProps>(null);
+export const P2PPushMaterial = buildExtends<IPushMaterialProps>(ChildHOC(null));

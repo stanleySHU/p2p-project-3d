@@ -1,0 +1,1 @@
+import { CameraGizmo as BabylonCameraGizmo } from '@babylonjs/core';

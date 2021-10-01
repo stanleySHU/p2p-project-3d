@@ -1,15 +1,16 @@
 import { DirectionalLight as BabylonDirectionalLight, Vector3 } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IShadowLightInitial, extendsFrom as _extendsFrom } from './ShadowLight';
+import { IShadowLightInitial, buildExtends as _buildExtends } from './ShadowLight';
  
 export type IDirectionalLightInitial<T> = IShadowLightInitial<T> & {
     direction: Vector3
 };
 export type IDirectionalLightProps = IDirectionalLightInitial<BabylonDirectionalLight> & IDirectionalLightOptions; 
 
-function DirectionalLightHOC<T>(EL: Nullable<React.FC<T>>) {
+function DirectionalLightHOC<T>(EL:React.FC<T>) {
     return (props: T & IDirectionalLightProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, direction } = props;
@@ -21,18 +22,15 @@ function DirectionalLightHOC<T>(EL: Nullable<React.FC<T>>) {
                 console.log(`DirectionalLight ${name} created`);
             }
         }, [])
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(DirectionalLightHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(DirectionalLightHOC(e));
 };
 
-export const P2PDirectionalLight = extendsFrom<IDirectionalLightProps>(null);
+export const P2PDirectionalLight = buildExtends<IDirectionalLightProps>(ChildHOC(null));
 
 export type IDirectionalLightOptions = {
     

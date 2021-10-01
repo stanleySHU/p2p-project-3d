@@ -1,0 +1,1 @@
+import { LightGizmo as BabylonLightGizmo } from '@babylonjs/core';

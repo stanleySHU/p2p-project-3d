@@ -1,0 +1,1 @@
+import { MirrorTexture as BabylonMirrorTexture } from '@babylonjs/core';

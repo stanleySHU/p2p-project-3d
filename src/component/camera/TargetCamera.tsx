@@ -1,15 +1,14 @@
 import { TargetCamera as BabylonTargetCamera } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { ICameraInitial, extendsFrom as _extendsFrom } from './Camera';
+import { ICameraInitial, buildExtends as _buildExtends } from './Camera';
 
-export type ITargetCameraInitial<T> = ICameraInitial<T> & {
-
-};
+export type ITargetCameraInitial<T> = ICameraInitial<T> & {};
 export type ITargetCameraProps = ITargetCameraInitial<BabylonTargetCamera> & ITargetCameraOptions;
 
-function TargetCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+function TargetCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & ITargetCameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position, setActiveOnSceneIfNoneActive } = props;
@@ -22,18 +21,15 @@ function TargetCameraHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 }
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(TargetCameraHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(TargetCameraHOC(e));
 };
 
-export const P2PTargetCamera = extendsFrom<ITargetCameraProps>(null);
+export const P2PTargetCamera = buildExtends<ITargetCameraProps>(ChildHOC(null));
 
 export type ITargetCameraOptions = {
     

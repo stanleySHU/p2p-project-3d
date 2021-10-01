@@ -1,34 +1,34 @@
 import { StandardMaterial as BabylonStandardMaterial } from '@babylonjs/core';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IPushMaterialInitial, extendsFrom as _extendsFrom } from './PushMaterial';
+import { IPushMaterialInitial, buildExtends as _buildExtends } from './PushMaterial';
 
 export type IStandardMaterialInitial<T> = IPushMaterialInitial<T> & {};
 export type IStandardMaterialProps = IStandardMaterialInitial<BabylonStandardMaterial>;
 
-function StandardMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+function StandardMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IStandardMaterialProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props as any;
 
         useEffect(() => {
+            console.log(props)
             console.log(`StandardMaterial ${name} called`);
             if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonStandardMaterial(name, scene!);
+                let material = new BabylonStandardMaterial(name, scene!);
+                instanceRef.current = material;
                 console.log(`StandardMaterial ${name} created`);
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 } 
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(StandardMaterialHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(StandardMaterialHOC(e));
 }
 
-export const P2PStandardMaterial = extendsFrom<IStandardMaterialProps>(null);
+export const P2PStandardMaterial = buildExtends<IStandardMaterialProps>(ChildHOC(null));

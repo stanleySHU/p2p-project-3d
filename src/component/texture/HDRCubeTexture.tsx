@@ -1,0 +1,1 @@
+import { HDRCubeTexture as BabylonHDRCubeTexture } from '@babylonjs/core';

@@ -1,8 +1,9 @@
 import { Mesh as BabylonMesh, MeshBuilder, Plane, Vector4 } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
-import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
+import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
+import { ChildHOC } from "../Component";
 
 export type IPlaneInitial<T> = IMeshInitial<T> & {
     size?: number;
@@ -16,7 +17,7 @@ export type IPlaneInitial<T> = IMeshInitial<T> & {
 };
 export type IPlaneProps = IPlaneInitial<BabylonMesh> & IPlaneOptions;
 
-function PlaneHOC<T>(EL: Nullable<React.FC<T>>) {
+function PlaneHOC<T>(EL: React.FC<T>) {
     return (props: T & IPlaneProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
@@ -29,18 +30,15 @@ function PlaneHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(PlaneHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(PlaneHOC(e));
 }
 
-export const P2PPlane = extendsFrom<IPlaneProps>(null);
+export const P2PPlane = buildExtends<IPlaneProps>(ChildHOC(null));
 
 export type IPlaneOptions = {
 

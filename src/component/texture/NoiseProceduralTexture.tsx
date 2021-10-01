@@ -1,0 +1,1 @@
+import { NoiseProceduralTexture as BabylonNoiseProceduralTexture } from '@babylonjs/core';

@@ -1,15 +1,16 @@
 import { DeviceOrientationCamera as BabylonDeviceOrientationCamera } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IFreeCameraInitial, extendsFrom as _extendsFrom } from './FreeCamera';
+import { IFreeCameraInitial, buildExtends as _buildExtends } from './FreeCamera';
 
 export type IDeviceOrientationCameraInitial<T> = IFreeCameraInitial<T> & {
 
 };
 export type IDeviceOrientationCameraProps = IDeviceOrientationCameraInitial<BabylonDeviceOrientationCamera> & IDeviceOrientationCameraOptions;
 
-function DeviceOrientationCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+function DeviceOrientationCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IDeviceOrientationCameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position } = props;
@@ -22,18 +23,15 @@ function DeviceOrientationCameraHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, [])
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 }
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(DeviceOrientationCameraHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(DeviceOrientationCameraHOC(e));
 };
 
-export const P2PDeviceOrientationCamera = extendsFrom<IDeviceOrientationCameraProps>(null);
+export const P2PDeviceOrientationCamera = buildExtends<IDeviceOrientationCameraProps>(ChildHOC(null));
 
 export type IDeviceOrientationCameraOptions = {
     

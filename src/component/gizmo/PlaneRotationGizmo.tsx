@@ -1,0 +1,1 @@
+import { PlaneRotationGizmo as BabylonPlaneRotationGizmo } from '@babylonjs/core';

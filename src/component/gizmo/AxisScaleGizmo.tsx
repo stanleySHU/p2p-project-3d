@@ -1,0 +1,1 @@
+import { AxisScaleGizmo as BabylonAxisScaleGizmo } from '@babylonjs/core';

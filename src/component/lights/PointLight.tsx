@@ -1,15 +1,16 @@
 import { PointLight as BabylonPointLight, Vector3 } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IShadowLightInitial, extendsFrom as _extendsFrom } from './ShadowLight';
+import { IShadowLightInitial, buildExtends as _buildExtends } from './ShadowLight';
 
 export type IPointLightInitial<T> = IShadowLightInitial<T> & {
     position: Vector3
 };
 export type IPointLightProps = IPointLightInitial<BabylonPointLight> & IPointLightOptions;
 
-function PointLightHOC<T>(EL: Nullable<React.FC<T>> ) {
+function PointLightHOC<T>(EL: React.FC<T> ) {
     return (props: T & IPointLightProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position } = props;
@@ -22,18 +23,15 @@ function PointLightHOC<T>(EL: Nullable<React.FC<T>> ) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 }
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(PointLightHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(PointLightHOC(e));
 };
 
-export const P2PPointLight = extendsFrom<IPointLightProps>(null);
+export const P2PPointLight = buildExtends<IPointLightProps>(ChildHOC(null));
 
 export type IPointLightOptions = {
     

@@ -1,15 +1,16 @@
 import { TouchCamera as BabylonTouchCamera} from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IFreeCameraInitial, extendsFrom as _extendsFrom } from './FreeCamera';
+import { IFreeCameraInitial, buildExtends as _buildExtends } from './FreeCamera';
 
 export type ITouchCameraInitial<T> = IFreeCameraInitial<T> & {
 
 };
 export type ITouchCameraProps = ITouchCameraInitial<BabylonTouchCamera> & ITouchCameraOptions;
 
-function TouchCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+function TouchCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & ITouchCameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position } = props;
@@ -22,18 +23,15 @@ function TouchCameraHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 }
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(TouchCameraHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(TouchCameraHOC(e));
 };
 
-export const P2PTouchCamera = extendsFrom<ITouchCameraProps>(null);
+export const P2PTouchCamera = buildExtends<ITouchCameraProps>(ChildHOC(null));
 
 export type ITouchCameraOptions = {
     

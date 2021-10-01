@@ -1,15 +1,16 @@
 import { TransformNode as BabylonTransformNode } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { INodeInitial, extendsFrom as _extendsFrom } from './Node';
+import { INodeInitial, buildExtends as _buildExtends } from './Node';
 
 export type ITransformNodeInitial<T> = INodeInitial<T> & {
     isPure?: boolean
 };
 export type ITransformNodeProps = ITransformNodeInitial<BabylonTransformNode> & ITransformNodeOptions;
 
-function TransformNodeHOC<T>(EL: Nullable<React.FC<T>>) {
+function TransformNodeHOC<T>(EL: React.FC<T>) {
     return (props: T & ITransformNodeProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, isPure } = props;
@@ -22,18 +23,15 @@ function TransformNodeHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 }
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(TransformNodeHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(TransformNodeHOC(e));
 }
 
-export const P2PTransformNode = extendsFrom<ITransformNodeProps>(null);
+export const P2PTransformNode = buildExtends<ITransformNodeProps>(ChildHOC(null));
 
 export type ITransformNodeOptions = {
     

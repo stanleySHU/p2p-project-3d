@@ -1,8 +1,9 @@
 import { Mesh as BabylonMesh, MeshBuilder, Vector4 } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
-import { IMeshInitial, extendsFrom as _extendsFrom } from "./Mesh";
+import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
 import { SceneContext } from "../Scene";
 import { Nullable } from "../../utils/customType";
+import { ChildHOC } from "../Component";
 
 export type ITiledPlaneInitial<T> = IMeshInitial<T> & {
     pattern?: number;
@@ -21,7 +22,7 @@ export type ITiledPlaneInitial<T> = IMeshInitial<T> & {
 };
 export type ITiledPlaneProps = ITiledPlaneInitial<BabylonMesh> & ITiledPlaneOptions;
 
-function TiledPlaneHOC<T>(EL: Nullable<React.FC<T>>) {
+function TiledPlaneHOC<T>(EL: React.FC<T>) {
     return (props: T & ITiledPlaneProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props;
@@ -34,18 +35,15 @@ function TiledPlaneHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(TiledPlaneHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(TiledPlaneHOC(e));
 }
 
-export const P2PTiledPlane = extendsFrom<ITiledPlaneProps>(null);
+export const P2PTiledPlane = buildExtends<ITiledPlaneProps>(ChildHOC(null));
 
 export type ITiledPlaneOptions = {
 

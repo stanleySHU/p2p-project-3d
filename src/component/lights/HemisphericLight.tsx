@@ -1,15 +1,16 @@
 import { HemisphericLight as BabylonHemisphericLight, Vector3 } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { ILightInitial, extendsFrom as _extendsFrom } from './Light';
+import { ILightInitial, buildExtends as _buildExtends } from './Light';
 
 export type IHemisphericLightInitial<T> = ILightInitial<T> & {
     direction: Vector3
 };
 export type IHemisphericLightProps = IHemisphericLightInitial<BabylonHemisphericLight> & IHemisphericLightOptions;
 
-function HemisphericLightHOC<T>(EL: Nullable<React.FC<T>>) {
+function HemisphericLightHOC<T>(EL: React.FC<T>) {
     return (props: T & IHemisphericLightProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, direction } = props;
@@ -22,18 +23,15 @@ function HemisphericLightHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 }
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(HemisphericLightHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(HemisphericLightHOC(e));
 };
 
-export const P2PHemisphericLight = extendsFrom<IHemisphericLightProps>(null);
+export const P2PHemisphericLight = buildExtends<IHemisphericLightProps>(ChildHOC(null));
 
 export type IHemisphericLightOptions = {
     

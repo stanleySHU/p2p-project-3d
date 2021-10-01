@@ -1,0 +1,1 @@
+import { PositionGizmo as BabylonPositionGizmo } from '@babylonjs/core';

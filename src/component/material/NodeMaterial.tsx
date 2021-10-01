@@ -1,15 +1,16 @@
 import { INodeMaterialOptions, NodeMaterial as BabylonNodeMaterial } from '@babylonjs/core';
 import React, { useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IPushMaterialInitial, extendsFrom as _extendsFrom  } from './PushMaterial';
+import { IPushMaterialInitial, buildExtends as _buildExtends  } from './PushMaterial';
 
 export type INodeMaterialInitial<T> = IPushMaterialInitial<T> & {
     options?: Partial<INodeMaterialOptions>
 };
 export type INodeMaterialProps = INodeMaterialInitial<BabylonNodeMaterial>;
 
-function NodeMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+function NodeMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & INodeMaterialProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, options } = props as any;
@@ -22,15 +23,12 @@ function NodeMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 } 
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(NodeMaterialHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(NodeMaterialHOC(e));
 }
 
-export const P2PNodeMaterial = extendsFrom<INodeMaterialProps>(null);
+export const P2PNodeMaterial = buildExtends<INodeMaterialProps>(ChildHOC(null));

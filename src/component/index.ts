@@ -3,14 +3,22 @@ import { P2PNode } from './node/Node';
 import { P2PTransformNode } from './node/TransformNode';
 
 //cameras
+import { P2PAnaglyphArcRotateCamera } from './camera/AnaglyphArcRotateCamera';
+import { P2PAnaglyphFreeCamera } from './camera/AnaglyphFreeCamera';
 import { P2PArcRotateCamera } from './camera/ArcRotateCamera'; 
 import { P2PCamera } from './camera/Camera';
 import { P2PDeviceOrientationCamera } from './camera/DeviceOrientationCamera';
 import { P2PFollowCamera } from './camera/FollowCamera';
 import { P2PFreeCamera } from './camera/FreeCamera';
+import { P2PStereoscopicArcRotateCamera } from './camera/StereoscopicArcRotateCamera';
+import { P2PStereoscopicFreeCamera } from './camera/StereoscopicFreeCamera';
 import { P2PTargetCamera } from './camera/TargetCamera';
 import { P2PTouchCamera } from './camera/TouchCamera';
 import { P2PUniversalCamera } from './camera/UniversalCamera';
+import { P2PVirtualJoysticksCamera } from './camera/VirtualJoysticksCamera';
+import { P2PVRDeviceOrientationArcRotateCamera } from './camera/VRDeviceOrientationArcRotateCamera';
+import { P2PWebVRFreeCamera } from './camera/WebVRFreeCamera';
+import { P2PWebXRCamera } from './camera/WebXRCamera';
 
 //lights
 import { P2PDirectionalLight } from './lights/DirectionalLight';
@@ -73,7 +81,10 @@ declare global {
 
 export {
     P2PNode, P2PTransformNode,
-    P2PArcRotateCamera, P2PCamera, P2PDeviceOrientationCamera, P2PFollowCamera, P2PFreeCamera, P2PTargetCamera, P2PTouchCamera, P2PUniversalCamera,
+    //camera
+    P2PAnaglyphArcRotateCamera, P2PAnaglyphFreeCamera, P2PArcRotateCamera, P2PCamera, P2PDeviceOrientationCamera, P2PFollowCamera, P2PFreeCamera, P2PStereoscopicArcRotateCamera, P2PStereoscopicFreeCamera, 
+    P2PTargetCamera, P2PTouchCamera, P2PUniversalCamera, P2PVirtualJoysticksCamera, P2PVRDeviceOrientationArcRotateCamera, P2PWebVRFreeCamera, P2PWebXRCamera,
+    //
     P2PDirectionalLight, P2PHemisphericLight, P2PPointLight, P2PSpotLight,
     P2PBox, P2PCapsule, P2PCylinder, P2PDashedLines, P2PDisc, P2PGround, P2PLines, P2PLineSystem, P2PMesh, P2PPlane, P2PSphere, P2PTiledBox, P2PTiledGround, P2PTiledPlane, P2PTorus,
     P2PBackgroundMaterial, P2PMaterial, P2PMultiMaterial, P2PNodeMaterial, P2PPBRMetallicRoughnessMaterial, P2PPBRSpecularGlossinessMaterial, P2PPushMaterial, P2PShaderMaterial, P2PStandardMaterial

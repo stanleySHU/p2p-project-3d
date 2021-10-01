@@ -1,15 +1,16 @@
 import { AbstractMesh, FollowCamera as BabylonFollowCamera } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { ITargetCameraInitial, extendsFrom as _extendsFrom } from './TargetCamera';
+import { ITargetCameraInitial, buildExtends as _buildExtends } from './TargetCamera';
 
 export type IFollowCameraInitial<T> = ITargetCameraInitial<T> & {
     lockedTarget?: Nullable<AbstractMesh>
 };
 export type IFollowCameraProps = IFollowCameraInitial<BabylonFollowCamera> & IFollowCameraOptions;
 
-function FollowCameraHOC<T>(EL: Nullable<React.FC<T>>) {
+function FollowCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IFollowCameraProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name, position, lockedTarget } = props;
@@ -22,18 +23,15 @@ function FollowCameraHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     }
 };
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(FollowCameraHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(FollowCameraHOC(e));
 };
 
-export const P2PFollowCamera = extendsFrom<IFollowCameraProps>(null);
+export const P2PFollowCamera = buildExtends<IFollowCameraProps>(ChildHOC(null));
 
 export type IFollowCameraOptions = {
     

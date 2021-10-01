@@ -1,13 +1,14 @@
 import { PBRSpecularGlossinessMaterial as BabylonPBRSpecularGlossinessMaterial } from '@babylonjs/core';
 import React, { useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
+import { ChildHOC } from '../Component';
 import { SceneContext } from '../Scene';
-import { IPBRBaseSimpleMaterialInitial, extendsFrom as _extendsFrom } from './PBRBaseSimpleMaterial';
+import { IPBRBaseSimpleMaterialInitial, buildExtends as _buildExtends } from './PBRBaseSimpleMaterial';
 
 export type IPBRSpecularGlossinessMaterialInitial<T> = IPBRBaseSimpleMaterialInitial<T> & {};
 export type IPBRSpecularGlossinessMaterialProps = IPBRSpecularGlossinessMaterialInitial<BabylonPBRSpecularGlossinessMaterial>;
 
-function PBRSpecularGlossinessMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
+function PBRSpecularGlossinessMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IPBRSpecularGlossinessMaterialProps) => {
         const { scene } = useContext(SceneContext);
         const { instanceRef, name } = props as any;
@@ -20,15 +21,12 @@ function PBRSpecularGlossinessMaterialHOC<T>(EL: Nullable<React.FC<T>>) {
             }
         }, []);
 
-        if (EL == null) return <>{props.children}</>
-        return <EL {...props}>
-            {props.children}
-        </EL>
+        return <EL {...props}/>
     };
 } 
 
-export function extendsFrom<T>(e: any) {
-    return _extendsFrom<T>(PBRSpecularGlossinessMaterialHOC(e));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(PBRSpecularGlossinessMaterialHOC(e));
 }
 
-export const P2PPBRSpecularGlossinessMaterial = extendsFrom<IPBRSpecularGlossinessMaterialProps>(null);
+export const P2PPBRSpecularGlossinessMaterial = buildExtends<IPBRSpecularGlossinessMaterialProps>(ChildHOC(null));
