@@ -49,6 +49,7 @@ export const P2PScene = (props: IScenePropsInitial) => {
     useEffect(() => {
         const children: ReactElement[] = Array.isArray(props.children) ? props.children : props.children ? [props.children] : [];
         let scene = new BaybylonScene(engine!);
+        
         setInstance(scene);
         sceneRef.current = scene;
 

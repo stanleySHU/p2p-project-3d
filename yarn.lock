@@ -1138,12 +1138,12 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@babylonjs/core@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@babylonjs/core/-/core-4.2.0.tgz#d1cfd43d7e3d2e58cde79083f04eeb607f6c8f18"
-  integrity sha512-sZQigPvMDc0pcgwlKvTF5gsMzGwT8gelQIOyxELrohdFu12pHGhIr61+yVxxq9tpCdzyYD9kS8LM0w2y+5ypkg==
+"@babylonjs/core@^5.0.0-alpha.48":
+  version "5.0.0-alpha.48"
+  resolved "https://registry.yarnpkg.com/@babylonjs/core/-/core-5.0.0-alpha.48.tgz#a935fec7a288a60f083833497091f489cee0bd4d"
+  integrity sha512-NFOIZp+yj1Q+ziogK7I6mbKy+tqh/qTXJrHAcU29CPtNXhxda487ATdWmdlRUOWwbFqE7DY8J1HKGteTEmA/4Q==
   dependencies:
-    tslib ">=1.10.0"
+    tslib "^2.3.1"
 
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
@@ -10626,11 +10626,6 @@ tsconfig-paths@^3.9.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
-tslib@>=1.10.0:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
-  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
-
 tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
@@ -10640,6 +10635,11 @@ tslib@^2.0.3:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
   integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
+
+tslib@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tsutils@^3.17.1:
   version "3.20.0"

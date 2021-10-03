@@ -13,12 +13,12 @@ export type IPointLightProps = IPointLightInitial<BabylonPointLight> & IPointLig
 function PointLightHOC<T>(EL: React.FC<T> ) {
     return (props: T & IPointLightProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, position } = props;
+        const { instance, name, position } = props;
 
         useEffect(() => {
             console.log(`PointLight ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonPointLight(name, position, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonPointLight(name, position, scene!);
                 console.log(`PointLight ${name} created`);
             }
         }, []);

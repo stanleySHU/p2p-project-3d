@@ -25,12 +25,12 @@ export type ITiledPlaneProps = ITiledPlaneInitial<BabylonMesh> & ITiledPlaneOpti
 function TiledPlaneHOC<T>(EL: React.FC<T>) {
     return (props: T & ITiledPlaneProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`TiledPlane ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateTiledPlane(name, props, scene);
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateTiledPlane(name, props, scene);
                 console.log(`TiledPlane ${name} created`);
             }
         }, []);

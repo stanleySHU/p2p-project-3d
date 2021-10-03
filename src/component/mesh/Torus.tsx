@@ -19,12 +19,12 @@ export type ITorusProps = ITorusInitial<BabylonMesh> & ITorusOptions;
 function TorusHOC<T>(EL: React.FC<T>) {
     return (props: T & ITorusProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`Torus ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateTorus(name, props, scene);
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateTorus(name, props, scene);
                 console.log(`Torus ${name} created`);
             }
         }, []);

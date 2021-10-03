@@ -13,12 +13,12 @@ export type IAnaglyphArcRotateCameraProps = IAnaglyphArcRotateCameraInitial<Baby
 function AnaglyphArcRotateCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IAnaglyphArcRotateCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, alpha, beta, radius, target, interaxialDistance } = props;
+        const { instance, name, alpha, beta, radius, target, interaxialDistance } = props;
 
         useEffect(() => {
             console.log(`AnaglyphArcRotateCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonAnaglyphArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonAnaglyphArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, scene!);
                 console.log(`AnaglyphArcRotateCamera ${name} created`);
             }
         }, []);

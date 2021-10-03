@@ -13,12 +13,12 @@ export type IHemisphericLightProps = IHemisphericLightInitial<BabylonHemispheric
 function HemisphericLightHOC<T>(EL: React.FC<T>) {
     return (props: T & IHemisphericLightProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, direction } = props;
+        const { instance, name, direction } = props;
 
         useEffect(() => {
             console.log(`HemisphericLight ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonHemisphericLight(name, direction, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonHemisphericLight(name, direction, scene!);
                 console.log(`HemisphericLight ${name} created`);
             }
         }, []);

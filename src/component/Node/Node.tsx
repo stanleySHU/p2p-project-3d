@@ -9,12 +9,12 @@ export type INodeProps = INodeInitial<BabylonNode> & INodeOptions;
 function NodeHOC<T>(EL: React.FC<T>) {
     return (props: T & INodeProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`Node ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonNode(name, scene);
+            if (instance && !instance.current) {
+                instance.current = new BabylonNode(name, scene);
                 console.log(`Node ${name} created`);
             }
         }, []);

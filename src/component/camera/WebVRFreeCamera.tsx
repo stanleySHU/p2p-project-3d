@@ -13,12 +13,12 @@ export type IWebVRFreeCameraProps = IWebVRFreeCameraInitial<BabylonWebVRFreeCame
 function WebVRFreeCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IWebVRFreeCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, position,  webVROptions } = props;
+        const { instance, name, position,  webVROptions } = props;
 
         useEffect(() => {
             console.log(`WebVRFreeCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonWebVRFreeCamera(name, position, scene!, webVROptions);
+            if (instance && !instance.current) {
+                instance.current = new BabylonWebVRFreeCamera(name, position, scene!, webVROptions);
                 console.log(`WebVRFreeCamera ${name} created`);
             }
         }, []);

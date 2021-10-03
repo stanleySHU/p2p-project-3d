@@ -11,12 +11,12 @@ export type IMultiMaterialProps = IMultiMaterialInitial<BabylonMultiMaterial>;
 function MultiMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IMultiMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props as any;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`MultiMaterial ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonMultiMaterial(name, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonMultiMaterial(name, scene!);
                 console.log(`MultiMaterial ${name} created`);
             }
         }, []);

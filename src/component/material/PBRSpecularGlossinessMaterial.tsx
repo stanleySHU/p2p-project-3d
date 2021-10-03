@@ -11,12 +11,12 @@ export type IPBRSpecularGlossinessMaterialProps = IPBRSpecularGlossinessMaterial
 function PBRSpecularGlossinessMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IPBRSpecularGlossinessMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props as any;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`PBRSpecularGlossinessMaterial ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonPBRSpecularGlossinessMaterial(name, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonPBRSpecularGlossinessMaterial(name, scene!);
                 console.log(`PBRSpecularGlossinessMaterial ${name} created`);
             }
         }, []);

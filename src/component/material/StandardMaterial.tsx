@@ -11,14 +11,13 @@ export type IStandardMaterialProps = IStandardMaterialInitial<BabylonStandardMat
 function StandardMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IStandardMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props as any;
+        const { instance, name } = props;
 
         useEffect(() => {
-            console.log(props)
             console.log(`StandardMaterial ${name} called`);
-            if (instanceRef && !instanceRef.current) {
+            if (instance && !instance.current) {
                 let material = new BabylonStandardMaterial(name, scene!);
-                instanceRef.current = material;
+                instance.current = material;
                 console.log(`StandardMaterial ${name} created`);
             }
         }, []);

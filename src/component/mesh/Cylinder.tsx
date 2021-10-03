@@ -28,12 +28,12 @@ export type ICylinderProps = ICylinderInitial<BabylonMesh> & ICylinderOptions;
 function CylinderHOC<T>(EL: React.FC<T>) {
     return (props: T & ICylinderProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`Cylinder ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateCylinder(name, props, scene);
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateCylinder(name, props, scene);
                 console.log(`Cylinder ${name} created`);
             }
         }, []);

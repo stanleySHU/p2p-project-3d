@@ -18,12 +18,12 @@ export type IDashedLinesProps = IDashedLinesInitial<BabylonMesh> & IDashedLinesO
 function DashedLinesHOC<T>(EL: React.FC<T>) {
     return (props: T & IDashedLinesProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`DashedLines ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateDashedLines(name, props, scene);
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateDashedLines(name, props, scene);
                 console.log(`DashedLines ${name} created`);
             }
         }, []);

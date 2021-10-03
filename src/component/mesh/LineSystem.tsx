@@ -17,12 +17,12 @@ export type ILineSystemProps = ILineSystemInitial<BabylonMesh> & ILineSystemOpti
 function LineSystemHOC<T>(EL: React.FC<T>) {
     return (props: T & ILineSystemProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`LineSystem ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateLineSystem(name, props, scene!);
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateLineSystem(name, props, scene!);
                 console.log(`LineSystem ${name} created`);
             }
         }, []);

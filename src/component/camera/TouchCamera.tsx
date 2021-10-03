@@ -13,12 +13,12 @@ export type ITouchCameraProps = ITouchCameraInitial<BabylonTouchCamera> & ITouch
 function TouchCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & ITouchCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, position } = props;
+        const { instance, name, position } = props;
 
         useEffect(() => {
             console.log(`TouchCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonTouchCamera(name, position, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonTouchCamera(name, position, scene!);
                 console.log(`TouchCamera ${name} created`);
             }
         }, []);

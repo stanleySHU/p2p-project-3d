@@ -13,12 +13,12 @@ export type IWebXRCameraProps = IWebXRCameraInitial<BabylonWebXRCamera> & IWebXR
 function WebXRCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IWebXRCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, _xrSessionManager } = props;
+        const { instance, name, _xrSessionManager } = props;
 
         useEffect(() => {
             console.log(`WebXRCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonWebXRCamera(name, scene!, _xrSessionManager);
+            if (instance && !instance.current) {
+                instance.current = new BabylonWebXRCamera(name, scene!, _xrSessionManager);
                 console.log(`WebXRCamera ${name} created`);
             }
         }, []);

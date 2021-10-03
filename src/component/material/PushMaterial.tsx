@@ -10,12 +10,12 @@ export type IPushMaterialProps = IPushMaterialInitial<BabylonPushMaterial>;
 function PushMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IPushMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props as any;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`PushMaterial ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonPushMaterial(name, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonPushMaterial(name, scene!);
                 console.log(`PushMaterial ${name} created`);
             }
         }, []);

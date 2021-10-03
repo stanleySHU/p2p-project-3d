@@ -14,12 +14,12 @@ export type IStereoscopicFreeCameraProps = IStereoscopicFreeCameraInitial<Babylo
 function StereoscopicFreeCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IStereoscopicFreeCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, position, interaxialDistance, isStereoscopicSideBySide } = props;
+        const { instance, name, position, interaxialDistance, isStereoscopicSideBySide } = props;
 
         useEffect(() => {
             console.log(`StereoscopicFreeCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonStereoscopicFreeCamera(name, position, interaxialDistance, isStereoscopicSideBySide, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonStereoscopicFreeCamera(name, position, interaxialDistance, isStereoscopicSideBySide, scene!);
                 console.log(`StereoscopicFreeCamera ${name} created`);
             }
         }, []);

@@ -16,12 +16,12 @@ export type IMeshProps = IMeshInitial<BabylonMesh> & IMeshOptions;
 function MeshHOC<T>(EL: React.FC<T>) {
     return (props: T & IMeshProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, source, doNotCloneChildren, clonePhysicsImpostor } = props;
+        const { instance, name, source, doNotCloneChildren, clonePhysicsImpostor } = props;
 
         useEffect(() => {
             console.log(`Mesh ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonMesh(name, scene!, null, source, doNotCloneChildren, clonePhysicsImpostor);
+            if (instance && !instance.current) {
+                instance.current = new BabylonMesh(name, scene!, null, source, doNotCloneChildren, clonePhysicsImpostor);
                 console.log(`Mesh ${name} created`);
             }
         }, [])

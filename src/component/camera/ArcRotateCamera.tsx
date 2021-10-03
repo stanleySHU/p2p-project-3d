@@ -16,12 +16,12 @@ export type IArcRotateCameraProps = IArcRotateCameraInitial<BabylonArcRotateCame
 function ArcRotateCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IArcRotateCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
+        const { instance, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
 
         useEffect(() => {
             console.log(`ArcRotateCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonArcRotateCamera(name, alpha, beta, radius, target, scene!, setActiveOnSceneIfNoneActive);
+            if (instance && !instance.current) {
+                instance.current = new BabylonArcRotateCamera(name, alpha, beta, radius, target, scene!, setActiveOnSceneIfNoneActive);
                 console.log(`ArcRotateCamera ${name} created`);
             }
         }, []);

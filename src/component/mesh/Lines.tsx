@@ -17,12 +17,12 @@ export type ILinesProps = ILinesInitial<BabylonMesh> & ILinesOptions;
 function LinesHOC<T>(EL: React.FC<T>) {
     return (props: T & ILinesProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`Lines ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateLines(name, props, scene);
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateLines(name, props, scene);
                 console.log(`Lines ${name} created`);
             }
         }, []);

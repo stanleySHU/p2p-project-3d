@@ -11,12 +11,12 @@ export type IVirtualJoysticksCameraProps = IVirtualJoysticksCameraInitial<Babylo
 function VirtualJoysticksCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IVirtualJoysticksCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, position } = props;
+        const { instance, name, position } = props;
 
         useEffect(() => {
             console.log(`VirtualJoysticksCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonVirtualJoysticksCamera(name, position, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonVirtualJoysticksCamera(name, position, scene!);
                 console.log(`VirtualJoysticksCamera ${name} created`);
             }
         }, []);

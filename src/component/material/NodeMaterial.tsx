@@ -13,12 +13,12 @@ export type INodeMaterialProps = INodeMaterialInitial<BabylonNodeMaterial>;
 function NodeMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & INodeMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, options } = props as any;
+        const { instance, name, options } = props;
 
         useEffect(() => {
             console.log(`NodeMaterial ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonNodeMaterial(name, scene!, options);
+            if (instance && !instance.current) {
+                instance.current = new BabylonNodeMaterial(name, scene!, options);
                 console.log(`NodeMaterial ${name} created`);
             }
         }, []);

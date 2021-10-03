@@ -11,12 +11,12 @@ export type IBackgroundMaterialProps = IBackgroundMaterialInitial<BabylonBackgro
 function BackgroundMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IBackgroundMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props as any;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`BackgroundMaterial ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonBackgroundMaterial(name, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonBackgroundMaterial(name, scene!);
                 console.log(`BackgroundMaterial ${name} created`);
             }
         }, []);

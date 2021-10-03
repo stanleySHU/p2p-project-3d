@@ -23,12 +23,12 @@ export type ISphereProps = ISphereInitial<BabylonMesh> & ISphereOptions;
 function SphereHOC<T>(EL: React.FC<T>) {
     return (props: T & ISphereProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`Sphere ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateSphere(name, props, scene);
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateSphere(name, props, scene);
                 console.log(`Sphere ${name} created`);
             }
         }, []);

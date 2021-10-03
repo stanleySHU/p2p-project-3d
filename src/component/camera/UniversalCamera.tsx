@@ -13,12 +13,12 @@ export type IUniversalCameraProps = IUniversalCameraInitial<BabylonUniversalCame
 function UniversalCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IUniversalCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, position } = props;
+        const { instance, name, position } = props;
 
         useEffect(() => {
             console.log(`UniversalCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonUniversalCamera(name, position, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonUniversalCamera(name, position, scene!);
                 console.log(`UniversalCamera ${name} created`);
             }
         }, []);

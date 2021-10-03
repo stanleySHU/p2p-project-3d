@@ -19,12 +19,12 @@ export type IDiscProps = IDiscInitial<BabylonMesh> & IDiscOptions;
 function DiscHOC<T>(EL: React.FC<T>) {
     return (props: T & IDiscProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`Disc ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateDisc(name, props, scene);
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateDisc(name, props, scene);
                 console.log(`Disc ${name} created`);
             }
         }, []);

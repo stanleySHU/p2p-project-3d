@@ -14,12 +14,12 @@ export type IVRDeviceOrientationArcRotateCameraProps = IVRDeviceOrientationArcRo
 function VRDeviceOrientationArcRotateCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IVRDeviceOrientationArcRotateCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
+        const { instance, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
 
         useEffect(() => {
             console.log(`VRDeviceOrientationArcRotateCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonVRDeviceOrientationArcRotateCamera(name, alpha, beta, radius, target, scene!, setActiveOnSceneIfNoneActive);
+            if (instance && !instance.current) {
+                instance.current = new BabylonVRDeviceOrientationArcRotateCamera(name, alpha, beta, radius, target, scene!, setActiveOnSceneIfNoneActive);
                 console.log(`VRDeviceOrientationArcRotateCamera ${name} created`);
             }
         }, []);

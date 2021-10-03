@@ -26,12 +26,12 @@ export type ITiledBoxProps = ITiledBoxInitial<BabylonMesh> & IGroupOptions;
 function TiledBoxHOC<T>(EL: React.FC<T>) {
     return (props: T & ITiledBoxProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`TiledBox ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateTiledBox(name, props, scene);
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateTiledBox(name, props, scene);
                 console.log(`TiledBox ${name} created`);
             }
         }, []);

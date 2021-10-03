@@ -1,8 +1,7 @@
-import { FreeCamera as BabylonFreeCamera} from '@babylonjs/core';
+import { FreeCamera as BabylonFreeCamera, Vector3} from '@babylonjs/core';
 import React, { useContext, useEffect } from "react";
 import { SceneContext } from "../Scene";
 import { ITargetCameraInitial, buildExtends as _buildExtends } from "./TargetCamera";
-import { Nullable } from "../../utils/customType";
 import { ChildHOC } from '../Component';
 
 export type IFreeCameraInitial<T> = ITargetCameraInitial<T> & {};
@@ -11,15 +10,19 @@ export type IFreeCameraProps = IFreeCameraInitial<BabylonFreeCamera> & IFreeCame
 function FreeCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IFreeCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, position, setActiveOnSceneIfNoneActive } = props;
+        const { instance, name, position, setActiveOnSceneIfNoneActive } = props;
 
         useEffect(() => {
             console.log(`FreeCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonFreeCamera(name, position, scene!, setActiveOnSceneIfNoneActive);
+            if (instance && !instance.current) {
+                instance.current = new BabylonFreeCamera(name, position, scene!, setActiveOnSceneIfNoneActive);
+                // instance.current.setTarget();
                 console.log(`FreeCamera ${name} created`);
             }
         }, []);
+
+        useEffect(() => {
+        });
 
         return <EL {...props}/>
     };  
@@ -31,4 +34,6 @@ export function buildExtends<T>(e: any) {
 
 export const P2PFreeCamera = buildExtends<IFreeCameraProps>(ChildHOC(null));
 
-export type IFreeCameraOptions = {}
+export type IFreeCameraOptions = {
+    
+}

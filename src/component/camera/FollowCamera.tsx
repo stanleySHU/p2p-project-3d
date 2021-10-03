@@ -13,12 +13,12 @@ export type IFollowCameraProps = IFollowCameraInitial<BabylonFollowCamera> & IFo
 function FollowCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IFollowCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, position, lockedTarget } = props;
+        const { instance, name, position, lockedTarget } = props;
 
         useEffect(() => {
             console.log(`FollowCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonFollowCamera(name, position, scene!, lockedTarget);
+            if (instance && !instance.current) {
+                instance.current = new BabylonFollowCamera(name, position, scene!, lockedTarget);
                 console.log(`FollowCamera ${name} created`);
             }
         }, []);

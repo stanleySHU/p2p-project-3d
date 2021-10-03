@@ -16,12 +16,12 @@ export type ISpotLightProps = ISpotLightInitial<BabylonSpotLight> & ISpotLightOp
 function SpotLightHOC<T>(EL: React.FC<T>) {
     return (props: T & ISpotLightProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, position, direction, angle, exponent } = props;
+        const { instance, name, position, direction, angle, exponent } = props;
 
         useEffect(() => {
             console.log(`SpotLight ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonSpotLight(name, position, direction, angle, exponent, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonSpotLight(name, position, direction, angle, exponent, scene!);
                 console.log(`SpotLight ${name} created`);
             }
         }, [])

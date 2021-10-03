@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { IComponentProps, buildExtends as _buildExtends } from "../Component";
 
 export type IThinTextureInitial<T> = IComponentProps<T> &  {}

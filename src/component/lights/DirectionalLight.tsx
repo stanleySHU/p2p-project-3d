@@ -13,12 +13,12 @@ export type IDirectionalLightProps = IDirectionalLightInitial<BabylonDirectional
 function DirectionalLightHOC<T>(EL:React.FC<T>) {
     return (props: T & IDirectionalLightProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, direction } = props;
+        const { instance, name, direction } = props;
         
         useEffect(() => {
             console.log(`DirectionalLight ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonDirectionalLight(name, direction, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonDirectionalLight(name, direction, scene!);
                 console.log(`DirectionalLight ${name} created`);
             }
         }, [])

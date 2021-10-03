@@ -20,12 +20,12 @@ export type IPlaneProps = IPlaneInitial<BabylonMesh> & IPlaneOptions;
 function PlaneHOC<T>(EL: React.FC<T>) {
     return (props: T & IPlaneProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`Plane ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreatePlane(name, props, scene);
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreatePlane(name, props, scene);
                 console.log(`Plane ${name} created`);
             }
         }, []);

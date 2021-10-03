@@ -14,12 +14,12 @@ export type IStereoscopicArcRotateCameraProps = IStereoscopicArcRotateCameraInit
 function StereoscopicArcRotateCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IStereoscopicArcRotateCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide } = props;
+        const { instance, name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide } = props;
 
         useEffect(() => {
             console.log(`StereoscopicArcRotateCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonStereoscopicArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonStereoscopicArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide, scene!);
                 console.log(`StereoscopicArcRotateCamera ${name} created`);
             }
         }, []);

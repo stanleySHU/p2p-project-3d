@@ -25,12 +25,12 @@ export type ITiledGroundProps = ITiledGroundInitial<BabylonMesh> & ITiledGroundO
 function TiledGroundHOC<T>(EL: React.FC<T>) {
     return (props: T & ITiledGroundProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`TiledGround ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateTiledGround(name, props, scene);
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateTiledGround(name, props, scene);
                 console.log(`TiledGround ${name} created`);
             }
         }, []);

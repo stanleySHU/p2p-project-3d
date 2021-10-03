@@ -54,6 +54,58 @@ import { P2PPushMaterial } from './material/PushMaterial';
 import { P2PShaderMaterial } from './material/ShaderMaterial';
 import { P2PStandardMaterial } from './material/StandardMaterial';
 
+//behavior
+import { P2PAttachToBoxBehavior } from './events/behaviors/AttachToBoxBehavior';
+import { P2PAutoRotationBehavior } from './events/behaviors/AutoRotationBehavior';
+import { P2PBouncingBehavior } from './events/behaviors/BouncingBehavior';
+import { P2PFadeInOutBehavior } from './events/behaviors/FadeInOutBehavior';
+import { P2PMultiPointerScaleBehavior } from './events/behaviors/MultiPointerScaleBehavior';
+import { P2PPointerDragBehavior } from './events/behaviors/PointerDragBehavior';
+import { P2PSixDofDragBehavior } from './events/behaviors/SixDofDragBehavior';
+
+//action
+import { P2PAction } from './events/actions/Action';
+import { P2PCombineAction } from './events/actions/CombineAction';
+import { P2PDoNothingAction } from './events/actions/DoNothingAction';
+import { P2PExecuteCodeAction } from './events/actions/ExecuteCodeAction';
+import { P2PIncrementValueAction } from './events/actions/IncrementValueAction';
+import { P2PInterpolateValueAction } from './events/actions/InterpolateValueAction';
+import { P2PPlayAnimationAction } from './events/actions/PlayAnimationAction';
+import { P2PPlaySoundAction } from './events/actions/PlaySoundAction';
+import { P2PSetParentAction } from './events/actions/SetParentAction';
+import { P2PSetStateAction } from './events/actions/SetStateAction';
+import { P2PSetValueAction } from './events/actions/SetValueAction';
+import { P2PStopAnimationAction } from './events/actions/StopAnimationAction';
+import { P2PStopSoundAction } from './events/actions/StopSoundAction';
+import { P2PSwitchBooleanAction } from './events/actions/SwitchBooleanAction';
+
+//Condition
+import { P2PCondition } from './events/condition/Condition';
+import { P2PPredicateCondition } from './events/condition/PredicateCondition';
+import { P2PStateCondition } from './events/condition/StateCondition';
+import { P2PValueCondition } from './events/condition/ValueCondition';
+
+//texture
+import { P2PBaseTexture } from './texture/BaseTexture';
+import { P2PColorGradingTexture } from './texture/ColorGradingTexture'; 
+import { P2PCubeTexture } from './texture/CubeTexture';
+import { P2PCustomProceduralTexture } from './texture/CustomProceduralTexture';
+import { P2PDynamicTexture } from './texture/DynamicTexture';
+import { P2PEquiRectangularCubeTexture } from './texture/EquiRectangularCubeTexture';
+import { P2PHDRCubeTexture } from './texture/HDRCubeTexture';
+import { P2PHtmlElementTexture } from './texture/HtmlElementTexture';
+import { P2PMirrorTexture } from './texture/MirrorTexture'; 
+import { P2PMultiRenderTarget } from './texture/MultiRenderTarget';
+import { P2PNoiseProceduralTexture } from './texture/NoiseProceduralTexture';
+import { P2PProceduralTexture } from './texture/ProceduralTexture';
+import { P2PRawTexture } from './texture/RawTexture';
+import { P2PRawTexture2DArray } from './texture/RawTexture2DArray';
+import { P2PRawTexture3D } from './texture/RawTexture3D';
+import { P2PRefractionTexture } from './texture/RefractionTexture';
+import { P2PRenderTargetTexture } from './texture/RenderTargetTexture';
+import { P2PTexture } from './texture/Texture';
+import { P2PVideoTexture } from './texture/VideoTexture';
+
 //resource
 import { IBinaryResourceInitial } from './resource/BinaryFileResource';
 import { ICubeTextureResourceInitial } from './resource/CubeTextureManager';
@@ -86,6 +138,19 @@ export {
     P2PTargetCamera, P2PTouchCamera, P2PUniversalCamera, P2PVirtualJoysticksCamera, P2PVRDeviceOrientationArcRotateCamera, P2PWebVRFreeCamera, P2PWebXRCamera,
     //
     P2PDirectionalLight, P2PHemisphericLight, P2PPointLight, P2PSpotLight,
+    //mesh
     P2PBox, P2PCapsule, P2PCylinder, P2PDashedLines, P2PDisc, P2PGround, P2PLines, P2PLineSystem, P2PMesh, P2PPlane, P2PSphere, P2PTiledBox, P2PTiledGround, P2PTiledPlane, P2PTorus,
-    P2PBackgroundMaterial, P2PMaterial, P2PMultiMaterial, P2PNodeMaterial, P2PPBRMetallicRoughnessMaterial, P2PPBRSpecularGlossinessMaterial, P2PPushMaterial, P2PShaderMaterial, P2PStandardMaterial
+    //material
+    P2PBackgroundMaterial, P2PMaterial, P2PMultiMaterial, P2PNodeMaterial, P2PPBRMetallicRoughnessMaterial, P2PPBRSpecularGlossinessMaterial, P2PPushMaterial, P2PShaderMaterial, P2PStandardMaterial,
+    //behavior
+    P2PAttachToBoxBehavior, P2PAutoRotationBehavior, P2PBouncingBehavior, P2PFadeInOutBehavior, P2PMultiPointerScaleBehavior, P2PPointerDragBehavior, P2PSixDofDragBehavior,
+    //actions
+    P2PAction, P2PCombineAction, P2PDoNothingAction, P2PExecuteCodeAction, P2PIncrementValueAction, P2PInterpolateValueAction, P2PPlayAnimationAction, P2PPlaySoundAction,
+    P2PSetParentAction, P2PSetStateAction, P2PSetValueAction, P2PStopAnimationAction, P2PStopSoundAction, P2PSwitchBooleanAction,
+    //condition
+    P2PCondition, P2PPredicateCondition, P2PStateCondition, P2PValueCondition,
+    //texture
+    P2PBaseTexture, P2PColorGradingTexture, P2PCubeTexture, P2PCustomProceduralTexture, P2PDynamicTexture, P2PEquiRectangularCubeTexture, P2PHDRCubeTexture, P2PHtmlElementTexture,
+    P2PMirrorTexture, P2PMultiRenderTarget, P2PNoiseProceduralTexture, P2PProceduralTexture, P2PRawTexture, P2PRawTexture2DArray, P2PRawTexture3D, P2PRefractionTexture,
+    P2PRenderTargetTexture, P2PTexture, P2PVideoTexture
 }

@@ -11,12 +11,12 @@ export type IPBRMetallicRoughnessMaterialProps = IPBRMetallicRoughnessMaterialIn
 function PBRMetallicRoughnessMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IPBRMetallicRoughnessMaterialProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props as any;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`PBRMetallicRoughnessMaterial ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonPBRMetallicRoughnessMaterial(name, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonPBRMetallicRoughnessMaterial(name, scene!);
                 console.log(`PBRMetallicRoughnessMaterial ${name} created`);
             }
         }, []);

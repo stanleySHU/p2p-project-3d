@@ -25,12 +25,12 @@ export type IBoxProps = IBoxInitial<BabylonMesh>;
 function BoxHOC<T>(EL: React.FC<T>) {
     return (props: T & IBoxProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`Box ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateBox(name, props, scene); 
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateBox(name, props, scene); 
                 console.log(`Box ${name} created`);
             }
         }, [])

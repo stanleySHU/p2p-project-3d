@@ -13,12 +13,12 @@ export type IAnaglyphFreeCameraProps = IAnaglyphFreeCameraInitial<BabylonAnaglyp
 function AnaglyphFreeCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IAnaglyphFreeCameraProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name, position, interaxialDistance } = props;
+        const { instance, name, position, interaxialDistance } = props;
 
         useEffect(() => {
             console.log(`AnaglyphFreeCamera ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = new BabylonAnaglyphFreeCamera(name, position, interaxialDistance, scene!);
+            if (instance && !instance.current) {
+                instance.current = new BabylonAnaglyphFreeCamera(name, position, interaxialDistance, scene!);
                 console.log(`AnaglyphFreeCamera ${name} created`);
             }
         }, []);

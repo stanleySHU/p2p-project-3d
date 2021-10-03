@@ -11,12 +11,12 @@ export type ICapsuleProps = ICapsuleInitial<BabylonMesh> & ICapsuleOptions;
 function CapsuleHOC<T>(EL: React.FC<T>) {
     return (props: T & ICapsuleProps) => {
         const { scene } = useContext(SceneContext);
-        const { instanceRef, name } = props;
+        const { instance, name } = props;
 
         useEffect(() => {
             console.log(`Capsule ${name} called`);
-            if (instanceRef && !instanceRef.current) {
-                instanceRef.current = MeshBuilder.CreateCapsule(name, props, scene); 
+            if (instance && !instance.current) {
+                instance.current = MeshBuilder.CreateCapsule(name, props, scene); 
                 console.log(`Capsule ${name} created`);
             }
         }, []); 
