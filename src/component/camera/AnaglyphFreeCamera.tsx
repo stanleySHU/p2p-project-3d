@@ -1,11 +1,12 @@
 import { AnaglyphFreeCamera as BabylonAnaglyphFreeCamera } from '@babylonjs/core';
 import React, { useContext, useEffect } from "react";
-import { SceneContext } from "../Scene";
+import { SceneContext } from "../scene/Scene";
 import { IFreeCameraInitial, buildExtends as _buildExtends } from "./FreeCamera";
 import { Nullable } from "../../utils/customType";
 import { ChildHOC } from '../Component';
 
 export type IAnaglyphFreeCameraInitial<T> = IFreeCameraInitial<T> & {
+    name: string,
     interaxialDistance: number
 };
 export type IAnaglyphFreeCameraProps = IAnaglyphFreeCameraInitial<BabylonAnaglyphFreeCamera> & IAnaglyphFreeCameraOptions;

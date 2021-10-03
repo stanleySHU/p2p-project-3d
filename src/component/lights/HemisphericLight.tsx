@@ -2,10 +2,11 @@ import { HemisphericLight as BabylonHemisphericLight, Vector3 } from '@babylonjs
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { ILightInitial, buildExtends as _buildExtends } from './Light';
 
 export type IHemisphericLightInitial<T> = ILightInitial<T> & {
+    name: string,
     direction: Vector3
 };
 export type IHemisphericLightProps = IHemisphericLightInitial<BabylonHemisphericLight> & IHemisphericLightOptions;

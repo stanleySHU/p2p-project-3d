@@ -1,7 +1,7 @@
 import { PushMaterial as BabylonPushMaterial } from '@babylonjs/core';import React, { useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IMaterialInitial, buildExtends as _buildExtends } from './Material';
 
 export type IPushMaterialInitial<T> = IMaterialInitial<T> & {};

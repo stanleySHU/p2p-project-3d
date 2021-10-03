@@ -2,7 +2,7 @@ import { DeviceOrientationCamera as BabylonDeviceOrientationCamera } from '@baby
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IFreeCameraInitial, buildExtends as _buildExtends } from './FreeCamera';
 
 export type IDeviceOrientationCameraInitial<T> = IFreeCameraInitial<T> & {

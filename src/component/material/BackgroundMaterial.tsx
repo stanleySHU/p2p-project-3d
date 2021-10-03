@@ -2,10 +2,12 @@ import { BackgroundMaterial as BabylonBackgroundMaterial } from '@babylonjs/core
 import React, { useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IPushMaterialInitial, buildExtends as _buildExtends  } from './PushMaterial';
 
-export type IBackgroundMaterialInitial<T> = IPushMaterialInitial<T> & {};
+export type IBackgroundMaterialInitial<T> = IPushMaterialInitial<T> & {
+    name: string,
+};
 export type IBackgroundMaterialProps = IBackgroundMaterialInitial<BabylonBackgroundMaterial>;
 
 function BackgroundMaterialHOC<T>(EL: React.FC<T>) {

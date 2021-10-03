@@ -1,3 +1,7 @@
+//scene
+import { P2PScene } from './scene/Scene';
+import { P2PPreloadScene } from './scene/PreloadScene';
+
 //node
 import { P2PNode } from './node/Node';
 import { P2PTransformNode } from './node/TransformNode';
@@ -107,31 +111,21 @@ import { P2PTexture } from './texture/Texture';
 import { P2PVideoTexture } from './texture/VideoTexture';
 
 //resource
-import { IBinaryResourceInitial } from './resource/BinaryFileResource';
-import { ICubeTextureResourceInitial } from './resource/CubeTextureManager';
-import { IEquiRectangularCubeTextureResourceInitial } from './resource/EquiRectangularCubeTextureResource';
-import { IHDRCubeTextureResourceInitial } from './resource/HDRCubeTextureResource';
-import { IImageResourceInitial } from './resource/ImageResource';
-import { IMeshResourceInitial } from './resource/MeshResource';
-import { ITextFileResourceInitial } from './resource/TextFileResource';
-import { ITextureResourceInitial } from './resource/TextureResource'
-
-declare global {
-    namespace JSX {
-        interface IntrinsicElements {
-            loadBinary: IBinaryResourceInitial,
-            loadCTexture: ICubeTextureResourceInitial,
-            loadERCTexture: IEquiRectangularCubeTextureResourceInitial,
-            loadHDRCTexture: IHDRCubeTextureResourceInitial,
-            loadImg: IImageResourceInitial,
-            loadMesh: IMeshResourceInitial,
-            loadTextFile: ITextFileResourceInitial,
-            loadTexture: ITextureResourceInitial
-        }
-    }
-}
+import { P2PAssetsManager } from './resource/AssetsManager';
+import { P2PBinaryFileAssetTask } from './resource/BinaryFileAssetTask';
+import { P2PContainerAssetTask } from './resource/ContainerAssetTask';
+import { P2PCubeTextureAssetTask } from './resource/CubeTextureManager';
+import { P2PEquiRectangularCubeTextureAssetTask } from './resource/EquiRectangularCubeTextureAssetTask';
+import { P2PHDRCubeTextureAssetTask } from './resource/HDRCubeTextureAssetTask';
+import { P2PImageAssetTask } from './resource/ImageAssetTask';
+import { P2PMeshAssetTask } from './resource/MeshAssetTask';
+import { P2PTextFileAssetTask } from './resource/TextFileAssetTask';
+import { P2PTextureAssetTask } from './resource/TextureAssetTask';
 
 export {
+    //scene
+    P2PScene, P2PPreloadScene,
+    //node
     P2PNode, P2PTransformNode,
     //camera
     P2PAnaglyphArcRotateCamera, P2PAnaglyphFreeCamera, P2PArcRotateCamera, P2PCamera, P2PDeviceOrientationCamera, P2PFollowCamera, P2PFreeCamera, P2PStereoscopicArcRotateCamera, P2PStereoscopicFreeCamera, 
@@ -152,5 +146,34 @@ export {
     //texture
     P2PBaseTexture, P2PColorGradingTexture, P2PCubeTexture, P2PCustomProceduralTexture, P2PDynamicTexture, P2PEquiRectangularCubeTexture, P2PHDRCubeTexture, P2PHtmlElementTexture,
     P2PMirrorTexture, P2PMultiRenderTarget, P2PNoiseProceduralTexture, P2PProceduralTexture, P2PRawTexture, P2PRawTexture2DArray, P2PRawTexture3D, P2PRefractionTexture,
-    P2PRenderTargetTexture, P2PTexture, P2PVideoTexture
+    P2PRenderTargetTexture, P2PTexture, P2PVideoTexture,
+    //task
+    P2PAssetsManager, P2PBinaryFileAssetTask, P2PContainerAssetTask, P2PCubeTextureAssetTask, P2PEquiRectangularCubeTextureAssetTask, P2PHDRCubeTextureAssetTask, P2PImageAssetTask,
+    P2PMeshAssetTask, P2PTextFileAssetTask, P2PTextureAssetTask
 }
+
+
+// //resource
+// import { IBinaryResourceInitial } from './resource2/BinaryFileResource';
+// import { ICubeTextureResourceInitial } from './resource2/CubeTextureManager';
+// import { IEquiRectangularCubeTextureResourceInitial } from './resource2/EquiRectangularCubeTextureResource';
+// import { IHDRCubeTextureResourceInitial } from './resource2/HDRCubeTextureResource';
+// import { IImageResourceInitial } from './resource2/ImageResource';
+// import { IMeshResourceInitial } from './resource2/MeshResource';
+// import { ITextFileResourceInitial } from './resource2/TextFileResource';
+// import { ITextureResourceInitial } from './resource2/TextureResource'
+
+// declare global {
+//     namespace JSX {
+//         interface IntrinsicElements {
+//             loadBinary: IBinaryResourceInitial,
+//             loadCTexture: ICubeTextureResourceInitial,
+//             loadERCTexture: IEquiRectangularCubeTextureResourceInitial,
+//             loadHDRCTexture: IHDRCubeTextureResourceInitial,
+//             loadImg: IImageResourceInitial,
+//             loadMesh: IMeshResourceInitial,
+//             loadTextFile: ITextFileResourceInitial,
+//             loadTexture: ITextureResourceInitial
+//         }
+//     }
+// }

@@ -2,7 +2,7 @@ import { PBRMetallicRoughnessMaterial as BabylonPBRMetallicRoughnessMaterial } f
 import React, { useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IPBRBaseSimpleMaterialInitial, buildExtends as _buildExtends } from './PBRBaseSimpleMaterial';
 
 export type IPBRMetallicRoughnessMaterialInitial<T> = IPBRBaseSimpleMaterialInitial<T> & {};

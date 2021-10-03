@@ -2,7 +2,7 @@ import { StandardMaterial as BabylonStandardMaterial } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IPushMaterialInitial, buildExtends as _buildExtends } from './PushMaterial';
 
 export type IStandardMaterialInitial<T> = IPushMaterialInitial<T> & {};

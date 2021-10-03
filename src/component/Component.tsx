@@ -6,7 +6,7 @@ type ICustomProps = {
 }
 
 export type IComponentProps<T> = {
-    name: string,
+    name?: string,
     key?: string,
     children?: ReactNode
 } & {

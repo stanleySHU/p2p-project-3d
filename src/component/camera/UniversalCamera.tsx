@@ -2,7 +2,7 @@ import { UniversalCamera as BabylonUniversalCamera } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { ITouchCameraInitial, buildExtends as _buildExtends } from './TouchCamera';
 
 export type IUniversalCameraInitial<T> = ITouchCameraInitial<T> & {

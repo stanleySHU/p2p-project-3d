@@ -2,7 +2,7 @@ import { INodeMaterialOptions, NodeMaterial as BabylonNodeMaterial } from '@baby
 import React, { useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IPushMaterialInitial, buildExtends as _buildExtends  } from './PushMaterial';
 
 export type INodeMaterialInitial<T> = IPushMaterialInitial<T> & {

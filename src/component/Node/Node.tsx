@@ -1,9 +1,11 @@
 import { Node as BabylonNode } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../Component'
 
-export type INodeInitial<T> = IComponentProps<T> & {}
+export type INodeInitial<T> = IComponentProps<T> & {
+    name: string
+}
 export type INodeProps = INodeInitial<BabylonNode> & INodeOptions;
 
 function NodeHOC<T>(EL: React.FC<T>) {

@@ -1,7 +1,7 @@
 import { IMultiRenderTargetOptions, MultiRenderTarget as BabylonMultiRenderTarget } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IRenderTargetTextureInitial, buildExtends as _buildExtends } from './RenderTargetTexture';
 
 export type IMultiRenderTargetInitial<T> = IRenderTargetTextureInitial<T> & {

@@ -1,11 +1,12 @@
 import { Color4, LinesMesh, Mesh as BabylonMesh, MeshBuilder, Vector3 } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
 import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { SceneContext } from "../Scene";
+import { SceneContext } from "../scene/Scene";
 import { Nullable } from "../../utils/customType";
 import { ChildHOC } from "../Component";
 
 export type ILineSystemInitial<T> = IMeshInitial<T> & {
+    name: string,
     lines: Vector3[][];
     updatable?: boolean;
     instance?: Nullable<LinesMesh>;

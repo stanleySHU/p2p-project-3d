@@ -1,10 +1,11 @@
 import { NoiseProceduralTexture as BabylonNoiseProceduralTexture, Texture } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IProceduralTextureInitial, buildExtends as _buildExtends } from './ProceduralTexture';
 
 export type INoiseProceduralTextureInitial<T> = IProceduralTextureInitial<T> & {
+    name: string,
     size?: number, 
     fallbackTexture?: Texture
 }

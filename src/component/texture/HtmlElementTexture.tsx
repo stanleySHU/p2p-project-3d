@@ -4,6 +4,7 @@ import { ChildHOC } from '../Component';
 import { IBaseTextureInitial, buildExtends as _buildExtends } from './BaseTexture';
 
 export type IHtmlElementTextureInitial<T> = IBaseTextureInitial<T> & {
+    name: string,
     element: HTMLVideoElement | HTMLCanvasElement, 
     options: IHtmlElementTextureOptions
 }

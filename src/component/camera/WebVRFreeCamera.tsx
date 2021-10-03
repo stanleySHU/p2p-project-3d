@@ -1,6 +1,6 @@
 import { WebVRFreeCamera as BabylonWebVRFreeCamera, WebVROptions, WebXRSessionManager } from '@babylonjs/core';
 import React, { useContext, useEffect } from "react";
-import { SceneContext } from "../Scene";
+import { SceneContext } from "../scene/Scene";
 import { IFreeCameraInitial, buildExtends as _buildExtends } from "./FreeCamera";
 import { Nullable } from "../../utils/customType";
 import { ChildHOC } from '../Component';

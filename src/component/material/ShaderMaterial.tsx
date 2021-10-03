@@ -1,7 +1,7 @@
 import { IShaderMaterialOptions, ShaderMaterial as BabylonShaderMaterial } from '@babylonjs/core';
 import React, { useContext, useEffect, useRef } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IMaterialInitial, buildExtends as _buildExtends } from './Material';
 
 export type IShaderMaterialInitial<T> = IMaterialInitial<T> & {

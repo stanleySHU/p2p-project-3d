@@ -1,68 +1,36 @@
-import { ReactElement, useContext, useEffect, useRef, useState } from "react";
-import { AbstractAssetTask, AssetsManager as BabylonAssetsManager, ImageAssetTask} from '@babylonjs/core';
-import { SceneContext } from "../Scene";
-import { ImageResource } from "./ImageResource";
-import { IResourceInitial, Resource } from "./Resource";
-import { Nullable, UndefinedAble } from "../../utils/customType";
+import { AssetsManager as BabylonAssetsManager } from "@babylonjs/core";
+import React, { useContext, useEffect } from "react";
+import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from "../Component";
+import { SceneContext } from "../scene/Scene";
 
-export type IAssetsManagerInitial = {
-    children: any | any[], //ReactElement<IResourceInitial> | ReactElement<IResourceInitial>[],
-    onProgress?: (remainingCount: number, totalCount: number, task: AbstractAssetTask) => void,
-    onFinish?: (tasks: AbstractAssetTask[]) => void;
+export type IAssetsManagerInitial<T> = IComponentProps<T> & {};
+
+function AssetsManagerHOC<T>(EL: React.FC<T>) {
+    return (props: T & IAssetsManagerInitial<BabylonAssetsManager>) => {
+        const { scene } = useContext(SceneContext);        
+        const { name, instance, componentInstances } = props;
+
+        useEffect(() => {
+            console.log(props);
+            console.log(`AssetsManager ${name} called`);
+            if (instance && !instance.current) {
+                instance.current = new BabylonAssetsManager(scene!);
+                console.log(`AssetsManager ${name} created`);
+            }
+
+            for (let item of componentInstances!.current) {
+                // console.log('1', item)
+            }
+
+            //resolve
+        });
+
+        return <EL {...props}/>
+    }
 }
 
-export const AssetsManager = (props: IAssetsManagerInitial) => {
-    const { scene, onProgress, onFinish } = useContext(SceneContext);
-    const assetContainerRef = useRef(new BabylonAssetsManager(scene!));
+export function buildExtends<T>(e: any) {
+    return _buildExtends<T>(AssetsManagerHOC(e));
+}
 
-    useEffect(() => {
-        const children: ReactElement<IResourceInitial>[] = Array.isArray(props.children) ? props.children : [props.children];
-        children.forEach(child => {
-            let type = child.type as string;
-            let resource = resolve(type);
-            resource?.addTask(assetContainerRef.current, child.props);
-        });
-        assetContainerRef.current.onProgress = handleProgress;
-        assetContainerRef.current.onFinish = handleFinish;
-        assetContainerRef.current.load();
-    }, []);
-
-    function handleProgress(remainingCount: number, totalCount: number, task: AbstractAssetTask) {
-        onProgress && onProgress(remainingCount, totalCount, task);
-    }
-
-    function handleFinish(tasks: AbstractAssetTask[]) {
-        onFinish && onFinish(tasks);
-    }
-
-    function resolve(type: string): UndefinedAble<Resource> {
-        switch(type) {
-            case "loadMesh": {
-                break;
-            }
-            case "loadTextFile": {
-                break;
-            }
-            case "loadBinaryFile": {
-                break;
-            }
-            case "loadImg": {
-                return new ImageResource();
-            }
-            case "loadTexture": {
-                break;
-            }
-            case "loadCubeTexture": {
-                break;
-            }
-            case "loadHDRCubeTexture": {
-                break;
-            }
-            case "loadEquiRectangularCubeTexture": {
-                break;
-            }
-            default: break;
-        }
-    }
-    return null;
-};
+export const P2PAssetsManager = buildExtends(ChildHOC(null));

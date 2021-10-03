@@ -1,7 +1,7 @@
 import { MirrorTexture as BabylonMirrorTexture } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IRenderTargetTextureInitial, buildExtends as _buildExtends } from './RenderTargetTexture';
 
 export type IMirrorTextureInitial<T> = IRenderTargetTextureInitial<T> & {}

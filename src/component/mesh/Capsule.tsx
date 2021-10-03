@@ -1,11 +1,13 @@
 import { ICreateCapsuleOptions, Mesh as BabylonMesh, MeshBuilder } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
 import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { SceneContext } from "../Scene";
+import { SceneContext } from "../scene/Scene";
 import { Nullable } from "../../utils/customType";
 import { ChildHOC } from "../Component";
 
-export type ICapsuleInitial<T> = IMeshInitial<T> & ICreateCapsuleOptions;
+export type ICapsuleInitial<T> = IMeshInitial<T> & {
+    name: string
+} & ICreateCapsuleOptions;
 export type ICapsuleProps = ICapsuleInitial<BabylonMesh> & ICapsuleOptions;
 
 function CapsuleHOC<T>(EL: React.FC<T>) {

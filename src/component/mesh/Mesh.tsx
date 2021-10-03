@@ -3,9 +3,10 @@ import React, { useContext, useEffect } from "react";
 import { Nullable } from "../../utils/customType";
 import { ChildHOC } from "../Component";
 import { ITransformNodeInitial, buildExtends as _buildExtends  } from "../node/TransformNode";
-import { SceneContext } from "../Scene";
+import { SceneContext } from "../scene/Scene";
 
 export type IMeshInitial<T> = ITransformNodeInitial<T> & {
+    name: string,
     source?: Nullable<BabylonMesh>,
     parent?: Nullable<Node>, //这个怎么处理。。。
     doNotCloneChildren?: boolean,

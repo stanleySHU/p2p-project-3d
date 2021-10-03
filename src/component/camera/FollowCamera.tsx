@@ -2,7 +2,7 @@ import { AbstractMesh, FollowCamera as BabylonFollowCamera } from '@babylonjs/co
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { ITargetCameraInitial, buildExtends as _buildExtends } from './TargetCamera';
 
 export type IFollowCameraInitial<T> = ITargetCameraInitial<T> & {

@@ -1,11 +1,12 @@
 import { Mesh as BabylonMesh, MeshBuilder, Vector4 } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
 import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { SceneContext } from "../Scene";
+import { SceneContext } from "../scene/Scene";
 import { Nullable } from "../../utils/customType";
 import { ChildHOC } from "../Component";
 
 export type IDiscInitial<T> = IMeshInitial<T> & {
+    name: string,
     radius?: number;
     tessellation?: number;
     arc?: number;

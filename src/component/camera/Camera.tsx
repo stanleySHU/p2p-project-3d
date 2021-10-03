@@ -4,9 +4,10 @@ import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
 import { EngineContext } from '../Engine';
 import { INodeInitial, buildExtends as _buildExtends } from '../node/Node';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 
 export type ICameraInitial<T> = INodeInitial<T> & {
+    name: string,
     position: Vector3,
     setActiveOnSceneIfNoneActive?: boolean
 };

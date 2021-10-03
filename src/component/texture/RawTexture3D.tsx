@@ -1,7 +1,7 @@
 import { RawTexture3D as BabylonRawTexture3D } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
 
 export type IRawTexture3DInitial<T> = ITextureInitial<T> & {

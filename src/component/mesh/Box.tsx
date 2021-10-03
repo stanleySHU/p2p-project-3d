@@ -2,10 +2,11 @@ import { Color4, Mesh as BabylonMesh, MeshBuilder, Vector4 } from '@babylonjs/co
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IMeshInitial, buildExtends as _buildExtends } from './Mesh';
 
 export type IBoxInitial<T> = IMeshInitial<T> & {
+    name: string,
     size?: number,
     width?: number,
     height?: number,

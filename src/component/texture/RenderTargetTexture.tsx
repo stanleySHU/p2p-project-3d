@@ -1,7 +1,7 @@
 import { RenderTargetTexture as BabylonRenderTargetTexture } from '@babylonjs/core'; 
 import React, { useContext, useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
 
 export type IRenderTargetTextureInitial<T> = ITextureInitial<T> & {

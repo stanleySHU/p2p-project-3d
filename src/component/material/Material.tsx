@@ -1,9 +1,10 @@
 import { Material as BabylonMaterial } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../Component'
 
 export type IMaterialInitial<T> = IComponentProps<T> & {
+    name: string,
     doNotAdd?: boolean
 };
 export type IMaterialProps = IMaterialInitial<BabylonMaterial> & IMaterialOptions;

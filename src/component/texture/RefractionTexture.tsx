@@ -1,7 +1,7 @@
 import { RefractionTexture as BabylonRefractionTexture } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IRenderTargetTextureInitial, buildExtends as _buildExtends } from './RenderTargetTexture';
 
 export type IRefractionTextureInitial<T> = IRenderTargetTextureInitial<T> & {

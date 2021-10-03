@@ -2,10 +2,11 @@ import { ProceduralTexture as BabylonProceduralTexture, RenderTargetTextureSize,
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
 
 export type IProceduralTextureInitial<T> = ITextureInitial<T> & {
+    name: string,
     size: RenderTargetTextureSize, 
     fragment: any,  
     fallbackTexture?: Nullable<Texture>, 

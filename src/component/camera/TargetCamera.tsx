@@ -1,7 +1,7 @@
 import { TargetCamera as BabylonTargetCamera, Vector3 } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { ICameraInitial, buildExtends as _buildExtends } from './Camera';
 
 export type ITargetCameraInitial<T> = ICameraInitial<T> & {};

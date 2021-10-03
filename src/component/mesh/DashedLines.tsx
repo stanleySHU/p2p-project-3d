@@ -1,11 +1,12 @@
 import { LinesMesh, Mesh as BabylonMesh, MeshBuilder, Vector3 } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
 import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { SceneContext } from "../Scene";
+import { SceneContext } from "../scene/Scene";
 import { Nullable } from "../../utils/customType";
 import { ChildHOC } from "../Component";
 
 export type IDashedLinesInitial<T> = IMeshInitial<T> & {
+    name: string,
     points: Vector3[];
     dashSize?: number;
     gapSize?: number;

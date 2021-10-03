@@ -2,7 +2,7 @@ import { EquiRectangularCubeTexture as BabylonEquiRectangularCubeTexture } from 
 import React, { useContext, useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IBaseTextureInitial, buildExtends as _buildExtends } from './BaseTexture';
 
 export type IEquiRectangularCubeTextureInitial<T> = IBaseTextureInitial<T> & {

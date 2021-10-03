@@ -1,10 +1,11 @@
 import { DynamicTexture as BabylonDynamicTexture } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
 
 export type IDynamicTextureInitial<T> = ITextureInitial<T> & {
+    name: string,
     options: any, 
     generateMipMaps: boolean
 }

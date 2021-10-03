@@ -1,11 +1,12 @@
 import { ArcRotateCamera as BabylonArcRotateCamera, Vector3 } from '@babylonjs/core'
 import React, {useContext, useEffect } from "react"
-import { SceneContext } from "../Scene";
+import { SceneContext } from "../scene/Scene";
 import { ITargetCameraInitial, buildExtends as _buildExtends } from "./TargetCamera";
 import { Nullable } from "../../utils/customType";
 import { ChildHOC } from '../Component';
 
 export type IArcRotateCameraInitial<T> = ITargetCameraInitial<T> & {
+    name: string,
     alpha: number,
     beta: number,
     radius: number,

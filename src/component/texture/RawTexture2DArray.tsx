@@ -1,7 +1,7 @@
 import { RawTexture2DArray as BabylonRawTexture2DArray } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
 
 export type IRawTexture2DArrayInitial<T> = ITextureInitial<T> & {

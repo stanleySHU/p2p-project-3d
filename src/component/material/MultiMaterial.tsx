@@ -2,7 +2,7 @@ import { MultiMaterial as BabylonMultiMaterial } from '@babylonjs/core';
 import React, { useContext, useEffect, useRef } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { IMaterialInitial, buildExtends as _buildExtends  } from './Material';
 
 export type IMultiMaterialInitial<T> = IMaterialInitial<T> & {};

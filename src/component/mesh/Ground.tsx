@@ -1,10 +1,11 @@
 import { Mesh as BabylonMesh, MeshBuilder } from "@babylonjs/core";
 import React, { useContext, useEffect } from "react";
 import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { SceneContext } from "../Scene";
+import { SceneContext } from "../scene/Scene";
 import { ChildHOC } from "../Component";
 
 export type IGroundInitial<T> = IMeshInitial<T> & {
+    name: string,
     width?: number,
     height?: number,
     subdivisions?: number,

@@ -1,6 +1,6 @@
 import { StereoscopicArcRotateCamera as BabylonStereoscopicArcRotateCamera } from '@babylonjs/core';
 import React, {useContext, useEffect } from "react"
-import { SceneContext } from "../Scene";
+import { SceneContext } from "../scene/Scene";
 import { IArcRotateCameraInitial, buildExtends as _buildExtends } from "./ArcRotateCamera";
 import { Nullable } from "../../utils/customType";
 import { ChildHOC } from '../Component';

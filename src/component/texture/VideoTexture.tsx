@@ -1,10 +1,11 @@
 import { VideoTexture as BabylonVideoTexture, VideoTextureSettings } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../Scene';
+import { SceneContext } from '../scene/Scene';
 import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
 
 export type IVideoTextureInitial<T> = ITextureInitial<T> & {
+    name: string,
     src: string | string[] | HTMLVideoElement, 
     generateMipMaps?: boolean | undefined, 
     invertY?: boolean | undefined, 

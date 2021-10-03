@@ -1,6 +1,6 @@
 import { FreeCamera as BabylonFreeCamera, Vector3} from '@babylonjs/core';
 import React, { useContext, useEffect } from "react";
-import { SceneContext } from "../Scene";
+import { SceneContext } from "../scene/Scene";
 import { ITargetCameraInitial, buildExtends as _buildExtends } from "./TargetCamera";
 import { ChildHOC } from '../Component';
 

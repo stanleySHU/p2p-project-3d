@@ -1,8 +1,8 @@
 import { Scene as BaybylonScene, Scene, AbstractAssetTask, Observable } from "@babylonjs/core";
 import React, { Children, ReactElement, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { EngineContext } from "./Engine";
-import { IAssetsManagerInitial } from './resource/AssetsManager'
 import { NavControllerContext } from "./NavController";
+import { IComponentProps, buildExtends as _buildExtends } from './Component';
 
 export type IScenePropsInitial = {
     id: string,

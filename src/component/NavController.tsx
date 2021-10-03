@@ -1,11 +1,11 @@
 import { Scene as BabylonScene, Scene } from "@babylonjs/core";
 import React, { ReactElement, ReactNode, useContext, useEffect, useRef, useState } from "react"
 import { EngineContext } from "./Engine";
-import { IScenePropsInitial } from './Scene';
+import { ISceneProps } from './scene/Scene';
 
 type INavControllerOptions = {
     enter: string,
-    children: ReactElement<IScenePropsInitial> | ReactElement<IScenePropsInitial>[]
+    children: ReactElement<ISceneProps> | ReactElement<ISceneProps>[]
 }
 
 type INavControllerContextOptions = {
@@ -20,7 +20,7 @@ export const NavControllerContext = React.createContext<INavControllerContextOpt
 
 export const NavController = (props: INavControllerOptions) => {
     const { engine } = useContext(EngineContext);
-    const [sceneEls, setSceneEls] = useState<ReactElement<IScenePropsInitial>[]>([]);
+    const [sceneEls, setSceneEls] = useState<ReactElement<ISceneProps>[]>([]);
     const sceneIdsRef = useRef<string[]>([]);
     const scenesRef = useRef<BabylonScene[]>([]);
 
