@@ -1,8 +1,6 @@
 import { WebVRFreeCamera as BabylonWebVRFreeCamera, WebVROptions, WebXRSessionManager } from '@babylonjs/core';
-import React, { useContext, useEffect } from "react";
-import { SceneContext } from "../scene/Scene";
+import React, { useEffect } from "react";
 import { IFreeCameraInitial, buildExtends as _buildExtends } from "./FreeCamera";
-import { Nullable } from "../../utils/customType";
 import { ChildHOC } from '../Component';
 
 export type IWebVRFreeCameraInitial<T> = IFreeCameraInitial<T> & {
@@ -12,13 +10,12 @@ export type IWebVRFreeCameraProps = IWebVRFreeCameraInitial<BabylonWebVRFreeCame
 
 function WebVRFreeCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IWebVRFreeCameraProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, position,  webVROptions } = props;
+        const { scene, instance, name, position,  webVROptions } = props;
 
         useEffect(() => {
             console.log(`WebVRFreeCamera ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonWebVRFreeCamera(name, position, scene!, webVROptions);
+                instance.current = new BabylonWebVRFreeCamera(name, position, scene, webVROptions);
                 console.log(`WebVRFreeCamera ${name} created`);
             }
         }, []);

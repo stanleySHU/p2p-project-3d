@@ -1,8 +1,6 @@
 import { WebXRCamera as BabylonWebXRCamera, WebXRSessionManager } from '@babylonjs/core';
-import React, { useContext, useEffect } from "react";
-import { SceneContext } from "../scene/Scene";
+import React, { useEffect } from "react";
 import { IFreeCameraInitial, buildExtends as _buildExtends } from "./FreeCamera";
-import { Nullable } from "../../utils/customType";
 import { ChildHOC } from '../Component';
 
 export type IWebXRCameraInitial<T> = IFreeCameraInitial<T> & {
@@ -12,13 +10,12 @@ export type IWebXRCameraProps = IWebXRCameraInitial<BabylonWebXRCamera> & IWebXR
 
 function WebXRCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IWebXRCameraProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, _xrSessionManager } = props;
+        const { scene, instance, name, _xrSessionManager } = props;
 
         useEffect(() => {
             console.log(`WebXRCamera ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonWebXRCamera(name, scene!, _xrSessionManager);
+                instance.current = new BabylonWebXRCamera(name, scene, _xrSessionManager);
                 console.log(`WebXRCamera ${name} created`);
             }
         }, []);

@@ -1,8 +1,6 @@
 import { Mesh as BabylonMesh, MeshBuilder, Vector4 } from "@babylonjs/core";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { SceneContext } from "../scene/Scene";
-import { Nullable } from "../../utils/customType";
 import { ChildHOC } from "../Component";
 
 export type ITiledPlaneInitial<T> = IMeshInitial<T> & {
@@ -24,8 +22,7 @@ export type ITiledPlaneProps = ITiledPlaneInitial<BabylonMesh> & ITiledPlaneOpti
 
 function TiledPlaneHOC<T>(EL: React.FC<T>) {
     return (props: T & ITiledPlaneProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name } = props;
+        const { scene, instance, name } = props;
 
         useEffect(() => {
             console.log(`TiledPlane ${name} called`);

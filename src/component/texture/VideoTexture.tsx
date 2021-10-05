@@ -1,10 +1,11 @@
-import { VideoTexture as BabylonVideoTexture, VideoTextureSettings } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
+import { VideoTexture as BabylonVideoTexture, VideoTextureSettings, Scene as BabylonScene } from '@babylonjs/core';
+import React, { useEffect } from 'react';
+import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
 
 export type IVideoTextureInitial<T> = ITextureInitial<T> & {
+    scene: Nullable<BabylonScene>,
     name: string,
     src: string | string[] | HTMLVideoElement, 
     generateMipMaps?: boolean | undefined, 
@@ -16,13 +17,12 @@ export type IVideoTextureProps = IVideoTextureInitial<BabylonVideoTexture>;
 
 function VideoTextureHOC<T>(EL: React.FC<T>) {
     return (props: T & IVideoTextureProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, src, generateMipMaps, invertY, samplingMode, settings} = props;
+        const { scene, instance, name, src, generateMipMaps, invertY, samplingMode, settings} = props;
 
         useEffect(() => {
             console.log(`VideoTexture ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonVideoTexture(name, src, scene!, generateMipMaps, invertY, samplingMode, settings);
+                instance.current = new BabylonVideoTexture(name, src, scene, generateMipMaps, invertY, samplingMode, settings);
                 console.log(`VideoTexture ${name} created`);
             }
         }, [])

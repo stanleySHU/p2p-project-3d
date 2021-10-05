@@ -1,10 +1,10 @@
-import { CustomProceduralTexture as BabylonCustomProceduralTexture, Texture } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
+import { CustomProceduralTexture as BabylonCustomProceduralTexture, Scene as BabylonScene,Texture } from '@babylonjs/core';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { IProceduralTextureInitial, buildExtends as _buildExtends } from './ProceduralTexture';
 
 export type ICustomProceduralTextureInitial<T> = IProceduralTextureInitial<T> & {
+    scene: BabylonScene,
     name: string,
     texturePath: string, 
     size: number, 
@@ -14,13 +14,12 @@ export type ICustomProceduralTextureProps = ICustomProceduralTextureInitial<Baby
 
 function CustomProceduralTextureHOC<T>(EL: React.FC<T>) {
     return (props: T & ICustomProceduralTextureProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, texturePath, size, fallbackTexture, generateMipMaps } = props;
+        const { scene, instance, name, texturePath, size, fallbackTexture, generateMipMaps } = props;
 
         useEffect(() => {
             console.log(`CustomProceduralTexture ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonCustomProceduralTexture(name, texturePath, size, scene!, fallbackTexture, generateMipMaps);
+                instance.current = new BabylonCustomProceduralTexture(name, texturePath, size, scene, fallbackTexture, generateMipMaps);
                 console.log(`CustomProceduralTexture ${name} created`);
             }
         }, [])

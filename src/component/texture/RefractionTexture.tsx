@@ -1,23 +1,22 @@
-import { RefractionTexture as BabylonRefractionTexture } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
+import { RefractionTexture as BabylonRefractionTexture, Scene as BabylonScene } from '@babylonjs/core';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { IRenderTargetTextureInitial, buildExtends as _buildExtends } from './RenderTargetTexture';
 
 export type IRefractionTextureInitial<T> = IRenderTargetTextureInitial<T> & {
+    scene: BabylonScene,
     size: number
 }
 export type IRefractionTextureProps = IRefractionTextureInitial<BabylonRefractionTexture>;
 
 function RefractionTextureHOC<T>(EL: React.FC<T>) {
     return (props: T & IRefractionTextureProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, size, generateMipMaps } = props;
+        const { scene, instance, name, size, generateMipMaps } = props;
 
         useEffect(() => {
             console.log(`RefractionTexture ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonRefractionTexture(name, size, scene!, generateMipMaps);
+                instance.current = new BabylonRefractionTexture(name, size, scene, generateMipMaps);
                 console.log(`RefractionTexture ${name} created`);
             }
         }, [])

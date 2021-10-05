@@ -1,8 +1,7 @@
 import { AbstractMesh, FollowCamera as BabylonFollowCamera } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { ITargetCameraInitial, buildExtends as _buildExtends } from './TargetCamera';
 
 export type IFollowCameraInitial<T> = ITargetCameraInitial<T> & {
@@ -12,13 +11,12 @@ export type IFollowCameraProps = IFollowCameraInitial<BabylonFollowCamera> & IFo
 
 function FollowCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IFollowCameraProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, position, lockedTarget } = props;
+        const { scene, instance, name, position, lockedTarget } = props;
 
         useEffect(() => {
             console.log(`FollowCamera ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonFollowCamera(name, position, scene!, lockedTarget);
+                instance.current = new BabylonFollowCamera(name, position, scene, lockedTarget);
                 console.log(`FollowCamera ${name} created`);
             }
         }, []);

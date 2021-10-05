@@ -1,8 +1,6 @@
 import { Color4, Mesh as BabylonMesh, MeshBuilder, Vector4 } from "@babylonjs/core";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { SceneContext } from "../scene/Scene";
-import { Nullable } from "../../utils/customType";
 import { ChildHOC } from "../Component";
 
 export type ICylinderInitial<T> = IMeshInitial<T> & {
@@ -28,8 +26,7 @@ export type ICylinderProps = ICylinderInitial<BabylonMesh> & ICylinderOptions;
 
 function CylinderHOC<T>(EL: React.FC<T>) {
     return (props: T & ICylinderProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name } = props;
+        const { scene, instance, name } = props;
 
         useEffect(() => {
             console.log(`Cylinder ${name} called`);

@@ -1,7 +1,6 @@
 import { Mesh as BabylonMesh, MeshBuilder } from "@babylonjs/core";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { SceneContext } from "../scene/Scene";
 import { ChildHOC } from "../Component";
 
 export type IGroundInitial<T> = IMeshInitial<T> & {
@@ -17,8 +16,7 @@ export type IGroundProps = IGroundInitial<BabylonMesh> & IGroundOptions;
 
 function GroundHOC<T>(EL: React.FC<T>) {
     return (props: T & IGroundProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name } = props;
+        const { scene, instance, name } = props;
 
         useEffect(() => {
             console.log(`Ground ${name} called`);

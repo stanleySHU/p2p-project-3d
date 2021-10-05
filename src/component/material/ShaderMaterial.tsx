@@ -1,7 +1,6 @@
 import { IShaderMaterialOptions, ShaderMaterial as BabylonShaderMaterial } from '@babylonjs/core';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { IMaterialInitial, buildExtends as _buildExtends } from './Material';
 
 export type IShaderMaterialInitial<T> = IMaterialInitial<T> & {
@@ -12,13 +11,12 @@ export type IShaderMaterialProps = IShaderMaterialInitial<BabylonShaderMaterial>
 
 function ShaderMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IShaderMaterialProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, parentInstance, name, shaderPath, options, assignTo } = props;
+        const { scene, instance, parentInstance, name, shaderPath, options, assignTo } = props;
 
         useEffect(() => {
             console.log(`ShaderMaterial ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonShaderMaterial(name, scene!, shaderPath, options);
+                instance.current = new BabylonShaderMaterial(name, scene, shaderPath, options);
                 console.log(`ShaderMaterial ${name} created`);
 
                 if (parentInstance) {

@@ -1,10 +1,10 @@
-import { RawTexture2DArray as BabylonRawTexture2DArray } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
+import { RawTexture2DArray as BabylonRawTexture2DArray, Scene as BabylonScene } from '@babylonjs/core';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
 
 export type IRawTexture2DArrayInitial<T> = ITextureInitial<T> & {
+    scene: BabylonScene,
     data: ArrayBufferView, 
     width: number, 
     height: number, 
@@ -17,13 +17,12 @@ export type IRawTexture2DArrayProps = IRawTexture2DArrayInitial<BabylonRawTextur
 
 function RawTexture2DArrayHOC<T>(EL: React.FC<T>) {
     return (props: T & IRawTexture2DArrayProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, data, width, height, depth, format, generateMipMaps, invertY, samplingMode, textureType} = props;
+        const { scene, instance, name, data, width, height, depth, format, generateMipMaps, invertY, samplingMode, textureType} = props;
 
         useEffect(() => {
             console.log(`RawTexture2DArray ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonRawTexture2DArray(data, width, height, depth, format, scene!, generateMipMaps, invertY, samplingMode, textureType);
+                instance.current = new BabylonRawTexture2DArray(data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType);
                 console.log(`RawTexture2DArray ${name} created`);
             }
         }, [])

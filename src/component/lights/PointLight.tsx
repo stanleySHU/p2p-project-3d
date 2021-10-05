@@ -1,8 +1,6 @@
 import { PointLight as BabylonPointLight, Vector3 } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
-import { Nullable } from '../../utils/customType';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { IShadowLightInitial, buildExtends as _buildExtends } from './ShadowLight';
 
 export type IPointLightInitial<T> = IShadowLightInitial<T> & {
@@ -13,13 +11,12 @@ export type IPointLightProps = IPointLightInitial<BabylonPointLight> & IPointLig
 
 function PointLightHOC<T>(EL: React.FC<T> ) {
     return (props: T & IPointLightProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, position } = props;
+        const { scene, instance, name, position } = props;
 
         useEffect(() => {
             console.log(`PointLight ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonPointLight(name, position, scene!);
+                instance.current = new BabylonPointLight(name, position, scene);
                 console.log(`PointLight ${name} created`);
             }
         }, []);

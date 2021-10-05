@@ -1,7 +1,5 @@
 import { PushMaterial as BabylonPushMaterial } from '@babylonjs/core';import React, { useContext, useEffect, useRef } from 'react';
-import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { IMaterialInitial, buildExtends as _buildExtends } from './Material';
 
 export type IPushMaterialInitial<T> = IMaterialInitial<T> & {};
@@ -9,13 +7,12 @@ export type IPushMaterialProps = IPushMaterialInitial<BabylonPushMaterial>;
 
 function PushMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IPushMaterialProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name } = props;
+        const { scene, instance, name } = props;
 
         useEffect(() => {
             console.log(`PushMaterial ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonPushMaterial(name, scene!);
+                instance.current = new BabylonPushMaterial(name, scene);
                 console.log(`PushMaterial ${name} created`);
             }
         }, []);

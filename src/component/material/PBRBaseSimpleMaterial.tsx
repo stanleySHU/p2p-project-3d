@@ -1,6 +1,5 @@
 import { PBRBaseSimpleMaterial as BabylonPBRBaseSimpleMaterial } from '@babylonjs/core';
 import React from 'react';
-import { Nullable } from '../../utils/customType';
 import { IPBRBaseMaterialInitial, buildExtends as _buildExtends } from './PBRBaseMaterial';
 
 export type IPBRBaseSimpleMaterialInitial<T> = IPBRBaseMaterialInitial<T> & {};

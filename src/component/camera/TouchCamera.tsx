@@ -1,8 +1,6 @@
 import { TouchCamera as BabylonTouchCamera} from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
-import { Nullable } from '../../utils/customType';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { IFreeCameraInitial, buildExtends as _buildExtends } from './FreeCamera';
 
 export type ITouchCameraInitial<T> = IFreeCameraInitial<T> & {
@@ -12,13 +10,12 @@ export type ITouchCameraProps = ITouchCameraInitial<BabylonTouchCamera> & ITouch
 
 function TouchCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & ITouchCameraProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, position } = props;
+        const { scene, instance, name, position } = props;
 
         useEffect(() => {
             console.log(`TouchCamera ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonTouchCamera(name, position, scene!);
+                instance.current = new BabylonTouchCamera(name, position, scene);
                 console.log(`TouchCamera ${name} created`);
             }
         }, []);

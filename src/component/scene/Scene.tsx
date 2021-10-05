@@ -1,5 +1,5 @@
 import { AbstractAssetTask, Scene as BabylonScene, SceneOptions } from "@babylonjs/core";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IComponentProps, buildExtends as _buildExtends, ChildHOC} from '../Component';
 import { EngineContext } from "../Engine";
 
@@ -14,25 +14,29 @@ export type ISceneInitial<T> = IComponentProps<T> & {
 export type ISceneProps = ISceneInitial<BabylonScene>;
 
 type ISceneContextOptions = {
-    scene?: BabylonScene
+    sceneInstance: BabylonScene
 }
-export const SceneContext = React.createContext<ISceneContextOptions>({});
+export const SceneContext = React.createContext<ISceneContextOptions>({} as any);
 
 export function SceneHOC<T>(EL: React.FC<T>) {
     return (props: T & ISceneProps) => {
         const { engine } = useContext(EngineContext);
         const { name, instance, options } = props;
+        
+        const [isReady, setIsReady] = useState(false);
+
         useEffect(() => {
             console.log(`Scene ${name} called`);
             if (instance && !instance.current) {
                 instance!.current = new BabylonScene(engine!, options);
+                setIsReady(true);
                 console.log(`Scene ${name} created`);
             }
             return () => {
                 instance!.current.dispose();
             }
         }, []);
-        return <SceneContext.Provider value={{scene: instance!.current}}>
+        return isReady && <SceneContext.Provider value={{sceneInstance: instance!.current}}>
                 <EL {...props}/>
             </SceneContext.Provider>
     }

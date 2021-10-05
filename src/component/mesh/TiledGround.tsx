@@ -1,8 +1,6 @@
 import { Mesh as BabylonMesh, MeshBuilder } from "@babylonjs/core";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { SceneContext } from "../scene/Scene";
-import { Nullable } from "../../utils/customType";
 import { ChildHOC } from "../Component";
 
 export type ITiledGroundInitial<T> = IMeshInitial<T> & {
@@ -24,8 +22,7 @@ export type ITiledGroundProps = ITiledGroundInitial<BabylonMesh> & ITiledGroundO
 
 function TiledGroundHOC<T>(EL: React.FC<T>) {
     return (props: T & ITiledGroundProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name } = props;
+        const { scene, instance, name } = props;
 
         useEffect(() => {
             console.log(`TiledGround ${name} called`);

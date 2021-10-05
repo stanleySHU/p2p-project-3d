@@ -1,8 +1,6 @@
 import { DeviceOrientationCamera as BabylonDeviceOrientationCamera } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
-import { Nullable } from '../../utils/customType';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { IFreeCameraInitial, buildExtends as _buildExtends } from './FreeCamera';
 
 export type IDeviceOrientationCameraInitial<T> = IFreeCameraInitial<T> & {
@@ -12,13 +10,12 @@ export type IDeviceOrientationCameraProps = IDeviceOrientationCameraInitial<Baby
 
 function DeviceOrientationCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IDeviceOrientationCameraProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, position } = props;
+        const { scene, instance, name, position } = props;
 
         useEffect(() => {
             console.log(`DeviceOrientationCamera ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonDeviceOrientationCamera(name, position, scene!);
+                instance.current = new BabylonDeviceOrientationCamera(name, position, scene);
                 console.log(`DeviceOrientationCamera ${name} created`);
             }
         }, [])

@@ -1,32 +1,37 @@
-import { AbstractAssetTask, Scene as BabylonScene } from "@babylonjs/core";
-import React, { useEffect } from 'react';
-import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../Component';
-import { SceneHOC } from "./Scene";
+import { Scene as BabylonScene } from "@babylonjs/core";
+import { useEffect, useReducer, ReactElement } from 'react';
+import { IComponentProps, buildExtends as _buildExtends } from '../Component';
+import { SceneHOC, SceneContext } from "./Scene";
+import { reducer, initialState } from "../../page/PreloadRedux";
+import { IAssetsManagerProps } from '../resource/AssetsManager';
 
-export type IPreloadSceneProps<T> = IComponentProps<T> & {};
+export type IPreloadSceneProps<T> = IComponentProps<T> & {
+    children: [ReactElement<IAssetsManagerProps>, ReactElement]
+};
 
-function PreloadSceneHOC<T>(EL: React.FC<T>) {
-    return (props: T & IPreloadSceneProps<BabylonScene>) => {
-        const { instance } = props;
 
-        function onProgress(remainingCount: number, totalCount: number, task: AbstractAssetTask) {
+function PreloadScene<T>(props: T & IPreloadSceneProps<BabylonScene>) {
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const { instance, componentInstances } = props;
 
+    useEffect(() => {
+
+    }, []);
+
+    const children = props.children as [any, any];
+    const AssetsManagerType = children[0].type;
+    const AssetsManagerProps = children[0].props;
+    const NodeType = children[1].type;
+    const NodeProps = children[1].props;
+    console.log(AssetsManagerProps, NodeProps);
+    return <SceneContext.Consumer>
+        {
+            ({ sceneInstance }) => sceneInstance && <>
+                <NodeType {...AssetsManagerProps} parentInstance={instance} parentComponentInstances={componentInstances} scene={sceneInstance} loadDispatch={state} />
+                <AssetsManagerType {...NodeProps} parentInstance={instance} parentComponentInstances={componentInstances} scene={sceneInstance} loadState={dispatch} />
+            </>
         }
-
-        function onFinish(tasks: AbstractAssetTask[]) {
-
-        }
-
-        useEffect(() => {
-            
-        }, []);
-
-        return <EL {...props} onProgress={onProgress} onFinish={onFinish}/>
-    }
+    </SceneContext.Consumer>;
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(PreloadSceneHOC(e));
-}
-
-export const P2PPreloadScene = buildExtends(SceneHOC(ChildHOC(null)));
+export const P2PPreloadScene = _buildExtends<IPreloadSceneProps<BabylonScene>>(SceneHOC(PreloadScene));

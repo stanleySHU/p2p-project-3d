@@ -1,8 +1,6 @@
 import { INodeMaterialOptions, NodeMaterial as BabylonNodeMaterial } from '@babylonjs/core';
-import React, { useContext, useEffect, useRef } from 'react';
-import { Nullable } from '../../utils/customType';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { IPushMaterialInitial, buildExtends as _buildExtends  } from './PushMaterial';
 
 export type INodeMaterialInitial<T> = IPushMaterialInitial<T> & {
@@ -12,13 +10,12 @@ export type INodeMaterialProps = INodeMaterialInitial<BabylonNodeMaterial>;
 
 function NodeMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & INodeMaterialProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, options } = props;
+        const { scene, instance, name, options } = props;
 
         useEffect(() => {
             console.log(`NodeMaterial ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonNodeMaterial(name, scene!, options);
+                instance.current = new BabylonNodeMaterial(name, scene, options);
                 console.log(`NodeMaterial ${name} created`);
             }
         }, []);

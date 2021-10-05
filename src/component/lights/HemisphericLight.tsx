@@ -1,8 +1,6 @@
 import { HemisphericLight as BabylonHemisphericLight, Vector3 } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
-import { Nullable } from '../../utils/customType';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { ILightInitial, buildExtends as _buildExtends } from './Light';
 
 export type IHemisphericLightInitial<T> = ILightInitial<T> & {
@@ -13,13 +11,12 @@ export type IHemisphericLightProps = IHemisphericLightInitial<BabylonHemispheric
 
 function HemisphericLightHOC<T>(EL: React.FC<T>) {
     return (props: T & IHemisphericLightProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, direction } = props;
+        const { scene, instance, name, direction } = props;
 
         useEffect(() => {
             console.log(`HemisphericLight ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonHemisphericLight(name, direction, scene!);
+                instance.current = new BabylonHemisphericLight(name, direction, scene);
                 console.log(`HemisphericLight ${name} created`);
             }
         }, []);

@@ -1,8 +1,6 @@
 import { StereoscopicFreeCamera as BabylonStereoscopicFreeCamera } from '@babylonjs/core';
-import React, { useContext, useEffect } from "react";
-import { SceneContext } from "../scene/Scene";
+import React, { useEffect } from "react";
 import { IFreeCameraInitial, buildExtends as _buildExtends } from "./FreeCamera";
-import { Nullable } from "../../utils/customType";
 import { ChildHOC } from '../Component';
 
 export type IStereoscopicFreeCameraInitial<T> = IFreeCameraInitial<T> & {
@@ -13,13 +11,12 @@ export type IStereoscopicFreeCameraProps = IStereoscopicFreeCameraInitial<Babylo
 
 function StereoscopicFreeCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IStereoscopicFreeCameraProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, position, interaxialDistance, isStereoscopicSideBySide } = props;
+        const { scene, instance, name, position, interaxialDistance, isStereoscopicSideBySide } = props;
 
         useEffect(() => {
             console.log(`StereoscopicFreeCamera ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonStereoscopicFreeCamera(name, position, interaxialDistance, isStereoscopicSideBySide, scene!);
+                instance.current = new BabylonStereoscopicFreeCamera(name, position, interaxialDistance, isStereoscopicSideBySide, scene);
                 console.log(`StereoscopicFreeCamera ${name} created`);
             }
         }, []);

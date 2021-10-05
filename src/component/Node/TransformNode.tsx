@@ -1,8 +1,6 @@
 import { TransformNode as BabylonTransformNode } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
-import { Nullable } from '../../utils/customType';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { INodeInitial, buildExtends as _buildExtends } from './Node';
 
 export type ITransformNodeInitial<T> = INodeInitial<T> & {
@@ -12,8 +10,7 @@ export type ITransformNodeProps = ITransformNodeInitial<BabylonTransformNode> & 
 
 function TransformNodeHOC<T>(EL: React.FC<T>) {
     return (props: T & ITransformNodeProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, isPure } = props;
+        const { scene, instance, name, isPure } = props;
 
         useEffect(() => {
             console.log(`TransformNode ${name} called`);

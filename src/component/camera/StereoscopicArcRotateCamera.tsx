@@ -1,8 +1,6 @@
 import { StereoscopicArcRotateCamera as BabylonStereoscopicArcRotateCamera } from '@babylonjs/core';
-import React, {useContext, useEffect } from "react"
-import { SceneContext } from "../scene/Scene";
+import React, { useEffect } from "react"
 import { IArcRotateCameraInitial, buildExtends as _buildExtends } from "./ArcRotateCamera";
-import { Nullable } from "../../utils/customType";
 import { ChildHOC } from '../Component';
 
 export type IStereoscopicArcRotateCameraInitial<T> = IArcRotateCameraInitial<T> & {
@@ -13,13 +11,12 @@ export type IStereoscopicArcRotateCameraProps = IStereoscopicArcRotateCameraInit
 
 function StereoscopicArcRotateCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IStereoscopicArcRotateCameraProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide } = props;
+        const { scene, instance, name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide } = props;
 
         useEffect(() => {
             console.log(`StereoscopicArcRotateCamera ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonStereoscopicArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide, scene!);
+                instance.current = new BabylonStereoscopicArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide, scene);
                 console.log(`StereoscopicArcRotateCamera ${name} created`);
             }
         }, []);

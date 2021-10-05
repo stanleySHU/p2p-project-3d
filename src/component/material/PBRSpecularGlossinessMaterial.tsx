@@ -1,8 +1,6 @@
 import { PBRSpecularGlossinessMaterial as BabylonPBRSpecularGlossinessMaterial } from '@babylonjs/core';
-import React, { useContext, useEffect, useRef } from 'react';
-import { Nullable } from '../../utils/customType';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { IPBRBaseSimpleMaterialInitial, buildExtends as _buildExtends } from './PBRBaseSimpleMaterial';
 
 export type IPBRSpecularGlossinessMaterialInitial<T> = IPBRBaseSimpleMaterialInitial<T> & {};
@@ -10,13 +8,12 @@ export type IPBRSpecularGlossinessMaterialProps = IPBRSpecularGlossinessMaterial
 
 function PBRSpecularGlossinessMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IPBRSpecularGlossinessMaterialProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name } = props;
+        const { scene, instance, name } = props;
 
         useEffect(() => {
             console.log(`PBRSpecularGlossinessMaterial ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonPBRSpecularGlossinessMaterial(name, scene!);
+                instance.current = new BabylonPBRSpecularGlossinessMaterial(name, scene);
                 console.log(`PBRSpecularGlossinessMaterial ${name} created`);
             }
         }, []);

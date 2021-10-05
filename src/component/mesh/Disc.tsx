@@ -1,8 +1,6 @@
 import { Mesh as BabylonMesh, MeshBuilder, Vector4 } from "@babylonjs/core";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { SceneContext } from "../scene/Scene";
-import { Nullable } from "../../utils/customType";
 import { ChildHOC } from "../Component";
 
 export type IDiscInitial<T> = IMeshInitial<T> & {
@@ -19,8 +17,7 @@ export type IDiscProps = IDiscInitial<BabylonMesh> & IDiscOptions;
 
 function DiscHOC<T>(EL: React.FC<T>) {
     return (props: T & IDiscProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name } = props;
+        const { scene, instance, name } = props;
 
         useEffect(() => {
             console.log(`Disc ${name} called`);

@@ -1,17 +1,17 @@
-import { Node as BabylonNode } from '@babylonjs/core';
+import { Node as BabylonNode, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useContext, useEffect } from 'react';
 import { SceneContext } from '../scene/Scene';
 import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../Component'
 
 export type INodeInitial<T> = IComponentProps<T> & {
+    scene: BabylonScene,
     name: string
 }
 export type INodeProps = INodeInitial<BabylonNode> & INodeOptions;
 
 function NodeHOC<T>(EL: React.FC<T>) {
     return (props: T & INodeProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name } = props;
+        const { scene, instance, name } = props;
 
         useEffect(() => {
             console.log(`Node ${name} called`);

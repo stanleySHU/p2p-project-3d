@@ -1,10 +1,11 @@
-import { NoiseProceduralTexture as BabylonNoiseProceduralTexture, Texture } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
+import { NoiseProceduralTexture as BabylonNoiseProceduralTexture, Scene as BabylonScene, Texture } from '@babylonjs/core';
+import React, { useEffect } from 'react';
+import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { IProceduralTextureInitial, buildExtends as _buildExtends } from './ProceduralTexture';
 
 export type INoiseProceduralTextureInitial<T> = IProceduralTextureInitial<T> & {
+    scene?: Nullable<BabylonScene>,
     name: string,
     size?: number, 
     fallbackTexture?: Texture
@@ -13,8 +14,7 @@ export type INoiseProceduralTextureProps = INoiseProceduralTextureInitial<Babylo
 
 function NoiseProceduralTextureHOC<T>(EL: React.FC<T>) {
     return (props: T & INoiseProceduralTextureProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, size, fallbackTexture, generateMipMaps } = props;
+        const { scene, instance, name, size, fallbackTexture, generateMipMaps } = props;
 
         useEffect(() => {
             console.log(`NoiseProceduralTexture ${name} called`);

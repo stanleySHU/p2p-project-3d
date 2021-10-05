@@ -1,8 +1,6 @@
 import { PBRMetallicRoughnessMaterial as BabylonPBRMetallicRoughnessMaterial } from '@babylonjs/core';
-import React, { useContext, useEffect, useRef } from 'react';
-import { Nullable } from '../../utils/customType';
+import React, { useEffect } from 'react';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { IPBRBaseSimpleMaterialInitial, buildExtends as _buildExtends } from './PBRBaseSimpleMaterial';
 
 export type IPBRMetallicRoughnessMaterialInitial<T> = IPBRBaseSimpleMaterialInitial<T> & {};
@@ -10,13 +8,12 @@ export type IPBRMetallicRoughnessMaterialProps = IPBRMetallicRoughnessMaterialIn
 
 function PBRMetallicRoughnessMaterialHOC<T>(EL: React.FC<T>) {
     return (props: T & IPBRMetallicRoughnessMaterialProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name } = props;
+        const { scene, instance, name } = props;
 
         useEffect(() => {
             console.log(`PBRMetallicRoughnessMaterial ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonPBRMetallicRoughnessMaterial(name, scene!);
+                instance.current = new BabylonPBRMetallicRoughnessMaterial(name, scene);
                 console.log(`PBRMetallicRoughnessMaterial ${name} created`);
             }
         }, []);

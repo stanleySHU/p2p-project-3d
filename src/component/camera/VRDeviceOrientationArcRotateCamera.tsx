@@ -1,8 +1,6 @@
 import { VRCameraMetrics, VRDeviceOrientationArcRotateCamera as BabylonVRDeviceOrientationArcRotateCamera } from '@babylonjs/core';
-import React, {useContext, useEffect } from "react"
-import { SceneContext } from "../scene/Scene";
+import React, {useEffect } from "react"
 import { IArcRotateCameraInitial, buildExtends as _buildExtends } from "./ArcRotateCamera";
-import { Nullable } from "../../utils/customType";
 import { ChildHOC } from '../Component';
 
 export type IVRDeviceOrientationArcRotateCameraInitial<T> = IArcRotateCameraInitial<T> & {
@@ -13,13 +11,12 @@ export type IVRDeviceOrientationArcRotateCameraProps = IVRDeviceOrientationArcRo
 
 function VRDeviceOrientationArcRotateCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IVRDeviceOrientationArcRotateCameraProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
+        const { scene, instance, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
 
         useEffect(() => {
             console.log(`VRDeviceOrientationArcRotateCamera ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonVRDeviceOrientationArcRotateCamera(name, alpha, beta, radius, target, scene!, setActiveOnSceneIfNoneActive);
+                instance.current = new BabylonVRDeviceOrientationArcRotateCamera(name, alpha, beta, radius, target, scene, setActiveOnSceneIfNoneActive);
                 console.log(`VRDeviceOrientationArcRotateCamera ${name} created`);
             }
         }, []);

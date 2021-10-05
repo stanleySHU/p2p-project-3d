@@ -1,7 +1,6 @@
 import { Color4, LinesMesh, Mesh as BabylonMesh, MeshBuilder, Vector3 } from "@babylonjs/core";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { SceneContext } from "../scene/Scene";
 import { Nullable } from "../../utils/customType";
 import { ChildHOC } from "../Component";
 
@@ -17,8 +16,7 @@ export type ILinesProps = ILinesInitial<BabylonMesh> & ILinesOptions;
 
 function LinesHOC<T>(EL: React.FC<T>) {
     return (props: T & ILinesProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name } = props;
+        const { scene, instance, name } = props;
 
         useEffect(() => {
             console.log(`Lines ${name} called`);

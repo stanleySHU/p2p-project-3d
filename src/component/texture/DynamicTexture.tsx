@@ -1,10 +1,11 @@
-import { DynamicTexture as BabylonDynamicTexture } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
+import { DynamicTexture as BabylonDynamicTexture, Scene as BabylonScene } from '@babylonjs/core';
+import React, { useEffect } from 'react';
+import { Nullable } from '../../utils/customType';
 import { ChildHOC } from '../Component';
-import { SceneContext } from '../scene/Scene';
 import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
 
 export type IDynamicTextureInitial<T> = ITextureInitial<T> & {
+    scene?: Nullable<BabylonScene>,
     name: string,
     options: any, 
     generateMipMaps: boolean
@@ -13,8 +14,7 @@ export type IDynamicTextureProps = IDynamicTextureInitial<BabylonDynamicTexture>
 
 function DynamicTextureHOC<T>(EL: React.FC<T>) {
     return (props: T & IDynamicTextureProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, options, generateMipMaps, samplingMode, format, invertY } = props;
+        const { scene, instance, name, options, generateMipMaps, samplingMode, format, invertY } = props;
 
         useEffect(() => {
             console.log(`DynamicTexture ${name} called`);

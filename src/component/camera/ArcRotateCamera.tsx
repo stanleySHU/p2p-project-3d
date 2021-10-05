@@ -1,8 +1,6 @@
 import { ArcRotateCamera as BabylonArcRotateCamera, Vector3 } from '@babylonjs/core'
-import React, {useContext, useEffect } from "react"
-import { SceneContext } from "../scene/Scene";
+import React, {useEffect } from "react"
 import { ITargetCameraInitial, buildExtends as _buildExtends } from "./TargetCamera";
-import { Nullable } from "../../utils/customType";
 import { ChildHOC } from '../Component';
 
 export type IArcRotateCameraInitial<T> = ITargetCameraInitial<T> & {
@@ -16,13 +14,12 @@ export type IArcRotateCameraProps = IArcRotateCameraInitial<BabylonArcRotateCame
 
 function ArcRotateCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IArcRotateCameraProps) => {
-        const { scene } = useContext(SceneContext);
-        const { instance, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
+        const { scene, instance, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
 
         useEffect(() => {
             console.log(`ArcRotateCamera ${name} called`);
             if (instance && !instance.current) {
-                instance.current = new BabylonArcRotateCamera(name, alpha, beta, radius, target, scene!, setActiveOnSceneIfNoneActive);
+                instance.current = new BabylonArcRotateCamera(name, alpha, beta, radius, target, scene, setActiveOnSceneIfNoneActive);
                 console.log(`ArcRotateCamera ${name} created`);
             }
         }, []);
