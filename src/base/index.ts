@@ -1,6 +1,5 @@
 //scene
 import { P2PScene } from './scene/Scene';
-import { P2PPreloadScene } from './scene/PreloadScene';
 
 //node
 import { P2PNode } from './node/Node';
@@ -111,7 +110,7 @@ import { P2PTexture } from './texture/Texture';
 import { P2PVideoTexture } from './texture/VideoTexture';
 
 //resource
-import { P2PAssetsManager } from './resource/AssetsManager';
+import { P2PAssetsManager } from './resource2/AssetsManager';
 import { P2PBinaryFileAssetTask } from './resource/BinaryFileAssetTask';
 import { P2PContainerAssetTask } from './resource/ContainerAssetTask';
 import { P2PCubeTextureAssetTask } from './resource/CubeTextureManager';
@@ -122,9 +121,34 @@ import { P2PMeshAssetTask } from './resource/MeshAssetTask';
 import { P2PTextFileAssetTask } from './resource/TextFileAssetTask';
 import { P2PTextureAssetTask } from './resource/TextureAssetTask';
 
+//resource2
+import { IBinaryResourceInitial } from './resource2/BinaryFileResource';
+import { ICubeTextureResourceInitial } from './resource2/CubeTextureManager';
+import { IEquiRectangularCubeTextureResourceInitial } from './resource2/EquiRectangularCubeTextureResource';
+import { IHDRCubeTextureResourceInitial } from './resource2/HDRCubeTextureResource';
+import { IImageResourceInitial } from './resource2/ImageResource';
+import { IMeshResourceInitial } from './resource2/MeshResource';
+import { ITextFileResourceInitial } from './resource2/TextFileResource';
+import { ITextureResourceInitial } from './resource2/TextureResource';
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            taskBinary: IBinaryResourceInitial,
+            taskCTexture: ICubeTextureResourceInitial,
+            taskERCTexture: IEquiRectangularCubeTextureResourceInitial,
+            taskHDRCTexture: IHDRCubeTextureResourceInitial,
+            taskImg: IImageResourceInitial,
+            taskMesh: IMeshResourceInitial,
+            taskTextFile: ITextFileResourceInitial,
+            taskTexture: ITextureResourceInitial
+        }
+    }
+}
+
 export {
     //scene
-    P2PScene, P2PPreloadScene,
+    P2PScene,
     //node
     P2PNode, P2PTransformNode,
     //camera
@@ -151,29 +175,3 @@ export {
     P2PAssetsManager, P2PBinaryFileAssetTask, P2PContainerAssetTask, P2PCubeTextureAssetTask, P2PEquiRectangularCubeTextureAssetTask, P2PHDRCubeTextureAssetTask, P2PImageAssetTask,
     P2PMeshAssetTask, P2PTextFileAssetTask, P2PTextureAssetTask
 }
-
-
-// //resource
-// import { IBinaryResourceInitial } from './resource2/BinaryFileResource';
-// import { ICubeTextureResourceInitial } from './resource2/CubeTextureManager';
-// import { IEquiRectangularCubeTextureResourceInitial } from './resource2/EquiRectangularCubeTextureResource';
-// import { IHDRCubeTextureResourceInitial } from './resource2/HDRCubeTextureResource';
-// import { IImageResourceInitial } from './resource2/ImageResource';
-// import { IMeshResourceInitial } from './resource2/MeshResource';
-// import { ITextFileResourceInitial } from './resource2/TextFileResource';
-// import { ITextureResourceInitial } from './resource2/TextureResource'
-
-// declare global {
-//     namespace JSX {
-//         interface IntrinsicElements {
-//             loadBinary: IBinaryResourceInitial,
-//             loadCTexture: ICubeTextureResourceInitial,
-//             loadERCTexture: IEquiRectangularCubeTextureResourceInitial,
-//             loadHDRCTexture: IHDRCubeTextureResourceInitial,
-//             loadImg: IImageResourceInitial,
-//             loadMesh: IMeshResourceInitial,
-//             loadTextFile: ITextFileResourceInitial,
-//             loadTexture: ITextureResourceInitial
-//         }
-//     }
-// }

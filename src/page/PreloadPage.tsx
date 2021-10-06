@@ -1,13 +1,29 @@
-import { Vector3 } from '@babylonjs/core'
-import { P2PAssetsManager, P2PDirectionalLight, P2PFreeCamera, P2PGround, P2PImageAssetTask, P2PNode, P2PPreloadScene, P2PStandardMaterial, P2PTexture } from '../component'
-import { ISceneProps, SceneContext } from '../component/scene/Scene'
-
+import { P2PAssetsManager, P2PNode } from '../base'
+import { ISceneProps, P2PScene, SceneContext } from '../base/scene/Scene'
+import { useEffect, useReducer } from 'react';
+import { reducer, initialState } from "./PreloadRedux";
 
 export const PreloadPage = (props: ISceneProps) => {
-    return <P2PPreloadScene {...props}>
-        <P2PAssetsManager scene={null}>
-            <P2PImageAssetTask name="main-bg" url="./assets/img/main_bg@1x.jpg" />
-        </P2PAssetsManager>
-        <P2PNode name="" scene={null as any}/>
-    </P2PPreloadScene>
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    useEffect(() => {
+
+    }, []);
+
+    return <P2PScene {...props}>
+        <SceneContext.Consumer>
+            {
+                ({ sceneInstance }) => sceneInstance &&
+                    <>
+                        <P2PNode name="" scene={sceneInstance} >
+                            
+                        </P2PNode>
+                        <P2PAssetsManager scene={sceneInstance} loadDispatch={dispatch}>
+                            <taskImg taskName="main-bg" url="/assets/img/main_bg@1x.jpg" />
+                            <taskImg taskName="main-bg" url="/assets/img/main_bg@1x.jpg" />
+                        </P2PAssetsManager>
+                    </>
+            }
+        </SceneContext.Consumer>
+    </P2PScene>
 }

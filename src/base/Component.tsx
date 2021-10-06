@@ -55,15 +55,20 @@ function ComponentHOC<T>(EL: React.FC<T>) {
 export function ChildHOC<T>(EL: Nullable<React.FC<T>>) {
     return (props: T & IComponentProps<any>) => {
         const { instance, componentInstances } = props;
-        let children = React.Children.map(props.children, (child: any) => {
-            const Type = child.type;
-            return <Type {...child.props} parentInstance={instance} parentComponentInstances={componentInstances} />
-        })
+        // let children = React.Children.map(props.children, (child: any) => {
+        //     const Type = child.type;
+        //     return <Type {...child.props} parentInstance={instance} parentComponentInstances={componentInstances} />
+        // })
+
+        let children = React.Children.map(props.children, child => (React.cloneElement(child as any, {
+            parentInstance: instance,
+            parentComponentInstances: componentInstances
+        })));
+
         if (EL == null) return <>{children}</>
         return <EL {...props}>{children}</EL>
     }
 }
-
 
 export function buildExtends<T>(e: any) {
     return ComponentHOC<T>(e);

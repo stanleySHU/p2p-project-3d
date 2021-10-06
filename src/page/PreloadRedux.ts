@@ -1,4 +1,4 @@
-type ActionType = "processUpdate" |  "load" | "loadSucces" | "loadFail";
+type ActionType = "processUpdate" |  "load" | "loadSucces" | "loadFail" | "loadFinish";
 
 export type InitialState = {
     process: number,
@@ -9,7 +9,8 @@ export type Action = {
     type: ActionType,
     payload?: {
         loading?: boolean,
-        process?: number
+        process?: number,
+        detail?: string
     }
 };
 
@@ -25,7 +26,7 @@ export function reducer(state: InitialState, action: Action) {
     return state;
 }
 
-export function startLoad(): Action {
+export function load(): Action {
     return {
         type: 'load',
         payload: {
@@ -43,21 +44,29 @@ export function processUpdate(process: number): Action {
     }
 }
 
-export function loadFail(): Action {
+export function loadFail(text: string): Action {
     return {
         type: 'loadSucces',
+        payload: {
+            detail: text
+        }
+    }
+}
+
+export function loadSucces(text: string): Action {
+    return {
+        type: 'loadSucces',
+        payload: {
+            detail: text
+        }
+    }
+}
+
+export function loadFinish(): Action {
+    return {
+        type: 'loadFinish',
         payload: {
             loading: false
         }
     }
 }
-
-export function loadSucces(): Action {
-    return {
-        type: 'loadSucces',
-        payload: {
-            loading: true
-        }
-    }
-}
-

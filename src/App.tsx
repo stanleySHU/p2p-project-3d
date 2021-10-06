@@ -1,8 +1,8 @@
-import { P2PEngine } from './component/Engine';
-import { NavController } from './component/NavController';
+import { P2PEngine } from './base/Engine';
+import { NavController } from './base/NavController';
 import { PreloadPage } from './page/PreloadPage';
 import { StartPage } from './page/StartPage';
-import './component/index'
+import './base/index'
 
 function App() {
   return (

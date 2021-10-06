@@ -1,7 +1,7 @@
 import { Vector3 } from '@babylonjs/core';
-import { P2PDirectionalLight, P2PFreeCamera, P2PNode, P2PStandardMaterial, P2PTexture } from '../component';
-import { P2PGround } from '../component/mesh/Ground';
-import { ISceneProps, P2PScene, SceneContext } from '../component/scene/Scene'
+import { P2PDirectionalLight, P2PFreeCamera, P2PNode, P2PStandardMaterial, P2PTexture } from '../base';
+import { P2PGround } from '../base/mesh/Ground';
+import { ISceneProps, P2PScene, SceneContext } from '../base/scene/Scene'
 
 
 export const StartPage = (props: ISceneProps) => {

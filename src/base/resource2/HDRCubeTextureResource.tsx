@@ -1,13 +1,13 @@
 import { AbstractAssetTask, AssetsManager, HDRCubeTextureAssetTask, ImageAssetTask, TextureAssetTask } from "@babylonjs/core";
 import { IResourceInitial, Resource } from "./Resource";
 
-export type IHDRCubeTextureResourceInitial = {
+export type IHDRCubeTextureResourceInitial = IResourceInitial & {
     size: number,
     noMipmap: boolean,
     generateHarmonics: boolean,
     gammaSpace: boolean,
     reserved: boolean
-} & IResourceInitial
+};
 
 export class ImageResource extends Resource {
     getTask(loader: AssetsManager, props: IHDRCubeTextureResourceInitial): HDRCubeTextureAssetTask {

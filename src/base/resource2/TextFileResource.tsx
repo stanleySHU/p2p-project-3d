@@ -1,9 +1,9 @@
 import { AssetsManager, TextFileAssetTask } from "@babylonjs/core";
 import { IResourceInitial, Resource } from "./Resource";
 
-export type ITextFileResourceInitial = {
+export type ITextFileResourceInitial = IResourceInitial & {
 
-} & IResourceInitial;
+};
 
 
 export class TextFileResource extends Resource {

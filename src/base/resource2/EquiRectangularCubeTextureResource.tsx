@@ -1,11 +1,11 @@
 import { AbstractAssetTask, AssetsManager, EquiRectangularCubeTextureAssetTask, ImageAssetTask, TextureAssetTask } from "@babylonjs/core";
 import { IResourceInitial, Resource } from "./Resource";
 
-export type IEquiRectangularCubeTextureResourceInitial = {
+export type IEquiRectangularCubeTextureResourceInitial = IResourceInitial & {
     size: number,
     noMipmap: boolean,
     gammaSpace: boolean
-} & IResourceInitial
+};
 
 export class ImageResource extends Resource {
     getTask(loader: AssetsManager, props: IEquiRectangularCubeTextureResourceInitial): EquiRectangularCubeTextureAssetTask {

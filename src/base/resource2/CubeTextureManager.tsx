@@ -1,11 +1,11 @@
 import { AbstractAssetTask, AssetsManager, CubeTextureAssetTask, ImageAssetTask, TextureAssetTask } from "@babylonjs/core";
 import { IResourceInitial, Resource } from "./Resource";
 
-export type ICubeTextureResourceInitial = {
+export type ICubeTextureResourceInitial = IResourceInitial & {
     extensions?: string[],
     noMipmap?: boolean,
     files: string[]
-} & IResourceInitial
+};
 
 export class ImageResource extends Resource {
     getTask(loader: AssetsManager, props: ICubeTextureResourceInitial): CubeTextureAssetTask {

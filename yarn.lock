@@ -1138,11 +1138,19 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@babylonjs/core@^5.0.0-alpha.48":
+"@babylonjs/core@5.0.0-alpha.48", "@babylonjs/core@^5.0.0-alpha.48":
   version "5.0.0-alpha.48"
   resolved "https://registry.yarnpkg.com/@babylonjs/core/-/core-5.0.0-alpha.48.tgz#a935fec7a288a60f083833497091f489cee0bd4d"
   integrity sha512-NFOIZp+yj1Q+ziogK7I6mbKy+tqh/qTXJrHAcU29CPtNXhxda487ATdWmdlRUOWwbFqE7DY8J1HKGteTEmA/4Q==
   dependencies:
+    tslib "^2.3.1"
+
+"@babylonjs/gui@^5.0.0-alpha.48":
+  version "5.0.0-alpha.48"
+  resolved "https://registry.yarnpkg.com/@babylonjs/gui/-/gui-5.0.0-alpha.48.tgz#a9b1dba030e1cb52e66c2addf8f07bef054ce011"
+  integrity sha512-0l90c03udMZb/3gJT9vti7l1IdIxL8w78pfQgF/mrwj9RdisJJbWHPKH6D/9tReHoBejIKi/ysv8i376p2C25A==
+  dependencies:
+    "@babylonjs/core" "5.0.0-alpha.48"
     tslib "^2.3.1"
 
 "@bcoe/v8-coverage@^0.2.3":

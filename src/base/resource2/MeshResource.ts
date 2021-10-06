@@ -1,10 +1,10 @@
 import { AssetsManager, MeshAssetTask } from "@babylonjs/core";
 import { IResourceInitial, Resource } from "./Resource";
 
-export type IMeshResourceInitial = {
+export type IMeshResourceInitial = IResourceInitial & {
     meshName: string,
     sceneFileName: string
-} & IResourceInitial;
+};
 
 export class MeshResource extends Resource {
     getTask(loader: AssetsManager, props: IMeshResourceInitial): MeshAssetTask {

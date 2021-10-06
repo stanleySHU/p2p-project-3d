@@ -1,9 +1,9 @@
 import { AbstractAssetTask, AssetsManager, BinaryFileAssetTask, ImageAssetTask } from "@babylonjs/core";
 import { IResourceInitial, Resource } from "./Resource";
 
-export type IBinaryResourceInitial = {
+export type IBinaryResourceInitial = IResourceInitial & {
 
-} & IResourceInitial
+};
 
 export class ImageResource extends Resource {
     getTask(loader: AssetsManager, props: IBinaryResourceInitial): BinaryFileAssetTask {
