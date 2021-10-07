@@ -1,27 +1,37 @@
-import { MultiMaterial as BabylonMultiMaterial } from '@babylonjs/core';
+import { MultiMaterial as BabylonMultiMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { IMaterialInitial, buildExtends as _buildExtends  } from './Material';
+import { buildExtends as _buildExtends } from './Material'
 
-export type IMultiMaterialInitial<T> = IMaterialInitial<T> & {};
-export type IMultiMaterialProps = IMultiMaterialInitial<BabylonMultiMaterial>;
+export type IMultiMaterialProps = {
+    name: string, 
+    scene: BabylonScene
+}
+
+export type IMultiMaterialParams = {
+
+}
 
 function MultiMaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & IMultiMaterialProps) => {
-        const { scene, instance, name } = props;
-
+    return (props: T & IMultiMaterialParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonMultiMaterial(name, scene);
-            }
-        }, []);
 
+        });
         return <EL {...props}/>
-    };
-} 
+    }
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(MultiMaterialHOC(e));
 }
 
-export const P2PMultiMaterial = buildExtends<IMultiMaterialProps>(ChildHOC(null));
+function _(props: IMultiMaterialProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, scene } =  props;
+    useEffect(() => {
+        let obj = new BabylonMultiMaterial(name, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PMultiMaterial = buildExtends<IMultiMaterialProps & IMultiMaterialParams>(_);

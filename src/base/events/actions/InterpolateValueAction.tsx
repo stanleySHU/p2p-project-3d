@@ -1,35 +1,43 @@
-import { InterpolateValueAction as BabylonInterpolateValueAction } from '@babylonjs/core';
+import { Action, InterpolateValueAction as BabylonInterpolateValueAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component';
-import { IActionInitial, buildExtends as _buildExtends } from './Action';
+import { buildExtends as _buildExtends } from './Action'
 
-export type IInterpolateValueActionInitial<T> = IActionInitial<T> & {
+export type IInterpolateValueActionProps = {
+    triggerOptions: any, 
     target: any, 
     propertyPath: string, 
     value: any, 
     duration?: number, 
+    condition?: Condition, 
     stopOtherAnimations?: boolean, 
     onInterpolationDone?: () => void
-};
-export type IInterpolateValueActionProps = IInterpolateValueActionInitial<BabylonInterpolateValueAction>;
+}
+
+export type IInterpolateValueActionParams = {
+
+}
 
 function InterpolateValueActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IInterpolateValueActionProps) => {
-        const { instance, name, triggerOptions, target, propertyPath, value, duration, condition, stopOtherAnimations, onInterpolationDone } = props;
+    return (props: T & IInterpolateValueActionParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonInterpolateValueAction(triggerOptions, target, propertyPath, value, duration, condition, stopOtherAnimations, onInterpolationDone);
-            }
-        }, []);
+
+        });
         return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(InterpolateValueActionHOC(e));
 }
 
-export const P2PInterpolateValueAction = buildExtends<IInterpolateValueActionProps>(ChildHOC(null));
+function _(props: IInterpolateValueActionProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { triggerOptions, target, propertyPath, value, duration, condition, stopOtherAnimations, onInterpolationDone } =  props;
+    useEffect(() => {
+        let obj = new BabylonInterpolateValueAction(triggerOptions, target, propertyPath, value, duration, condition, stopOtherAnimations, onInterpolationDone);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IInterpolateValueActionOptions = {};
-
+export const P2PInterpolateValueAction = buildExtends<IInterpolateValueActionProps & IInterpolateValueActionParams>(_);

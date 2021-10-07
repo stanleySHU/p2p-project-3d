@@ -1,27 +1,37 @@
-import { DoNothingAction as BabylonDoNothingAction } from '@babylonjs/core';
+import { DoNothingAction as BabylonDoNothingAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component';
-import { IActionInitial, buildExtends as _buildExtends } from './Action';
+import { buildExtends as _buildExtends } from './Action'
 
-export type IDoNothingActionInitial<T> = IActionInitial<T> & {};
-export type IDoNothingActionProps = IDoNothingActionInitial<BabylonDoNothingAction>;
+export type IDoNothingActionProps = {
+    triggerOptions?: any, 
+    condition?: Condition
+}
+
+export type IDoNothingActionParams = {
+
+}
 
 function DoNothingActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IDoNothingActionProps) => {
-        const { instance, name, triggerOptions, condition } = props;
+    return (props: T & IDoNothingActionParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonDoNothingAction(triggerOptions, condition);
-            }
-        }, []);
+
+        });
         return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(DoNothingActionHOC(e));
 }
 
-export const P2PDoNothingAction = buildExtends<IDoNothingActionProps>(ChildHOC(null));
+function _(props: IDoNothingActionProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { triggerOptions, condition } =  props;
+    useEffect(() => {
+        let obj = new BabylonDoNothingAction(triggerOptions, condition);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IDoNothingActionOptions = {};
+export const P2PDoNothingAction = buildExtends<IDoNothingActionProps & IDoNothingActionParams>(_);

@@ -1,20 +1,19 @@
-import { Light as BabylonLight } from '@babylonjs/core';
-import React from 'react';
-import { INodeInitial, buildExtends as _buildExtends } from '../node/Node';
+import { buildExtends as _buildExtends } from '../node/Node';
+import { useEffect } from "react"
 
-export type ILightInitial<T> = INodeInitial<T> & {};
-export type ILightProps = ILightInitial<BabylonLight> & ILightOptions;
+export type ILightProps = {}
+
+export type ILightParams = {}
 
 function LightHOC<T>(EL: React.FC<T>) {
-    return (props: T & ILightProps) => {
+    return (props: T & ILightParams) => {
+        useEffect(() => {
+
+        })
         return <EL {...props}/>
     }
 }
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(LightHOC(e));
-};
-
-export type ILightOptions = {
-    
 }

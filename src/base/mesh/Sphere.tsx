@@ -1,43 +1,51 @@
-import { Mesh as BabylonMesh, MeshBuilder, Vector4 } from "@babylonjs/core";
-import React, { useEffect } from "react";
-import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { ChildHOC } from "../Component";
+import { MeshBuilder, Scene as BabylonScene, Vector4 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './Mesh';
+import { useEffect, useReducer } from "react"
+import { Nullable } from '../../utils/customType';
 
-export type ISphereInitial<T> = IMeshInitial<T> & {
-    segments?: number;
-    diameter?: number;
-    diameterX?: number;
-    diameterY?: number;
-    diameterZ?: number;
-    arc?: number;
-    slice?: number;
-    sideOrientation?: number;
-    frontUVs?: Vector4;
-    backUVs?: Vector4;
-    updatable?: boolean;
-};
-export type ISphereProps = ISphereInitial<BabylonMesh> & ISphereOptions;
+export type ISphereProps = {
+    name: string, 
+    options: {
+        segments?: number;
+        diameter?: number;
+        diameterX?: number;
+        diameterY?: number;
+        diameterZ?: number;
+        arc?: number;
+        slice?: number;
+        sideOrientation?: number;
+        frontUVs?: Vector4;
+        backUVs?: Vector4;
+        updatable?: boolean;
+    }, 
+    scene?: Nullable<BabylonScene>
+}
+
+export type ISphereParams = {
+
+}
 
 function SphereHOC<T>(EL: React.FC<T>) {
     return (props: T & ISphereProps) => {
-        const { scene, instance, name } = props;
-
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = MeshBuilder.CreateSphere(name, props, scene);
-            }
-        }, []);
 
+        })
         return <EL {...props}/>
     }
-};
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(SphereHOC(e));
 }
 
-export const P2PSphere = buildExtends<ISphereProps>(ChildHOC(null));
-
-export type ISphereOptions = {
-
+function _(props: ISphereProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, options, scene } =  props;
+    useEffect(() => {
+        let obj = MeshBuilder.CreateSphere(name, options, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
 }
+
+export const P2PSphere = buildExtends<ISphereProps & ISphereParams>(_);

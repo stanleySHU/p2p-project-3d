@@ -1,6 +1,6 @@
-import { Scene } from "@babylonjs/core";
+import { Scene, Vector3 } from "@babylonjs/core";
 import React, { ReactElement, useContext, useEffect, useReducer } from "react";
-import { P2PAssetsManager, P2PScene } from "..";
+import { P2PAssetsManager, P2PDirectionalLight, P2PFreeCamera, P2PNode, P2PScene } from "..";
 import { Nullable } from "../../utils/customType";
 import { NavControllerContext } from "../tab/NavController";
 import { push, replace } from "../tab/NavRedux";
@@ -23,7 +23,7 @@ export function P2PPreloadPage(props: IPreloadSceneProps) {
 
     function loaded() {
         if (props.next) {
-            navDispath(replace(props.next));
+            // navDispath(replace(props.next));
         }
     }
 
@@ -36,12 +36,16 @@ export function P2PPreloadPage(props: IPreloadSceneProps) {
             {
                 ({ sceneInstance }) => sceneInstance &&
                     <>
-                        {
-                            React.cloneElement(props.Preview!, {
-                                loadState: state,
-                                scene: sceneInstance
-                            })
-                        }
+                        <P2PNode name="preView" scene={sceneInstance}>
+                            <P2PFreeCamera name="camera" scene={sceneInstance} position={new Vector3(0, 5, -10)} />
+                            <P2PDirectionalLight name="light" scene={sceneInstance} direction={Vector3.Zero()} />
+                            {
+                                React.cloneElement(props.Preview!, {
+                                    loadState: state,
+                                    scene: sceneInstance
+                                })
+                            }
+                        </P2PNode>
                         <P2PAssetsManager scene={sceneInstance} loadDispatch={dispatch} loaded={loaded}>
                             {props.children}
                         </P2PAssetsManager>

@@ -1,20 +1,19 @@
-import { ShadowLight as BabylonShadowLight } from '@babylonjs/core';
-import React from 'react';
-import { ILightInitial, buildExtends as _buildExtends } from './Light';
+import { buildExtends as _buildExtends } from '../node/Node';
+import { useEffect } from "react"
 
-export type IShadowLightInitial<T> = ILightInitial<T> & {};
-export type IShadowLightProps = IShadowLightInitial<BabylonShadowLight> & IShadowLightOptins;
+export type IShadowLightProps = {}
+
+export type IShadowLightParams = {}
 
 function ShadowLightHOC<T>(EL: React.FC<T>) {
-    return (props: T & IShadowLightProps) => {
+    return (props: T & IShadowLightParams) => {
+        useEffect(() => {
+
+        })
         return <EL {...props}/>
     }
 }
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(ShadowLightHOC(e));
-};
-
-export type IShadowLightOptins = {
-    
 }

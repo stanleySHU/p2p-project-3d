@@ -1,19 +1,21 @@
-import { Control as BabylonControl } from '@babylonjs/gui';
-import React, { useEffect } from 'react';
-import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../../Component'; 
+import { Control as BabylonControl} from '@babylonjs/gui';
+import React, { useEffect, useReducer } from 'react';
+import { buildExtends as _buildExtends } from '../../Component'
 
-export type IControlInitial<T> = IComponentProps<T> & {}
-export type IControlProps = IControlInitial<BabylonControl>;
+export type IControlProps = {
+    name?: string | undefined
+}
 
-export function ControlHOC<T>(EL: React.FC<T>) {
-    return (props: T & IControlProps) => {
-        const { instance, name } = props;
+export type IControlParams = {
+
+}
+
+function ControlHOC<T>(EL: React.FC<T>) {
+    return (props: T & IControlParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonControl(name);
-            }
-        }, []);
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
@@ -21,4 +23,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(ControlHOC(e));
 }
 
-export const P2PControl = buildExtends<IControlProps>(ChildHOC(null));
+function _(props: IControlProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name } = props;
+    useEffect(() => {
+        let obj = new BabylonControl(name);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PControl = buildExtends<IControlProps & IControlParams>(_); 

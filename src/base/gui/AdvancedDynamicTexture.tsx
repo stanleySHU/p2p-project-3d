@@ -1,29 +1,29 @@
 import { Scene as BabylonScene } from '@babylonjs/core';
-import { AdvancedDynamicTexture as BabylonAdvancedDynamicTexture } from '@babylonjs/gui';
-import React, { useEffect } from 'react';
+import { AdvancedDynamicTexture as BabylonAdvancedDynamicTexture} from '@babylonjs/gui';
+import React, { useEffect, useReducer } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../Component'; 
+import { buildExtends as _buildExtends } from '../Component'
 
-export type IAdvancedDynamicTextureInitial<T> = IComponentProps<T> & {
+export type IAdvancedDynamicTextureProps = {
     name: string, 
-    width?: number, 
-    height?: number, 
+    width: number | undefined, 
+    height: number | undefined, 
     scene: Nullable<BabylonScene>, 
     generateMipMaps?: boolean, 
     samplingMode?: number, 
-    invertY?: boolean
+    BabylonSceneinvertY?: boolean
 }
-export type IAdvancedDynamicTextureProps = IAdvancedDynamicTextureInitial<BabylonAdvancedDynamicTexture>;
 
-export function AdvancedDynamicTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IAdvancedDynamicTextureProps) => {
-        const { instance, name, width, height, scene, generateMipMaps, samplingMode, invertY } = props;
+export type IAdvancedDynamicTextureParams = {
+
+}
+
+function AdvancedDynamicTextureHOC<T>(EL: React.FC<T>) {
+    return (props: T & IAdvancedDynamicTextureParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonAdvancedDynamicTexture(name, width, height, scene as any, generateMipMaps, samplingMode, invertY);
-            }
-        }, []);
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
@@ -31,4 +31,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(AdvancedDynamicTextureHOC(e));
 }
 
-export const P2PAdvancedDynamicTexture = buildExtends<IAdvancedDynamicTextureProps>(ChildHOC(null));
+function _(props: IAdvancedDynamicTextureProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, width, height, scene, generateMipMaps, samplingMode, BabylonSceneinvertY } = props;
+    useEffect(() => {
+        let obj = new BabylonAdvancedDynamicTexture(name, width, height, scene, generateMipMaps, samplingMode, BabylonSceneinvertY );
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PAdvancedDynamicTexture = buildExtends<IAdvancedDynamicTextureProps & IAdvancedDynamicTextureParams>(_); 

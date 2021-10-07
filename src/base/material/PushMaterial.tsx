@@ -1,26 +1,37 @@
-import { PushMaterial as BabylonPushMaterial } from '@babylonjs/core';import React, { useContext, useEffect, useRef } from 'react';
-import { ChildHOC } from '../Component';
-import { IMaterialInitial, buildExtends as _buildExtends } from './Material';
+import { PushMaterial as BabylonPushMaterial, Scene as BabylonScene } from '@babylonjs/core';
+import React, { useEffect } from 'react';
+import { buildExtends as _buildExtends } from './Material'
 
-export type IPushMaterialInitial<T> = IMaterialInitial<T> & {};
-export type IPushMaterialProps = IPushMaterialInitial<BabylonPushMaterial>;
+export type IPushMaterialProps = {
+    name: string, 
+    scene: BabylonScene
+}
+
+export type IPushMaterialParams = {
+
+}
 
 function PushMaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & IPushMaterialProps) => {
-        const { scene, instance, name } = props;
-
+    return (props: T & IPushMaterialParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonPushMaterial(name, scene);
-            }
-        }, []);
 
+        });
         return <EL {...props}/>
-    };
-} 
+    }
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(PushMaterialHOC(e));
 }
 
-export const P2PPushMaterial = buildExtends<IPushMaterialProps>(ChildHOC(null));
+function _(props: IPushMaterialProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, scene } =  props;
+    useEffect(() => {
+        let obj = new BabylonPushMaterial(name, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PPushMaterial = buildExtends<IPushMaterialProps & IPushMaterialParams>(_);

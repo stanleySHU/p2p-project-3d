@@ -1,37 +1,41 @@
-import { SpotLight as BabylonSpotLight, Vector3 } from '@babylonjs/core';
-import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { IShadowLightInitial, buildExtends as _buildExtends } from './ShadowLight';
+import { SpotLight as BabylonSpotLight, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './ShadowLight';
+import { useEffect, useReducer } from "react"
 
-export type ISpotLightInitial<T> = IShadowLightInitial<T> & {
-    name: string,
-    position: Vector3,
-    direction: Vector3,
-    angle: number,
-    exponent: number
-};
-export type ISpotLightProps = ISpotLightInitial<BabylonSpotLight> & ISpotLightOptions;
+export type ISpotLightProps = {
+    name: string, 
+    position: Vector3, 
+    direction: Vector3, 
+    angle: number, 
+    exponent: number, 
+    scene: BabylinScene
+}
+
+export type ISpotLightParams = {
+
+}
 
 function SpotLightHOC<T>(EL: React.FC<T>) {
-    return (props: T & ISpotLightProps) => {
-        const { scene, instance, name, position, direction, angle, exponent } = props;
-
+    return (props: T & ISpotLightParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonSpotLight(name, position, direction, angle, exponent, scene);
-            }
-        }, [])
 
+        })
         return <EL {...props}/>
     }
 }
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(SpotLightHOC(e));
-};
-
-export const P2PSpotLight = buildExtends<ISpotLightProps>(ChildHOC(null));
-
-export type ISpotLightOptions = {
-    
 }
+
+function _(props: ISpotLightProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, position, direction, angle, exponent, scene } =  props;
+    useEffect(() => {
+        let obj = new BabylonSpotLight(name, position, direction, angle, exponent, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PSpotLight = buildExtends<ISpotLightProps & ISpotLightParams>(_);

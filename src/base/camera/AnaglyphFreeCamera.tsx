@@ -1,34 +1,39 @@
-import { AnaglyphFreeCamera as BabylonAnaglyphFreeCamera } from '@babylonjs/core';
-import React, { useEffect } from "react";
-import { IFreeCameraInitial, buildExtends as _buildExtends } from "./FreeCamera";
-import { ChildHOC } from '../Component';
+import { AnaglyphFreeCamera as BabylonAnaglyphFreeCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './FreeCamera';
+import { useEffect, useReducer } from "react"
 
-export type IAnaglyphFreeCameraInitial<T> = IFreeCameraInitial<T> & {
-    name: string,
-    interaxialDistance: number
-};
-export type IAnaglyphFreeCameraProps = IAnaglyphFreeCameraInitial<BabylonAnaglyphFreeCamera> & IAnaglyphFreeCameraOptions;
+export type IAnaglyphFreeCameraProps = {
+    name: string, 
+    position: Vector3, 
+    interaxialDistance: number, 
+    scene: BabylinScene
+}
+
+export type IAnaglyphFreeCameraParams = {
+
+}
 
 function AnaglyphFreeCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IAnaglyphFreeCameraProps) => {
-        const { scene, instance, name, position, interaxialDistance } = props;
-
+    return (props: T & IAnaglyphFreeCameraParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonAnaglyphFreeCamera(name, position, interaxialDistance, scene);
-            }
-        }, []);
 
+        })
         return <EL {...props}/>
-    };  
-};
+    }
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(AnaglyphFreeCameraHOC(e));
-};
-
-export const P2PAnaglyphFreeCamera = buildExtends<IAnaglyphFreeCameraProps>(ChildHOC(null));
-
-export type IAnaglyphFreeCameraOptions = {
-    
 }
+
+function _(props: IAnaglyphFreeCameraProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, position, interaxialDistance, scene } =  props;
+    useEffect(() => {
+        let obj = new BabylonAnaglyphFreeCamera(name, position, interaxialDistance, scene );
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PAnaglyphFreeCamera = buildExtends<IAnaglyphFreeCameraProps & IAnaglyphFreeCameraParams>(_);

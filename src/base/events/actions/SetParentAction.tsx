@@ -1,31 +1,39 @@
-import { SetParentAction as BabylonSetParentAction } from '@babylonjs/core';
+import { Action, SetParentAction as BabylonSetParentAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component';
-import { IActionInitial, buildExtends as _buildExtends } from './Action';
+import { buildExtends as _buildExtends } from './Action'
 
-export type ISetParentActionInitial<T> = IActionInitial<T> & {
+export type ISetParentActionProps = {
+    triggerOptions: any, 
     target: any, 
-    parent: any
-};
-export type ISetParentActionProps = ISetParentActionInitial<BabylonSetParentAction>;
+    parent: any, 
+    condition?: Condition
+}
+
+export type ISetParentActionParams = {
+
+}
 
 function SetParentActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & ISetParentActionProps) => {
-        const { instance, name, triggerOptions, target, parent, condition } = props;
+    return (props: T & ISetParentActionParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonSetParentAction(triggerOptions, target, parent, condition);
-            }
-        }, []);
+
+        });
         return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(SetParentActionHOC(e));
 }
 
-export const P2PSetParentAction = buildExtends<ISetParentActionProps>(ChildHOC(null));
+function _(props: ISetParentActionProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { triggerOptions, target, parent, condition } =  props;
+    useEffect(() => {
+        let obj = new BabylonSetParentAction(triggerOptions, target, parent, condition);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type ISetParentActionOptions = {};
-
+export const P2PSetParentAction = buildExtends<ISetParentActionProps & ISetParentActionParams>(_);

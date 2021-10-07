@@ -1,27 +1,37 @@
-import { PBRMetallicRoughnessMaterial as BabylonPBRMetallicRoughnessMaterial } from '@babylonjs/core';
+import { PBRMetallicRoughnessMaterial as BabylonPBRMetallicRoughnessMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { IPBRBaseSimpleMaterialInitial, buildExtends as _buildExtends } from './PBRBaseSimpleMaterial';
+import { buildExtends as _buildExtends } from './PBRBaseSimpleMaterial'
 
-export type IPBRMetallicRoughnessMaterialInitial<T> = IPBRBaseSimpleMaterialInitial<T> & {};
-export type IPBRMetallicRoughnessMaterialProps = IPBRMetallicRoughnessMaterialInitial<BabylonPBRMetallicRoughnessMaterial>;
+export type IPBRMetallicRoughnessMaterialProps = {
+    name: string, 
+    scene: BabylonScene
+}
+
+export type IPBRMetallicRoughnessMaterialParams = {
+
+}
 
 function PBRMetallicRoughnessMaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & IPBRMetallicRoughnessMaterialProps) => {
-        const { scene, instance, name } = props;
-
+    return (props: T & IPBRMetallicRoughnessMaterialParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonPBRMetallicRoughnessMaterial(name, scene);
-            }
-        }, []);
 
+        });
         return <EL {...props}/>
-    };
-} 
+    }
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(PBRMetallicRoughnessMaterialHOC(e));
 }
 
-export const P2PPBRMetallicRoughnessMaterial = buildExtends<IPBRMetallicRoughnessMaterialProps>(ChildHOC(null));
+function _(props: IPBRMetallicRoughnessMaterialProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, scene } =  props;
+    useEffect(() => {
+        let obj = new BabylonPBRMetallicRoughnessMaterial(name, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PPBRMetallicRoughnessMaterial = buildExtends<IPBRMetallicRoughnessMaterialProps & IPBRMetallicRoughnessMaterialParams>(_);

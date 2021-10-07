@@ -1,23 +1,24 @@
 import { Node as BabylonNode, Scene as BabylonScene } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
-import { SceneContext } from '../scene/Scene';
-import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../Component'
+import React, { useEffect, useReducer } from 'react';
+import { Nullable } from '../../utils/customType';
+import { buildExtends as _buildExtends } from '../Component'
+import { newChildren } from '../ComponentRedux';
+import { reducer, initialState } from './NodeRedux';
 
-export type INodeInitial<T> = IComponentProps<T> & {
-    scene: BabylonScene,
-    name: string
+export type INodeProps = {
+    name: string, 
+    scene?: Nullable<BabylonScene>
 }
-export type INodeProps = INodeInitial<BabylonNode> & INodeOptions;
+
+export type INodeParams = {
+
+}
 
 function NodeHOC<T>(EL: React.FC<T>) {
-    return (props: T & INodeProps) => {
-        const { scene, instance, name } = props;
-
+    return (props: T & INodeParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonNode(name, scene);
-            }
-        }, []);
+
+        });
         return <EL {...props}/>
     }
 }
@@ -26,5 +27,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(NodeHOC(e));
 }
 
-export const P2PNode = buildExtends<INodeProps>(ChildHOC(null));
-export type INodeOptions = {}
+function _(props: INodeProps) {
+    const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { scene, name } = props;
+    useEffect(() => {
+        let obj = new BabylonNode(name, scene);
+        dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PNode = buildExtends<INodeProps & INodeParams>(_); 

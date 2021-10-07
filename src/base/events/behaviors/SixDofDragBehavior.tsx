@@ -1,25 +1,33 @@
-import { SixDofDragBehavior as BabylonSixDofDragBehavior } from "@babylonjs/core";
+import { SixDofDragBehavior as BabylonSixDofDragBehavior, TransformNode } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../../Component';
+import { buildExtends as _buildExtends } from '../../Component'
 
-export type ISixDofDragBehaviorProps = IComponentProps<BabylonSixDofDragBehavior> & {}
+export type ISixDofDragBehaviorProps = {}
+
+export type ISixDofDragBehaviorParams = {
+
+}
 
 function SixDofDragBehaviorHOC<T>(EL: React.FC<T>) {
-    return (props: T & ISixDofDragBehaviorProps) => {
-        const { instance, name } = props;
-
+    return (props: T & ISixDofDragBehaviorParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonSixDofDragBehavior();
-            }
-        }, [])
-    
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(SixDofDragBehaviorHOC(e));
 }
 
-export const P2PSixDofDragBehavior = buildExtends<ISixDofDragBehaviorProps>(ChildHOC(null));
+function _(props: ISixDofDragBehaviorProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    useEffect(() => {
+        let obj = new BabylonSixDofDragBehavior();
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PSixDofDragBehavior = buildExtends<ISixDofDragBehaviorProps & ISixDofDragBehaviorParams>(_);

@@ -1,29 +1,38 @@
-import { INodeMaterialOptions, NodeMaterial as BabylonNodeMaterial } from '@babylonjs/core';
+import { INodeMaterialOptions, NodeMaterial as BabylonNodeMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { IPushMaterialInitial, buildExtends as _buildExtends  } from './PushMaterial';
+import { buildExtends as _buildExtends } from './PushMaterial'
 
-export type INodeMaterialInitial<T> = IPushMaterialInitial<T> & {
+export type INodeMaterialProps = {
+    name: string, 
+    scene?: BabylonScene, 
     options?: Partial<INodeMaterialOptions>
-};
-export type INodeMaterialProps = INodeMaterialInitial<BabylonNodeMaterial>;
+}
+
+export type INodeMaterialParams = {
+
+}
 
 function NodeMaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & INodeMaterialProps) => {
-        const { scene, instance, name, options } = props;
-
+    return (props: T & INodeMaterialParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonNodeMaterial(name, scene, options);
-            }
-        }, []);
 
+        });
         return <EL {...props}/>
-    };
-} 
+    }
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(NodeMaterialHOC(e));
 }
 
-export const P2PNodeMaterial = buildExtends<INodeMaterialProps>(ChildHOC(null));
+function _(props: INodeMaterialProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, scene, options } =  props;
+    useEffect(() => {
+        let obj = new BabylonNodeMaterial(name, scene, options);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PNodeMaterial = buildExtends<INodeMaterialProps & INodeMaterialParams>(_);

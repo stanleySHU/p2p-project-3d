@@ -1,25 +1,33 @@
-import { MultiPointerScaleBehavior as BabylonMultiPointerScaleBehavior} from "@babylonjs/core";
+import { MultiPointerScaleBehavior as BabylonMultiPointerScaleBehavior, TransformNode } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../../Component';
+import { buildExtends as _buildExtends } from '../../Component'
 
-export type IMultiPointerScaleBehaviorProps = IComponentProps<BabylonMultiPointerScaleBehavior> & {}
+export type IMultiPointerScaleBehaviorProps = {}
+
+export type IMultiPointerScaleBehaviorParams = {
+
+}
 
 function MultiPointerScaleBehaviorHOC<T>(EL: React.FC<T>) {
-    return (props: T & IMultiPointerScaleBehaviorProps) => {
-        const { instance, name } = props;
-
+    return (props: T & IMultiPointerScaleBehaviorParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonMultiPointerScaleBehavior();
-            }
-        }, [])
-    
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(MultiPointerScaleBehaviorHOC(e));
 }
 
-export const P2PMultiPointerScaleBehavior = buildExtends<IMultiPointerScaleBehaviorProps>(ChildHOC(null));
+function _(props: IMultiPointerScaleBehaviorProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    useEffect(() => {
+        let obj = new BabylonMultiPointerScaleBehavior();
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PMultiPointerScaleBehavior = buildExtends<IMultiPointerScaleBehaviorProps & IMultiPointerScaleBehaviorParams>(_);

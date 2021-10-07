@@ -1,40 +1,48 @@
-import { Mesh as BabylonMesh, MeshBuilder, Plane, Vector4 } from "@babylonjs/core";
-import React, { useEffect } from "react";
-import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { ChildHOC } from "../Component";
+import { MeshBuilder, Plane, Scene as BabylonScene, Vector4 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './Mesh';
+import { useEffect, useReducer } from "react"
+import { Nullable } from '../../utils/customType';
 
-export type IPlaneInitial<T> = IMeshInitial<T> & {
-    size?: number;
-    width?: number;
-    height?: number;
-    sideOrientation?: number;
-    frontUVs?: Vector4;
-    backUVs?: Vector4;
-    updatable?: boolean;
-    sourcePlane?: Plane;
-};
-export type IPlaneProps = IPlaneInitial<BabylonMesh> & IPlaneOptions;
+export type IPlaneProps = {
+    name: string, 
+    options: {
+        size?: number;
+        width?: number;
+        height?: number;
+        sideOrientation?: number;
+        frontUVs?: Vector4;
+        backUVs?: Vector4;
+        updatable?: boolean;
+        sourcePlane?: Plane;
+    }, 
+    scene?: Nullable<BabylonScene>
+}
+
+export type IPlaneParams = {
+
+}
 
 function PlaneHOC<T>(EL: React.FC<T>) {
     return (props: T & IPlaneProps) => {
-        const { scene, instance, name } = props;
-
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = MeshBuilder.CreatePlane(name, props, scene);
-            }
-        }, []);
 
+        })
         return <EL {...props}/>
     }
-};
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(PlaneHOC(e));
 }
 
-export const P2PPlane = buildExtends<IPlaneProps>(ChildHOC(null));
-
-export type IPlaneOptions = {
-
+function _(props: IPlaneProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, options, scene } =  props;
+    useEffect(() => {
+        let obj = MeshBuilder.CreatePlane(name, options, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
 }
+
+export const P2PPlane = buildExtends<IPlaneProps & IPlaneParams>(_);

@@ -1,39 +1,45 @@
-import { Color4, LinesMesh, Mesh as BabylonMesh, MeshBuilder, Vector3 } from "@babylonjs/core";
-import React, { useEffect } from "react";
-import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { Nullable } from "../../utils/customType";
-import { ChildHOC } from "../Component";
+import { Color4, LinesMesh, MeshBuilder, Scene as BabylonScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './Mesh';
+import { useEffect, useReducer } from "react"
+import { Nullable } from '../../utils/customType';
 
-export type ILinesInitial<T> = IMeshInitial<T> & {
-    name: string,
-    points: Vector3[];
-    updatable?: boolean;
-    instance?: Nullable<LinesMesh>;  //?
-    colors?: Color4[];
-    useVertexAlpha?: boolean;
-};
-export type ILinesProps = ILinesInitial<BabylonMesh> & ILinesOptions;
+export type ILinesProps = {
+    name: string, 
+    options: {
+        points: Vector3[];
+        updatable?: boolean;
+        instance?: Nullable<LinesMesh>;
+        colors?: Color4[];
+        useVertexAlpha?: boolean;
+    }, 
+    scene?: Nullable<BabylonScene>
+}
+
+export type ILinesParams = {
+
+}
 
 function LinesHOC<T>(EL: React.FC<T>) {
     return (props: T & ILinesProps) => {
-        const { scene, instance, name } = props;
-
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = MeshBuilder.CreateLines(name, props, scene);
-            }
-        }, []);
 
+        })
         return <EL {...props}/>
     }
-};
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(LinesHOC(e));
 }
 
-export const P2PLines = buildExtends<ILinesProps>(ChildHOC(null));
-
-export type ILinesOptions = {
-
+function _(props: ILinesProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, options, scene } =  props;
+    useEffect(() => {
+        let obj = MeshBuilder.CreateLines(name, options, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
 }
+
+export const P2PLines = buildExtends<ILinesProps & ILinesParams>(_);

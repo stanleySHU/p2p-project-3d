@@ -1,20 +1,21 @@
-import { Ellipse as BabylonEllipse } from '@babylonjs/gui';
-import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component'; 
-import { IContainerInitial, buildExtends as _buildExtends } from './Container';
+import { Ellipse as BabylonEllipse} from '@babylonjs/gui';
+import React, { useEffect, useReducer } from 'react';
+import { buildExtends as _buildExtends } from './Container'
 
-export type IEllipseInitial<T> = IContainerInitial<T> & {}
-export type IEllipseProps = IEllipseInitial<BabylonEllipse>;
+export type IEllipseProps = {
+    name?: string | undefined
+}
 
-export function EllipseHOC<T>(EL: React.FC<T>) {
-    return (props: T & IEllipseProps) => {
-        const { instance, name } = props;
+export type IEllipseParams = {
+
+}
+
+function EllipseHOC<T>(EL: React.FC<T>) {
+    return (props: T & IEllipseParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonEllipse(name);
-            }
-        }, []);
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
@@ -22,4 +23,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(EllipseHOC(e));
 }
 
-export const P2PEllipse = buildExtends<IEllipseProps>(ChildHOC(null));
+function _(props: IEllipseProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name } = props;
+    useEffect(() => {
+        let obj = new BabylonEllipse(name);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PEllipse = buildExtends<IEllipseProps & IEllipseParams>(_); 

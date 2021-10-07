@@ -1,20 +1,21 @@
-import { Button as BabylonButton } from '@babylonjs/gui';
-import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component'; 
-import { IRectangleInitial, buildExtends as _buildExtends } from './Rectangle';
+import { Button as BabylonButton} from '@babylonjs/gui';
+import React, { useEffect, useReducer } from 'react';
+import { buildExtends as _buildExtends } from './Rectangle'
 
-export type IButtonInitial<T> = IRectangleInitial<T> & {}
-export type IButtonProps = IButtonInitial<BabylonButton>;
+export type IButtonProps = {
+    name?: string | undefined
+}
 
-export function ButtonHOC<T>(EL: React.FC<T>) {
-    return (props: T & IButtonProps) => {
-        const { instance, name } = props;
+export type IButtonParams = {
+
+}
+
+function ButtonHOC<T>(EL: React.FC<T>) {
+    return (props: T & IButtonParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonButton(name);
-            }
-        }, []);
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
@@ -22,4 +23,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(ButtonHOC(e));
 }
 
-export const P2PButton = buildExtends<IButtonProps>(ChildHOC(null));
+function _(props: IButtonProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name } = props;
+    useEffect(() => {
+        let obj = new BabylonButton(name);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PButton = buildExtends<IButtonProps & IButtonParams>(_); 

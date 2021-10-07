@@ -1,34 +1,43 @@
-import { VRCameraMetrics, VRDeviceOrientationArcRotateCamera as BabylonVRDeviceOrientationArcRotateCamera } from '@babylonjs/core';
-import React, {useEffect } from "react"
-import { IArcRotateCameraInitial, buildExtends as _buildExtends } from "./ArcRotateCamera";
-import { ChildHOC } from '../Component';
+import { VRDeviceOrientationArcRotateCamera as BabylonVRDeviceOrientationArcRotateCamera, Scene as BabylinScene, Vector3, VRCameraMetrics } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './ArcRotateCamera';
+import { useEffect, useReducer } from "react"
 
-export type IVRDeviceOrientationArcRotateCameraInitial<T> = IArcRotateCameraInitial<T> & {
+export type IVRDeviceOrientationArcRotateCameraProps = {
+    name: string, 
+    alpha: number, 
+    beta: number, 
+    radius: number, 
+    target: Vector3, 
+    scene: BabylinScene, 
     compensateDistortion?: boolean, 
-    vrCameraMetrics?: VRCameraMetrics 
-};
-export type IVRDeviceOrientationArcRotateCameraProps = IVRDeviceOrientationArcRotateCameraInitial<BabylonVRDeviceOrientationArcRotateCamera> & IVRDeviceOrientationArcRotateCameraOptions;
+    vrCameraMetrics?: VRCameraMetrics
+}
+
+export type IVRDeviceOrientationArcRotateCameraParams = {
+
+}
 
 function VRDeviceOrientationArcRotateCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IVRDeviceOrientationArcRotateCameraProps) => {
-        const { scene, instance, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
-
+    return (props: T & IVRDeviceOrientationArcRotateCameraParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonVRDeviceOrientationArcRotateCamera(name, alpha, beta, radius, target, scene, setActiveOnSceneIfNoneActive);
-            }
-        }, []);
-        
+
+        })
         return <EL {...props}/>
     }
 }
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(VRDeviceOrientationArcRotateCameraHOC(e));
-};
+}
 
-export const P2PVRDeviceOrientationArcRotateCamera = buildExtends<IVRDeviceOrientationArcRotateCameraProps>(ChildHOC(null));
+function _(props: IVRDeviceOrientationArcRotateCameraProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, alpha, beta, radius, target, scene, compensateDistortion, vrCameraMetrics } =  props;
+    useEffect(() => {
+        let obj = new BabylonVRDeviceOrientationArcRotateCamera(name, alpha, beta, radius, target, scene, compensateDistortion, vrCameraMetrics);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IVRDeviceOrientationArcRotateCameraOptions = {
-
-};
+export const P2PVRDeviceOrientationArcRotateCamera = buildExtends<IVRDeviceOrientationArcRotateCameraProps & IVRDeviceOrientationArcRotateCameraParams>(_);

@@ -1,25 +1,33 @@
-import { BouncingBehavior as BabylonBouncingBehavior } from '@babylonjs/core'; 
+import { BouncingBehavior as BabylonBouncingBehavior } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../../Component';
+import { buildExtends as _buildExtends } from '../../Component'
 
-export type IBouncingBehaviorProps = IComponentProps<BabylonBouncingBehavior> & {}
+export type IBouncingBehaviorProps = {}
+
+export type IBouncingBehaviorParams = {
+
+}
 
 function BouncingBehaviorHOC<T>(EL: React.FC<T>) {
-    return (props: T & IBouncingBehaviorProps) => {
-        const { instance, name } = props;
-
+    return (props: T & IBouncingBehaviorParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonBouncingBehavior();
-            }
-        }, [])
-    
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(BouncingBehaviorHOC(e));
 }
 
-export const P2PBouncingBehavior = buildExtends<IBouncingBehaviorProps>(ChildHOC(null));
+function _(props: IBouncingBehaviorProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    useEffect(() => {
+        let obj = new BabylonBouncingBehavior();
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PBouncingBehavior = buildExtends<IBouncingBehaviorProps & IBouncingBehaviorParams>(_);

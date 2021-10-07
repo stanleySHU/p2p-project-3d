@@ -1,29 +1,38 @@
-import { VirtualJoysticksCamera as BabylonVirtualJoysticksCamera } from '@babylonjs/core';
-import React, { useEffect } from "react";
-import { IFreeCameraInitial, buildExtends as _buildExtends } from "./FreeCamera";
-import { ChildHOC } from '../Component';
+import { VirtualJoysticksCamera as BabylonVirtualJoysticksCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './FreeCamera';
+import { useEffect, useReducer } from "react"
 
-export type IVirtualJoysticksCameraInitial<T> = IFreeCameraInitial<T> & {};
-export type IVirtualJoysticksCameraProps = IVirtualJoysticksCameraInitial<BabylonVirtualJoysticksCamera> & IVirtualJoysticksCameraOptions;
+export type IVirtualJoysticksCameraProps = {
+    name: string, 
+    position: Vector3, 
+    scene: BabylinScene
+}
+
+export type IVirtualJoysticksCameraParams = {
+
+}
 
 function VirtualJoysticksCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IVirtualJoysticksCameraProps) => {
-        const { scene, instance, name, position } = props;
-
+    return (props: T & IVirtualJoysticksCameraParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonVirtualJoysticksCamera(name, position, scene);
-            }
-        }, []);
 
+        })
         return <EL {...props}/>
-    };  
-};
+    }
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(VirtualJoysticksCameraHOC(e));
-};
+}
 
-export const P2PVirtualJoysticksCamera = buildExtends<IVirtualJoysticksCameraProps>(ChildHOC(null));
+function _(props: IVirtualJoysticksCameraProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, position, scene } =  props;
+    useEffect(() => {
+        let obj = new BabylonVirtualJoysticksCamera(name, position, scene );
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IVirtualJoysticksCameraOptions = {}
+export const P2PVirtualJoysticksCamera = buildExtends<IVirtualJoysticksCameraProps & IVirtualJoysticksCameraParams>(_);

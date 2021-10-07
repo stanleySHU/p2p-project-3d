@@ -1,12 +1,11 @@
-import { CubeTexture as BabylonCubeTexture } from '@babylonjs/core'; 
-import React, { useContext, useEffect } from 'react';
+import { CubeTexture as BabylonCubeTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
+import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { ChildHOC } from '../Component';
-import { EngineContext } from '../Engine';
-import { IBaseTextureInitial, buildExtends as _buildExtends } from './BaseTexture';
+import { buildExtends as _buildExtends } from './BaseTexture'
 
-export type ICubeTextureInitial<T> = IBaseTextureInitial<T> & {
+export type ICubeTextureProps = {
     rootUrl: string, 
+    sceneOrEngine: BabylonScene | ThinEngine, 
     extensions?: Nullable<string[]>, 
     noMipmap?: boolean, 
     files?: Nullable<string[]>, 
@@ -18,20 +17,19 @@ export type ICubeTextureInitial<T> = IBaseTextureInitial<T> & {
     createPolynomials?: boolean, 
     lodScale?: number, 
     lodOffset?: number, 
-    loaderOptions?: any
+    loaderOptions?: any, 
+    useSRGBBuffer?: boolean
 }
-export type ICubeTextureProps = ICubeTextureInitial<BabylonCubeTexture>;
+
+export type ICubeTextureParams = {
+
+}
 
 function CubeTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & ICubeTextureProps) => {
-        const { engine } = useContext(EngineContext);
-        const { instance, name, rootUrl, extensions, noMipmap, files, onLoad, onError, format, prefiltered, forcedExtension, createPolynomials, lodScale, lodOffset, loaderOptions } = props;
-
+    return (props: T & ICubeTextureParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonCubeTexture(rootUrl, engine!, extensions, noMipmap, files, onLoad, onError, format, prefiltered, forcedExtension, createPolynomials, lodScale, lodOffset, loaderOptions);
-            }
-        }, [])
+
+        });
         return <EL {...props}/>
     }
 }
@@ -40,6 +38,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(CubeTextureHOC(e));
 }
 
-export const P2PCubeTexture = buildExtends<ICubeTextureProps>(ChildHOC(null));
-    
-export type ICubeTextureOptions = {};
+function _(props: ICubeTextureProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { rootUrl, sceneOrEngine, extensions, noMipmap, files, onLoad, onError, format, prefiltered, forcedExtension, createPolynomials, lodScale, lodOffset, loaderOptions, useSRGBBuffer } =  props;
+    useEffect(() => {
+        let obj = new BabylonCubeTexture(rootUrl, sceneOrEngine, extensions, noMipmap, files, onLoad, onError, format, prefiltered, forcedExtension, createPolynomials, lodScale, lodOffset, loaderOptions, useSRGBBuffer);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PCubeTexture = buildExtends<ICubeTextureProps & ICubeTextureParams>(_);

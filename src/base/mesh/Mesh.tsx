@@ -1,39 +1,44 @@
 import { Mesh as BabylonMesh, Scene as  BabylonScene } from "@babylonjs/core";
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import { Nullable } from "../../utils/customType";
-import { ChildHOC } from "../Component";
-import { ITransformNodeInitial, buildExtends as _buildExtends  } from "../node/TransformNode";
+import { newChildren } from "../ComponentRedux";
+import { reducer, initialState } from './MeshRedux';
+import { buildExtends as _buildExtends  } from "../node/TransformNode";
 
-export type IMeshInitial<T> = ITransformNodeInitial<T> & {
-    scene?: BabylonScene,
-    name: string,
-    source?: Nullable<BabylonMesh>,
-    parent?: Nullable<Node>, //这个怎么处理。。。
-    doNotCloneChildren?: boolean,
+export type IMeshProps = {
+    name: string, 
+    scene?: Nullable<BabylonScene>, 
+    parent?: Nullable<Node>, 
+    source?: Nullable<BabylonMesh>, 
+    doNotCloneChildren?: boolean, 
     clonePhysicsImpostor?: boolean
-};
-export type IMeshProps = IMeshInitial<BabylonMesh> & IMeshOptions;
+}
+
+export type IMeshParams = {
+
+}
 
 function MeshHOC<T>(EL: React.FC<T>) {
     return (props: T & IMeshProps) => {
-        const { scene, instance, name, source, doNotCloneChildren, clonePhysicsImpostor } = props;
-
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonMesh(name, scene, null, source, doNotCloneChildren, clonePhysicsImpostor);
-            }
-        }, [])
-        
+
+        })
         return <EL {...props}/>
-    };
+    }
 }
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(MeshHOC(e));
 }
 
-export const P2PMesh = buildExtends<IMeshProps>(ChildHOC(null));
-
-export type IMeshOptions = {
-    
+function _(props: IMeshProps) {
+    const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, scene, parent, source, doNotCloneChildren, clonePhysicsImpostor } =  props;
+    useEffect(() => {
+        let obj = new BabylonMesh(name, scene, parent as any, source, doNotCloneChildren, clonePhysicsImpostor);
+        dispatch(newChildren(obj));
+    }, []);
+    return null;
 }
+
+export const P2PMesh = buildExtends<IMeshProps & IMeshParams>(_);

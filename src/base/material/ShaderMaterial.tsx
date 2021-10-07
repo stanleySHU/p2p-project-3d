@@ -1,32 +1,39 @@
-import { IShaderMaterialOptions, ShaderMaterial as BabylonShaderMaterial } from '@babylonjs/core';
+import { ShaderMaterial as BabylonShaderMaterial, Scene as BabylonScene, IShaderMaterialOptions } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { IMaterialInitial, buildExtends as _buildExtends } from './Material';
+import { buildExtends as _buildExtends } from './Material'
 
-export type IShaderMaterialInitial<T> = IMaterialInitial<T> & {
-    shaderPath: any,
+export type IShaderMaterialProps = {
+    name: string, 
+    scene: BabylonScene, 
+    shaderPath: any, 
     options?: Partial<IShaderMaterialOptions>
-};
-export type IShaderMaterialProps = IShaderMaterialInitial<BabylonShaderMaterial>;
+}
+
+export type IShaderMaterialParams = {
+
+}
 
 function ShaderMaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & IShaderMaterialProps) => {
-        const { scene, instance, parentInstance, name, shaderPath, options, assignTo } = props;
-
+    return (props: T & IShaderMaterialParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonShaderMaterial(name, scene, shaderPath, options);
-                if (parentInstance) {
-                    parentInstance.current[assignTo!] = instance.current;
-                }
-            }
-        }, []);
+
+        });
         return <EL {...props}/>
-    };
-} 
+    }
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(ShaderMaterialHOC(e));
 }
 
-export const P2PShaderMaterial = buildExtends<IShaderMaterialProps>(ChildHOC(null));
+function _(props: IShaderMaterialProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, scene, shaderPath, options } =  props;
+    useEffect(() => {
+        let obj = new BabylonShaderMaterial(name, scene, shaderPath, options);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PShaderMaterial = buildExtends<IShaderMaterialProps & IShaderMaterialParams>(_);

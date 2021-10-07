@@ -1,29 +1,30 @@
-import { RawTexture as BabylonRawTexture} from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { EngineContext } from '../Engine';
-import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
+import { RawTexture as BabylonRawTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
+import React, { useEffect } from 'react';
+import { Nullable } from '../../utils/customType';
+import { buildExtends as _buildExtends } from './Texture'
 
-export type IRawTextureInitial<T> = ITextureInitial<T> & {
-    data: ArrayBufferView, 
+export type IRawTextureProps = {
+    data: Nullable<ArrayBufferView>, 
     width: number, 
     height: number, 
     format: number, 
-    generateMipMaps?: boolean,     
-    type?: number
+    sceneOrEngine: Nullable<BabylonScene | ThinEngine>, 
+    generateMipMaps?: boolean, 
+    invertY?: boolean, 
+    samplingMode?: number, 
+    type?: number, 
+    creationFlags?: number
 }
-export type IRawTextureProps = IRawTextureInitial<BabylonRawTexture>;
+
+export type IRawTextureParams = {
+
+}
 
 function RawTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IRawTextureProps) => {
-        const { engine } = useContext(EngineContext);
-        const { instance, name, data, width, height, format, generateMipMaps, invertY, samplingMode, type } = props;
-
+    return (props: T & IRawTextureParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonRawTexture(data, width, height, format, engine!, generateMipMaps, invertY, samplingMode, type);
-            }
-        }, [])
+
+        });
         return <EL {...props}/>
     }
 }
@@ -32,6 +33,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(RawTextureHOC(e));
 }
 
-export const P2PRawTexture = buildExtends<IRawTextureProps>(ChildHOC(null));
-    
-export type IRawTextureOptions = {};
+function _(props: IRawTextureProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { data, width, height, format, sceneOrEngine, generateMipMaps, invertY, samplingMode, type, creationFlags } =  props;
+    useEffect(() => {
+        let obj = new BabylonRawTexture(data, width, height, format, sceneOrEngine, generateMipMaps, invertY, samplingMode, type, creationFlags);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PRawTexture = buildExtends<IRawTextureProps & IRawTextureParams>(_);

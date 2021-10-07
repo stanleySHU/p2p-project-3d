@@ -1,38 +1,39 @@
-import { Camera as BabylonCamera, Vector3 } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { EngineContext } from '../Engine';
-import { INodeInitial, buildExtends as _buildExtends } from '../node/Node';
+import { Camera as BabylonCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from '../node/Node';
+import { useEffect, useReducer } from "react"
 
-export type ICameraInitial<T> = INodeInitial<T> & {
-    name: string,
-    position: Vector3,
+export type ICameraProps = {
+    name: string, 
+    position: Vector3, 
+    scene: BabylinScene, 
     setActiveOnSceneIfNoneActive?: boolean
-};
-export type ICameraProps = ICameraInitial<BabylonCamera> & ICameraOptions;
+}
+
+export type ICameraParams = {
+
+}
 
 function CameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & ICameraProps) => {
-        const { canvas } = useContext(EngineContext);
-        const { scene, instance, name, position, setActiveOnSceneIfNoneActive } = props;
-
+    return (props: T & ICameraParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonCamera(name, position, scene, setActiveOnSceneIfNoneActive);
-            }
-            instance!.current.attachControl(canvas, true);
-        }, []);
-        
+
+        })
         return <EL {...props}/>
     }
 }
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(CameraHOC(e));
-};
-
-export const P2PCamera = buildExtends<ICameraProps>(ChildHOC(null));
-
-export type ICameraOptions = {
-    
 }
+
+function _(props: ICameraProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, position, scene, setActiveOnSceneIfNoneActive } =  props;
+    useEffect(() => {
+        let obj = new BabylonCamera(name, position, scene, setActiveOnSceneIfNoneActive);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PCamera = buildExtends<ICameraProps & ICameraParams>(_);

@@ -1,23 +1,24 @@
-import { RefractionTexture as BabylonRefractionTexture, Scene as BabylonScene } from '@babylonjs/core';
+import { RefractionTexture as BabylonRefractionTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { IRenderTargetTextureInitial, buildExtends as _buildExtends } from './RenderTargetTexture';
+import { Nullable } from '../../utils/customType';
+import { buildExtends as _buildExtends } from './RenderTargetTexture'
 
-export type IRefractionTextureInitial<T> = IRenderTargetTextureInitial<T> & {
-    scene: BabylonScene,
-    size: number
+export type IRefractionTextureProps = {
+    name: string, 
+    size: number, 
+    scene: BabylonScene, 
+    generateMipMaps?: boolean
 }
-export type IRefractionTextureProps = IRefractionTextureInitial<BabylonRefractionTexture>;
+
+export type IRefractionTextureParams = {
+
+}
 
 function RefractionTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IRefractionTextureProps) => {
-        const { scene, instance, name, size, generateMipMaps } = props;
-
+    return (props: T & IRefractionTextureParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonRefractionTexture(name, size, scene, generateMipMaps);
-            }
-        }, [])
+
+        });
         return <EL {...props}/>
     }
 }
@@ -26,6 +27,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(RefractionTextureHOC(e));
 }
 
-export const P2PRefractionTexture = buildExtends<IRefractionTextureProps>(ChildHOC(null));
-    
-export type IRefractionTextureOptions = {};
+function _(props: IRefractionTextureProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, size, scene, generateMipMaps } =  props;
+    useEffect(() => {
+        let obj = new BabylonRefractionTexture(name, size, scene, generateMipMaps);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PRefractionTexture = buildExtends<IRefractionTextureProps & IRefractionTextureParams>(_);

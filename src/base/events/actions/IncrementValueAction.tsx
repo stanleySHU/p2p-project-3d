@@ -1,31 +1,40 @@
-import { IncrementValueAction as BabylonIncrementValueAction } from '@babylonjs/core';
+import { Action, IncrementValueAction as BabylonIncrementValueAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component';
-import { IActionInitial, buildExtends as _buildExtends } from './Action';
+import { buildExtends as _buildExtends } from './Action'
 
-export type IIncrementValueActionInitial<T> = IActionInitial<T> & {
+export type IIncrementValueActionProps = {
+    triggerOptions: any, 
     target: any, 
     propertyPath: string, 
-    value: any
-};
-export type IIncrementValueActionProps = IIncrementValueActionInitial<BabylonIncrementValueAction>;
+    value: any,
+    condition?: Condition
+}
+
+export type IIncrementValueActionParams = {
+
+}
 
 function IncrementValueActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IIncrementValueActionProps) => {
-        const { instance, name, triggerOptions, target, propertyPath, value, condition } = props;
+    return (props: T & IIncrementValueActionParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonIncrementValueAction(triggerOptions, target, propertyPath, value, condition);
-            }
-        }, []);
+
+        });
         return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(IncrementValueActionHOC(e));
 }
 
-export const P2PIncrementValueAction = buildExtends<IIncrementValueActionProps>(ChildHOC(null));
+function _(props: IIncrementValueActionProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { triggerOptions, target, propertyPath, value, condition } =  props;
+    useEffect(() => {
+        let obj = new BabylonIncrementValueAction(triggerOptions, target, propertyPath, value, condition);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IIncrementValueActionOptions = {};
+export const P2PIncrementValueAction = buildExtends<IIncrementValueActionProps & IIncrementValueActionParams>(_);

@@ -1,29 +1,37 @@
-import { PredicateCondition as BabylonPredicateCondition } from '@babylonjs/core';
+import { ActionManager, PredicateCondition as BabylonPredicateCondition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component';
-import { IConditionInitial, buildExtends as _buildExtends } from './Condition';
+import { buildExtends as _buildExtends } from './Condition'
 
-export type IPredicateConditionInitial<T> = IConditionInitial<T> & {
+export type IPredicateConditionProps = {
+    actionManager: ActionManager, 
     predicate: () => boolean
-};
-export type IPredicateConditionProps = IPredicateConditionInitial<BabylonPredicateCondition>;
+}
+
+export type IPredicateConditionParams = {
+
+}
 
 function PredicateConditionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IPredicateConditionProps) => {
-        const { instance, name, actionManager, predicate } = props;
+    return (props: T & IPredicateConditionParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonPredicateCondition(actionManager, predicate);
-            }
-        }, []);
+
+        });
         return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(PredicateConditionHOC(e));
 }
 
-export const P2PPredicateCondition = buildExtends<IPredicateConditionProps>(ChildHOC(null));
+function _(props: IPredicateConditionProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { actionManager, predicate } =  props;
+    useEffect(() => {
+        let obj = new BabylonPredicateCondition(actionManager, predicate);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IPredicateConditionOptions = {};
+export const P2PPredicateCondition = buildExtends<IPredicateConditionProps & IPredicateConditionParams>(_);

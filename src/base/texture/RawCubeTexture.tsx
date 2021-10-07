@@ -1,31 +1,29 @@
-import { RawCubeTexture as BabylonRawCubeTexture, Scene as BabylonScene } from '@babylonjs/core';
+import { RawCubeTexture as BabylonRawCubeTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { ChildHOC } from '../Component';
-import { ICubeTextureInitial, buildExtends as _buildExtends } from './CubeTexture';
+import { buildExtends as _buildExtends } from './CubeTexture'
 
-export type IRawCubeTextureInitial<T> = ICubeTextureInitial<T> & {
-    scene: BabylonScene,
+export type IRawCubeTextureProps = {
+    scene: BabylonScene, 
     data: Nullable<ArrayBufferView[]>, 
     size: number, 
-    format?: number | undefined, 
-    type?: number | undefined, 
-    generateMipMaps?: boolean | undefined, 
-    invertY?: boolean | undefined,
-    samplingMode?: number | undefined, 
-    ompression?: Nullable<any>
+    format?: number, 
+    type?: number, 
+    generateMipMaps?: boolean, 
+    invertY?: boolean, 
+    samplingMode?: number, 
+    compression?: Nullable<string>
 }
-export type IRawCubeTextureProps = IRawCubeTextureInitial<BabylonRawCubeTexture>;
+
+export type IRawCubeTextureParams = {
+
+}
 
 function RawCubeTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IRawCubeTextureProps) => {
-        const { scene, instance, name, data, size, format, type, generateMipMaps, invertY, samplingMode, ompression } = props;
-
+    return (props: T & IRawCubeTextureParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonRawCubeTexture(scene, data, size, format, type, generateMipMaps, invertY, samplingMode, ompression );
-            }
-        }, [])
+
+        });
         return <EL {...props}/>
     }
 }
@@ -34,6 +32,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(RawCubeTextureHOC(e));
 }
 
-export const P2PRawCubeTexture = buildExtends<IRawCubeTextureProps>(ChildHOC(null));
-    
-export type IRawCubeTextureOptions = {};
+function _(props: IRawCubeTextureProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { scene, data, size, format, type, generateMipMaps, invertY, samplingMode, compression } =  props;
+    useEffect(() => {
+        let obj = new BabylonRawCubeTexture(scene, data, size, format, type, generateMipMaps, invertY, samplingMode, compression);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PRawCubeTexture = buildExtends<IRawCubeTextureProps & IRawCubeTextureParams>(_);

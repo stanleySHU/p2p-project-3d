@@ -1,31 +1,40 @@
-import { SetValueAction as BabylonSetValueAction } from '@babylonjs/core'; 
+import { Action, SetValueAction as BabylonSetValueAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component';
-import { IActionInitial, buildExtends as _buildExtends } from './Action';
+import { buildExtends as _buildExtends } from './Action'
 
-export type ISetValueActionInitial<T> = IActionInitial<T> & {
+export type ISetValueActionProps = {
+    triggerOptions: any, 
     target: any, 
     propertyPath: string, 
-    value: any
-};
-export type ISetValueActionProps = ISetValueActionInitial<BabylonSetValueAction>;
+    value: any, 
+    condition?: Condition
+}
+
+export type ISetValueActionParams = {
+
+}
 
 function SetValueActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & ISetValueActionProps) => {
-        const { instance, name, triggerOptions, target, propertyPath, value, condition } = props;
+    return (props: T & ISetValueActionParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonSetValueAction(triggerOptions, target, propertyPath, value, condition);
-            }
-        }, []);
+
+        });
         return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(SetValueActionHOC(e));
 }
 
-export const P2PSetValueAction = buildExtends<ISetValueActionProps>(ChildHOC(null));
+function _(props: ISetValueActionProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { triggerOptions, target, propertyPath, value, condition } =  props;
+    useEffect(() => {
+        let obj = new BabylonSetValueAction(triggerOptions, target, propertyPath, value, condition);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type ISetValueActionOptions = {};
+export const P2PSetValueAction = buildExtends<ISetValueActionProps & ISetValueActionParams>(_);

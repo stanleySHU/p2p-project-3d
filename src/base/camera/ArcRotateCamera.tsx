@@ -1,37 +1,42 @@
-import { ArcRotateCamera as BabylonArcRotateCamera, Vector3 } from '@babylonjs/core'
-import React, {useEffect } from "react"
-import { ITargetCameraInitial, buildExtends as _buildExtends } from "./TargetCamera";
-import { ChildHOC } from '../Component';
+import { ArcRotateCamera as BabylonArcRotateCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './TargetCamera';
+import { useEffect, useReducer } from "react"
 
-export type IArcRotateCameraInitial<T> = ITargetCameraInitial<T> & {
-    name: string,
-    alpha: number,
-    beta: number,
-    radius: number,
-    target: Vector3,
-};
-export type IArcRotateCameraProps = IArcRotateCameraInitial<BabylonArcRotateCamera> & IArcRotateCameraOptions;
+export type IArcRotateCameraProps = {
+    name: string, 
+    alpha: number, 
+    beta: number, 
+    radius: number, 
+    target: Vector3, 
+    scene: BabylinScene, 
+    setActiveOnSceneIfNoneActive?: boolean
+}
+
+export type IArcRotateCameraParams = {
+
+}
 
 function ArcRotateCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IArcRotateCameraProps) => {
-        const { scene, instance, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
-
+    return (props: T & IArcRotateCameraParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonArcRotateCamera(name, alpha, beta, radius, target, scene, setActiveOnSceneIfNoneActive);
-            }
-        }, []);
-        
+
+        })
         return <EL {...props}/>
     }
 }
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(ArcRotateCameraHOC(e));
-};
+}
 
-export const P2PArcRotateCamera = buildExtends<IArcRotateCameraProps>(ChildHOC(null));
+function _(props: IArcRotateCameraProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, alpha, beta, radius, target, scene, setActiveOnSceneIfNoneActive } =  props;
+    useEffect(() => {
+        let obj = new BabylonArcRotateCamera(name, alpha, beta, radius, target, scene, setActiveOnSceneIfNoneActive );
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IArcRotateCameraOptions = {
-
-};
+export const P2PArcRotateCamera = buildExtends<IArcRotateCameraProps & IArcRotateCameraParams>(_);

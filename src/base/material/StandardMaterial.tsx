@@ -1,28 +1,37 @@
-import { StandardMaterial as BabylonStandardMaterial } from '@babylonjs/core';
+import { StandardMaterial as BabylonStandardMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { IPushMaterialInitial, buildExtends as _buildExtends } from './PushMaterial';
+import { buildExtends as _buildExtends } from './PushMaterial'
 
-export type IStandardMaterialInitial<T> = IPushMaterialInitial<T> & {};
-export type IStandardMaterialProps = IStandardMaterialInitial<BabylonStandardMaterial>;
+export type IStandardMaterialProps = {
+    name: string, 
+    scene: BabylonScene
+}
+
+export type IStandardMaterialParams = {
+
+}
 
 function StandardMaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & IStandardMaterialProps) => {
-        const { scene, instance, name } = props;
-
+    return (props: T & IStandardMaterialParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                let material = new BabylonStandardMaterial(name, scene);
-                instance.current = material;
-            }
-        }, []);
 
+        });
         return <EL {...props}/>
-    };
-} 
+    }
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(StandardMaterialHOC(e));
 }
 
-export const P2PStandardMaterial = buildExtends<IStandardMaterialProps>(ChildHOC(null));
+function _(props: IStandardMaterialProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, scene } =  props;
+    useEffect(() => {
+        let obj = new BabylonStandardMaterial(name, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PStandardMaterial = buildExtends<IStandardMaterialProps & IStandardMaterialParams>(_);

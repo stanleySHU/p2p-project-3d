@@ -1,21 +1,21 @@
 import { Action as BabylonAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../../Component';
+import { buildExtends as _buildExtends } from '../../Component'
 
-export type IActionInitial<T> = IComponentProps<T> & {
-    triggerOptions: any,
+export type IActionProps = {
+    triggerOptions: any, 
     condition?: Condition
-};
-export type IActionProps = IActionInitial<BabylonAction>;
+}
+
+export type IActionParams = {
+
+}
 
 function ActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IActionProps) => {
-        const { instance, name, triggerOptions, condition } = props;
+    return (props: T & IActionParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonAction(triggerOptions, condition);
-            }
-        }, []);
+
+        });
         return <EL {...props}/>
     }
 }
@@ -24,7 +24,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(ActionHOC(e));
 }
 
-export const P2PAction = buildExtends<IActionProps>(ChildHOC(null));
+function _(props: IActionProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { triggerOptions, condition } =  props;
+    useEffect(() => {
+        let obj = new BabylonAction(triggerOptions, condition);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IActionOptions = {};
-
+export const P2PAction = buildExtends<IActionProps & IActionParams>(_);

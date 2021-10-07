@@ -1,20 +1,21 @@
-import { Slider as BabylonSlider } from '@babylonjs/gui';
-import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component'; 
-import { IBaseSliderInitial, buildExtends as _buildExtends } from './BaseSlider';
+import { Slider as BabylonSlider} from '@babylonjs/gui';
+import React, { useEffect, useReducer } from 'react';
+import { buildExtends as _buildExtends } from './BaseSlider'
 
-export type ISliderInitial<T> = IBaseSliderInitial<T> & {}
-export type ISliderProps = ISliderInitial<BabylonSlider>;
+export type ISliderProps = {
+    name?: string | undefined
+}
 
-export function SliderHOC<T>(EL: React.FC<T>) {
-    return (props: T & ISliderProps) => {
-        const { instance, name } = props;
+export type ISliderParams = {
+
+}
+
+function SliderHOC<T>(EL: React.FC<T>) {
+    return (props: T & ISliderParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonSlider(name);
-            }
-        }, []);
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
@@ -22,4 +23,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(SliderHOC(e));
 }
 
-export const P2PSlider = buildExtends<ISliderProps>(ChildHOC(null));
+function _(props: ISliderProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name } = props;
+    useEffect(() => {
+        let obj = new BabylonSlider(name);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PSlider = buildExtends<ISliderProps & ISliderParams>(_); 

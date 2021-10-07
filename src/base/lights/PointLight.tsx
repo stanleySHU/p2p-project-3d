@@ -1,34 +1,38 @@
-import { PointLight as BabylonPointLight, Vector3 } from '@babylonjs/core';
-import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { IShadowLightInitial, buildExtends as _buildExtends } from './ShadowLight';
+import { PointLight as BabylonPointLight, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './ShadowLight';
+import { useEffect, useReducer } from "react"
 
-export type IPointLightInitial<T> = IShadowLightInitial<T> & {
-    name: string,
-    position: Vector3
-};
-export type IPointLightProps = IPointLightInitial<BabylonPointLight> & IPointLightOptions;
+export type IPointLightProps = {
+    name: string, 
+    position: Vector3, 
+    scene: BabylinScene
+}
 
-function PointLightHOC<T>(EL: React.FC<T> ) {
-    return (props: T & IPointLightProps) => {
-        const { scene, instance, name, position } = props;
+export type IPointLightParams = {
 
+}
+
+function PointLightHOC<T>(EL: React.FC<T>) {
+    return (props: T & IPointLightParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonPointLight(name, position, scene);
-            }
-        }, []);
 
+        })
         return <EL {...props}/>
     }
 }
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(PointLightHOC(e));
-};
-
-export const P2PPointLight = buildExtends<IPointLightProps>(ChildHOC(null));
-
-export type IPointLightOptions = {
-    
 }
+
+function _(props: IPointLightProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, position, scene } =  props;
+    useEffect(() => {
+        let obj = new BabylonPointLight (name, position, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PPointLight = buildExtends<IPointLightProps & IPointLightParams>(_);

@@ -1,32 +1,43 @@
-import { StereoscopicArcRotateCamera as BabylonStereoscopicArcRotateCamera } from '@babylonjs/core';
-import React, { useEffect } from "react"
-import { IArcRotateCameraInitial, buildExtends as _buildExtends } from "./ArcRotateCamera";
-import { ChildHOC } from '../Component';
+import { StereoscopicArcRotateCamera as BabylonStereoscopicArcRotateCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './ArcRotateCamera';
+import { useEffect, useReducer } from "react"
 
-export type IStereoscopicArcRotateCameraInitial<T> = IArcRotateCameraInitial<T> & {
-    interaxialDistance: number,
-    isStereoscopicSideBySide: boolean
-};
-export type IStereoscopicArcRotateCameraProps = IStereoscopicArcRotateCameraInitial<BabylonStereoscopicArcRotateCamera> & IStereoscopicArcRotateCameraOptions;
+export type IStereoscopicArcRotateCameraProps = {
+    name: string, 
+    alpha: number, 
+    beta: number, 
+    radius: number, 
+    target: Vector3, 
+    interaxialDistance: number, 
+    isStereoscopicSideBySide: boolean, 
+    scene: BabylinScene
+}
+
+export type IStereoscopicArcRotateCameraParams = {
+
+}
 
 function StereoscopicArcRotateCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IStereoscopicArcRotateCameraProps) => {
-        const { scene, instance, name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide } = props;
-
+    return (props: T & IStereoscopicArcRotateCameraParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonStereoscopicArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide, scene);
-            }
-        }, []);
-        
+
+        })
         return <EL {...props}/>
     }
 }
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(StereoscopicArcRotateCameraHOC(e));
-};
+}
 
-export const P2PStereoscopicArcRotateCamera = buildExtends<IStereoscopicArcRotateCameraProps>(ChildHOC(null));
+function _(props: IStereoscopicArcRotateCameraProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide, scene} =  props;
+    useEffect(() => {
+        let obj = new BabylonStereoscopicArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IStereoscopicArcRotateCameraOptions = {};
+export const P2PStereoscopicArcRotateCamera = buildExtends<IStereoscopicArcRotateCameraProps & IStereoscopicArcRotateCameraParams>(_);

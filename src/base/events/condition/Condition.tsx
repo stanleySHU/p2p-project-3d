@@ -1,20 +1,20 @@
-import { ActionManager, Condition as BabylonCondition } from '@babylonjs/core';
+import { ActionManager, Condition as BabylonCondition, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../../Component';
+import { buildExtends as _buildExtends } from '../../Component'
 
-export type IConditionInitial<T> = IComponentProps<T> & {
+export type IConditionProps = {
     actionManager: ActionManager
-};
-export type IConditionProps = IConditionInitial<BabylonCondition>;
+}
+
+export type IConditionParams = {
+
+}
 
 function ConditionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IConditionProps) => {
-        const { instance, name, actionManager } = props;
+    return (props: T & IConditionParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonCondition(actionManager);
-            }
-        }, []);
+
+        });
         return <EL {...props}/>
     }
 }
@@ -23,7 +23,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(ConditionHOC(e));
 }
 
-export const P2PCondition = buildExtends<IConditionProps>(ChildHOC(null));
+function _(props: IConditionProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { actionManager } =  props;
+    useEffect(() => {
+        let obj = new BabylonCondition(actionManager);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IConditionOptions = {};
-
+export const P2PCondition = buildExtends<IConditionProps & IConditionParams>(_);

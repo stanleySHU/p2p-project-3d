@@ -1,5 +1,6 @@
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, { ReactNode, Ref, useEffect, useReducer, useRef } from "react";
 import { Nullable } from "../utils/customType";
+import { reducer, initialState, InitialState, Action, addChildren } from './ComponentRedux';
 
 type ICustomProps = {
     assignTo?: string;
@@ -8,62 +9,34 @@ type ICustomProps = {
 export type IComponentProps<T> = {
     name?: string,
     key?: string,
+    ref?: Ref<any>,
     children?: ReactNode
 } & {
-    instance?: React.MutableRefObject<T>,
-    parentInstance?: React.MutableRefObject<any>,
-    componentInstances?: React.MutableRefObject<any[]>,
-    parentComponentInstances?: React.MutableRefObject<(any)[]>,
+    state: InitialState,
+    dispatch: React.Dispatch<Action>,
+    parentDispatch: React.Dispatch<Action>
 } & ICustomProps;
 
 function ComponentHOC<T>(EL: React.FC<T>) {
     return (props: T & IComponentProps<any>) => {
-        const instanceRef = useRef<any>();
-        const componentInstancesRef = useRef<any[]>([]); 
-        const { assignTo, parentComponentInstances } = props;
-
-        function assignChildren() {
-            for (let item of componentInstancesRef.current) {
-                let customParams: ICustomProps = item.custoParams;
-                customParams.assignTo && (instanceRef.current[customParams.assignTo] = item);
-            }
-        }
-
-        function attachChildren() {
-            if (parentComponentInstances && instanceRef.current) {
-                let customParams: ICustomProps = {
-                    assignTo: assignTo
-                } 
-                instanceRef.current.custoParams = customParams;
-                parentComponentInstances.current.push(instanceRef.current);
-            }
-        }
+        const [ state, dispatch ] = useReducer(reducer, initialState);
+        const { parentDispatch } = props;
 
         useEffect(() =>{
-            assignChildren();            
-            attachChildren();
-
+            parentDispatch(addChildren(state.instance));
             return () => {
-                instanceRef.current.dispose && instanceRef.current.dispose();
-                instanceRef.current = null;
             }
         }, []);
 
-        return <EL {...props} instance={instanceRef} componentInstances={componentInstancesRef}/>
+        return <EL {...props} state={state} dispatch={dispatch}/>
     }
 }
 
 export function ChildHOC<T>(EL: Nullable<React.FC<T>>) {
     return (props: T & IComponentProps<any>) => {
-        const { instance, componentInstances } = props;
-        // let children = React.Children.map(props.children, (child: any) => {
-        //     const Type = child.type;
-        //     return <Type {...child.props} parentInstance={instance} parentComponentInstances={componentInstances} />
-        // })
-
+        const { dispatch } = props;
         let children = React.Children.map(props.children, child => (React.cloneElement(child as any, {
-            parentInstance: instance,
-            parentComponentInstances: componentInstances
+            parentDispatch: dispatch
         })));
 
         if (EL == null) return <>{children}</>

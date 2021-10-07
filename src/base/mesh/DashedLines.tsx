@@ -1,39 +1,45 @@
-import { LinesMesh, Mesh as BabylonMesh, MeshBuilder, Vector3 } from "@babylonjs/core";
-import React, { useEffect } from "react";
-import { IMeshInitial, buildExtends as _buildExtends } from "./Mesh";
-import { ChildHOC } from "../Component";
+import { LinesMesh, MeshBuilder, Scene as BabylonScene, Vector3 } from "@babylonjs/core";
+import { buildExtends as _buildExtends } from './Mesh';
+import { useEffect, useReducer } from "react"
+import { Nullable } from '../../utils/customType';
 
-export type IDashedLinesInitial<T> = IMeshInitial<T> & {
-    name: string,
-    points: Vector3[];
-    dashSize?: number;
-    gapSize?: number;
-    dashNb?: number;
-    updatable?: boolean;
-    instance?: LinesMesh;
-};
-export type IDashedLinesProps = IDashedLinesInitial<BabylonMesh> & IDashedLinesOptions;
+export type IDashedLinesProps = {
+    name: string, 
+    options: {
+        points: Vector3[];
+        dashSize?: number;
+        gapSize?: number;
+        dashNb?: number;
+        updatable?: boolean;
+        instance?: LinesMesh;
+    }, scene?: Nullable<BabylonScene>
+}
+
+export type IDashedLinesParams = {
+
+}
 
 function DashedLinesHOC<T>(EL: React.FC<T>) {
     return (props: T & IDashedLinesProps) => {
-        const { scene, instance, name } = props;
-
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = MeshBuilder.CreateDashedLines(name, props, scene);
-            }
-        }, []);
 
+        })
         return <EL {...props}/>
     }
-};
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(DashedLinesHOC(e));
 }
 
-export const P2PDashedLines = buildExtends<IDashedLinesProps>(ChildHOC(null));
-
-export type IDashedLinesOptions = {
-
+function _(props: IDashedLinesProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, options, scene } =  props;
+    useEffect(() => {
+        let obj = MeshBuilder.CreateDashedLines(name, options, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
 }
+
+export const P2PDashedLines = buildExtends<IDashedLinesProps & IDashedLinesParams>(_);

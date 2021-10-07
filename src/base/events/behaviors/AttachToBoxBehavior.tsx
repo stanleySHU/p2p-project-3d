@@ -1,27 +1,36 @@
 import { AttachToBoxBehavior as BabylonAttachToBoxBehavior, TransformNode } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../../Component';
+import { buildExtends as _buildExtends } from '../../Component'
 
-export type IAttachToBoxBehaviorProps = IComponentProps<BabylonAttachToBoxBehavior> & {
+export type IAttachToBoxBehaviorProps = {
     ui: TransformNode
 }
 
-function AttachToBoxBehaviorHOC<T>(EL: React.FC<T>) {
-    return (props: T & IAttachToBoxBehaviorProps) => {
-        const { instance, name, ui } = props;
+export type IAttachToBoxBehaviorParams = {
 
+}
+
+function AttachToBoxBehaviorHOC<T>(EL: React.FC<T>) {
+    return (props: T & IAttachToBoxBehaviorParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonAttachToBoxBehavior(ui);
-            }
-        }, [])
-    
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(AttachToBoxBehaviorHOC(e));
 }
 
-export const P2PAttachToBoxBehavior = buildExtends<IAttachToBoxBehaviorProps>(ChildHOC(null));
+function _(props: IAttachToBoxBehaviorProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { ui } =  props;
+    useEffect(() => {
+        let obj = new BabylonAttachToBoxBehavior(ui);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PAttachToBoxBehavior = buildExtends<IAttachToBoxBehaviorProps & IAttachToBoxBehaviorParams>(_);

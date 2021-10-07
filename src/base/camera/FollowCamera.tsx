@@ -1,34 +1,40 @@
-import { AbstractMesh, FollowCamera as BabylonFollowCamera } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import { AbstractMesh, FollowCamera as BabylonFollowCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './TargetCamera';
+import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { ChildHOC } from '../Component';
-import { ITargetCameraInitial, buildExtends as _buildExtends } from './TargetCamera';
 
-export type IFollowCameraInitial<T> = ITargetCameraInitial<T> & {
+export type IFollowCameraProps = {
+    name: string, 
+    position: Vector3, 
+    scene: BabylinScene, 
     lockedTarget?: Nullable<AbstractMesh>
-};
-export type IFollowCameraProps = IFollowCameraInitial<BabylonFollowCamera> & IFollowCameraOptions;
+}
+
+export type IFollowCameraParams = {
+
+}
 
 function FollowCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IFollowCameraProps) => {
-        const { scene, instance, name, position, lockedTarget } = props;
-
+    return (props: T & IFollowCameraParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonFollowCamera(name, position, scene, lockedTarget);
-            }
-        }, []);
 
+        })
         return <EL {...props}/>
     }
-};
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(FollowCameraHOC(e));
-};
-
-export const P2PFollowCamera = buildExtends<IFollowCameraProps>(ChildHOC(null));
-
-export type IFollowCameraOptions = {
-    
 }
+
+function _(props: IFollowCameraProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, position, scene, lockedTarget } =  props;
+    useEffect(() => {
+        let obj = new BabylonFollowCamera(name, position, scene, lockedTarget);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PFollowCamera = buildExtends<IFollowCameraProps & IFollowCameraParams>(_);

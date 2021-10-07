@@ -1,32 +1,40 @@
-import { StereoscopicFreeCamera as BabylonStereoscopicFreeCamera } from '@babylonjs/core';
-import React, { useEffect } from "react";
-import { IFreeCameraInitial, buildExtends as _buildExtends } from "./FreeCamera";
-import { ChildHOC } from '../Component';
+import { StereoscopicFreeCamera as BabylonStereoscopicFreeCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './FreeCamera';
+import { useEffect, useReducer } from "react"
 
-export type IStereoscopicFreeCameraInitial<T> = IFreeCameraInitial<T> & {
-    interaxialDistance: number,
-    isStereoscopicSideBySide: boolean
-};
-export type IStereoscopicFreeCameraProps = IStereoscopicFreeCameraInitial<BabylonStereoscopicFreeCamera> & IStereoscopicFreeCameraOptions;
+export type IStereoscopicFreeCameraProps = {
+    name: string, 
+    position: Vector3, 
+    interaxialDistance: number, 
+    isStereoscopicSideBySide: boolean,
+    scene: BabylinScene
+}
+
+export type IStereoscopicFreeCameraParams = {
+
+}
 
 function StereoscopicFreeCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IStereoscopicFreeCameraProps) => {
-        const { scene, instance, name, position, interaxialDistance, isStereoscopicSideBySide } = props;
-
+    return (props: T & IStereoscopicFreeCameraParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonStereoscopicFreeCamera(name, position, interaxialDistance, isStereoscopicSideBySide, scene);
-            }
-        }, []);
 
+        })
         return <EL {...props}/>
-    };  
-};
+    }
+}
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(StereoscopicFreeCameraHOC(e));
-};
+}
 
-export const P2PStereoscopicFreeCamera = buildExtends<IStereoscopicFreeCameraProps>(ChildHOC(null));
+function _(props: IStereoscopicFreeCameraProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, position, interaxialDistance, isStereoscopicSideBySide, scene } =  props;
+    useEffect(() => {
+        let obj = new BabylonStereoscopicFreeCamera(name, position, interaxialDistance, isStereoscopicSideBySide, scene );
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IStereoscopicFreeCameraOptions = {}
+export const P2PStereoscopicFreeCamera = buildExtends<IStereoscopicFreeCameraProps & IStereoscopicFreeCameraParams>(_);

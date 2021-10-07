@@ -1,20 +1,21 @@
-import { Container as BabylonContainer } from '@babylonjs/gui';
-import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component'; 
-import { IControlInitial, buildExtends as _buildExtends } from './Control';
+import { Container as BabylonContainer} from '@babylonjs/gui';
+import React, { useEffect, useReducer } from 'react';
+import { buildExtends as _buildExtends } from './Control'
 
-export type IContainerInitial<T> = IControlInitial<T> & {}
-export type IContainerProps = IContainerInitial<BabylonContainer>;
+export type IContainerProps = {
+    name?: string | undefined
+}
 
-export function ContainerHOC<T>(EL: React.FC<T>) {
-    return (props: T & IContainerProps) => {
-        const { instance, name } = props;
+export type IContainerParams = {
+
+}
+
+function ContainerHOC<T>(EL: React.FC<T>) {
+    return (props: T & IContainerParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonContainer(name);
-            }
-        }, []);
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
@@ -22,4 +23,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(ContainerHOC(e));
 }
 
-export const P2PContainer = buildExtends<IContainerProps>(ChildHOC(null));
+function _(props: IContainerProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name } = props;
+    useEffect(() => {
+        let obj = new BabylonContainer(name);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PContainer = buildExtends<IContainerProps & IContainerParams>(_); 

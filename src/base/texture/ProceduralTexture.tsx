@@ -1,30 +1,28 @@
-import { ProceduralTexture as BabylonProceduralTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture } from '@babylonjs/core';
+import { ProceduralTexture as BabylonProceduralTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { ChildHOC } from '../Component';
-import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
+import { buildExtends as _buildExtends } from './Texture'
 
-export type IProceduralTextureInitial<T> = ITextureInitial<T> & {
-    scene: Nullable<BabylonScene>,
-    name: string,
+export type IProceduralTextureProps = {
+    name: string, 
     size: RenderTargetTextureSize, 
-    fragment: any,  
+    fragment: any, 
+    scene: Nullable<BabylonScene>, 
     fallbackTexture?: Nullable<Texture>, 
     generateMipMaps?: boolean, 
     isCube?: boolean, 
     textureType?: number
 }
-export type IProceduralTextureProps = IProceduralTextureInitial<BabylonProceduralTexture>;
+
+export type IProceduralTextureParams = {
+
+}
 
 function ProceduralTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IProceduralTextureProps) => {
-        const { scene, instance, name, size, fragment, fallbackTexture, generateMipMaps, isCube, textureType } = props;
-
+    return (props: T & IProceduralTextureParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonProceduralTexture(name, size, fragment, scene, fallbackTexture, generateMipMaps, isCube, textureType);
-            }
-        }, [])
+
+        });
         return <EL {...props}/>
     }
 }
@@ -33,6 +31,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(ProceduralTextureHOC(e));
 }
 
-export const P2PProceduralTexture = buildExtends<IProceduralTextureProps>(ChildHOC(null));
-    
-export type IProceduralTextureOptions = {};
+function _(props: IProceduralTextureProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, size, fragment, scene, fallbackTexture, generateMipMaps, isCube, textureType } =  props;
+    useEffect(() => {
+        let obj = new BabylonProceduralTexture(name, size, fragment, scene, fallbackTexture, generateMipMaps, isCube, textureType);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PProceduralTexture = buildExtends<IProceduralTextureProps & IProceduralTextureParams>(_);

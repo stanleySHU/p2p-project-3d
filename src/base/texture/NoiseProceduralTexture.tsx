@@ -1,26 +1,25 @@
-import { NoiseProceduralTexture as BabylonNoiseProceduralTexture, Scene as BabylonScene, Texture } from '@babylonjs/core';
+import { NoiseProceduralTexture as BabylonNoiseProceduralTexture, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { ChildHOC } from '../Component';
-import { IProceduralTextureInitial, buildExtends as _buildExtends } from './ProceduralTexture';
+import { buildExtends as _buildExtends } from './ProceduralTexture'
 
-export type INoiseProceduralTextureInitial<T> = IProceduralTextureInitial<T> & {
-    scene?: Nullable<BabylonScene>,
-    name: string,
+export type INoiseProceduralTextureProps = {
+    name: string, 
     size?: number, 
-    fallbackTexture?: Texture
+    scene?: Nullable<BabylonScene>, 
+    fallbackTexture?: Texture, 
+    generateMipMaps?: boolean
 }
-export type INoiseProceduralTextureProps = INoiseProceduralTextureInitial<BabylonNoiseProceduralTexture>;
+
+export type INoiseProceduralTextureParams = {
+
+}
 
 function NoiseProceduralTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & INoiseProceduralTextureProps) => {
-        const { scene, instance, name, size, fallbackTexture, generateMipMaps } = props;
-
+    return (props: T & INoiseProceduralTextureParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonNoiseProceduralTexture(name, size, scene, fallbackTexture, generateMipMaps) ;
-            }
-        }, [])
+
+        });
         return <EL {...props}/>
     }
 }
@@ -29,6 +28,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(NoiseProceduralTextureHOC(e));
 }
 
-export const P2PNoiseProceduralTexture = buildExtends<INoiseProceduralTextureProps>(ChildHOC(null));
-    
-export type INoiseProceduralTextureOptions = {};
+function _(props: INoiseProceduralTextureProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, size, scene, fallbackTexture, generateMipMaps } =  props;
+    useEffect(() => {
+        let obj = new BabylonNoiseProceduralTexture(name, size, scene, fallbackTexture, generateMipMaps );
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PNoiseProceduralTexture = buildExtends<INoiseProceduralTextureProps & INoiseProceduralTextureParams>(_);

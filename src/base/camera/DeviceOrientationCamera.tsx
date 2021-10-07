@@ -1,33 +1,38 @@
-import { DeviceOrientationCamera as BabylonDeviceOrientationCamera } from '@babylonjs/core';
-import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { IFreeCameraInitial, buildExtends as _buildExtends } from './FreeCamera';
+import { DeviceOrientationCamera as BabylonDeviceOrientationCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './FreeCamera';
+import { useEffect, useReducer } from "react"
 
-export type IDeviceOrientationCameraInitial<T> = IFreeCameraInitial<T> & {
+export type IDeviceOrientationCameraProps = {
+    name: string, 
+    position: Vector3, 
+    scene: BabylinScene
+}
 
-};
-export type IDeviceOrientationCameraProps = IDeviceOrientationCameraInitial<BabylonDeviceOrientationCamera> & IDeviceOrientationCameraOptions;
+export type IDeviceOrientationCameraParams = {
+
+}
 
 function DeviceOrientationCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IDeviceOrientationCameraProps) => {
-        const { scene, instance, name, position } = props;
-
+    return (props: T & IDeviceOrientationCameraParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonDeviceOrientationCamera(name, position, scene);
-            }
-        }, [])
 
+        })
         return <EL {...props}/>
-    };
+    }
 }
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(DeviceOrientationCameraHOC(e));
-};
-
-export const P2PDeviceOrientationCamera = buildExtends<IDeviceOrientationCameraProps>(ChildHOC(null));
-
-export type IDeviceOrientationCameraOptions = {
-    
 }
+
+function _(props: IDeviceOrientationCameraProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, position, scene } =  props;
+    useEffect(() => {
+        let obj = new BabylonDeviceOrientationCamera(name, position, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PDeviceOrientationCamera = buildExtends<IDeviceOrientationCameraProps & IDeviceOrientationCameraParams>(_);

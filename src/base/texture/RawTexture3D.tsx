@@ -1,29 +1,30 @@
-import { RawTexture3D as BabylonRawTexture3D, Scene as BabylonScene } from '@babylonjs/core';
+import { RawTexture3D as BabylonRawTexture3D, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
+import { Nullable } from '../../utils/customType';
+import { buildExtends as _buildExtends } from './Texture'
 
-export type IRawTexture3DInitial<T> = ITextureInitial<T> & {
-    scene: BabylonScene,
+export type IRawTexture3DProps = {
     data: ArrayBufferView, 
     width: number, 
     height: number, 
     depth: number, 
     format: number, 
-    generateMipMaps?: boolean,     
+    scene: BabylonScene, 
+    generateMipMaps?: boolean, 
+    invertY?: boolean, 
+    samplingMode?: number, 
     textureType?: number
 }
-export type IRawTexture3DProps = IRawTexture3DInitial<BabylonRawTexture3D>;
+
+export type IRawTexture3DParams = {
+
+}
 
 function RawTexture3DHOC<T>(EL: React.FC<T>) {
-    return (props: T & IRawTexture3DProps) => {
-        const { scene, instance, name, data, width, height, depth, format, generateMipMaps, invertY, samplingMode, textureType} = props;
-
+    return (props: T & IRawTexture3DParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonRawTexture3D(data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType);
-            }
-        }, [])
+
+        });
         return <EL {...props}/>
     }
 }
@@ -32,6 +33,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(RawTexture3DHOC(e));
 }
 
-export const P2PRawTexture3D = buildExtends<IRawTexture3DProps>(ChildHOC(null));
-    
-export type IRawTexture3DOptions = {};
+function _(props: IRawTexture3DProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType } =  props;
+    useEffect(() => {
+        let obj = new BabylonRawTexture3D(data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PRawTexture3D = buildExtends<IRawTexture3DProps & IRawTexture3DParams>(_);

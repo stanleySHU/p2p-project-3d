@@ -1,29 +1,38 @@
-import { ActionEvent, ExecuteCodeAction as BabylonExecuteCodeAction } from '@babylonjs/core';
+import { ExecuteCodeAction as BabylonExecuteCodeAction, Condition, ActionEvent } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component';
-import { IActionInitial, buildExtends as _buildExtends } from './Action';
+import { buildExtends as _buildExtends } from './Action'
 
-export type IExecuteCodeActionInitial<T> = IActionInitial<T> & {
-    func: (evt: ActionEvent) => void,
-};
-export type IExecuteCodeActionProps = IExecuteCodeActionInitial<BabylonExecuteCodeAction>;
+export type IExecuteCodeActionProps = {
+    triggerOptions: any, 
+    func: (evt: ActionEvent) => void, 
+    condition?: Condition
+}
+
+export type IExecuteCodeActionParams = {
+
+}
 
 function ExecuteCodeActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IExecuteCodeActionProps) => {
-        const { instance, name, triggerOptions, func, condition } = props;
+    return (props: T & IExecuteCodeActionParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonExecuteCodeAction(triggerOptions, func, condition);
-            }
-        }, []);
+
+        });
         return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(ExecuteCodeActionHOC(e));
 }
 
-export const P2PExecuteCodeAction = buildExtends<IExecuteCodeActionProps>(ChildHOC(null));
+function _(props: IExecuteCodeActionProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { triggerOptions, func, condition} =  props;
+    useEffect(() => {
+        let obj = new BabylonExecuteCodeAction(triggerOptions, func, condition);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
 
-export type IExecuteCodeActionOptions = {};
+export const P2PExecuteCodeAction = buildExtends<IExecuteCodeActionProps & IExecuteCodeActionParams>(_);

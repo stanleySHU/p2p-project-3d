@@ -1,16 +1,23 @@
-import { PBRBaseMaterial as BabylonPBRBaseMaterial } from '@babylonjs/core';
-import React from 'react';
-import { IPushMaterialInitial, buildExtends as _buildExtends } from './PushMaterial';
+import { Scene as BabylonScene } from '@babylonjs/core';
+import React, { useEffect } from 'react';
+import { buildExtends as _buildExtends } from './PushMaterial'
 
-export type IPBRBaseMaterialInitial<T> = IPushMaterialInitial<T> & {};
-export type IPBRBaseMaterialProps = IPBRBaseMaterialInitial<BabylonPBRBaseMaterial>;
+export type IPBRBaseMaterialProps = {
+}
+
+export type IPBRBaseMaterialParams = {
+
+}
 
 function PBRBaseMaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & IPBRBaseMaterialProps) => {
+    return (props: T & IPBRBaseMaterialParams) => {
+        useEffect(() => {
+
+        });
         return <EL {...props}/>
-    };
-} 
+    }
+}
 
 export function buildExtends<T>(e: any) {
-    return PBRBaseMaterialHOC(_buildExtends<T>(e));
+    return _buildExtends<T>(PBRBaseMaterialHOC(e));
 }

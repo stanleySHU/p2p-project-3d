@@ -1,33 +1,41 @@
-import { TransformNode as BabylonTransformNode } from '@babylonjs/core';
-import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { INodeInitial, buildExtends as _buildExtends } from './Node';
+import { TransformNode as BabylonTransformNode, Scene as BabylonScene } from '@babylonjs/core';
+import React, { useEffect, useReducer } from 'react';
+import { Nullable } from '../../utils/customType';
+import { newChildren } from '../ComponentRedux';
+import { buildExtends as _buildExtends } from './Node';
+import { reducer, initialState } from './NodeRedux';
 
-export type ITransformNodeInitial<T> = INodeInitial<T> & {
+export type ITransformNodeProps = {
+    name: string, 
+    scene?: Nullable<BabylonScene>, 
     isPure?: boolean
-};
-export type ITransformNodeProps = ITransformNodeInitial<BabylonTransformNode> & ITransformNodeOptions;
+}
+
+export type ITransformNodeParams = {
+
+}
 
 function TransformNodeHOC<T>(EL: React.FC<T>) {
-    return (props: T & ITransformNodeProps) => {
-        const { scene, instance, name, isPure } = props;
-
+    return (props: T & ITransformNodeParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonTransformNode(name, scene, isPure);
-            }
-        }, []);
-
+            
+        });
         return <EL {...props}/>
     }
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(TransformNodeHOC(e));
+    return _buildExtends<T>(TransformNodeHOC(e))
 }
 
-export const P2PTransformNode = buildExtends<ITransformNodeProps>(ChildHOC(null));
-
-export type ITransformNodeOptions = {
-    
+function _(props: ITransformNodeProps) {
+    const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { scene, name, isPure } = props;
+    useEffect(() => {
+        let obj = new BabylonTransformNode(name, scene, isPure);
+        dispatch(newChildren(obj));
+    }, []);
+    return null;
 }
+
+export const P2PTransformNode = buildExtends<ITransformNodeProps & ITransformNodeParams>(_);

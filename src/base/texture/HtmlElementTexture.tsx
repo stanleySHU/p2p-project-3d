@@ -1,24 +1,23 @@
-import { HtmlElementTexture as BabylonHtmlElementTexture, IHtmlElementTextureOptions } from '@babylonjs/core'; 
+import { HtmlElementTexture as BabylonHtmlElementTexture, IHtmlElementTextureOptions, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { IBaseTextureInitial, buildExtends as _buildExtends } from './BaseTexture';
+import { Nullable } from '../../utils/customType';
+import { buildExtends as _buildExtends } from './BaseTexture'
 
-export type IHtmlElementTextureInitial<T> = IBaseTextureInitial<T> & {
-    name: string,
+export type IHtmlElementTextureProps = {
+    name: string, 
     element: HTMLVideoElement | HTMLCanvasElement, 
     options: IHtmlElementTextureOptions
 }
-export type IHtmlElementTextureProps = IHtmlElementTextureInitial<BabylonHtmlElementTexture>;
+
+export type IHtmlElementTextureParams = {
+
+}
 
 function HtmlElementTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IHtmlElementTextureProps) => {
-        const { instance, name, element, options } = props;
-
+    return (props: T & IHtmlElementTextureParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonHtmlElementTexture(name, element, options);
-            }
-        }, [])
+
+        });
         return <EL {...props}/>
     }
 }
@@ -27,5 +26,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(HtmlElementTextureHOC(e));
 }
 
-export const P2PHtmlElementTexture = buildExtends<IHtmlElementTextureProps>(ChildHOC(null));
-    
+function _(props: IHtmlElementTextureProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, element, options } =  props;
+    useEffect(() => {
+        let obj = new BabylonHtmlElementTexture(name, element, options);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PHtmlElementTexture = buildExtends<IHtmlElementTextureProps & IHtmlElementTextureParams>(_);

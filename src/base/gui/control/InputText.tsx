@@ -1,22 +1,22 @@
-import { InputText as BabylonInputText } from '@babylonjs/gui';
-import React, { useEffect } from 'react';
-import { ChildHOC } from '../../Component'; 
-import { IControlInitial, buildExtends as _buildExtends } from './Control';
+import { InputText as BabylonInputText} from '@babylonjs/gui';
+import React, { useEffect, useReducer } from 'react';
+import { buildExtends as _buildExtends } from './Control'
 
-export type IInputTextInitial<T> = IControlInitial<T> & {
+export type IInputTextProps = {
+    name?: string | undefined,
     text?: string
 }
-export type IInputTextProps = IInputTextInitial<BabylonInputText>;
 
-export function InputTextHOC<T>(EL: React.FC<T>) {
-    return (props: T & IInputTextProps) => {
-        const { instance, name, text } = props;
+export type IInputTextParams = {
+
+}
+
+function InputTextHOC<T>(EL: React.FC<T>) {
+    return (props: T & IInputTextParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonInputText(name, text);
-            }
-        }, []);
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
@@ -24,4 +24,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(InputTextHOC(e));
 }
 
-export const P2PInputText = buildExtends<IInputTextProps>(ChildHOC(null));
+function _(props: IInputTextProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, text } = props;
+    useEffect(() => {
+        let obj = new BabylonInputText(name, text);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PInputText = buildExtends<IInputTextProps & IInputTextParams>(_); 

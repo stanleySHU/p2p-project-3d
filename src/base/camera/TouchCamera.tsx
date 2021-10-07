@@ -1,33 +1,38 @@
-import { TouchCamera as BabylonTouchCamera} from '@babylonjs/core';
-import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { IFreeCameraInitial, buildExtends as _buildExtends } from './FreeCamera';
+import { TouchCamera as BabylonTouchCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { buildExtends as _buildExtends } from './FreeCamera';
+import { useEffect, useReducer } from "react"
 
-export type ITouchCameraInitial<T> = IFreeCameraInitial<T> & {
+export type ITouchCameraProps = {
+    name: string, 
+    position: Vector3, 
+    scene: BabylinScene
+}
 
-};
-export type ITouchCameraProps = ITouchCameraInitial<BabylonTouchCamera> & ITouchCameraOptions;
+export type ITouchCameraParams = {
+
+}
 
 function TouchCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & ITouchCameraProps) => {
-        const { scene, instance, name, position } = props;
-
+    return (props: T & ITouchCameraParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonTouchCamera(name, position, scene);
-            }
-        }, []);
 
+        })
         return <EL {...props}/>
     }
 }
 
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(TouchCameraHOC(e));
-};
-
-export const P2PTouchCamera = buildExtends<ITouchCameraProps>(ChildHOC(null));
-
-export type ITouchCameraOptions = {
-    
 }
+
+function _(props: ITouchCameraProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, position, scene } =  props;
+    useEffect(() => {
+        let obj = new BabylonTouchCamera(name, position, scene);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PTouchCamera = buildExtends<ITouchCameraProps & ITouchCameraParams>(_);

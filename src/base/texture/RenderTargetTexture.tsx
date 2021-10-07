@@ -1,30 +1,41 @@
-import { RenderTargetTexture as BabylonRenderTargetTexture, Scene as BabylonScene } from '@babylonjs/core'; 
+import { RenderTargetTexture as BabylonRenderTargetTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { ChildHOC } from '../Component';
-import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
+import { buildExtends as _buildExtends } from './Texture'
 
-export type IRenderTargetTextureInitial<T> = ITextureInitial<T> & {
-    scene: Nullable<BabylonScene>,
-    name: string, size: number | {
+export type IRenderTargetTextureProps = {
+    name: string, 
+    size: number | {
         width: number;
         height: number;
         layers?: number;
     } | {
         ratio: number;
-    }, generateMipMaps?: boolean, doNotChangeAspectRatio?: boolean, type?: number, isCube?: boolean, samplingMode?: number, generateDepthBuffer?: boolean, generateStencilBuffer?: boolean, isMulti?: boolean, format?: number, delayAllocation?: boolean
+    }, 
+    scene: Nullable<BabylonScene>, 
+    generateMipMaps?: boolean, 
+    doNotChangeAspectRatio?: boolean, 
+    type?: number, 
+    isCube?: boolean, 
+    samplingMode?: number, 
+    generateDepthBuffer?: boolean, 
+    generateStencilBuffer?: boolean, 
+    isMulti?: boolean, 
+    format?: number, 
+    delayAllocation?: boolean, 
+    samples?: number, 
+    creationFlags?: number
 }
-export type IRenderTargetTextureProps = IRenderTargetTextureInitial<BabylonRenderTargetTexture>;
+
+export type IRenderTargetTextureParams = {
+
+}
 
 function RenderTargetTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IRenderTargetTextureProps) => {
-        const { scene, instance, name, size, generateMipMaps, doNotChangeAspectRatio, type, isCube, samplingMode, generateDepthBuffer, generateStencilBuffer, isMulti, format, delayAllocation } = props;
-
+    return (props: T & IRenderTargetTextureParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonRenderTargetTexture(name, size, scene, generateMipMaps, doNotChangeAspectRatio, type, isCube, samplingMode, generateDepthBuffer, generateStencilBuffer, isMulti, format, delayAllocation);
-            }
-        }, [])
+
+        });
         return <EL {...props}/>
     }
 }
@@ -33,6 +44,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(RenderTargetTextureHOC(e));
 }
 
-export const P2PRenderTargetTexture = buildExtends<IRenderTargetTextureProps>(ChildHOC(null));
-    
-export type IRenderTargetTextureOptions = {};
+function _(props: IRenderTargetTextureProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { name, size, scene, generateMipMaps, doNotChangeAspectRatio, type, isCube, samplingMode, generateDepthBuffer, generateStencilBuffer, isMulti, format, delayAllocation, samples, creationFlags} =  props;
+    useEffect(() => {
+        let obj = new BabylonRenderTargetTexture(name, size, scene, generateMipMaps, doNotChangeAspectRatio, type, isCube, samplingMode, generateDepthBuffer, generateStencilBuffer, isMulti, format, delayAllocation, samples, creationFlags);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PRenderTargetTexture = buildExtends<IRenderTargetTextureProps & IRenderTargetTextureParams>(_);

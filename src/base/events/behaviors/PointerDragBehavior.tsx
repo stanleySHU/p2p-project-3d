@@ -1,30 +1,39 @@
-import { PointerDragBehavior as BabylonPointerDragBehavior, Vector3 } from "@babylonjs/core";
+import { PointerDragBehavior as BabylonPointerDragBehavior, TransformNode, Vector3 } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { IComponentProps, buildExtends as _buildExtends, ChildHOC } from '../../Component';
+import { buildExtends as _buildExtends } from '../../Component'
 
-export type IPointerDragBehaviorProps = IComponentProps<BabylonPointerDragBehavior> & {
+export type IPointerDragBehaviorProps = {
     options?: {
         dragAxis?: Vector3;
         dragPlaneNormal?: Vector3;
     }
 }
 
-function PointerDragBehaviorHOC<T>(EL: React.FC<T>) {
-    return (props: T & IPointerDragBehaviorProps) => {
-        const { instance, name, options } = props;
+export type IPointerDragBehaviorParams = {
 
+}
+
+function PointerDragBehaviorHOC<T>(EL: React.FC<T>) {
+    return (props: T & IPointerDragBehaviorParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonPointerDragBehavior(options);
-            }
-        }, [])
-    
-        return <EL {...props}/>;
+
+        });
+        return <EL {...props}/>
     }
 }
 
-function buildExtends<T>(e: any) {
+export function buildExtends<T>(e: any) {
     return _buildExtends<T>(PointerDragBehaviorHOC(e));
 }
 
-export const P2PPointerDragBehavior = buildExtends<IPointerDragBehaviorProps>(ChildHOC(null));
+function _(props: IPointerDragBehaviorProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { options } =  props;
+    useEffect(() => {
+        let obj = new BabylonPointerDragBehavior(options);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PPointerDragBehavior = buildExtends<IPointerDragBehaviorProps & IPointerDragBehaviorParams>(_);

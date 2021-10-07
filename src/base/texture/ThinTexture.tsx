@@ -1,16 +1,20 @@
-import React from "react";
-import { IComponentProps, buildExtends as _buildExtends } from "../Component";
+import React, { useEffect } from 'react';
+import { buildExtends as _buildExtends } from '../Component'
 
-export type IThinTextureInitial<T> = IComponentProps<T> &  {}
+export type IThinTextureProps = {}
 
-function ThinTextureHOCM<T>(EL: React.FC<T>) {
-    return (props: T & IThinTextureInitial<T>) => {
+export type IThinTextureParams = {}
+
+function ThinTextureHOC<T>(EL: React.FC<T>) {
+    return (props: T & IThinTextureParams) => {
+        useEffect(() => {
+
+        });
         return <EL {...props}/>
-    };
+    }
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ThinTextureHOCM(e));
+    return _buildExtends<T>(ThinTextureHOC(e));
 }
 
-export type ThinTextureProps = {}

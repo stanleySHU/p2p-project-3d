@@ -1,13 +1,12 @@
-import { Texture as BabylonTexture } from '@babylonjs/core';
-import React, { useContext, useEffect } from 'react';
+import { Texture as BabylonTexture, Scene as BabylonScene, ThinEngine, ITextureCreationOptions } from '@babylonjs/core';
+import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { ChildHOC } from '../Component';
-import { EngineContext } from '../Engine';
-import { IBaseTextureInitial, buildExtends as _buildExtends } from './BaseTexture';
+import { buildExtends as _buildExtends } from './BaseTexture'
 
-export type ITextureInitial<T> = IBaseTextureInitial<T> & {
+export type ITextureProps = {
     url: Nullable<string>, 
-    noMipmap?: boolean, 
+    sceneOrEngine: Nullable<BabylonScene | ThinEngine>, 
+    noMipmapOrOptions?: boolean | ITextureCreationOptions, 
     invertY?: boolean, 
     samplingMode?: number, 
     onLoad?: Nullable<() => void>, 
@@ -16,20 +15,19 @@ export type ITextureInitial<T> = IBaseTextureInitial<T> & {
     deleteBuffer?: boolean, 
     format?: number, 
     mimeType?: string, 
-    loaderOptions?: any
+    loaderOptions?: any, 
+    creationFlags?: number
 }
-export type ITextureProps = ITextureInitial<BabylonTexture>;
+
+export type ITextureParams = {
+
+}
 
 function TextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & ITextureProps) => {
-        const { engine } = useContext(EngineContext);
-        const { instance, name, url, noMipmap, invertY, samplingMode, onLoad, onError, buffer, deleteBuffer, format, mimeType, loaderOptions } = props;
-
+    return (props: T & ITextureParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonTexture(url, engine!, noMipmap, invertY, samplingMode, onLoad, onError, buffer, deleteBuffer, format, mimeType, loaderOptions);
-            }
-        }, [])
+
+        });
         return <EL {...props}/>
     }
 }
@@ -38,6 +36,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(TextureHOC(e));
 }
 
-export const P2PTexture = buildExtends<ITextureProps>(ChildHOC(null));
-    
-export type ITextureOptions = {};
+function _(props: ITextureProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { url, sceneOrEngine, noMipmapOrOptions, invertY, samplingMode, onLoad, onError, buffer, deleteBuffer, format, mimeType, loaderOptions, creationFlags } =  props;
+    useEffect(() => {
+        let obj = new BabylonTexture(url, sceneOrEngine, noMipmapOrOptions, invertY, samplingMode, onLoad, onError, buffer, deleteBuffer, format, mimeType, loaderOptions, creationFlags);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PTexture = buildExtends<ITextureProps & ITextureParams>(_);

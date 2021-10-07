@@ -1,29 +1,30 @@
-import { RawTexture2DArray as BabylonRawTexture2DArray, Scene as BabylonScene } from '@babylonjs/core';
+import { RawTexture2DArray as BabylonRawTexture2DArray, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
-import { ITextureInitial, buildExtends as _buildExtends } from './Texture';
+import { Nullable } from '../../utils/customType';
+import { buildExtends as _buildExtends } from './Texture'
 
-export type IRawTexture2DArrayInitial<T> = ITextureInitial<T> & {
-    scene: BabylonScene,
+export type IRawTexture2DArrayProps = {
     data: ArrayBufferView, 
     width: number, 
     height: number, 
     depth: number, 
     format: number, 
-    generateMipMaps?: boolean,     
+    scene: BabylonScene, 
+    generateMipMaps?: boolean, 
+    invertY?: boolean, 
+    samplingMode?: number, 
     textureType?: number
 }
-export type IRawTexture2DArrayProps = IRawTexture2DArrayInitial<BabylonRawTexture2DArray>;
+
+export type IRawTexture2DArrayParams = {
+
+}
 
 function RawTexture2DArrayHOC<T>(EL: React.FC<T>) {
-    return (props: T & IRawTexture2DArrayProps) => {
-        const { scene, instance, name, data, width, height, depth, format, generateMipMaps, invertY, samplingMode, textureType} = props;
-
+    return (props: T & IRawTexture2DArrayParams) => {
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonRawTexture2DArray(data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType);
-            }
-        }, [])
+
+        });
         return <EL {...props}/>
     }
 }
@@ -32,6 +33,14 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(RawTexture2DArrayHOC(e));
 }
 
-export const P2PRawTexture2DArray = buildExtends<IRawTexture2DArrayProps>(ChildHOC(null));
-    
-export type IRawTexture2DArrayOptions = {};
+function _(props: IRawTexture2DArrayProps) {
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType } =  props;
+    useEffect(() => {
+        let obj = new BabylonRawTexture2DArray(data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType);
+        // dispatch(newChildren(obj));
+    }, []);
+    return null;
+}
+
+export const P2PRawTexture2DArray = buildExtends<IRawTexture2DArrayProps & IRawTexture2DArrayParams>(_);
