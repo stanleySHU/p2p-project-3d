@@ -13,10 +13,8 @@ function BackgroundMaterialHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`BackgroundMaterial ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonBackgroundMaterial(name, scene);
-                console.log(`BackgroundMaterial ${name} created`);
             }
         }, []);
 

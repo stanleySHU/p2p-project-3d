@@ -19,7 +19,6 @@ function InterpolateValueActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonInterpolateValueAction(triggerOptions, target, propertyPath, value, duration, condition, stopOtherAnimations, onInterpolationDone);
-                console.log(`InterpolateValueAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

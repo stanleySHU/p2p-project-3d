@@ -10,10 +10,8 @@ export function DisplayGridHOC<T>(EL: React.FC<T>) {
     return (props: T & IDisplayGridProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`DisplayGrid ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonDisplayGrid(name);
-                console.log(`DisplayGrid ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function DisplayGridHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(DisplayGridHOC(e));
+    return _buildExtends<T>(DisplayGridHOC(e));
 }
 
-export const P2PDisplayGrid = buildExtends(ChildHOC(null));
+export const P2PDisplayGrid = buildExtends<IDisplayGridProps>(ChildHOC(null));

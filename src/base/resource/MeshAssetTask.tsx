@@ -16,10 +16,8 @@ function MeshAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, meshesNames, rootUrl, sceneFilename } = props;
 
         useEffect(() => {
-            console.log(`MeshAssetTask ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonMeshAssetTask(name, meshesNames, rootUrl, sceneFilename);
-                console.log(`MeshAssetTask ${name} created`);
             }
         }, []);
         return <EL {...props}/>

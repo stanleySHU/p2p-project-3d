@@ -19,10 +19,8 @@ function HDRCubeTextureAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, url, size, noMipmap, generateHarmonics, gammaSpace, reserved } = props;
 
         useEffect(() => {
-            console.log(`HDRCubeTextureAssetTask ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonHDRCubeTextureAssetTask(name, url, size, noMipmap, generateHarmonics, gammaSpace, reserved);
-                console.log(`HDRCubeTextureAssetTask ${name} created`);
             }
         }, []);
         return <EL {...props}/>

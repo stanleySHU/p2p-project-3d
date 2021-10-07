@@ -26,10 +26,8 @@ function BoxHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`Box ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateBox(name, props, scene); 
-                console.log(`Box ${name} created`);
             }
         }, [])
 

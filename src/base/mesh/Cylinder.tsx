@@ -29,10 +29,8 @@ function CylinderHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`Cylinder ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateCylinder(name, props, scene);
-                console.log(`Cylinder ${name} created`);
             }
         }, []);
 

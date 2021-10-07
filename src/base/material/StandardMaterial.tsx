@@ -11,11 +11,9 @@ function StandardMaterialHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`StandardMaterial ${name} called`);
             if (instance && !instance.current) {
                 let material = new BabylonStandardMaterial(name, scene);
                 instance.current = material;
-                console.log(`StandardMaterial ${name} created`);
             }
         }, []);
 

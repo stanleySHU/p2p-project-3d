@@ -1,21 +1,22 @@
-import { FreeCamera as BabylonFreeCamera } from '@babylonjs/core';
-import React, { useEffect } from "react";
+import { FreeCamera as BabylonFreeCamera, Vector3 } from '@babylonjs/core';
+import React, { useContext, useEffect } from "react";
 import { ITargetCameraInitial, buildExtends as _buildExtends } from "./TargetCamera";
 import { ChildHOC } from '../Component';
+import { EngineContext } from '../Engine';
 
 export type IFreeCameraInitial<T> = ITargetCameraInitial<T> & {};
 export type IFreeCameraProps = IFreeCameraInitial<BabylonFreeCamera> & IFreeCameraOptions;
 
 function FreeCameraHOC<T>(EL: React.FC<T>) {
     return (props: T & IFreeCameraProps) => {
+        const { canvas } = useContext(EngineContext);
         const { scene, instance, name, position, setActiveOnSceneIfNoneActive } = props;
 
         useEffect(() => {
-            console.log(`FreeCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonFreeCamera(name, position, scene, setActiveOnSceneIfNoneActive);
-                // instance.current.setTarget();
-                console.log(`FreeCamera ${name} created`);
+                instance.current.setTarget(new Vector3(0, 0, 0));
+                instance.current.attachControl(canvas, true);
             }
         }, []);
 

@@ -19,10 +19,8 @@ function LineSystemHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`LineSystem ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateLineSystem(name, props, scene!);
-                console.log(`LineSystem ${name} created`);
             }
         }, []);
 

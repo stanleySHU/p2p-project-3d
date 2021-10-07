@@ -10,10 +10,8 @@ export function InputPasswordHOC<T>(EL: React.FC<T>) {
     return (props: T & IInputPasswordProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`InputPassword ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonInputPassword(name);
-                console.log(`InputPassword ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function InputPasswordHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(InputPasswordHOC(e));
+    return _buildExtends<T>(InputPasswordHOC(e));
 }
 
-export const P2PInputPassword = buildExtends(ChildHOC(null));
+export const P2PInputPassword = buildExtends<IInputPasswordProps>(ChildHOC(null));

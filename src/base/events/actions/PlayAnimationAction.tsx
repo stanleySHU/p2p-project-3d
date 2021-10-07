@@ -17,7 +17,6 @@ function PlayAnimationActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonPlayAnimationAction(triggerOptions, target, from, to, loop, condition);
-                console.log(`PlayAnimationAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

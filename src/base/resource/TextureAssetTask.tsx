@@ -17,10 +17,8 @@ function TextureAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, url, noMipmap, invertY, samplingMode } = props;
 
         useEffect(() => {
-            console.log(`TextureAssetTask ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonTextureAssetTask(name, url, noMipmap, invertY, samplingMode);
-                console.log(`TextureAssetTask ${name} created`);
             }
         }, []);
         return <EL {...props}/>

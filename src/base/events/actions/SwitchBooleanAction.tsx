@@ -15,7 +15,6 @@ function SwitchBooleanActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonSwitchBooleanAction(triggerOptions, target, propertyPath, condition);
-                console.log(`SwitchBooleanAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

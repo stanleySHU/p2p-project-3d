@@ -13,10 +13,8 @@ function UniversalCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, position } = props;
 
         useEffect(() => {
-            console.log(`UniversalCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonUniversalCamera(name, position, scene);
-                console.log(`UniversalCamera ${name} created`);
             }
         }, []);
 

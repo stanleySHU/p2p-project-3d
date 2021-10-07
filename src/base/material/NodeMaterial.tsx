@@ -13,10 +13,8 @@ function NodeMaterialHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, options } = props;
 
         useEffect(() => {
-            console.log(`NodeMaterial ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonNodeMaterial(name, scene, options);
-                console.log(`NodeMaterial ${name} created`);
             }
         }, []);
 

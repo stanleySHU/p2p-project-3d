@@ -23,10 +23,8 @@ function HDRCubeTextureHOC<T>(EL: React.FC<T>) {
         const { instance, name, url, size, noMipmap, generateHarmonics, gammaSpace, prefilterOnLoad, onLoad, onError } = props;
 
         useEffect(() => {
-            console.log(`HDRCubeTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonHDRCubeTexture(url, engine!, size, noMipmap, generateHarmonics, gammaSpace, prefilterOnLoad, onLoad, onError);
-                console.log(`HDRCubeTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

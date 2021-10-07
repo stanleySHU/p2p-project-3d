@@ -13,10 +13,8 @@ export function ImageHOC<T>(EL: React.FC<T>) {
     return (props: T & IImageProps) => {
         const { instance, name, url } = props;
         useEffect(() => {
-            console.log(`Image ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonImage(name, url);
-                console.log(`Image ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -24,7 +22,7 @@ export function ImageHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(ImageHOC(e));
+    return _buildExtends<T>(ImageHOC(e));
 }
 
-export const P2PImage = buildExtends(ChildHOC(null));
+export const P2PImage = buildExtends<IImageProps>(ChildHOC(null));

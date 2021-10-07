@@ -19,10 +19,8 @@ function DashedLinesHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`DashedLines ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateDashedLines(name, props, scene);
-                console.log(`DashedLines ${name} created`);
             }
         }, []);
 

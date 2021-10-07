@@ -14,11 +14,8 @@ function ShaderMaterialHOC<T>(EL: React.FC<T>) {
         const { scene, instance, parentInstance, name, shaderPath, options, assignTo } = props;
 
         useEffect(() => {
-            console.log(`ShaderMaterial ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonShaderMaterial(name, scene, shaderPath, options);
-                console.log(`ShaderMaterial ${name} created`);
-
                 if (parentInstance) {
                     parentInstance.current[assignTo!] = instance.current;
                 }

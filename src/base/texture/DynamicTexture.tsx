@@ -17,10 +17,8 @@ function DynamicTextureHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, options, generateMipMaps, samplingMode, format, invertY } = props;
 
         useEffect(() => {
-            console.log(`DynamicTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonDynamicTexture(name, options, scene, generateMipMaps, samplingMode, format, invertY);
-                console.log(`DynamicTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

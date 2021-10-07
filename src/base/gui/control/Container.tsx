@@ -10,10 +10,8 @@ export function ContainerHOC<T>(EL: React.FC<T>) {
     return (props: T & IContainerProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`Container ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonContainer(name);
-                console.log(`Container ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function ContainerHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(ContainerHOC(e));
+    return _buildExtends<T>(ContainerHOC(e));
 }
 
-export const P2PContainer = buildExtends(ChildHOC(null));
+export const P2PContainer = buildExtends<IContainerProps>(ChildHOC(null));

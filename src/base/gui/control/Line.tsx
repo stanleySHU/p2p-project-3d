@@ -10,10 +10,8 @@ export function LineHOC<T>(EL: React.FC<T>) {
     return (props: T & ILineProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`Line ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonLine(name);
-                console.log(`Line ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function LineHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(LineHOC(e));
+    return _buildExtends<T>(LineHOC(e));
 }
 
-export const P2PLine = buildExtends(ChildHOC(null));
+export const P2PLine = buildExtends<ILineProps>(ChildHOC(null));

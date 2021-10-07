@@ -17,10 +17,8 @@ function SpotLightHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, position, direction, angle, exponent } = props;
 
         useEffect(() => {
-            console.log(`SpotLight ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonSpotLight(name, position, direction, angle, exponent, scene);
-                console.log(`SpotLight ${name} created`);
             }
         }, [])
 

@@ -20,10 +20,8 @@ function EquiRectangularCubeTextureHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, url, size, noMipmap, gammaSpace, onLoad, onError} = props;
 
         useEffect(() => {
-            console.log(`EquiRectangularCubeTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonEquiRectangularCubeTexture(url, scene, size, noMipmap, gammaSpace, onLoad, onError);
-                console.log(`EquiRectangularCubeTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

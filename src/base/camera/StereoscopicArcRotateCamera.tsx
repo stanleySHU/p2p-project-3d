@@ -14,10 +14,8 @@ function StereoscopicArcRotateCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide } = props;
 
         useEffect(() => {
-            console.log(`StereoscopicArcRotateCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonStereoscopicArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide, scene);
-                console.log(`StereoscopicArcRotateCamera ${name} created`);
             }
         }, []);
         

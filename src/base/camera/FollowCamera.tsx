@@ -14,10 +14,8 @@ function FollowCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, position, lockedTarget } = props;
 
         useEffect(() => {
-            console.log(`FollowCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonFollowCamera(name, position, scene, lockedTarget);
-                console.log(`FollowCamera ${name} created`);
             }
         }, []);
 

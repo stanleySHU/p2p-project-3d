@@ -15,7 +15,6 @@ function SetStateActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonSetStateAction(triggerOptions, target, value, condition);
-                console.log(`SetStateAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

@@ -21,10 +21,8 @@ function RenderTargetTextureHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, size, generateMipMaps, doNotChangeAspectRatio, type, isCube, samplingMode, generateDepthBuffer, generateStencilBuffer, isMulti, format, delayAllocation } = props;
 
         useEffect(() => {
-            console.log(`RenderTargetTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonRenderTargetTexture(name, size, scene, generateMipMaps, doNotChangeAspectRatio, type, isCube, samplingMode, generateDepthBuffer, generateStencilBuffer, isMulti, format, delayAllocation);
-                console.log(`RenderTargetTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

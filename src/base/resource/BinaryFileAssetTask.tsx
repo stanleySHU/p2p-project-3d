@@ -14,10 +14,8 @@ function BinaryFileAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, url } = props;
 
         useEffect(() => {
-            console.log(`BinaryFileAssetTask ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonBinaryFileAssetTask(name, url);
-                console.log(`BinaryFileAssetTask ${name} created`);
             }
         }, []);
         return <EL {...props}/>

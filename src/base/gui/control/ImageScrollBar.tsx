@@ -10,10 +10,8 @@ export function ImageScrollBarHOC<T>(EL: React.FC<T>) {
     return (props: T & IImageScrollBarProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`ImageScrollBar ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonImageScrollBar(name);
-                console.log(`ImageScrollBar ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function ImageScrollBarHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(ImageScrollBarHOC(e));
+    return _buildExtends<T>(ImageScrollBarHOC(e));
 }
 
-export const P2PImageScrollBar = buildExtends(ChildHOC(null));
+export const P2PImageScrollBar = buildExtends<IImageScrollBarProps>(ChildHOC(null));

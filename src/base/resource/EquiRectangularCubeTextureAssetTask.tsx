@@ -17,10 +17,8 @@ function EquiRectangularCubeTextureAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, url, size, noMipmap, gammaSpace } = props;
 
         useEffect(() => {
-            console.log(`EquiRectangularCubeTextureAssetTask ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonEquiRectangularCubeTextureAssetTask(name, url, size, noMipmap, gammaSpace);
-                console.log(`EquiRectangularCubeTextureAssetTask ${name} created`);
             }
         }, []);
         return <EL {...props}/>

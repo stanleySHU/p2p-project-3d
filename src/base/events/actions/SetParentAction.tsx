@@ -15,7 +15,6 @@ function SetParentActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonSetParentAction(triggerOptions, target, parent, condition);
-                console.log(`SetParentAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

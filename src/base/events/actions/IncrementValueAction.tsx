@@ -16,7 +16,6 @@ function IncrementValueActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonIncrementValueAction(triggerOptions, target, propertyPath, value, condition);
-                console.log(`IncrementValueAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

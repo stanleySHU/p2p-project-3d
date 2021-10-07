@@ -14,10 +14,8 @@ function DirectionalLightHOC<T>(EL:React.FC<T>) {
         const { scene, instance, name, direction } = props;
         
         useEffect(() => {
-            console.log(`DirectionalLight ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonDirectionalLight(name, direction, scene);
-                console.log(`DirectionalLight ${name} created`);
             }
         }, [])
         return <EL {...props}/>

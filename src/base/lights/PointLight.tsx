@@ -14,10 +14,8 @@ function PointLightHOC<T>(EL: React.FC<T> ) {
         const { scene, instance, name, position } = props;
 
         useEffect(() => {
-            console.log(`PointLight ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonPointLight(name, position, scene);
-                console.log(`PointLight ${name} created`);
             }
         }, []);
 

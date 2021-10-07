@@ -13,10 +13,8 @@ function TransformNodeHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, isPure } = props;
 
         useEffect(() => {
-            console.log(`TransformNode ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonTransformNode(name, scene, isPure);
-                console.log(`TransformNode ${name} created`);
             }
         }, []);
 

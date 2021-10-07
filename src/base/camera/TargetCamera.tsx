@@ -11,10 +11,8 @@ function TargetCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, position, setActiveOnSceneIfNoneActive } = props;
 
         useEffect(() => {
-            console.log(`TargetCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonTargetCamera(name, position, scene, setActiveOnSceneIfNoneActive);
-                console.log(`TargetCamera ${name} created`);
             }
         }, []);
 

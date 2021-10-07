@@ -14,10 +14,8 @@ function ImageAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, url } = props;
 
         useEffect(() => {
-            console.log(`ImageAssetTask ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonImageAssetTask(name, url);
-                console.log(`ImageAssetTask ${name} created`);
             }
         }, []);
         return <EL {...props}/>

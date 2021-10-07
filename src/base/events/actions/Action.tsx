@@ -14,7 +14,6 @@ function ActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonAction(triggerOptions, condition);
-                console.log(`Action ${name} created`);
             }
         }, []);
         return <EL {...props}/>

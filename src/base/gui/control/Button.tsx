@@ -10,10 +10,8 @@ export function ButtonHOC<T>(EL: React.FC<T>) {
     return (props: T & IButtonProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`Button ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonButton(name);
-                console.log(`Button ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function ButtonHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(ButtonHOC(e));
+    return _buildExtends<T>(ButtonHOC(e));
 }
 
-export const P2PButton = buildExtends(ChildHOC(null));
+export const P2PButton = buildExtends<IButtonProps>(ChildHOC(null));

@@ -15,10 +15,8 @@ function HtmlElementTextureHOC<T>(EL: React.FC<T>) {
         const { instance, name, element, options } = props;
 
         useEffect(() => {
-            console.log(`HtmlElementTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonHtmlElementTexture(name, element, options);
-                console.log(`HtmlElementTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

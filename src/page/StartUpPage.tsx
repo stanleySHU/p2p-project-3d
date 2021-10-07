@@ -4,7 +4,7 @@ import { P2PGround } from '../base/mesh/Ground';
 import { ISceneProps, P2PScene, SceneContext } from '../base/scene/Scene'
 
 
-export const StartPage = (props: ISceneProps) => {
+export const StartUpPage = (props: ISceneProps) => {
     return <P2PScene {...props}>
         <SceneContext.Consumer >
             {

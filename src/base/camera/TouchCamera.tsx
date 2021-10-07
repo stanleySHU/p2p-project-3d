@@ -13,10 +13,8 @@ function TouchCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, position } = props;
 
         useEffect(() => {
-            console.log(`TouchCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonTouchCamera(name, position, scene);
-                console.log(`TouchCamera ${name} created`);
             }
         }, []);
 

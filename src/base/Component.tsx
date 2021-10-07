@@ -44,6 +44,7 @@ function ComponentHOC<T>(EL: React.FC<T>) {
             attachChildren();
 
             return () => {
+                instanceRef.current.dispose && instanceRef.current.dispose();
                 instanceRef.current = null;
             }
         }, []);

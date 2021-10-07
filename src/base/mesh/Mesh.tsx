@@ -19,10 +19,8 @@ function MeshHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, source, doNotCloneChildren, clonePhysicsImpostor } = props;
 
         useEffect(() => {
-            console.log(`Mesh ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonMesh(name, scene, null, source, doNotCloneChildren, clonePhysicsImpostor);
-                console.log(`Mesh ${name} created`);
             }
         }, [])
         

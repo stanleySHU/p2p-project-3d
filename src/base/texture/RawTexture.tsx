@@ -20,10 +20,8 @@ function RawTextureHOC<T>(EL: React.FC<T>) {
         const { instance, name, data, width, height, format, generateMipMaps, invertY, samplingMode, type } = props;
 
         useEffect(() => {
-            console.log(`RawTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonRawTexture(data, width, height, format, engine!, generateMipMaps, invertY, samplingMode, type);
-                console.log(`RawTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

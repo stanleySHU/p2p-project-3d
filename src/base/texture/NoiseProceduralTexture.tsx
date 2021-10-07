@@ -17,10 +17,8 @@ function NoiseProceduralTextureHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, size, fallbackTexture, generateMipMaps } = props;
 
         useEffect(() => {
-            console.log(`NoiseProceduralTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonNoiseProceduralTexture(name, size, scene, fallbackTexture, generateMipMaps) ;
-                console.log(`NoiseProceduralTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

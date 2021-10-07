@@ -14,10 +14,8 @@ function AnaglyphArcRotateCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, alpha, beta, radius, target, interaxialDistance } = props;
 
         useEffect(() => {
-            console.log(`AnaglyphArcRotateCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonAnaglyphArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, scene);
-                console.log(`AnaglyphArcRotateCamera ${name} created`);
             }
         }, []);
 

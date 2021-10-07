@@ -12,10 +12,8 @@ export function TextBlockHOC<T>(EL: React.FC<T>) {
     return (props: T & ITextBlockProps) => {
         const { instance, name, text} = props;
         useEffect(() => {
-            console.log(`TextBlock ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonTextBlock(name, text);
-                console.log(`TextBlock ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -23,7 +21,7 @@ export function TextBlockHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(TextBlockHOC(e));
+    return _buildExtends<T>(TextBlockHOC(e));
 }
 
-export const P2PTextBlock = buildExtends(ChildHOC(null));
+export const P2PTextBlock = buildExtends<ITextBlockProps>(ChildHOC(null));

@@ -11,7 +11,6 @@ function BouncingBehaviorHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonBouncingBehavior();
-                console.log(`BouncingBehavior ${name} created`);
             }
         }, [])
     

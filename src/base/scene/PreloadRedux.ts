@@ -1,8 +1,8 @@
 type ActionType = "processUpdate" |  "load" | "loadSucces" | "loadFail" | "loadFinish";
 
 export type InitialState = {
-    process: number,
-    loading: false
+    readonly process: number,
+    readonly loading: false
 };
 
 export type Action = {

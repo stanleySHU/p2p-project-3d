@@ -13,10 +13,8 @@ function CapsuleHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`Capsule ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateCapsule(name, props, scene); 
-                console.log(`Capsule ${name} created`);
             }
         }, []); 
 

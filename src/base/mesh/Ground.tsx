@@ -19,10 +19,8 @@ function GroundHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`Ground ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateGround(name, props, scene); 
-                console.log(`Ground ${name} created`);
             }
         }, []); 
 

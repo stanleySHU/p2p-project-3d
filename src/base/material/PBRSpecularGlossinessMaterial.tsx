@@ -11,10 +11,8 @@ function PBRSpecularGlossinessMaterialHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`PBRSpecularGlossinessMaterial ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonPBRSpecularGlossinessMaterial(name, scene);
-                console.log(`PBRSpecularGlossinessMaterial ${name} created`);
             }
         }, []);
 

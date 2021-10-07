@@ -10,10 +10,8 @@ export function RadioButtonHOC<T>(EL: React.FC<T>) {
     return (props: T & IRadioButtonProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`RadioButton ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonRadioButton(name);
-                console.log(`RadioButton ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function RadioButtonHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(RadioButtonHOC(e));
+    return _buildExtends<T>(RadioButtonHOC(e));
 }
 
-export const P2PRadioButton = buildExtends(ChildHOC(null));
+export const P2PRadioButton = buildExtends<IRadioButtonProps>(ChildHOC(null));

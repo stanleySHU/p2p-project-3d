@@ -14,7 +14,6 @@ function PlaySoundActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonPlaySoundAction(triggerOptions, sound, condition);
-                console.log(`PlaySoundAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

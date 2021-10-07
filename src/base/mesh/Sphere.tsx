@@ -23,10 +23,8 @@ function SphereHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`Sphere ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateSphere(name, props, scene);
-                console.log(`Sphere ${name} created`);
             }
         }, []);
 

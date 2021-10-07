@@ -121,6 +121,38 @@ import { P2PMeshAssetTask } from './resource/MeshAssetTask';
 import { P2PTextFileAssetTask } from './resource/TextFileAssetTask';
 import { P2PTextureAssetTask } from './resource/TextureAssetTask';
 
+//gui
+//control
+import { P2PBaseSlider } from './gui/control/BaseSlider';
+import { P2PButton } from './gui/control/Button';
+import { P2PCheckbox } from './gui/control/Checkbox';
+import { P2PColorPicker } from './gui/control/ColorPicker';
+import { P2PContainer } from './gui/control/Container';
+import { P2PControl } from './gui/control/Control';
+import { P2PDisplayGrid } from './gui/control/DisplayGrid';
+import { P2PEllipse } from './gui/control/Ellipse';
+import { P2PFocusableButton } from './gui/control/FocusableButton';
+import { P2PGrid } from './gui/control/Grid';
+import { P2PImage } from './gui/control/Image';
+import { P2PImageBasedSlider } from './gui/control/ImageBasedSlider';
+import { P2PImageScrollBar } from './gui/control/ImageScrollBar';
+import { P2PInputPassword } from './gui/control/InputPassword';
+import { P2PInputText } from './gui/control/InputText';
+import { P2PLine } from './gui/control/Line';
+import { P2PMultiLine } from './gui/control/MultiLine';
+import { P2PRadioButton } from './gui/control/RadioButton';
+import { P2PRectangle } from './gui/control/Rectangle';
+import { P2PScrollBar } from './gui/control/ScrollBar';
+import { P2PScrollViewer } from './gui/control/ScrollViewer';
+import { P2PSelectionPanel } from './gui/control/SelectionPanel';
+import { P2PSlider } from './gui/control/Slider';
+import { P2PStackPanel } from './gui/control/StackPanel';
+import { P2PTextBlock } from './gui/control/TextBlock';
+import { P2PToggleButton } from './gui/control/ToggleButton';
+import { P2PVirtualKeyboard } from './gui/control/VirtualKeyboard';
+
+import { P2PAdvancedDynamicTexture } from './gui/AdvancedDynamicTexture';
+
 //resource2
 import { IBinaryResourceInitial } from './resource2/BinaryFileResource';
 import { ICubeTextureResourceInitial } from './resource2/CubeTextureManager';
@@ -173,5 +205,10 @@ export {
     P2PRenderTargetTexture, P2PTexture, P2PVideoTexture,
     //task
     P2PAssetsManager, P2PBinaryFileAssetTask, P2PContainerAssetTask, P2PCubeTextureAssetTask, P2PEquiRectangularCubeTextureAssetTask, P2PHDRCubeTextureAssetTask, P2PImageAssetTask,
-    P2PMeshAssetTask, P2PTextFileAssetTask, P2PTextureAssetTask
+    P2PMeshAssetTask, P2PTextFileAssetTask, P2PTextureAssetTask,
+    //control 2d
+    P2PBaseSlider, P2PButton, P2PCheckbox, P2PColorPicker, P2PContainer, P2PControl, P2PDisplayGrid, P2PEllipse, P2PFocusableButton, P2PGrid, P2PImage, P2PImageBasedSlider, P2PImageScrollBar,
+    P2PInputPassword, P2PInputText, P2PLine, P2PMultiLine, P2PRadioButton, P2PRectangle, P2PScrollBar, P2PScrollViewer, P2PSelectionPanel, P2PSlider, P2PStackPanel, P2PTextBlock, P2PToggleButton,
+    P2PVirtualKeyboard,
+    P2PAdvancedDynamicTexture
 }

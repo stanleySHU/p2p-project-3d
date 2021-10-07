@@ -20,10 +20,8 @@ function VideoTextureHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, src, generateMipMaps, invertY, samplingMode, settings} = props;
 
         useEffect(() => {
-            console.log(`VideoTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonVideoTexture(name, src, scene, generateMipMaps, invertY, samplingMode, settings);
-                console.log(`VideoTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

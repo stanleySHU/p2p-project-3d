@@ -14,10 +14,8 @@ function VRDeviceOrientationArcRotateCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
 
         useEffect(() => {
-            console.log(`VRDeviceOrientationArcRotateCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonVRDeviceOrientationArcRotateCamera(name, alpha, beta, radius, target, scene, setActiveOnSceneIfNoneActive);
-                console.log(`VRDeviceOrientationArcRotateCamera ${name} created`);
             }
         }, []);
         

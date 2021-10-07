@@ -26,10 +26,8 @@ function TextureHOC<T>(EL: React.FC<T>) {
         const { instance, name, url, noMipmap, invertY, samplingMode, onLoad, onError, buffer, deleteBuffer, format, mimeType, loaderOptions } = props;
 
         useEffect(() => {
-            console.log(`Texture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonTexture(url, engine!, noMipmap, invertY, samplingMode, onLoad, onError, buffer, deleteBuffer, format, mimeType, loaderOptions);
-                console.log(`Texture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

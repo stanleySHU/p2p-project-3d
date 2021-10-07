@@ -12,10 +12,8 @@ export function ScrollViewerHOC<T>(EL: React.FC<T>) {
     return (props: T & IScrollViewerProps) => {
         const { instance, name, isImageBased } = props;
         useEffect(() => {
-            console.log(`ScrollViewer ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonScrollViewer(name, isImageBased);
-                console.log(`ScrollViewer ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -23,7 +21,7 @@ export function ScrollViewerHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(ScrollViewerHOC(e));
+    return _buildExtends<T>(ScrollViewerHOC(e));
 }
 
-export const P2PScrollViewer = buildExtends(ChildHOC(null));
+export const P2PScrollViewer = buildExtends<IScrollViewerProps>(ChildHOC(null));

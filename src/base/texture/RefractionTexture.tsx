@@ -14,10 +14,8 @@ function RefractionTextureHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, size, generateMipMaps } = props;
 
         useEffect(() => {
-            console.log(`RefractionTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonRefractionTexture(name, size, scene, generateMipMaps);
-                console.log(`RefractionTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

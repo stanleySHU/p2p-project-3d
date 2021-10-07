@@ -16,7 +16,6 @@ function PointerDragBehaviorHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonPointerDragBehavior(options);
-                console.log(`PointerDragBehavior ${name} created`);
             }
         }, [])
     

@@ -14,10 +14,8 @@ function HemisphericLightHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, direction } = props;
 
         useEffect(() => {
-            console.log(`HemisphericLight ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonHemisphericLight(name, direction, scene);
-                console.log(`HemisphericLight ${name} created`);
             }
         }, []);
 

@@ -11,10 +11,8 @@ function MultiMaterialHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`MultiMaterial ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonMultiMaterial(name, scene);
-                console.log(`MultiMaterial ${name} created`);
             }
         }, []);
 

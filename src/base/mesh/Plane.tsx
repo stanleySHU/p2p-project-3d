@@ -20,10 +20,8 @@ function PlaneHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`Plane ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreatePlane(name, props, scene);
-                console.log(`Plane ${name} created`);
             }
         }, []);
 

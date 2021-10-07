@@ -14,7 +14,6 @@ function ExecuteCodeActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonExecuteCodeAction(triggerOptions, func, condition);
-                console.log(`ExecuteCodeAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

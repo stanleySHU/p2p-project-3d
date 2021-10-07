@@ -17,10 +17,8 @@ function ColorGradingTextureHOC<T>(EL: React.FC<T>) {
         const { instance, name, url, onLoad } = props;
 
         useEffect(() => {
-            console.log(`ColorGradingTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonColorGradingTexture(url, engine!, onLoad);
-                console.log(`ColorGradingTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

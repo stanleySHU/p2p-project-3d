@@ -10,10 +10,8 @@ function PushMaterialHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`PushMaterial ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonPushMaterial(name, scene);
-                console.log(`PushMaterial ${name} created`);
             }
         }, []);
 

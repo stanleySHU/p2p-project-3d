@@ -10,10 +10,8 @@ export function CheckboxHOC<T>(EL: React.FC<T>) {
     return (props: T & ICheckboxProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`Checkbox ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonCheckbox(name);
-                console.log(`Checkbox ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function CheckboxHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(CheckboxHOC(e));
+    return _buildExtends<T>(CheckboxHOC(e));
 }
 
-export const P2PCheckbox = buildExtends(ChildHOC(null));
+export const P2PCheckbox = buildExtends<ICheckboxProps>(ChildHOC(null));

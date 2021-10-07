@@ -25,10 +25,8 @@ function TiledGroundHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`TiledGround ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateTiledGround(name, props, scene);
-                console.log(`TiledGround ${name} created`);
             }
         }, []);
 

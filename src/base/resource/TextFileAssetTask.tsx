@@ -14,10 +14,8 @@ function TextFileAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, url } = props;
 
         useEffect(() => {
-            console.log(`TextFileAssetTask ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonTextFileAssetTask(name, url);
-                console.log(`TextFileAssetTask ${name} created`);
             }
         }, []);
         return <EL {...props}/>

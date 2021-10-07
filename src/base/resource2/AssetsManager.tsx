@@ -3,22 +3,22 @@ import { AbstractAssetTask, AssetsManager as BabylonAssetsManager, Scene as Baby
 import { ImageResource } from "./ImageResource";
 import { Resource } from "./Resource";
 import { Nullable, UndefinedAble } from "../../utils/customType";
-import { Action, processUpdate, loadFinish, load } from "../../page/PreloadRedux";
+import { Action, processUpdate, loadFinish, load } from "../scene/PreloadRedux";
 import { IComponentProps } from '../Component'
 
 export type IAssetsManagerInitial<T> = IComponentProps<T> & {
     scene: BabylonScene,
     children: any | any[], 
-    loadDispatch: React.Dispatch<Action>
+    loadDispatch: React.Dispatch<Action>,
+    loaded: () => void
 }
 export type IAssetsManagerProps = IAssetsManagerInitial<BabylonAssetsManager>;
 
 export const P2PAssetsManager = (props: IAssetsManagerProps) => {
-    const { scene, loadDispatch } = props;
+    const { scene, loadDispatch, loaded } = props;
     const assetContainerRef = useRef(new BabylonAssetsManager(scene));
 
     useEffect(() => {
-        console.log(props)
         React.Children.forEach(props.children, (child: any) => {
             let type = child.type as string;
             let resource = resolve(type);
@@ -47,6 +47,7 @@ export const P2PAssetsManager = (props: IAssetsManagerProps) => {
 
     function handleFinish(tasks: AbstractAssetTask[]) {
         loadDispatch!(loadFinish());
+        loaded();
         console.log('finish', tasks);
     }
 

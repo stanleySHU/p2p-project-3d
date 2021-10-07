@@ -10,10 +10,8 @@ export function ImageBasedSliderHOC<T>(EL: React.FC<T>) {
     return (props: T & IImageBasedSliderProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`ImageBasedSlider ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonImageBasedSlider(name);
-                console.log(`ImageBasedSlider ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function ImageBasedSliderHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(ImageBasedSliderHOC(e));
+    return _buildExtends<T>(ImageBasedSliderHOC(e));
 }
 
-export const P2PImageBasedSlider = buildExtends(ChildHOC(null));
+export const P2PImageBasedSlider = buildExtends<IImageBasedSliderProps>(ChildHOC(null));

@@ -12,10 +12,8 @@ export function ToggleButtonHOC<T>(EL: React.FC<T>) {
     return (props: T & IToggleButtonProps) => {
         const { instance, name, group } = props;
         useEffect(() => {
-            console.log(`ToggleButton ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonToggleButton(name, group);
-                console.log(`ToggleButton ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -23,7 +21,7 @@ export function ToggleButtonHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(ToggleButtonHOC(e));
+    return _buildExtends<T>(ToggleButtonHOC(e));
 }
 
-export const P2PToggleButton = buildExtends(ChildHOC(null));
+export const P2PToggleButton = buildExtends<IToggleButtonProps>(ChildHOC(null));

@@ -17,7 +17,6 @@ function ValueConditionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonValueCondition(actionManager, target, propertyPath, value, operator);
-                console.log(`ValueCondition ${name} created`);
             }
         }, []);
         return <EL {...props}/>

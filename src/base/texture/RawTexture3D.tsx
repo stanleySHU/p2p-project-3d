@@ -20,10 +20,8 @@ function RawTexture3DHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, data, width, height, depth, format, generateMipMaps, invertY, samplingMode, textureType} = props;
 
         useEffect(() => {
-            console.log(`RawTexture3D ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonRawTexture3D(data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType);
-                console.log(`RawTexture3D ${name} created`);
             }
         }, [])
         return <EL {...props}/>

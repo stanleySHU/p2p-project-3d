@@ -11,7 +11,6 @@ function SixDofDragBehaviorHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonSixDofDragBehavior();
-                console.log(`SixDofDragBehavior ${name} created`);
             }
         }, [])
     

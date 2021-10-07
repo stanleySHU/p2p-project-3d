@@ -12,10 +12,8 @@ export function InputTextHOC<T>(EL: React.FC<T>) {
     return (props: T & IInputTextProps) => {
         const { instance, name, text } = props;
         useEffect(() => {
-            console.log(`InputText ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonInputText(name, text);
-                console.log(`InputText ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -23,7 +21,7 @@ export function InputTextHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(InputTextHOC(e));
+    return _buildExtends<T>(InputTextHOC(e));
 }
 
-export const P2PInputText = buildExtends(ChildHOC(null));
+export const P2PInputText = buildExtends<IInputTextProps>(ChildHOC(null));

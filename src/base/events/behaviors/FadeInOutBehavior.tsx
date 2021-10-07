@@ -11,7 +11,6 @@ function FadeInOutBehaviorHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonFadeInOutBehavior();
-                console.log(`FadeInOutBehavior ${name} created`);
             }
         }, [])
     

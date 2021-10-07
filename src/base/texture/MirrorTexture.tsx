@@ -13,10 +13,8 @@ function MirrorTextureHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, size, generateMipMaps, type, samplingMode, generateDepthBuffer } = props;
 
         useEffect(() => {
-            console.log(`MirrorTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonMirrorTexture(name, size, scene, generateMipMaps, type, samplingMode, generateDepthBuffer );
-                console.log(`MirrorTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

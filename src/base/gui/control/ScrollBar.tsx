@@ -10,10 +10,8 @@ export function ScrollBarHOC<T>(EL: React.FC<T>) {
     return (props: T & IScrollBarProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`ScrollBar ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonScrollBar(name);
-                console.log(`ScrollBar ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function ScrollBarHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(ScrollBarHOC(e));
+    return _buildExtends<T>(ScrollBarHOC(e));
 }
 
-export const P2PScrollBar = buildExtends(ChildHOC(null));
+export const P2PScrollBar = buildExtends<IScrollBarProps>(ChildHOC(null));

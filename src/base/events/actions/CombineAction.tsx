@@ -14,7 +14,6 @@ function CombineActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonCombineAction(triggerOptions, children, condition);
-                console.log(`CombineAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

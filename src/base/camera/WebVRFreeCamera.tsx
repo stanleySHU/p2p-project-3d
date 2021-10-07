@@ -13,10 +13,8 @@ function WebVRFreeCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, position,  webVROptions } = props;
 
         useEffect(() => {
-            console.log(`WebVRFreeCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonWebVRFreeCamera(name, position, scene, webVROptions);
-                console.log(`WebVRFreeCamera ${name} created`);
             }
         }, []);
 

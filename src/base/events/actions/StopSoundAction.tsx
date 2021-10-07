@@ -14,7 +14,6 @@ function StopSoundActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonStopSoundAction(triggerOptions, sound, condition);
-                console.log(`StopSoundAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

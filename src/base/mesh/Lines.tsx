@@ -19,10 +19,8 @@ function LinesHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`Lines ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateLines(name, props, scene);
-                console.log(`Lines ${name} created`);
             }
         }, []);
 

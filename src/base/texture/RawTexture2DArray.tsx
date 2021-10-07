@@ -20,10 +20,8 @@ function RawTexture2DArrayHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, data, width, height, depth, format, generateMipMaps, invertY, samplingMode, textureType} = props;
 
         useEffect(() => {
-            console.log(`RawTexture2DArray ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonRawTexture2DArray(data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType);
-                console.log(`RawTexture2DArray ${name} created`);
             }
         }, [])
         return <EL {...props}/>

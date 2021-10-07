@@ -10,10 +10,8 @@ export function FocusableButtonHOC<T>(EL: React.FC<T>) {
     return (props: T & IFocusableButtonProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`FocusableButton ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonFocusableButton(name);
-                console.log(`FocusableButton ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function FocusableButtonHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(FocusableButtonHOC(e));
+    return _buildExtends<T>(FocusableButtonHOC(e));
 }
 
-export const P2PFocusableButton = buildExtends(ChildHOC(null));
+export const P2PFocusableButton = buildExtends<IFocusableButtonProps>(ChildHOC(null));

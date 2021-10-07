@@ -13,10 +13,8 @@ function DeviceOrientationCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, position } = props;
 
         useEffect(() => {
-            console.log(`DeviceOrientationCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonDeviceOrientationCamera(name, position, scene);
-                console.log(`DeviceOrientationCamera ${name} created`);
             }
         }, [])
 

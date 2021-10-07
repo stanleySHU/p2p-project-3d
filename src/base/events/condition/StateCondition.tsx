@@ -15,7 +15,6 @@ function StateConditionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonStateCondition(actionManager, target, value );
-                console.log(`StateCondition ${name} created`);
             }
         }, []);
         return <EL {...props}/>

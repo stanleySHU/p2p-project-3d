@@ -17,10 +17,8 @@ function ArcRotateCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, alpha, beta, radius, target, setActiveOnSceneIfNoneActive } = props;
 
         useEffect(() => {
-            console.log(`ArcRotateCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonArcRotateCamera(name, alpha, beta, radius, target, scene, setActiveOnSceneIfNoneActive);
-                console.log(`ArcRotateCamera ${name} created`);
             }
         }, []);
         

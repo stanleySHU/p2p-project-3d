@@ -14,10 +14,8 @@ function StereoscopicFreeCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, position, interaxialDistance, isStereoscopicSideBySide } = props;
 
         useEffect(() => {
-            console.log(`StereoscopicFreeCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonStereoscopicFreeCamera(name, position, interaxialDistance, isStereoscopicSideBySide, scene);
-                console.log(`StereoscopicFreeCamera ${name} created`);
             }
         }, []);
 

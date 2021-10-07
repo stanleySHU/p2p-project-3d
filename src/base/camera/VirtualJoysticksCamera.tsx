@@ -11,10 +11,8 @@ function VirtualJoysticksCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, position } = props;
 
         useEffect(() => {
-            console.log(`VirtualJoysticksCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonVirtualJoysticksCamera(name, position, scene);
-                console.log(`VirtualJoysticksCamera ${name} created`);
             }
         }, []);
 

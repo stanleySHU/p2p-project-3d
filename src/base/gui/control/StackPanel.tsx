@@ -10,10 +10,8 @@ export function StackPanelHOC<T>(EL: React.FC<T>) {
     return (props: T & IStackPanelProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`StackPanel ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonStackPanel(name);
-                console.log(`StackPanel ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function StackPanelHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(StackPanelHOC(e));
+    return _buildExtends<T>(StackPanelHOC(e));
 }
 
-export const P2PStackPanel = buildExtends(ChildHOC(null));
+export const P2PStackPanel = buildExtends<IStackPanelProps>(ChildHOC(null));

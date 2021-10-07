@@ -14,7 +14,6 @@ function PredicateConditionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonPredicateCondition(actionManager, predicate);
-                console.log(`PredicateCondition ${name} created`);
             }
         }, []);
         return <EL {...props}/>

@@ -16,10 +16,8 @@ function ContainerAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, meshesNames, rootUrl, sceneFilename } = props;
 
         useEffect(() => {
-            console.log(`ContainerAssetTask ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonContainerAssetTask(name, meshesNames, rootUrl, sceneFilename );
-                console.log(`ContainerAssetTask ${name} created`);
             }
         }, []);
         return <EL {...props}/>

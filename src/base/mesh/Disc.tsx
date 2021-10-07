@@ -20,10 +20,8 @@ function DiscHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`Disc ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateDisc(name, props, scene);
-                console.log(`Disc ${name} created`);
             }
         }, []);
 

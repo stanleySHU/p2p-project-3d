@@ -26,10 +26,8 @@ function TiledBoxHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`TiledBox ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateTiledBox(name, props, scene);
-                console.log(`TiledBox ${name} created`);
             }
         }, []);
 

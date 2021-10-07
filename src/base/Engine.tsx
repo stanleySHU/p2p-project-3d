@@ -27,6 +27,12 @@ export const P2PEngine = (props: IEngineInitial) => {
         let obj = new BabylonEngine(canvasRef.current, antialias, options, adaptToDeviceRatio );
         setInstance(obj);
 
+        obj.runRenderLoop(() => {
+            for (let scene of obj.scenes) {
+                scene.cameras.length > 0 && scene.render();
+            }
+        })
+
         const onResizeWindow = () => {
             obj.resize();
         }

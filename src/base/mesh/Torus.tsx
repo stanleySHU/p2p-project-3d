@@ -19,10 +19,8 @@ function TorusHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`Torus ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateTorus(name, props, scene);
-                console.log(`Torus ${name} created`);
             }
         }, []);
 

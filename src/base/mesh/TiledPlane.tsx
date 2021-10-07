@@ -25,10 +25,8 @@ function TiledPlaneHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`TiledPlane ${name} called`);
             if (instance && !instance.current) {
                 instance.current = MeshBuilder.CreateTiledPlane(name, props, scene);
-                console.log(`TiledPlane ${name} created`);
             }
         }, []);
 

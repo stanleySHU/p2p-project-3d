@@ -14,7 +14,6 @@ function StopAnimationActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonStopAnimationAction(triggerOptions, target, condition);
-                console.log(`StopAnimationAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

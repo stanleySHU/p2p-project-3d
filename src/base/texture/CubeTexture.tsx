@@ -28,10 +28,8 @@ function CubeTextureHOC<T>(EL: React.FC<T>) {
         const { instance, name, rootUrl, extensions, noMipmap, files, onLoad, onError, format, prefiltered, forcedExtension, createPolynomials, lodScale, lodOffset, loaderOptions } = props;
 
         useEffect(() => {
-            console.log(`CubeTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonCubeTexture(rootUrl, engine!, extensions, noMipmap, files, onLoad, onError, format, prefiltered, forcedExtension, createPolynomials, lodScale, lodOffset, loaderOptions);
-                console.log(`CubeTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

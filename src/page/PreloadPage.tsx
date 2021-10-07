@@ -1,29 +1,18 @@
-import { P2PAssetsManager, P2PNode } from '../base'
-import { ISceneProps, P2PScene, SceneContext } from '../base/scene/Scene'
-import { useEffect, useReducer } from 'react';
-import { reducer, initialState } from "./PreloadRedux";
+import { P2PAdvancedDynamicTexture, P2PTextBlock } from '../base';
+import { IPreloadSceneProps, IPreviewProps, P2PPreloadPage } from '../base/scene/PreloadScene';
 
-export const PreloadPage = (props: ISceneProps) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
 
-    useEffect(() => {
-
-    }, []);
-
-    return <P2PScene {...props}>
-        <SceneContext.Consumer>
-            {
-                ({ sceneInstance }) => sceneInstance &&
-                    <>
-                        <P2PNode name="" scene={sceneInstance} >
-                            
-                        </P2PNode>
-                        <P2PAssetsManager scene={sceneInstance} loadDispatch={dispatch}>
-                            <taskImg taskName="main-bg" url="/assets/img/main_bg@1x.jpg" />
-                            <taskImg taskName="main-bg" url="/assets/img/main_bg@1x.jpg" />
-                        </P2PAssetsManager>
-                    </>
-            }
-        </SceneContext.Consumer>
-    </P2PScene>
+const PreView = (props: IPreviewProps) => {
+    return <P2PAdvancedDynamicTexture scene={null} {...props} name="preView">
+        <P2PTextBlock text="1111"/>
+    </P2PAdvancedDynamicTexture>
 }
+
+export const PreloadPage = (props: IPreloadSceneProps) => {
+    let preView = <PreView></PreView>;
+
+    return <P2PPreloadPage {...props} Preview={preView}>
+        <taskImg taskName="main-bg" url="/assets/img/main_bg@1x.jpg" /> 
+    </P2PPreloadPage>
+}
+

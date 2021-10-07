@@ -11,7 +11,6 @@ function AutoRotationBehaviorHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonAutoRotationBehavior();
-                console.log(`AutoRotationBehavior ${name} created`);
             }
         }, [])
     

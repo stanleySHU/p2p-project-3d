@@ -21,10 +21,8 @@ function ProceduralTextureHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, size, fragment, fallbackTexture, generateMipMaps, isCube, textureType } = props;
 
         useEffect(() => {
-            console.log(`ProceduralTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonProceduralTexture(name, size, fragment, scene, fallbackTexture, generateMipMaps, isCube, textureType);
-                console.log(`ProceduralTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

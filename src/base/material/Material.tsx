@@ -14,10 +14,8 @@ function MaterialHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, doNotAdd } = props;
 
         useEffect(() => {
-            console.log(`Material ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonMaterial(name, scene, doNotAdd);
-                console.log(`Material ${name} created`);
             }
         }, []);
 

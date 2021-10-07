@@ -13,10 +13,8 @@ function WebXRCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, _xrSessionManager } = props;
 
         useEffect(() => {
-            console.log(`WebXRCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonWebXRCamera(name, scene, _xrSessionManager);
-                console.log(`WebXRCamera ${name} created`);
             }
         }, []);
 

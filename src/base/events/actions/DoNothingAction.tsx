@@ -12,7 +12,6 @@ function DoNothingActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonDoNothingAction(triggerOptions, condition);
-                console.log(`DoNothingAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

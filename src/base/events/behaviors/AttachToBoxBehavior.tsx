@@ -13,7 +13,6 @@ function AttachToBoxBehaviorHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonAttachToBoxBehavior(ui);
-                console.log(`AttachToBoxBehavior ${name} created`);
             }
         }, [])
     

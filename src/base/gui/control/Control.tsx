@@ -9,10 +9,8 @@ export function ControlHOC<T>(EL: React.FC<T>) {
     return (props: T & IControlProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`Control ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonControl(name);
-                console.log(`Control ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -20,7 +18,7 @@ export function ControlHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(ControlHOC(e));
+    return _buildExtends<T>(ControlHOC(e));
 }
 
-export const P2PControl = buildExtends(ChildHOC(null));
+export const P2PControl = buildExtends<IControlProps>(ChildHOC(null));

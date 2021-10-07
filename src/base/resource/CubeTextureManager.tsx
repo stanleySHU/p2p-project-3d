@@ -18,10 +18,8 @@ function CubeTextureAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, url, extensions, noMipmap, files, prefiltered } = props;
 
         useEffect(() => {
-            console.log(`CubeTextureAssetTask ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonCubeTextureAssetTask(name, url, extensions, noMipmap, files, prefiltered);
-                console.log(`CubeTextureAssetTask ${name} created`);
             }
         }, []);
         return <EL {...props}/>

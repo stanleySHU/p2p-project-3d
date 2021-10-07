@@ -11,7 +11,6 @@ function MultiPointerScaleBehaviorHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonMultiPointerScaleBehavior();
-                console.log(`MultiPointerScaleBehavior ${name} created`);
             }
         }, [])
     

@@ -14,10 +14,8 @@ function AnaglyphFreeCameraHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, position, interaxialDistance } = props;
 
         useEffect(() => {
-            console.log(`AnaglyphFreeCamera ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonAnaglyphFreeCamera(name, position, interaxialDistance, scene);
-                console.log(`AnaglyphFreeCamera ${name} created`);
             }
         }, []);
 

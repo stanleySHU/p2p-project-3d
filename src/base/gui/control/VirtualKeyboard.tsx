@@ -10,10 +10,8 @@ export function VirtualKeyboardHOC<T>(EL: React.FC<T>) {
     return (props: T & IVirtualKeyboardProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`VirtualKeyboard ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonVirtualKeyboard(name);
-                console.log(`VirtualKeyboard ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function VirtualKeyboardHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(VirtualKeyboardHOC(e));
+    return _buildExtends<T>(VirtualKeyboardHOC(e));
 }
 
-export const P2PVirtualKeyboard = buildExtends(ChildHOC(null));
+export const P2PVirtualKeyboard = buildExtends<IVirtualKeyboardProps>(ChildHOC(null));

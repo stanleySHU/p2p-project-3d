@@ -11,10 +11,8 @@ function PBRMetallicRoughnessMaterialHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name } = props;
 
         useEffect(() => {
-            console.log(`PBRMetallicRoughnessMaterial ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonPBRMetallicRoughnessMaterial(name, scene);
-                console.log(`PBRMetallicRoughnessMaterial ${name} created`);
             }
         }, []);
 

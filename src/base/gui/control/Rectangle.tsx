@@ -10,10 +10,8 @@ export function RectangleHOC<T>(EL: React.FC<T>) {
     return (props: T & IRectangleProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`Rectangle ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonRectangle(name);
-                console.log(`Rectangle ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function RectangleHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(RectangleHOC(e));
+    return _buildExtends<T>(RectangleHOC(e));
 }
 
-export const P2PRectangle = buildExtends(ChildHOC(null));
+export const P2PRectangle = buildExtends<IRectangleProps>(ChildHOC(null));

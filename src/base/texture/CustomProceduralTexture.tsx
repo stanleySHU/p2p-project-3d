@@ -17,10 +17,8 @@ function CustomProceduralTextureHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, texturePath, size, fallbackTexture, generateMipMaps } = props;
 
         useEffect(() => {
-            console.log(`CustomProceduralTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonCustomProceduralTexture(name, texturePath, size, scene, fallbackTexture, generateMipMaps);
-                console.log(`CustomProceduralTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

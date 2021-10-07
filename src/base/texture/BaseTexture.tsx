@@ -13,10 +13,8 @@ function BaseTextureHOC<T>(EL: React.FC<T>) {
         const { instance, name } = props;
 
         useEffect(() => {
-            console.log(`BaseTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonBaseTexture(engine!);
-                console.log(`BaseTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

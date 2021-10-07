@@ -15,10 +15,8 @@ function MultiRenderTargetHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, size, count, options } = props;
 
         useEffect(() => {
-            console.log(`MultiRenderTarget ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonMultiRenderTarget(name, size, count, scene, options );
-                console.log(`MultiRenderTarget ${name} created`);
             }
         }, [])
         return <EL {...props}/>

@@ -16,7 +16,6 @@ function SetValueActionHOC<T>(EL: React.FC<T>) {
         useEffect(() => {
             if (instance && !instance.current) {
                 instance.current = new BabylonSetValueAction(triggerOptions, target, propertyPath, value, condition);
-                console.log(`SetValueAction ${name} created`);
             }
         }, []);
         return <EL {...props}/>

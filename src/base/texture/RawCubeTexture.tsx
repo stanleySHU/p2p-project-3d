@@ -22,10 +22,8 @@ function RawCubeTextureHOC<T>(EL: React.FC<T>) {
         const { scene, instance, name, data, size, format, type, generateMipMaps, invertY, samplingMode, ompression } = props;
 
         useEffect(() => {
-            console.log(`RawCubeTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonRawCubeTexture(scene, data, size, format, type, generateMipMaps, invertY, samplingMode, ompression );
-                console.log(`RawCubeTexture ${name} created`);
             }
         }, [])
         return <EL {...props}/>

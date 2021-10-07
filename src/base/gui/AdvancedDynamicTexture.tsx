@@ -19,10 +19,8 @@ export function AdvancedDynamicTextureHOC<T>(EL: React.FC<T>) {
     return (props: T & IAdvancedDynamicTextureProps) => {
         const { instance, name, width, height, scene, generateMipMaps, samplingMode, invertY } = props;
         useEffect(() => {
-            console.log(`AdvancedDynamicTexture ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonAdvancedDynamicTexture(name, width, height, scene as any, generateMipMaps, samplingMode, invertY);
-                console.log(`AdvancedDynamicTexture ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -30,7 +28,7 @@ export function AdvancedDynamicTextureHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(AdvancedDynamicTextureHOC(e));
+    return _buildExtends<T>(AdvancedDynamicTextureHOC(e));
 }
 
-export const P2PAdvancedDynamicTexture = buildExtends(ChildHOC(null));
+export const P2PAdvancedDynamicTexture = buildExtends<IAdvancedDynamicTextureProps>(ChildHOC(null));

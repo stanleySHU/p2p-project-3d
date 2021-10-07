@@ -13,10 +13,8 @@ export function SelectionPanelHOC<T>(EL: React.FC<T>) {
     return (props: T & ISelectionPanelProps) => {
         const { instance, name, groups } = props;
         useEffect(() => {
-            console.log(`SelectionPanel ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonSelectionPanel(name, groups);
-                console.log(`SelectionPanel ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -24,7 +22,7 @@ export function SelectionPanelHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(SelectionPanelHOC(e));
+    return _buildExtends<T>(SelectionPanelHOC(e));
 }
 
-export const P2PSelectionPanel = buildExtends(ChildHOC(null));
+export const P2PSelectionPanel = buildExtends<ISelectionPanelProps>(ChildHOC(null));

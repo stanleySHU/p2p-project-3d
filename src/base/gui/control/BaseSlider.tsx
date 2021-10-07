@@ -10,10 +10,8 @@ export function BaseSliderHOC<T>(EL: React.FC<T>) {
     return (props: T & IBaseSliderProps) => {
         const { instance, name } = props;
         useEffect(() => {
-            console.log(`BaseSlider ${name} called`);
             if (instance && !instance.current) {
                 instance.current = new BabylonBaseSlider(name);
-                console.log(`BaseSlider ${name} created`);
             }
         }, []);
         return <EL {...props}/>;
@@ -21,7 +19,7 @@ export function BaseSliderHOC<T>(EL: React.FC<T>) {
 }
 
 export function buildExtends<T>(e: any) {
-    return _buildExtends(BaseSliderHOC(e));
+    return _buildExtends<T>(BaseSliderHOC(e));
 }
 
-export const P2PBaseSlider = buildExtends(ChildHOC(null));
+export const P2PBaseSlider = buildExtends<IBaseSliderProps>(ChildHOC(null));
