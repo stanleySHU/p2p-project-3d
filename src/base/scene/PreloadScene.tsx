@@ -3,7 +3,6 @@ import React, { ReactElement, useContext, useEffect, useReducer } from "react";
 import { P2PAssetsManager, P2PDirectionalLight, P2PFreeCamera, P2PNode, P2PScene } from "..";
 import { Nullable } from "../../utils/customType";
 import { NavControllerContext } from "../tab/NavController";
-import { push, replace } from "../tab/NavRedux";
 import { initialState, InitialState, reducer } from "./PreloadRedux";
 import { ISceneProps, SceneContext } from "./Scene";
 
@@ -30,7 +29,6 @@ export function P2PPreloadPage(props: IPreloadSceneProps) {
     useEffect(() => {
 
     }, []);
-
     return <P2PScene {...props}>
         <SceneContext.Consumer>
             {

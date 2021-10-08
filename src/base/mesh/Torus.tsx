@@ -1,9 +1,10 @@
-import { MeshBuilder, Scene as BabylonScene, Vector4 } from '@babylonjs/core';
+import { MeshBuilder, Scene as BabylonScene, Vector4, Mesh as BabylonMesh } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type ITorusProps = {
+export type ITorusProps = IComponentProps<BabylonMesh> & {
     name: string, 
     options: {
         diameter?: number;
@@ -21,11 +22,8 @@ export type ITorusParams = {
 
 }
 
-function TorusHOC<T>(EL: React.FC<T>) {
-    return (props: T & ITorusProps) => {
-        useEffect(() => {
-
-        })
+function TorusHOC(EL: React.FC) {
+    return (props: ITorusParams) => {
         return <EL {...props}/>
     }
 }
@@ -35,13 +33,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ITorusProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, options, scene } =  props;
+    const { instance, name, options, scene } =  props;
     useEffect(() => {
-        let obj = MeshBuilder.CreateTorus(name, options, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = MeshBuilder.CreateTorus(name, options, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PTorus = buildExtends<ITorusProps & ITorusParams>(_);

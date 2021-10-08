@@ -1,17 +1,18 @@
 import { ColorPicker as BabylonColorPicker} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Control'
 
-export type IColorPickerProps = {
-    name?: string | undefined
+export type IColorPickerProps = IComponentProps<BabylonColorPicker> & {
+    name?: string 
 }
 
 export type IColorPickerParams = {
 
 }
 
-function ColorPickerHOC<T>(EL: React.FC<T>) {
-    return (props: T & IColorPickerParams) => {
+function ColorPickerHOC(EL: React.FC) {
+    return (props: IColorPickerParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IColorPickerProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonColorPicker(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonColorPicker(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PColorPicker = buildExtends<IColorPickerProps & IColorPickerParams>(_); 

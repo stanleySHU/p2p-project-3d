@@ -1,17 +1,18 @@
 import { Slider as BabylonSlider} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './BaseSlider'
 
-export type ISliderProps = {
-    name?: string | undefined
+export type ISliderProps = IComponentProps<BabylonSlider> & {
+    name?: string
 }
 
 export type ISliderParams = {
 
 }
 
-function SliderHOC<T>(EL: React.FC<T>) {
-    return (props: T & ISliderParams) => {
+function SliderHOC(EL: React.FC) {
+    return (props: ISliderParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ISliderProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonSlider(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonSlider(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PSlider = buildExtends<ISliderProps & ISliderParams>(_); 

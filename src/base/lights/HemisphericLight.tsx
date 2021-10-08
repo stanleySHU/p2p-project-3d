@@ -1,8 +1,9 @@
 import { HemisphericLight as BabylonHemisphericLight, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './Light';
 import { useEffect, useReducer } from "react"
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type IHemisphericLightProps = {
+export type IHemisphericLightProps = IComponentProps<BabylonHemisphericLight> &  {
     name: string, 
     direction: Vector3, 
     scene: BabylinScene
@@ -12,8 +13,8 @@ export type IHemisphericLightParams = {
 
 }
 
-function HemisphericLightHOC<T>(EL: React.FC<T>) {
-    return (props: T & IHemisphericLightParams) => {
+function HemisphericLightHOC(EL: React.FC) {
+    return (props: IHemisphericLightParams) => {
         useEffect(() => {
 
         })
@@ -26,13 +27,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IHemisphericLightProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, direction, scene } =  props;
+    const { instance, name, direction, scene } =  props;
     useEffect(() => {
-        let obj = new BabylonHemisphericLight (name, direction, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonHemisphericLight (name, direction, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PHemisphericLight = buildExtends<IHemisphericLightProps & IHemisphericLightParams>(_);

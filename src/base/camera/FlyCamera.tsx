@@ -2,8 +2,9 @@ import { AbstractMesh, FlyCamera as BabylonFlyCamera, Scene as BabylinScene, Vec
 import { buildExtends as _buildExtends } from './TargetCamera';
 import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type IFlyCameraProps = {
+export type IFlyCameraProps = IComponentProps<BabylonFlyCamera> &{
     name: string, 
     position: Vector3, 
     scene: BabylinScene, 
@@ -14,8 +15,8 @@ export type IFlyCameraParams = {
 
 }
 
-function FlyCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IFlyCameraParams) => {
+function FlyCameraHOC(EL: React.FC) {
+    return (props: IFlyCameraParams) => {
         useEffect(() => {
 
         })
@@ -28,13 +29,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IFlyCameraProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, position, scene, setActiveOnSceneIfNoneActive } =  props;
+    const { instance, name, position, scene, setActiveOnSceneIfNoneActive } =  props;
     useEffect(() => {
-        let obj = new BabylonFlyCamera(name, position, scene, setActiveOnSceneIfNoneActive);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonFlyCamera(name, position, scene, setActiveOnSceneIfNoneActive);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PFlyCamera = buildExtends<IFlyCameraProps & IFlyCameraParams>(_);

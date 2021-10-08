@@ -1,9 +1,10 @@
 import { EquiRectangularCubeTexture as BabylonEquiRectangularCubeTexture, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './BaseTexture'
 
-export type IEquiRectangularCubeTextureProps = {
+export type IEquiRectangularCubeTextureProps = IComponentProps<BabylonEquiRectangularCubeTexture> & {
     url: string, 
     scene: BabylonScene, 
     size: number, 
@@ -17,11 +18,8 @@ export type IEquiRectangularCubeTextureParams = {
 
 }
 
-function EquiRectangularCubeTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IEquiRectangularCubeTextureParams) => {
-        useEffect(() => {
-
-        });
+function EquiRectangularCubeTextureHOC(EL: React.FC) {
+    return (props: IEquiRectangularCubeTextureParams) => {
         return <EL {...props}/>
     }
 }
@@ -31,13 +29,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IEquiRectangularCubeTextureProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { url, scene, size, noMipmap, gammaSpace, onLoad, onError } =  props;
+    const { instance, url, scene, size, noMipmap, gammaSpace, onLoad, onError } =  props;
     useEffect(() => {
-        let obj = new BabylonEquiRectangularCubeTexture(url, scene, size, noMipmap, gammaSpace, onLoad, onError );
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonEquiRectangularCubeTexture(url, scene, size, noMipmap, gammaSpace, onLoad, onError );
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PEquiRectangularCubeTexture = buildExtends<IEquiRectangularCubeTextureProps & IEquiRectangularCubeTextureParams>(_);

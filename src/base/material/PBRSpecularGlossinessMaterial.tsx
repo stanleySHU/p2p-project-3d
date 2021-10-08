@@ -1,8 +1,9 @@
 import { PBRSpecularGlossinessMaterial as BabylonPBRSpecularGlossinessMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './PBRBaseSimpleMaterial'
 
-export type IPBRSpecularGlossinessMaterialProps = {
+export type IPBRSpecularGlossinessMaterialProps = IComponentProps<BabylonPBRSpecularGlossinessMaterial> &{
     name: string, 
     scene: BabylonScene
 }
@@ -11,8 +12,8 @@ export type IPBRSpecularGlossinessMaterialParams = {
 
 }
 
-function PBRSpecularGlossinessMaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & IPBRSpecularGlossinessMaterialParams) => {
+function PBRSpecularGlossinessMaterialHOC(EL: React.FC) {
+    return (props: IPBRSpecularGlossinessMaterialParams) => {
         useEffect(() => {
 
         });
@@ -25,13 +26,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IPBRSpecularGlossinessMaterialProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, scene } =  props;
+    const { instance, name, scene } =  props;
     useEffect(() => {
-        let obj = new BabylonPBRSpecularGlossinessMaterial(name, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonPBRSpecularGlossinessMaterial(name, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PPBRSpecularGlossinessMaterial = buildExtends<IPBRSpecularGlossinessMaterialProps & IPBRSpecularGlossinessMaterialParams>(_);

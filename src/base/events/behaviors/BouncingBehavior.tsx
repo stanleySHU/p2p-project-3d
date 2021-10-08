@@ -1,15 +1,15 @@
 import { BouncingBehavior as BabylonBouncingBehavior } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { buildExtends as _buildExtends } from '../../Component'
+import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
 
-export type IBouncingBehaviorProps = {}
+export type IBouncingBehaviorProps = IComponentProps<BabylonBouncingBehavior> & {}
 
 export type IBouncingBehaviorParams = {
 
 }
 
-function BouncingBehaviorHOC<T>(EL: React.FC<T>) {
-    return (props: T & IBouncingBehaviorParams) => {
+function BouncingBehaviorHOC(EL: React.FC) {
+    return (props: IBouncingBehaviorParams) => {
         useEffect(() => {
 
         });
@@ -22,12 +22,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IBouncingBehaviorProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { instance } =  props;
     useEffect(() => {
-        let obj = new BabylonBouncingBehavior();
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonBouncingBehavior();
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PBouncingBehavior = buildExtends<IBouncingBehaviorProps & IBouncingBehaviorParams>(_);

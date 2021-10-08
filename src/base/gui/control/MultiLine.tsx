@@ -1,17 +1,18 @@
 import { MultiLine as BabylonMultiLine} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Control'
 
-export type IMultiLineProps = {
-    name?: string | undefined
+export type IMultiLineProps = IComponentProps<BabylonMultiLine> & {
+    name?: string
 }
 
 export type IMultiLineParams = {
 
 }
 
-function MultiLineHOC<T>(EL: React.FC<T>) {
-    return (props: T & IMultiLineParams) => {
+function MultiLineHOC(EL: React.FC) {
+    return (props: IMultiLineParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IMultiLineProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonMultiLine(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonMultiLine(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PMultiLine = buildExtends<IMultiLineProps & IMultiLineParams>(_); 

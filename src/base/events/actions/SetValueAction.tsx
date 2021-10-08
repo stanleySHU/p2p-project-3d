@@ -1,8 +1,9 @@
 import { Action, SetValueAction as BabylonSetValueAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
-export type ISetValueActionProps = {
+export type ISetValueActionProps = IComponentProps<BabylonSetValueAction> &  {
     triggerOptions: any, 
     target: any, 
     propertyPath: string, 
@@ -14,8 +15,8 @@ export type ISetValueActionParams = {
 
 }
 
-function SetValueActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & ISetValueActionParams) => {
+function SetValueActionHOC(EL: React.FC) {
+    return (props: ISetValueActionParams) => {
         useEffect(() => {
 
         });
@@ -28,13 +29,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ISetValueActionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { triggerOptions, target, propertyPath, value, condition } =  props;
+    const { instance, triggerOptions, target, propertyPath, value, condition } =  props;
     useEffect(() => {
-        let obj = new BabylonSetValueAction(triggerOptions, target, propertyPath, value, condition);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonSetValueAction(triggerOptions, target, propertyPath, value, condition);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PSetValueAction = buildExtends<ISetValueActionProps & ISetValueActionParams>(_);

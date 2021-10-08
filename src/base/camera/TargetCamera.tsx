@@ -1,8 +1,9 @@
 import { TargetCamera as BabylonTargetCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './Camera';
 import { useEffect, useReducer } from "react"
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type ITargetCameraProps = {
+export type ITargetCameraProps = IComponentProps<BabylonTargetCamera> &{
     name: string, 
     position: Vector3, 
     scene: BabylinScene, 
@@ -13,8 +14,8 @@ export type ITargetCameraParams = {
 
 }
 
-function TargetCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & ITargetCameraParams) => {
+function TargetCameraHOC(EL: React.FC) {
+    return (props: ITargetCameraParams) => {
         useEffect(() => {
 
         })
@@ -27,13 +28,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ITargetCameraProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, position, scene, setActiveOnSceneIfNoneActive } =  props;
+    const { instance, name, position, scene, setActiveOnSceneIfNoneActive } =  props;
     useEffect(() => {
-        let obj = new BabylonTargetCamera(name, position, scene, setActiveOnSceneIfNoneActive);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonTargetCamera(name, position, scene, setActiveOnSceneIfNoneActive);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PTargetCamera = buildExtends<ITargetCameraProps & ITargetCameraParams>(_);

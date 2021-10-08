@@ -1,15 +1,15 @@
 import { FramingBehavior as BabylonFramingBehavior, TransformNode } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { buildExtends as _buildExtends } from '../../Component'
+import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
 
-export type IFramingBehaviorProps = {}
+export type IFramingBehaviorProps = IComponentProps<BabylonFramingBehavior> & {}
 
 export type IFramingBehaviorParams = {
 
 }
 
-function FramingBehaviorHOC<T>(EL: React.FC<T>) {
-    return (props: T & IFramingBehaviorParams) => {
+function FramingBehaviorHOC(EL: React.FC) {
+    return (props: IFramingBehaviorParams) => {
         useEffect(() => {
 
         });
@@ -22,12 +22,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IFramingBehaviorProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { instance } =  props;
     useEffect(() => {
-        let obj = new BabylonFramingBehavior();
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonFramingBehavior();
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PFramingBehavior = buildExtends<IFramingBehaviorProps & IFramingBehaviorParams>(_);

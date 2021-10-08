@@ -1,17 +1,18 @@
 import { Image as BabylonImage} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Control'
 
-export type IImageProps = {
-    name?: string | undefined
+export type IImageProps = IComponentProps<BabylonImage> & {
+    name?: string 
 }
 
 export type IImageParams = {
 
 }
 
-function ImageHOC<T>(EL: React.FC<T>) {
-    return (props: T & IImageParams) => {
+function ImageHOC(EL: React.FC) {
+    return (props: IImageParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IImageProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonImage(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonImage(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PImage = buildExtends<IImageProps & IImageParams>(_); 

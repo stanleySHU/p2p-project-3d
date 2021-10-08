@@ -1,8 +1,9 @@
 import { StandardMaterial as BabylonStandardMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './PushMaterial'
 
-export type IStandardMaterialProps = {
+export type IStandardMaterialProps = IComponentProps<BabylonStandardMaterial> &{
     name: string, 
     scene: BabylonScene
 }
@@ -11,8 +12,8 @@ export type IStandardMaterialParams = {
 
 }
 
-function StandardMaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & IStandardMaterialParams) => {
+function StandardMaterialHOC(EL: React.FC) {
+    return (props: IStandardMaterialParams) => {
         useEffect(() => {
 
         });
@@ -25,13 +26,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IStandardMaterialProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, scene } =  props;
+    const { instance, name, scene } =  props;
     useEffect(() => {
-        let obj = new BabylonStandardMaterial(name, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonStandardMaterial(name, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PStandardMaterial = buildExtends<IStandardMaterialProps & IStandardMaterialParams>(_);

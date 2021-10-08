@@ -2,8 +2,9 @@ import { AbstractMesh, ArcFollowCamera as BabylonArcFollowCamera, Scene as Babyl
 import { buildExtends as _buildExtends } from './TargetCamera';
 import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type IArcFollowCameraProps = {
+export type IArcFollowCameraProps = IComponentProps<BabylonArcFollowCamera> & {
     name: string, 
     alpha: number, 
     beta: number, 
@@ -16,8 +17,8 @@ export type IArcFollowCameraParams = {
 
 }
 
-function ArcFollowCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IArcFollowCameraParams) => {
+function ArcFollowCameraHOC(EL: React.FC) {
+    return (props: IArcFollowCameraParams) => {
         useEffect(() => {
 
         })
@@ -30,13 +31,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IArcFollowCameraProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, alpha, beta, radius, target, scene} =  props;
+    const { instance, name, alpha, beta, radius, target, scene} =  props;
     useEffect(() => {
-        let obj = new BabylonArcFollowCamera(name, alpha, beta, radius, target, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonArcFollowCamera(name, alpha, beta, radius, target, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PArcFollowCamera = buildExtends<IArcFollowCameraProps & IArcFollowCameraParams>(_);

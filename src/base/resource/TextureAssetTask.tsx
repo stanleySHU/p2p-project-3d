@@ -1,6 +1,5 @@
 import { TextureAssetTask as BabylonTextureAssetTask } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
 import { IAbstractAssetTaskProps, buildExtends as _buildExtends } from './AbstractAssetTask';
 
 export type ITextureAssetTaskInitial<T> = IAbstractAssetTaskProps<T> & {
@@ -17,8 +16,8 @@ function TextureAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, url, noMipmap, invertY, samplingMode } = props;
 
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonTextureAssetTask(name, url, noMipmap, invertY, samplingMode);
+            if (instance && !instance!.current) {
+                instance!.current = new BabylonTextureAssetTask(name, url, noMipmap, invertY, samplingMode);
             }
         }, []);
         return <EL {...props}/>
@@ -29,4 +28,4 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(TextureAssetTaskHOC(e));
 }
 
-export const P2PTextureAssetTask = buildExtends<ITextureAssetTaskProps>(ChildHOC(null));
+export const P2PTextureAssetTask = buildExtends<ITextureAssetTaskProps>(null);

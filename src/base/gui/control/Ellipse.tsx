@@ -1,17 +1,18 @@
 import { Ellipse as BabylonEllipse} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Container'
 
-export type IEllipseProps = {
-    name?: string | undefined
+export type IEllipseProps = IComponentProps<BabylonEllipse> & {
+    name?: string 
 }
 
 export type IEllipseParams = {
 
 }
 
-function EllipseHOC<T>(EL: React.FC<T>) {
-    return (props: T & IEllipseParams) => {
+function EllipseHOC(EL: React.FC) {
+    return (props: IEllipseParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IEllipseProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonEllipse(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonEllipse(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PEllipse = buildExtends<IEllipseProps & IEllipseParams>(_); 

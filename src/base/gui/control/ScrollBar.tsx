@@ -1,17 +1,18 @@
 import { ScrollBar as BabylonScrollBar} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './BaseSlider'
 
-export type IScrollBarProps = {
-    name?: string | undefined
+export type IScrollBarProps = IComponentProps<BabylonScrollBar> & {
+    name?: string
 }
 
 export type IScrollBarParams = {
 
 }
 
-function ScrollBarHOC<T>(EL: React.FC<T>) {
-    return (props: T & IScrollBarParams) => {
+function ScrollBarHOC(EL: React.FC) {
+    return (props: IScrollBarParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IScrollBarProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonScrollBar(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonScrollBar(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PScrollBar = buildExtends<IScrollBarProps & IScrollBarParams>(_); 

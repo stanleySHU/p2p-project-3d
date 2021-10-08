@@ -1,17 +1,19 @@
 import { TextBlock as BabylonTextBlock} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Control'
 
-export type ITextBlockProps = {
-    name?: string | undefined
+export type ITextBlockProps = IComponentProps<BabylonTextBlock> & {
+    name?: string,
+    text?: string
 }
 
 export type ITextBlockParams = {
 
 }
 
-function TextBlockHOC<T>(EL: React.FC<T>) {
-    return (props: T & ITextBlockParams) => {
+function TextBlockHOC(EL: React.FC) {
+    return (props: ITextBlockParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +26,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ITextBlockProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonTextBlock(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonTextBlock(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PTextBlock = buildExtends<ITextBlockProps & ITextBlockParams>(_); 

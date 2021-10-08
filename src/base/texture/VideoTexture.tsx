@@ -1,9 +1,10 @@
 import { VideoTexture as BabylonVideoTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine, VideoTextureSettings } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './Texture'
 
-export type IVideoTextureProps = {
+export type IVideoTextureProps = IComponentProps<BabylonVideoTexture> & {
     name: Nullable<string>, 
     src: string | string[] | HTMLVideoElement, 
     scene: Nullable<BabylonScene>, 
@@ -18,8 +19,8 @@ export type IVideoTextureParams = {
 
 }
 
-function VideoTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IVideoTextureParams) => {
+function VideoTextureHOC(EL: React.FC) {
+    return (props: IVideoTextureParams) => {
         useEffect(() => {
 
         });
@@ -32,13 +33,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IVideoTextureProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, src, scene, generateMipMaps, invertY, samplingMode, settings, onError } =  props;
+    const { instance, name, src, scene, generateMipMaps, invertY, samplingMode, settings, onError } =  props;
     useEffect(() => {
-        let obj = new BabylonVideoTexture(name, src, scene, generateMipMaps, invertY, samplingMode, settings, onError );
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonVideoTexture(name, src, scene, generateMipMaps, invertY, samplingMode, settings, onError );
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PVideoTexture = buildExtends<IVideoTextureProps & IVideoTextureParams>(_);

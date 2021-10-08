@@ -1,9 +1,10 @@
 import { HDRCubeTexture as BabylonHDRCubeTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './BaseTexture'
 
-export type IHDRCubeTextureProps = {
+export type IHDRCubeTextureProps = IComponentProps<BabylonHDRCubeTexture> & {
     url: string, 
     sceneOrEngine: BabylonScene | ThinEngine, 
     size: number, 
@@ -19,11 +20,8 @@ export type IHDRCubeTextureParams = {
 
 }
 
-function HDRCubeTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IHDRCubeTextureParams) => {
-        useEffect(() => {
-
-        });
+function HDRCubeTextureHOC(EL: React.FC) {
+    return (props: IHDRCubeTextureParams) => {
         return <EL {...props}/>
     }
 }
@@ -33,13 +31,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IHDRCubeTextureProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { url, sceneOrEngine, size, noMipmap, generateHarmonics, gammaSpace, prefilterOnLoad, onLoad, onError } =  props;
+    const { instance, url, sceneOrEngine, size, noMipmap, generateHarmonics, gammaSpace, prefilterOnLoad, onLoad, onError } =  props;
     useEffect(() => {
-        let obj = new BabylonHDRCubeTexture(url, sceneOrEngine, size, noMipmap, generateHarmonics, gammaSpace, prefilterOnLoad, onLoad, onError);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonHDRCubeTexture(url, sceneOrEngine, size, noMipmap, generateHarmonics, gammaSpace, prefilterOnLoad, onLoad, onError);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PHDRCubeTexture = buildExtends<IHDRCubeTextureProps & IHDRCubeTextureParams>(_);

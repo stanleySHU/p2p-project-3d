@@ -1,17 +1,18 @@
 import { VirtualKeyboard as BabylonVirtualKeyboard} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './StackPanel'
 
-export type IVirtualKeyboardProps = {
-    name?: string | undefined
+export type IVirtualKeyboardProps = IComponentProps<BabylonVirtualKeyboard>  & {
+    name?: string 
 }
 
 export type IVirtualKeyboardParams = {
 
 }
 
-function VirtualKeyboardHOC<T>(EL: React.FC<T>) {
-    return (props: T & IVirtualKeyboardParams) => {
+function VirtualKeyboardHOC(EL: React.FC) {
+    return (props: IVirtualKeyboardParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IVirtualKeyboardProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonVirtualKeyboard(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonVirtualKeyboard(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PVirtualKeyboard = buildExtends<IVirtualKeyboardProps & IVirtualKeyboardParams>(_); 

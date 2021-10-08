@@ -1,8 +1,9 @@
 import { WebVRFreeCamera as BabylonWebVRFreeCamera, Scene as BabylinScene, Vector3, WebVROptions } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './FreeCamera';
 import { useEffect, useReducer } from "react"
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type IWebVRFreeCameraProps = {
+export type IWebVRFreeCameraProps = IComponentProps<BabylonWebVRFreeCamera> &{
     name: string, 
     position: Vector3, 
     scene: BabylinScene, 
@@ -13,8 +14,8 @@ export type IWebVRFreeCameraParams = {
 
 }
 
-function WebVRFreeCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IWebVRFreeCameraParams) => {
+function WebVRFreeCameraHOC(EL: React.FC) {
+    return (props: IWebVRFreeCameraParams) => {
         useEffect(() => {
 
         })
@@ -27,13 +28,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IWebVRFreeCameraProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, position, scene, webVROptions } =  props;
+    const { instance, name, position, scene, webVROptions } =  props;
     useEffect(() => {
-        let obj = new BabylonWebVRFreeCamera(name, position, scene, webVROptions);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonWebVRFreeCamera(name, position, scene, webVROptions);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PWebVRFreeCamera = buildExtends<IWebVRFreeCameraProps & IWebVRFreeCameraParams>(_);

@@ -1,23 +1,19 @@
 import { ColorGradingTexture as BabylonColorGradingTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './BaseTexture'
 
-export type IColorGradingTextureProps = {
+export type IColorGradingTextureProps = IComponentProps<BabylonColorGradingTexture> & {
     url: string, 
     sceneOrEngine: BabylonScene | ThinEngine, 
     onLoad?: Nullable<() => void>
 }
 
-export type IColorGradingTextureParams = {
+export type IColorGradingTextureParams = {}
 
-}
-
-function ColorGradingTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IColorGradingTextureParams) => {
-        useEffect(() => {
-
-        });
+function ColorGradingTextureHOC(EL: React.FC) {
+    return (props: IColorGradingTextureParams) => {
         return <EL {...props}/>
     }
 }
@@ -27,13 +23,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IColorGradingTextureProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { url, sceneOrEngine, onLoad } =  props;
+    const { instance, url, sceneOrEngine, onLoad } =  props;
     useEffect(() => {
-        let obj = new BabylonColorGradingTexture(url, sceneOrEngine, onLoad);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonColorGradingTexture(url, sceneOrEngine, onLoad);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PColorGradingTexture = buildExtends<IColorGradingTextureProps & IColorGradingTextureParams>(_);

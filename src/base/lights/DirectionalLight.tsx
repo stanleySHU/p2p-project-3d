@@ -1,19 +1,18 @@
 import { DirectionalLight as BabylonDirectionalLight, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './ShadowLight';
 import { useEffect, useReducer } from "react"
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type IDirectionalLightProps = {
+export type IDirectionalLightProps = IComponentProps<BabylonDirectionalLight> &  {
     name: string, 
     direction: Vector3, 
     scene: BabylinScene
 }
 
-export type IDirectionalLightParams = {
+export type IDirectionalLightParams = {}
 
-}
-
-function DirectionalLightHOC<T>(EL: React.FC<T>) {
-    return (props: T & IDirectionalLightParams) => {
+function DirectionalLightHOC(EL: React.FC) {
+    return (props: IDirectionalLightParams) => {
         useEffect(() => {
 
         })
@@ -26,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IDirectionalLightProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, direction, scene } =  props;
+    const { instance, name, direction, scene } =  props;
     useEffect(() => {
-        let obj = new BabylonDirectionalLight (name, direction, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonDirectionalLight (name, direction, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PDirectionalLight = buildExtends<IDirectionalLightProps & IDirectionalLightParams>(_);

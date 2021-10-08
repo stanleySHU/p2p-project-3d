@@ -1,9 +1,10 @@
 import { IMultiRenderTargetOptions, MultiRenderTarget as BabylonMultiRenderTarget, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './RenderTargetTexture'
 
-export type IMultiRenderTargetProps = {
+export type IMultiRenderTargetProps = IComponentProps<BabylonMultiRenderTarget> & {
     name: string, 
     size: any, 
     count: number, 
@@ -16,8 +17,8 @@ export type IMultiRenderTargetParams = {
 
 }
 
-function MultiRenderTargetHOC<T>(EL: React.FC<T>) {
-    return (props: T & IMultiRenderTargetParams) => {
+function MultiRenderTargetHOC(EL: React.FC) {
+    return (props: IMultiRenderTargetParams) => {
         useEffect(() => {
 
         });
@@ -30,13 +31,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IMultiRenderTargetProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, size, count, scene, options, textureNames } =  props;
+    const { instance, name, size, count, scene, options, textureNames } =  props;
     useEffect(() => {
-        let obj = new BabylonMultiRenderTarget( name, size, count, scene, options, textureNames);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonMultiRenderTarget( name, size, count, scene, options, textureNames);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PMultiRenderTarget = buildExtends<IMultiRenderTargetProps & IMultiRenderTargetParams>(_);

@@ -1,11 +1,11 @@
 import { TransformNode as BabylonTransformNode, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect, useReducer } from 'react';
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 import { newChildren } from '../ComponentRedux';
 import { buildExtends as _buildExtends } from './Node';
-import { reducer, initialState } from './NodeRedux';
 
-export type ITransformNodeProps = {
+export type ITransformNodeProps = IComponentProps<BabylonTransformNode> & {
     name: string, 
     scene?: Nullable<BabylonScene>, 
     isPure?: boolean
@@ -15,8 +15,8 @@ export type ITransformNodeParams = {
 
 }
 
-function TransformNodeHOC<T>(EL: React.FC<T>) {
-    return (props: T & ITransformNodeParams) => {
+function TransformNodeHOC(EL: React.FC) {
+    return (props: ITransformNodeParams) => {
         useEffect(() => {
             
         });
@@ -29,13 +29,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ITransformNodeProps) {
-    const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { scene, name, isPure } = props;
+    const { instance, scene, name, isPure } = props;
     useEffect(() => {
-        let obj = new BabylonTransformNode(name, scene, isPure);
-        dispatch(newChildren(obj));
+        instance!.current = new BabylonTransformNode(name, scene, isPure);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PTransformNode = buildExtends<ITransformNodeProps & ITransformNodeParams>(_);

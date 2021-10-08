@@ -153,6 +153,19 @@ import { P2PVirtualKeyboard } from './gui/control/VirtualKeyboard';
 
 import { P2PAdvancedDynamicTexture } from './gui/AdvancedDynamicTexture';
 
+//gizmo
+import { P2PAxisDragGizmo } from './gizmo/AxisDragGizmo';
+import { P2PAxisScaleGizmo } from './gizmo/AxisScaleGizmo';
+import { P2PBoundingBoxGizmo } from './gizmo/BoundingBoxGizmo';
+import { P2PCameraGizmo } from './gizmo/CameraGizmo';
+import { P2PGizmo } from './gizmo/Gizmo';
+import { P2PLightGizmo } from './gizmo/LightGizmo'; 
+import { P2PPlaneDragGizmo } from './gizmo/PlaneDragGizmo';
+import { P2PPlaneRotationGizmo } from './gizmo/PlaneRotationGizmo';
+import { P2PPositionGizmo } from './gizmo/PositionGizmo';
+import { P2PRotationGizmo } from './gizmo/RotationGizmo';
+import { P2PScaleGizmo } from './gizmo/ScaleGizmo';
+
 //resource2
 import { IBinaryResourceInitial } from './resource2/BinaryFileResource';
 import { ICubeTextureResourceInitial } from './resource2/CubeTextureManager';
@@ -210,5 +223,7 @@ export {
     P2PBaseSlider, P2PButton, P2PCheckbox, P2PColorPicker, P2PContainer, P2PControl, P2PDisplayGrid, P2PEllipse, P2PFocusableButton, P2PGrid, P2PImage, P2PImageBasedSlider, P2PImageScrollBar,
     P2PInputPassword, P2PInputText, P2PLine, P2PMultiLine, P2PRadioButton, P2PRectangle, P2PScrollBar, P2PScrollViewer, P2PSelectionPanel, P2PSlider, P2PStackPanel, P2PTextBlock, P2PToggleButton,
     P2PVirtualKeyboard,
-    P2PAdvancedDynamicTexture
+    P2PAdvancedDynamicTexture,
+    //gizmo
+    P2PAxisDragGizmo, P2PAxisScaleGizmo, P2PBoundingBoxGizmo, P2PCameraGizmo, P2PGizmo, P2PLightGizmo, P2PPlaneDragGizmo, P2PPlaneRotationGizmo, P2PPositionGizmo, P2PRotationGizmo, P2PScaleGizmo,
 }

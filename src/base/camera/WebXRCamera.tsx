@@ -1,8 +1,9 @@
 import { WebXRCamera as BabylonWebXRCamera, Scene as BabylinScene, WebXRSessionManager } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './FreeCamera';
 import { useEffect, useReducer } from "react"
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type IWebXRCameraProps = {
+export type IWebXRCameraProps = IComponentProps<BabylonWebXRCamera> &{
     name: string, 
     scene: BabylinScene, 
     _xrSessionManager: WebXRSessionManager
@@ -12,8 +13,8 @@ export type IWebXRCameraParams = {
 
 }
 
-function WebXRCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IWebXRCameraParams) => {
+function WebXRCameraHOC(EL: React.FC) {
+    return (props: IWebXRCameraParams) => {
         useEffect(() => {
 
         })
@@ -26,13 +27,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IWebXRCameraProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, scene, _xrSessionManager } =  props;
+    const { instance, name, scene, _xrSessionManager } =  props;
     useEffect(() => {
-        let obj = new BabylonWebXRCamera(name, scene, _xrSessionManager);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonWebXRCamera(name, scene, _xrSessionManager);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PWebXRCamera = buildExtends<IWebXRCameraProps & IWebXRCameraParams>(_);

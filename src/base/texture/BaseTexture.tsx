@@ -1,21 +1,17 @@
 import { BaseTexture as BabylonBaseTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './ThinTexture'
 
-export type IBaseTextureProps = {
+export type IBaseTextureProps = IComponentProps<BabylonBaseTexture> & {
     sceneOrEngine: Nullable<BabylonScene | ThinEngine>
 }
 
-export type IBaseTextureParams = {
+export type IBaseTextureParams = {}
 
-}
-
-function BaseTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IBaseTextureParams) => {
-        useEffect(() => {
-
-        });
+function BaseTextureHOC(EL: React.FC) {
+    return (props: IBaseTextureParams) => {
         return <EL {...props}/>
     }
 }
@@ -25,13 +21,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IBaseTextureProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { sceneOrEngine } =  props;
+    const { instance, sceneOrEngine } =  props;
     useEffect(() => {
-        let obj = new BabylonBaseTexture(sceneOrEngine);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonBaseTexture(sceneOrEngine);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PBaseTexture = buildExtends<IBaseTextureProps & IBaseTextureParams>(_);

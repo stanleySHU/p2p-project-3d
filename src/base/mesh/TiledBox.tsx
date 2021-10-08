@@ -1,9 +1,10 @@
-import { Color4, MeshBuilder, Scene as BabylonScene, Vector4 } from '@babylonjs/core';
+import { Color4, MeshBuilder, Scene as BabylonScene, Vector4, Mesh as BabylonMesh } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type ITiledBoxProps = {
+export type ITiledBoxProps = IComponentProps<BabylonMesh> & {
     name: string,
     options: {
         pattern?: number;
@@ -28,11 +29,8 @@ export type ITiledBoxParams = {
 
 }
 
-function TiledBoxHOC<T>(EL: React.FC<T>) {
-    return (props: T & ITiledBoxProps) => {
-        useEffect(() => {
-
-        })
+function TiledBoxHOC(EL: React.FC) {
+    return (props: ITiledBoxParams) => {
         return <EL {...props}/>
     }
 }
@@ -42,13 +40,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ITiledBoxProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, options, scene } =  props;
+    const { instance, name, options, scene } =  props;
     useEffect(() => {
-        let obj = MeshBuilder.CreateTiledBox(name, options, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = MeshBuilder.CreateTiledBox(name, options, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PTiledBox = buildExtends<ITiledBoxProps & ITiledBoxParams>(_);

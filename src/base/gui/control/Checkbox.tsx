@@ -1,17 +1,18 @@
 import { Checkbox as BabylonCheckbox} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Control'
 
-export type ICheckboxProps = {
-    name?: string | undefined
+export type ICheckboxProps = IComponentProps<BabylonCheckbox> & {
+    name?: string
 }
 
 export type ICheckboxParams = {
 
 }
 
-function CheckboxHOC<T>(EL: React.FC<T>) {
-    return (props: T & ICheckboxParams) => {
+function CheckboxHOC(EL: React.FC) {
+    return (props: ICheckboxParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ICheckboxProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonCheckbox(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonCheckbox(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PCheckbox = buildExtends<ICheckboxProps & ICheckboxParams>(_); 

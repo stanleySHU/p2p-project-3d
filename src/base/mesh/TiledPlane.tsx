@@ -1,9 +1,10 @@
-import { MeshBuilder, Scene as BabylonScene, Vector4 } from '@babylonjs/core';
+import { MeshBuilder, Scene as BabylonScene, Vector4, Mesh as BabylonMesh } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type ITiledPlaneProps = {
+export type ITiledPlaneProps = IComponentProps<BabylonMesh> &  {
     name: string, 
     options: {
         pattern?: number;
@@ -27,11 +28,8 @@ export type ITiledPlaneParams = {
 
 }
 
-function TiledPlaneHOC<T>(EL: React.FC<T>) {
-    return (props: T & ITiledPlaneProps) => {
-        useEffect(() => {
-
-        })
+function TiledPlaneHOC(EL: React.FC) {
+    return (props: ITiledPlaneParams) => {
         return <EL {...props}/>
     }
 }
@@ -41,13 +39,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ITiledPlaneProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, options, scene } =  props;
+    const { instance, name, options, scene } =  props;
     useEffect(() => {
-        let obj = MeshBuilder.CreateTiledPlane(name, options, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = MeshBuilder.CreateTiledPlane(name, options, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PTiledPlane = buildExtends<ITiledPlaneProps & ITiledPlaneParams>(_);

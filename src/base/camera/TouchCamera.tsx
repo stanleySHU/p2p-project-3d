@@ -1,8 +1,9 @@
 import { TouchCamera as BabylonTouchCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './FreeCamera';
 import { useEffect, useReducer } from "react"
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type ITouchCameraProps = {
+export type ITouchCameraProps = IComponentProps<BabylonTouchCamera> &{
     name: string, 
     position: Vector3, 
     scene: BabylinScene
@@ -12,8 +13,8 @@ export type ITouchCameraParams = {
 
 }
 
-function TouchCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & ITouchCameraParams) => {
+function TouchCameraHOC(EL: React.FC) {
+    return (props: ITouchCameraParams) => {
         useEffect(() => {
 
         })
@@ -26,13 +27,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ITouchCameraProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, position, scene } =  props;
+    const { instance, name, position, scene } =  props;
     useEffect(() => {
-        let obj = new BabylonTouchCamera(name, position, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonTouchCamera(name, position, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PTouchCamera = buildExtends<ITouchCameraProps & ITouchCameraParams>(_);

@@ -1,9 +1,10 @@
-import { Color4, LinesMesh, MeshBuilder, Scene as BabylonScene, Vector3 } from '@babylonjs/core';
+import { Color4, LinesMesh, MeshBuilder, Scene as BabylonScene, Vector3, Mesh as BabylonMesh } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type ILinesProps = {
+export type ILinesProps = IComponentProps<BabylonMesh> & {
     name: string, 
     options: {
         points: Vector3[];
@@ -19,11 +20,8 @@ export type ILinesParams = {
 
 }
 
-function LinesHOC<T>(EL: React.FC<T>) {
-    return (props: T & ILinesProps) => {
-        useEffect(() => {
-
-        })
+function LinesHOC(EL: React.FC) {
+    return (props: ILinesParams) => {
         return <EL {...props}/>
     }
 }
@@ -33,13 +31,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ILinesProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, options, scene } =  props;
+    const { instance, name, options, scene } =  props;
     useEffect(() => {
-        let obj = MeshBuilder.CreateLines(name, options, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = MeshBuilder.CreateLines(name, options, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PLines = buildExtends<ILinesProps & ILinesParams>(_);

@@ -1,15 +1,15 @@
 import { AutoRotationBehavior as BabylonAutoRotationBehavior, TransformNode } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { buildExtends as _buildExtends } from '../../Component'
+import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
 
-export type IAutoRotationBehaviorProps = {}
+export type IAutoRotationBehaviorProps = IComponentProps<BabylonAutoRotationBehavior> &  {}
 
 export type IAutoRotationBehaviorParams = {
 
 }
 
-function AutoRotationBehaviorHOC<T>(EL: React.FC<T>) {
-    return (props: T & IAutoRotationBehaviorParams) => {
+function AutoRotationBehaviorHOC(EL: React.FC) {
+    return (props: IAutoRotationBehaviorParams) => {
         useEffect(() => {
 
         });
@@ -22,12 +22,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IAutoRotationBehaviorProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { instance } =  props;
     useEffect(() => {
-        let obj = new BabylonAutoRotationBehavior();
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonAutoRotationBehavior();
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PAutoRotationBehavior = buildExtends<IAutoRotationBehaviorProps & IAutoRotationBehaviorParams>(_);

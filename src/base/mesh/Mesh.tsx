@@ -1,11 +1,11 @@
 import { Mesh as BabylonMesh, Scene as  BabylonScene } from "@babylonjs/core";
 import React, { useEffect, useReducer } from "react";
 import { Nullable } from "../../utils/customType";
+import { IComponentProps, P2PChildren } from "../Component";
 import { newChildren } from "../ComponentRedux";
-import { reducer, initialState } from './MeshRedux';
 import { buildExtends as _buildExtends  } from "../node/TransformNode";
 
-export type IMeshProps = {
+export type IMeshProps = IComponentProps<BabylonMesh> & {
     name: string, 
     scene?: Nullable<BabylonScene>, 
     parent?: Nullable<Node>, 
@@ -18,27 +18,21 @@ export type IMeshParams = {
 
 }
 
-function MeshHOC<T>(EL: React.FC<T>) {
-    return (props: T & IMeshProps) => {
-        useEffect(() => {
-
-        })
+function MeshHOC(EL: React.FC) {
+    return (props: IMeshParams) => {
         return <EL {...props}/>
     }
 }
-
 export function buildExtends<T>(e: any) {
     return _buildExtends<T>(MeshHOC(e));
 }
 
 function _(props: IMeshProps) {
-    const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, scene, parent, source, doNotCloneChildren, clonePhysicsImpostor } =  props;
+    const { instance, name, scene, parent, source, doNotCloneChildren, clonePhysicsImpostor } =  props;
     useEffect(() => {
-        let obj = new BabylonMesh(name, scene, parent as any, source, doNotCloneChildren, clonePhysicsImpostor);
-        dispatch(newChildren(obj));
+        instance!.current = new BabylonMesh(name, scene, parent as any, source, doNotCloneChildren, clonePhysicsImpostor);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PMesh = buildExtends<IMeshProps & IMeshParams>(_);

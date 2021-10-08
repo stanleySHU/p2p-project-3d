@@ -1,8 +1,9 @@
 import { StereoscopicFreeCamera as BabylonStereoscopicFreeCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './FreeCamera';
 import { useEffect, useReducer } from "react"
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type IStereoscopicFreeCameraProps = {
+export type IStereoscopicFreeCameraProps = IComponentProps<BabylonStereoscopicFreeCamera> & {
     name: string, 
     position: Vector3, 
     interaxialDistance: number, 
@@ -14,8 +15,8 @@ export type IStereoscopicFreeCameraParams = {
 
 }
 
-function StereoscopicFreeCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IStereoscopicFreeCameraParams) => {
+function StereoscopicFreeCameraHOC(EL: React.FC) {
+    return (props: IStereoscopicFreeCameraParams) => {
         useEffect(() => {
 
         })
@@ -28,13 +29,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IStereoscopicFreeCameraProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, position, interaxialDistance, isStereoscopicSideBySide, scene } =  props;
+    const { instance, name, position, interaxialDistance, isStereoscopicSideBySide, scene } =  props;
     useEffect(() => {
-        let obj = new BabylonStereoscopicFreeCamera(name, position, interaxialDistance, isStereoscopicSideBySide, scene );
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonStereoscopicFreeCamera(name, position, interaxialDistance, isStereoscopicSideBySide, scene );
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PStereoscopicFreeCamera = buildExtends<IStereoscopicFreeCameraProps & IStereoscopicFreeCameraParams>(_);

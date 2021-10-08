@@ -2,12 +2,12 @@ import { Scene as BabylonScene } from '@babylonjs/core';
 import { AdvancedDynamicTexture as BabylonAdvancedDynamicTexture} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
 import { Nullable } from '../../utils/customType';
-import { buildExtends as _buildExtends } from '../Component'
+import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../Component'
 
-export type IAdvancedDynamicTextureProps = {
+export type IAdvancedDynamicTextureProps = IComponentProps<BabylonScene> & {
     name: string, 
-    width: number | undefined, 
-    height: number | undefined, 
+    width?: number, 
+    height?: number, 
     scene: Nullable<BabylonScene>, 
     generateMipMaps?: boolean, 
     samplingMode?: number, 
@@ -18,8 +18,8 @@ export type IAdvancedDynamicTextureParams = {
 
 }
 
-function AdvancedDynamicTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IAdvancedDynamicTextureParams) => {
+function AdvancedDynamicTextureHOC(EL: React.FC) {
+    return (props: IAdvancedDynamicTextureParams) => {
         useEffect(() => {
 
         });
@@ -32,13 +32,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IAdvancedDynamicTextureProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, width, height, scene, generateMipMaps, samplingMode, BabylonSceneinvertY } = props;
+    const { instance, name, width, height, scene, generateMipMaps, samplingMode, BabylonSceneinvertY } = props;
     useEffect(() => {
-        let obj = new BabylonAdvancedDynamicTexture(name, width, height, scene, generateMipMaps, samplingMode, BabylonSceneinvertY );
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonAdvancedDynamicTexture(name, width, height, scene, generateMipMaps, samplingMode, BabylonSceneinvertY );
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PAdvancedDynamicTexture = buildExtends<IAdvancedDynamicTextureProps & IAdvancedDynamicTextureParams>(_); 

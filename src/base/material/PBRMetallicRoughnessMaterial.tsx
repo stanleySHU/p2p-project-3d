@@ -1,8 +1,9 @@
 import { PBRMetallicRoughnessMaterial as BabylonPBRMetallicRoughnessMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './PBRBaseSimpleMaterial'
 
-export type IPBRMetallicRoughnessMaterialProps = {
+export type IPBRMetallicRoughnessMaterialProps = IComponentProps<BabylonPBRMetallicRoughnessMaterial> & {
     name: string, 
     scene: BabylonScene
 }
@@ -11,8 +12,8 @@ export type IPBRMetallicRoughnessMaterialParams = {
 
 }
 
-function PBRMetallicRoughnessMaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & IPBRMetallicRoughnessMaterialParams) => {
+function PBRMetallicRoughnessMaterialHOC(EL: React.FC) {
+    return (props: IPBRMetallicRoughnessMaterialParams) => {
         useEffect(() => {
 
         });
@@ -25,13 +26,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IPBRMetallicRoughnessMaterialProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, scene } =  props;
+    const { instance, name, scene } =  props;
     useEffect(() => {
-        let obj = new BabylonPBRMetallicRoughnessMaterial(name, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonPBRMetallicRoughnessMaterial(name, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PPBRMetallicRoughnessMaterial = buildExtends<IPBRMetallicRoughnessMaterialProps & IPBRMetallicRoughnessMaterialParams>(_);

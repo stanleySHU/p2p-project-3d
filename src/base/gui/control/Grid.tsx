@@ -1,17 +1,18 @@
 import { Grid as BabylonGrid} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Container'
 
-export type IGridProps = {
-    name?: string | undefined
+export type IGridProps = IComponentProps<BabylonGrid> & {
+    name?: string 
 }
 
 export type IGridParams = {
 
 }
 
-function GridHOC<T>(EL: React.FC<T>) {
-    return (props: T & IGridParams) => {
+function GridHOC(EL: React.FC) {
+    return (props: IGridParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IGridProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonGrid(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonGrid(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PGrid = buildExtends<IGridProps & IGridParams>(_); 

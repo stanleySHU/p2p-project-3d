@@ -1,8 +1,9 @@
 import { Action, IncrementValueAction as BabylonIncrementValueAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
-export type IIncrementValueActionProps = {
+export type IIncrementValueActionProps = IComponentProps<BabylonIncrementValueAction> & {
     triggerOptions: any, 
     target: any, 
     propertyPath: string, 
@@ -14,8 +15,8 @@ export type IIncrementValueActionParams = {
 
 }
 
-function IncrementValueActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IIncrementValueActionParams) => {
+function IncrementValueActionHOC(EL: React.FC) {
+    return (props: IIncrementValueActionParams) => {
         useEffect(() => {
 
         });
@@ -28,13 +29,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IIncrementValueActionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { triggerOptions, target, propertyPath, value, condition } =  props;
+    const { instance, triggerOptions, target, propertyPath, value, condition } =  props;
     useEffect(() => {
-        let obj = new BabylonIncrementValueAction(triggerOptions, target, propertyPath, value, condition);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonIncrementValueAction(triggerOptions, target, propertyPath, value, condition);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PIncrementValueAction = buildExtends<IIncrementValueActionProps & IIncrementValueActionParams>(_);

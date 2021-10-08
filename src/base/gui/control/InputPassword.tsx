@@ -1,8 +1,9 @@
 import { InputPassword as BabylonInputPassword} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './InputText'
 
-export type IInputPasswordProps = {
+export type IInputPasswordProps = IComponentProps<BabylonInputPassword> & {
     name?: string,
     text?: string
 }
@@ -11,8 +12,8 @@ export type IInputPasswordParams = {
 
 }
 
-function InputPasswordHOC<T>(EL: React.FC<T>) {
-    return (props: T & IInputPasswordParams) => {
+function InputPasswordHOC(EL: React.FC) {
+    return (props: IInputPasswordParams) => {
         useEffect(() => {
 
         });
@@ -25,13 +26,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IInputPasswordProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, text } = props;
+    const { instance, name, text } = props;
     useEffect(() => {
-        let obj = new BabylonInputPassword(name, text);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonInputPassword(name, text);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PInputPassword = buildExtends<IInputPasswordProps & IInputPasswordParams>(_); 

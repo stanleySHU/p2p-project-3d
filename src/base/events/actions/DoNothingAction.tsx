@@ -1,8 +1,9 @@
 import { DoNothingAction as BabylonDoNothingAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
-export type IDoNothingActionProps = {
+export type IDoNothingActionProps = IComponentProps<BabylonDoNothingAction> & {
     triggerOptions?: any, 
     condition?: Condition
 }
@@ -11,8 +12,8 @@ export type IDoNothingActionParams = {
 
 }
 
-function DoNothingActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IDoNothingActionParams) => {
+function DoNothingActionHOC(EL: React.FC) {
+    return (props: IDoNothingActionParams) => {
         useEffect(() => {
 
         });
@@ -25,13 +26,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IDoNothingActionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { triggerOptions, condition } =  props;
+    const { instance, triggerOptions, condition } =  props;
     useEffect(() => {
-        let obj = new BabylonDoNothingAction(triggerOptions, condition);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonDoNothingAction(triggerOptions, condition);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PDoNothingAction = buildExtends<IDoNothingActionProps & IDoNothingActionParams>(_);

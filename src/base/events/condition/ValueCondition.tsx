@@ -1,8 +1,9 @@
 import { ActionManager, ValueCondition as BabylonValueCondition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Condition'
 
-export type IValueConditionProps = {
+export type IValueConditionProps = IComponentProps<BabylonValueCondition> & {
     actionManager: ActionManager, 
     target: any, 
     propertyPath: string, 
@@ -14,8 +15,8 @@ export type IValueConditionParams = {
 
 }
 
-function ValueConditionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IValueConditionParams) => {
+function ValueConditionHOC(EL: React.FC) {
+    return (props: IValueConditionParams) => {
         useEffect(() => {
 
         });
@@ -28,13 +29,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IValueConditionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { actionManager, target, propertyPath, value, operator } =  props;
+    const { instance, actionManager, target, propertyPath, value, operator } =  props;
     useEffect(() => {
-        let obj = new BabylonValueCondition(actionManager, target, propertyPath, value, operator);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonValueCondition(actionManager, target, propertyPath, value, operator);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PValueCondition = buildExtends<IValueConditionProps & IValueConditionParams>(_);

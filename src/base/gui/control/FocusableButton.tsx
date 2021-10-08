@@ -1,17 +1,18 @@
 import { FocusableButton as BabylonFocusableButton} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Button'
 
-export type IFocusableButtonProps = {
-    name?: string | undefined
+export type IFocusableButtonProps = IComponentProps<BabylonFocusableButton> &{
+    name?: string
 }
 
 export type IFocusableButtonParams = {
 
 }
 
-function FocusableButtonHOC<T>(EL: React.FC<T>) {
-    return (props: T & IFocusableButtonParams) => {
+function FocusableButtonHOC(EL: React.FC) {
+    return (props: IFocusableButtonParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IFocusableButtonProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonFocusableButton(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonFocusableButton(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PFocusableButton = buildExtends<IFocusableButtonProps & IFocusableButtonParams>(_); 

@@ -1,9 +1,10 @@
-import { MeshBuilder, Scene as BabylonScene, Vector4 } from '@babylonjs/core';
+import { MeshBuilder, Scene as BabylonScene, Vector4, Mesh as BabylonMesh } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type IDiscProps = {
+export type IDiscProps = IComponentProps<BabylonMesh> & {
     name: string, 
     options: {
         radius?: number;
@@ -21,11 +22,8 @@ export type IDiscParams = {
 
 }
 
-function DiscHOC<T>(EL: React.FC<T>) {
-    return (props: T & IDiscProps) => {
-        useEffect(() => {
-
-        })
+function DiscHOC(EL: React.FC) {
+    return (props: IDiscParams) => {
         return <EL {...props}/>
     }
 }
@@ -35,13 +33,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IDiscProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, options, scene } =  props;
+    const { instance, name, options, scene } =  props;
     useEffect(() => {
-        let obj = MeshBuilder.CreateDisc(name, options, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = MeshBuilder.CreateDisc(name, options, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PDisc = buildExtends<IDiscProps & IDiscParams>(_);

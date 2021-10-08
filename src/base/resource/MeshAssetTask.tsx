@@ -1,6 +1,5 @@
 import { MeshAssetTask as BabylonMeshAssetTask } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
 import { IAbstractAssetTaskProps, buildExtends as _buildExtends } from './AbstractAssetTask';
 
 export type IMeshAssetTaskInitial<T> = IAbstractAssetTaskProps<T> & {
@@ -16,8 +15,8 @@ function MeshAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, meshesNames, rootUrl, sceneFilename } = props;
 
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonMeshAssetTask(name, meshesNames, rootUrl, sceneFilename);
+            if (instance && !instance!.current) {
+                instance!.current = new BabylonMeshAssetTask(name, meshesNames, rootUrl, sceneFilename);
             }
         }, []);
         return <EL {...props}/>
@@ -28,4 +27,4 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(MeshAssetTaskHOC(e));
 }
 
-export const P2PMeshAssetTask = buildExtends<IMeshAssetTaskProps>(ChildHOC(null));
+export const P2PMeshAssetTask = buildExtends<IMeshAssetTaskProps>(null);

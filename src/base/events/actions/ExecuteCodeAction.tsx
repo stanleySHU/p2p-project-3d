@@ -1,8 +1,9 @@
 import { ExecuteCodeAction as BabylonExecuteCodeAction, Condition, ActionEvent } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
-export type IExecuteCodeActionProps = {
+export type IExecuteCodeActionProps = IComponentProps<BabylonExecuteCodeAction> & {
     triggerOptions: any, 
     func: (evt: ActionEvent) => void, 
     condition?: Condition
@@ -12,8 +13,8 @@ export type IExecuteCodeActionParams = {
 
 }
 
-function ExecuteCodeActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IExecuteCodeActionParams) => {
+function ExecuteCodeActionHOC(EL: React.FC) {
+    return (props: IExecuteCodeActionParams) => {
         useEffect(() => {
 
         });
@@ -26,13 +27,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IExecuteCodeActionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { triggerOptions, func, condition} =  props;
+    const { instance, triggerOptions, func, condition} =  props;
     useEffect(() => {
-        let obj = new BabylonExecuteCodeAction(triggerOptions, func, condition);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonExecuteCodeAction(triggerOptions, func, condition);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PExecuteCodeAction = buildExtends<IExecuteCodeActionProps & IExecuteCodeActionParams>(_);

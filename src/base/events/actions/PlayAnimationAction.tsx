@@ -1,8 +1,9 @@
 import { Action, PlayAnimationAction as BabylonPlayAnimationAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
-export type IPlayAnimationActionProps = {
+export type IPlayAnimationActionProps = IComponentProps<BabylonPlayAnimationAction> & {
     triggerOptions: any, 
     target: any, 
     from: number, 
@@ -15,8 +16,8 @@ export type IPlayAnimationActionParams = {
 
 }
 
-function PlayAnimationActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IPlayAnimationActionParams) => {
+function PlayAnimationActionHOC(EL: React.FC) {
+    return (props: IPlayAnimationActionParams) => {
         useEffect(() => {
 
         });
@@ -29,13 +30,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IPlayAnimationActionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { triggerOptions, target, from, to, loop, condition } =  props;
+    const { instance, triggerOptions, target, from, to, loop, condition } =  props;
     useEffect(() => {
-        let obj = new BabylonPlayAnimationAction(triggerOptions, target, from, to, loop, condition);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonPlayAnimationAction(triggerOptions, target, from, to, loop, condition);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PPlayAnimationAction = buildExtends<IPlayAnimationActionProps & IPlayAnimationActionParams>(_);

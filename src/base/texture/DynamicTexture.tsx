@@ -1,9 +1,10 @@
 import { DynamicTexture as BabylonDynamicTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './Texture'
 
-export type IDynamicTextureProps = {
+export type IDynamicTextureProps = IComponentProps<BabylonDynamicTexture> &{
     name: string, 
     options: any, 
     scene?: Nullable<BabylonScene>, 
@@ -17,11 +18,8 @@ export type IDynamicTextureParams = {
 
 }
 
-function DynamicTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IDynamicTextureParams) => {
-        useEffect(() => {
-
-        });
+function DynamicTextureHOC(EL: React.FC) {
+    return (props: IDynamicTextureParams) => {
         return <EL {...props}/>
     }
 }
@@ -31,13 +29,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IDynamicTextureProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, options, scene, generateMipMaps, samplingMode, format, invertY } =  props;
+    const { instance, name, options, scene, generateMipMaps, samplingMode, format, invertY } =  props;
     useEffect(() => {
-        let obj = new BabylonDynamicTexture(name, options, scene, generateMipMaps, samplingMode, format, invertY);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonDynamicTexture(name, options, scene, generateMipMaps, samplingMode, format, invertY);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PDynamicTexture = buildExtends<IDynamicTextureProps & IDynamicTextureParams>(_);

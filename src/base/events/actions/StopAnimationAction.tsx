@@ -1,8 +1,9 @@
 import { Action, StopAnimationAction as BabylonStopAnimationAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
-export type IStopAnimationActionProps = {
+export type IStopAnimationActionProps = IComponentProps<BabylonStopAnimationAction> &  {
     triggerOptions: any, 
     target: any, 
     condition?: Condition
@@ -12,8 +13,8 @@ export type IStopAnimationActionParams = {
 
 }
 
-function StopAnimationActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IStopAnimationActionParams) => {
+function StopAnimationActionHOC(EL: React.FC) {
+    return (props: IStopAnimationActionParams) => {
         useEffect(() => {
 
         });
@@ -26,13 +27,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IStopAnimationActionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { triggerOptions, target, condition } =  props;
+    const { instance, triggerOptions, target, condition } =  props;
     useEffect(() => {
-        let obj = new BabylonStopAnimationAction(triggerOptions, target, condition);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonStopAnimationAction(triggerOptions, target, condition);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PStopAnimationAction = buildExtends<IStopAnimationActionProps & IStopAnimationActionParams>(_);

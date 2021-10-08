@@ -1,6 +1,5 @@
 import { TextFileAssetTask as BabylonTextFileAssetTask } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
 import { IAbstractAssetTaskProps, buildExtends as _buildExtends } from './AbstractAssetTask';
 
 export type ITextFileAssetTaskInitial<T> = IAbstractAssetTaskProps<T> & {
@@ -14,8 +13,8 @@ function TextFileAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, url } = props;
 
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonTextFileAssetTask(name, url);
+            if (instance && !instance!.current) {
+                instance!.current = new BabylonTextFileAssetTask(name, url);
             }
         }, []);
         return <EL {...props}/>
@@ -26,4 +25,4 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(TextFileAssetTaskHOC(e));
 }
 
-export const P2PTextFileAssetTask = buildExtends<ITextFileAssetTaskProps>(ChildHOC(null));
+export const P2PTextFileAssetTask = buildExtends<ITextFileAssetTaskProps>(null);

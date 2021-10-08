@@ -1,8 +1,9 @@
 import { Action, SetStateAction as BabylonSetStateAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
-export type ISetStateActionProps = {
+export type ISetStateActionProps = IComponentProps<BabylonSetStateAction> & {
     triggerOptions: any, 
     target: any, 
     value: string, 
@@ -13,8 +14,8 @@ export type ISetStateActionParams = {
 
 }
 
-function SetStateActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & ISetStateActionParams) => {
+function SetStateActionHOC(EL: React.FC) {
+    return (props: ISetStateActionParams) => {
         useEffect(() => {
 
         });
@@ -27,13 +28,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ISetStateActionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { triggerOptions, target, value, condition } =  props;
+    const { instance, triggerOptions, target, value, condition } =  props;
     useEffect(() => {
-        let obj = new BabylonSetStateAction(triggerOptions, target, value, condition);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonSetStateAction(triggerOptions, target, value, condition);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PSetStateAction = buildExtends<ISetStateActionProps & ISetStateActionParams>(_);

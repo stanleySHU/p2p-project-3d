@@ -1,9 +1,10 @@
-import { ICreateCapsuleOptions, MeshBuilder, Scene as BabylonScene } from "@babylonjs/core";
+import { ICreateCapsuleOptions, MeshBuilder, Scene as BabylonScene, Mesh as BabylonMesh } from "@babylonjs/core";
 import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from "../Component";
 
-export type ICapsuleProps = {
+export type ICapsuleProps = IComponentProps<BabylonMesh> & {
     name: string, 
     options?: ICreateCapsuleOptions, 
     scene?: Nullable<BabylonScene>
@@ -13,11 +14,8 @@ export type ICapsuleParams = {
 
 }
 
-function CapsuleHOC<T>(EL: React.FC<T>) {
-    return (props: T & ICapsuleParams) => {
-        useEffect(() => {
-
-        })
+function CapsuleHOC(EL: React.FC) {
+    return (props: ICapsuleParams) => {
         return <EL {...props}/>
     }
 }
@@ -27,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ICapsuleProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, options, scene } =  props;
+    const { instance, name, options, scene } =  props;
     useEffect(() => {
-        let obj = MeshBuilder.CreateCapsule(name, options, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = MeshBuilder.CreateCapsule(name, options, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PCapsule = buildExtends<ICapsuleProps & ICapsuleParams>(_);

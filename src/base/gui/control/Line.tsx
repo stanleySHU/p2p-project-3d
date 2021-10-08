@@ -1,17 +1,18 @@
 import { Line as BabylonLine} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Control'
 
-export type ILineProps = {
-    name?: string | undefined
+export type ILineProps = IComponentProps<BabylonLine> & {
+    name?: string 
 }
 
 export type ILineParams = {
 
 }
 
-function LineHOC<T>(EL: React.FC<T>) {
-    return (props: T & ILineParams) => {
+function LineHOC(EL: React.FC) {
+    return (props: ILineParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ILineProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonLine(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonLine(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PLine = buildExtends<ILineProps & ILineParams>(_); 

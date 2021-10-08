@@ -1,17 +1,18 @@
 import { Rectangle as BabylonRectangle} from '@babylonjs/gui';
 import React, { useEffect, useReducer } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Container'
 
-export type IRectangleProps = {
-    name?: string | undefined
+export type IRectangleProps = IComponentProps<BabylonRectangle> & {
+    name?: string
 }
 
 export type IRectangleParams = {
 
 }
 
-function RectangleHOC<T>(EL: React.FC<T>) {
-    return (props: T & IRectangleParams) => {
+function RectangleHOC(EL: React.FC) {
+    return (props: IRectangleParams) => {
         useEffect(() => {
 
         });
@@ -24,13 +25,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IRectangleProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name } = props;
+    const { instance, name } = props;
     useEffect(() => {
-        let obj = new BabylonRectangle(name);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonRectangle(name);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PRectangle = buildExtends<IRectangleProps & IRectangleParams>(_); 

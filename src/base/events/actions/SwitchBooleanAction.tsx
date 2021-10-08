@@ -1,8 +1,9 @@
 import { Action, SwitchBooleanAction as BabylonSwitchBooleanAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
-export type ISwitchBooleanActionProps = {
+export type ISwitchBooleanActionProps = IComponentProps<BabylonSwitchBooleanAction> & {
     triggerOptions: any, 
     target: any, 
     propertyPath: string, 
@@ -13,8 +14,8 @@ export type ISwitchBooleanActionParams = {
 
 }
 
-function SwitchBooleanActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & ISwitchBooleanActionParams) => {
+function SwitchBooleanActionHOC(EL: React.FC) {
+    return (props: ISwitchBooleanActionParams) => {
         useEffect(() => {
 
         });
@@ -27,13 +28,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ISwitchBooleanActionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { triggerOptions, target, propertyPath, condition } =  props;
+    const { instance, triggerOptions, target, propertyPath, condition } =  props;
     useEffect(() => {
-        let obj = new BabylonSwitchBooleanAction(triggerOptions, target, propertyPath, condition);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonSwitchBooleanAction(triggerOptions, target, propertyPath, condition);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PSwitchBooleanAction = buildExtends<ISwitchBooleanActionProps & ISwitchBooleanActionParams>(_);

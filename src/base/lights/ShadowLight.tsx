@@ -5,8 +5,8 @@ export type IShadowLightProps = {}
 
 export type IShadowLightParams = {}
 
-function ShadowLightHOC<T>(EL: React.FC<T>) {
-    return (props: T & IShadowLightParams) => {
+function ShadowLightHOC(EL: React.FC) {
+    return (props: IShadowLightParams) => {
         useEffect(() => {
 
         })

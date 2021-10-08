@@ -1,8 +1,9 @@
 import { Action, CombineAction as BabylonCombineAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
-export type ICombineActionProps = {
+export type ICombineActionProps = IComponentProps<BabylonCombineAction> & {
     triggerOptions: any, 
     children: Action[], 
     condition?: Condition, 
@@ -13,8 +14,8 @@ export type ICombineActionParams = {
 
 }
 
-function CombineActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & ICombineActionParams) => {
+function CombineActionHOC(EL: React.FC) {
+    return (props: ICombineActionParams) => {
         useEffect(() => {
 
         });
@@ -27,13 +28,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ICombineActionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { triggerOptions, children, condition, enableChildrenConditions } =  props;
+    const { instance, triggerOptions, children, condition, enableChildrenConditions } =  props;
     useEffect(() => {
-        let obj = new BabylonCombineAction(triggerOptions, children, condition, enableChildrenConditions);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonCombineAction(triggerOptions, children, condition, enableChildrenConditions);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PCombineAction = buildExtends<ICombineActionProps & ICombineActionParams>(_);

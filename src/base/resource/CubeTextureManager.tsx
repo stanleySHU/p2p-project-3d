@@ -1,6 +1,5 @@
 import { CubeTextureAssetTask as BabylonCubeTextureAssetTask } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { ChildHOC } from '../Component';
 import { IAbstractAssetTaskProps, buildExtends as _buildExtends } from './AbstractAssetTask';
 
 export type ICubeTextureAssetTaskInitial<T> = IAbstractAssetTaskProps<T> & {
@@ -18,8 +17,8 @@ function CubeTextureAssetTaskHOC<T>(EL: React.FC<T>) {
         const { name, instance, url, extensions, noMipmap, files, prefiltered } = props;
 
         useEffect(() => {
-            if (instance && !instance.current) {
-                instance.current = new BabylonCubeTextureAssetTask(name, url, extensions, noMipmap, files, prefiltered);
+            if (instance && !instance!.current) {
+                instance!.current = new BabylonCubeTextureAssetTask(name, url, extensions, noMipmap, files, prefiltered);
             }
         }, []);
         return <EL {...props}/>
@@ -30,4 +29,4 @@ export function buildExtends<T>(e: any) {
     return _buildExtends<T>(CubeTextureAssetTaskHOC(e));
 }
 
-export const P2PCubeTextureAssetTask = buildExtends<ICubeTextureAssetTaskProps>(ChildHOC(null));
+export const P2PCubeTextureAssetTask = buildExtends<ICubeTextureAssetTaskProps>(null);

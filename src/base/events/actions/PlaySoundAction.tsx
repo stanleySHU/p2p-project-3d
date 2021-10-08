@@ -1,8 +1,9 @@
 import { Action, PlaySoundAction as BabylonPlaySoundAction, Condition, Sound } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
-export type IPlaySoundActionProps = {
+export type IPlaySoundActionProps = IComponentProps<BabylonPlaySoundAction> & {
     triggerOptions: any, 
     sound: Sound, 
     condition?: Condition
@@ -12,8 +13,8 @@ export type IPlaySoundActionParams = {
 
 }
 
-function PlaySoundActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IPlaySoundActionParams) => {
+function PlaySoundActionHOC(EL: React.FC) {
+    return (props: IPlaySoundActionParams) => {
         useEffect(() => {
 
         });
@@ -26,13 +27,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IPlaySoundActionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { triggerOptions, sound, condition } =  props;
+    const { instance, triggerOptions, sound, condition } =  props;
     useEffect(() => {
-        let obj = new BabylonPlaySoundAction(triggerOptions, sound, condition);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonPlaySoundAction(triggerOptions, sound, condition);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PPlaySoundAction = buildExtends<IPlaySoundActionProps & IPlaySoundActionParams>(_);

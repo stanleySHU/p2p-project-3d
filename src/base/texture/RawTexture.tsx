@@ -1,9 +1,10 @@
 import { RawTexture as BabylonRawTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './Texture'
 
-export type IRawTextureProps = {
+export type IRawTextureProps = IComponentProps<BabylonRawTexture> & {
     data: Nullable<ArrayBufferView>, 
     width: number, 
     height: number, 
@@ -20,8 +21,8 @@ export type IRawTextureParams = {
 
 }
 
-function RawTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IRawTextureParams) => {
+function RawTextureHOC(EL: React.FC) {
+    return (props: IRawTextureParams) => {
         useEffect(() => {
 
         });
@@ -34,13 +35,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IRawTextureProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { data, width, height, format, sceneOrEngine, generateMipMaps, invertY, samplingMode, type, creationFlags } =  props;
+    const { instance, data, width, height, format, sceneOrEngine, generateMipMaps, invertY, samplingMode, type, creationFlags } =  props;
     useEffect(() => {
-        let obj = new BabylonRawTexture(data, width, height, format, sceneOrEngine, generateMipMaps, invertY, samplingMode, type, creationFlags);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonRawTexture(data, width, height, format, sceneOrEngine, generateMipMaps, invertY, samplingMode, type, creationFlags);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PRawTexture = buildExtends<IRawTextureProps & IRawTextureParams>(_);

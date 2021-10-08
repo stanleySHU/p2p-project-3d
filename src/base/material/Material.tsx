@@ -1,8 +1,8 @@
 import { Material as BabylonMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect } from 'react';
-import { buildExtends as _buildExtends } from '../Component'
+import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../Component'
 
-export type IMaterialProps = {
+export type IMaterialProps = IComponentProps<BabylonMaterial> & {
     name: string, 
     scene: BabylonScene, 
     doNotAdd?: boolean
@@ -12,8 +12,8 @@ export type IMaterialParams = {
 
 }
 
-function MaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & IMaterialParams) => {
+function MaterialHOC(EL: React.FC) {
+    return (props: IMaterialParams) => {
         useEffect(() => {
 
         });
@@ -26,13 +26,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IMaterialProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, scene, doNotAdd } =  props;
+    const { instance, name, scene, doNotAdd } =  props;
     useEffect(() => {
-        let obj = new BabylonMaterial(name, scene, doNotAdd);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonMaterial(name, scene, doNotAdd);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PMaterial = buildExtends<IMaterialProps & IMaterialParams>(_);

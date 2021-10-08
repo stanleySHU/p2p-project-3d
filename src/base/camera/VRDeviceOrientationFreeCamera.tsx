@@ -1,8 +1,9 @@
 import { VRDeviceOrientationFreeCamera as BabylonVRDeviceOrientationFreeCamera, Scene as BabylinScene, Vector3, VRCameraMetrics } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './DeviceOrientationCamera';
 import { useEffect, useReducer } from "react"
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type IVRDeviceOrientationFreeCameraProps = {
+export type IVRDeviceOrientationFreeCameraProps = IComponentProps<BabylonVRDeviceOrientationFreeCamera> &{
     name: string, 
     position: Vector3, 
     scene: BabylinScene, 
@@ -14,8 +15,8 @@ export type IVRDeviceOrientationFreeCameraParams = {
 
 }
 
-function VRDeviceOrientationFreeCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IVRDeviceOrientationFreeCameraParams) => {
+function VRDeviceOrientationFreeCameraHOC(EL: React.FC) {
+    return (props: IVRDeviceOrientationFreeCameraParams) => {
         useEffect(() => {
 
         })
@@ -28,13 +29,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IVRDeviceOrientationFreeCameraProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, position, scene, compensateDistortion, vrCameraMetrics } =  props;
+    const { instance, name, position, scene, compensateDistortion, vrCameraMetrics } =  props;
     useEffect(() => {
-        let obj = new BabylonVRDeviceOrientationFreeCamera(name, position, scene, compensateDistortion, vrCameraMetrics );
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonVRDeviceOrientationFreeCamera(name, position, scene, compensateDistortion, vrCameraMetrics );
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PVRDeviceOrientationFreeCamera = buildExtends<IVRDeviceOrientationFreeCameraProps & IVRDeviceOrientationFreeCameraParams>(_);

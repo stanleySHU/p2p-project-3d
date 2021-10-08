@@ -1,9 +1,10 @@
-import { MeshBuilder, Scene as BabylonScene } from '@babylonjs/core';
+import { MeshBuilder, Scene as BabylonScene, Mesh as BabylonMesh } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type ITiledGroundProps = {
+export type ITiledGroundProps = IComponentProps<BabylonMesh> & {
     name: string, 
     options: {
         xmin: number;
@@ -27,11 +28,8 @@ export type ITiledGroundParams = {
 
 }
 
-function TiledGroundHOC<T>(EL: React.FC<T>) {
-    return (props: T & ITiledGroundProps) => {
-        useEffect(() => {
-
-        })
+function TiledGroundHOC(EL: React.FC) {
+    return (props: ITiledGroundParams) => {
         return <EL {...props}/>
     }
 }
@@ -41,13 +39,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ITiledGroundProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, options, scene } =  props;
+    const { instance, name, options, scene } =  props;
     useEffect(() => {
-        let obj = MeshBuilder.CreateTiledGround(name, options, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = MeshBuilder.CreateTiledGround(name, options, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PTiledGround = buildExtends<ITiledGroundProps & ITiledGroundParams>(_);

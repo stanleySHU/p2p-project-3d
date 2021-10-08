@@ -2,8 +2,9 @@ import { AbstractMesh, FollowCamera as BabylonFollowCamera, Scene as BabylinScen
 import { buildExtends as _buildExtends } from './TargetCamera';
 import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 
-export type IFollowCameraProps = {
+export type IFollowCameraProps = IComponentProps<BabylonFollowCamera> &{
     name: string, 
     position: Vector3, 
     scene: BabylinScene, 
@@ -14,8 +15,8 @@ export type IFollowCameraParams = {
 
 }
 
-function FollowCameraHOC<T>(EL: React.FC<T>) {
-    return (props: T & IFollowCameraParams) => {
+function FollowCameraHOC(EL: React.FC) {
+    return (props: IFollowCameraParams) => {
         useEffect(() => {
 
         })
@@ -28,13 +29,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IFollowCameraProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, position, scene, lockedTarget } =  props;
+    const { instance, name, position, scene, lockedTarget } =  props;
     useEffect(() => {
-        let obj = new BabylonFollowCamera(name, position, scene, lockedTarget);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonFollowCamera(name, position, scene, lockedTarget);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PFollowCamera = buildExtends<IFollowCameraProps & IFollowCameraParams>(_);

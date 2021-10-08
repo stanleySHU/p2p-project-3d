@@ -5,8 +5,8 @@ export type ILightProps = {}
 
 export type ILightParams = {}
 
-function LightHOC<T>(EL: React.FC<T>) {
-    return (props: T & ILightParams) => {
+function LightHOC(EL: React.FC) {
+    return (props: ILightParams) => {
         useEffect(() => {
 
         })

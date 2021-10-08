@@ -1,8 +1,9 @@
 import { INodeMaterialOptions, NodeMaterial as BabylonNodeMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './PushMaterial'
 
-export type INodeMaterialProps = {
+export type INodeMaterialProps = IComponentProps<BabylonNodeMaterial> & {
     name: string, 
     scene?: BabylonScene, 
     options?: Partial<INodeMaterialOptions>
@@ -12,8 +13,8 @@ export type INodeMaterialParams = {
 
 }
 
-function NodeMaterialHOC<T>(EL: React.FC<T>) {
-    return (props: T & INodeMaterialParams) => {
+function NodeMaterialHOC(EL: React.FC) {
+    return (props: INodeMaterialParams) => {
         useEffect(() => {
 
         });
@@ -26,13 +27,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: INodeMaterialProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, scene, options } =  props;
+    const { instance, name, scene, options } =  props;
     useEffect(() => {
-        let obj = new BabylonNodeMaterial(name, scene, options);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonNodeMaterial(name, scene, options);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PNodeMaterial = buildExtends<INodeMaterialProps & INodeMaterialParams>(_);

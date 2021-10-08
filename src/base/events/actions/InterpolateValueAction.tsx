@@ -1,8 +1,9 @@
 import { Action, InterpolateValueAction as BabylonInterpolateValueAction, Condition } from '@babylonjs/core';
 import React, { useEffect } from 'react';
+import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
-export type IInterpolateValueActionProps = {
+export type IInterpolateValueActionProps = IComponentProps<BabylonInterpolateValueAction> & {
     triggerOptions: any, 
     target: any, 
     propertyPath: string, 
@@ -17,8 +18,8 @@ export type IInterpolateValueActionParams = {
 
 }
 
-function InterpolateValueActionHOC<T>(EL: React.FC<T>) {
-    return (props: T & IInterpolateValueActionParams) => {
+function InterpolateValueActionHOC(EL: React.FC) {
+    return (props: IInterpolateValueActionParams) => {
         useEffect(() => {
 
         });
@@ -31,13 +32,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IInterpolateValueActionProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { triggerOptions, target, propertyPath, value, duration, condition, stopOtherAnimations, onInterpolationDone } =  props;
+    const { instance, triggerOptions, target, propertyPath, value, duration, condition, stopOtherAnimations, onInterpolationDone } =  props;
     useEffect(() => {
-        let obj = new BabylonInterpolateValueAction(triggerOptions, target, propertyPath, value, duration, condition, stopOtherAnimations, onInterpolationDone);
-        // dispatch(newChildren(obj));
+        instance!.current = new BabylonInterpolateValueAction(triggerOptions, target, propertyPath, value, duration, condition, stopOtherAnimations, onInterpolationDone);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PInterpolateValueAction = buildExtends<IInterpolateValueActionProps & IInterpolateValueActionParams>(_);

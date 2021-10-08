@@ -1,9 +1,10 @@
 import { MirrorTexture as BabylonMirrorTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './RenderTargetTexture'
 
-export type IMirrorTextureProps = {
+export type IMirrorTextureProps = IComponentProps<BabylonMirrorTexture> & {
     name: string, 
     size: number | {
         width: number;
@@ -22,8 +23,8 @@ export type IMirrorTextureParams = {
 
 }
 
-function MirrorTextureHOC<T>(EL: React.FC<T>) {
-    return (props: T & IMirrorTextureParams) => {
+function MirrorTextureHOC(EL: React.FC) {
+    return (props: IMirrorTextureParams) => {
         useEffect(() => {
 
         });
@@ -36,13 +37,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IMirrorTextureProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, size, scene, generateMipMaps, type, samplingMode, generateDepthBuffer } =  props;
+    const { instance, name, size, scene, generateMipMaps, type, samplingMode, generateDepthBuffer } =  props;
     useEffect(() => {
-        let obj = new BabylonMirrorTexture( name, size, scene, generateMipMaps, type, samplingMode, generateDepthBuffer );
-        // dispatch(newChildren(obj));
+       instance!.current = new BabylonMirrorTexture( name, size, scene, generateMipMaps, type, samplingMode, generateDepthBuffer );
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PMirrorTexture = buildExtends<IMirrorTextureProps & IMirrorTextureParams>(_);

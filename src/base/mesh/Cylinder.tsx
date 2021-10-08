@@ -1,9 +1,10 @@
-import { Color4, MeshBuilder, Scene as BabylonScene, Vector4 } from "@babylonjs/core";
+import { Color4, MeshBuilder, Scene as BabylonScene, Vector4, Mesh as BabylonMesh } from "@babylonjs/core";
 import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
+import { IComponentProps, P2PChildren } from "../Component";
 
-export type ICylinderProps = {
+export type ICylinderProps = IComponentProps<BabylonMesh> & {
     name: string, 
     options: {
         height?: number;
@@ -29,11 +30,8 @@ export type ICylinderParams = {
 
 }
 
-function CylinderHOC<T>(EL: React.FC<T>) {
-    return (props: T & ICylinderParams) => {
-        useEffect(() => {
-
-        })
+function CylinderHOC(EL: React.FC) {
+    return (props: ICylinderParams) => {
         return <EL {...props}/>
     }
 }
@@ -43,13 +41,11 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ICylinderProps) {
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { name, options, scene } =  props;
+    const { instance, name, options, scene } =  props;
     useEffect(() => {
-        let obj = MeshBuilder.CreateCylinder(name, options, scene);
-        // dispatch(newChildren(obj));
+        instance!.current = MeshBuilder.CreateCylinder(name, options, scene);
     }, []);
-    return null;
+    return <P2PChildren {...props}/>;
 }
 
 export const P2PCylinder = buildExtends<ICylinderProps & ICylinderParams>(_);
