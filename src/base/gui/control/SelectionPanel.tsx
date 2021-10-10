@@ -1,14 +1,14 @@
 import { SelectionPanel as BabylonSelectionPanel, SelectorGroup} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Rectangle'
+import { buildExtends as _buildExtends, IRectangleParams } from './Rectangle'
 
 export type ISelectionPanelProps = IComponentProps<BabylonSelectionPanel> & {
     name: string,
     groups?: SelectorGroup[]
 }
 
-export type ISelectionPanelParams = {
+export type ISelectionPanelParams = IRectangleParams & {
 
 }
 
@@ -26,9 +26,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ISelectionPanelProps) {
-    const { instance, name, groups } = props;
-    useEffect(() => {
-        instance!.current = new BabylonSelectionPanel(name, groups);
+    const { init, name, groups } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonSelectionPanel(name, groups);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

@@ -1,5 +1,5 @@
 import { MirrorTexture as BabylonMirrorTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './RenderTargetTexture'
@@ -37,9 +37,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IMirrorTextureProps) {
-    const { instance, name, size, scene, generateMipMaps, type, samplingMode, generateDepthBuffer } =  props;
-    useEffect(() => {
-       instance!.current = new BabylonMirrorTexture( name, size, scene, generateMipMaps, type, samplingMode, generateDepthBuffer );
+    const { init, name, size, scene, generateMipMaps, type, samplingMode, generateDepthBuffer } =  props;
+    useLayoutEffect(() => {
+       let obj = new BabylonMirrorTexture( name, size, scene, generateMipMaps, type, samplingMode, generateDepthBuffer );
+       init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

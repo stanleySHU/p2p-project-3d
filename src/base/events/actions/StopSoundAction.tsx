@@ -1,5 +1,5 @@
 import { Action, StopSoundAction as BabylonStopSoundAction, Condition, Sound } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
@@ -27,9 +27,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IStopSoundActionProps) {
-    const { instance, triggerOptions, sound, condition } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonStopSoundAction(triggerOptions, sound, condition );
+    const { init, triggerOptions, sound, condition } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonStopSoundAction(triggerOptions, sound, condition );
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

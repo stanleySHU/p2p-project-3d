@@ -1,6 +1,6 @@
 import { AbstractMesh, ArcFollowCamera as BabylonArcFollowCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './TargetCamera';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 
@@ -31,9 +31,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IArcFollowCameraProps) {
-    const { instance, name, alpha, beta, radius, target, scene} =  props;
-    useEffect(() => {
-        instance!.current = new BabylonArcFollowCamera(name, alpha, beta, radius, target, scene);
+    const { init, name, alpha, beta, radius, target, scene} =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonArcFollowCamera(name, alpha, beta, radius, target, scene);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

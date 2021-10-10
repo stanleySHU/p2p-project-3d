@@ -1,6 +1,6 @@
 import { Camera as BabylonCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from '../node/Node';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { IComponentProps, P2PChildren } from '../Component';
 
 export type ICameraProps = IComponentProps<BabylonCamera> & {
@@ -10,15 +10,16 @@ export type ICameraProps = IComponentProps<BabylonCamera> & {
     setActiveOnSceneIfNoneActive?: boolean
 }
 
-export type ICameraParams = {
-
+export type ICameraParams = IComponentProps<any> & {
+    attachControl?: [any, boolean]
 }
 
-function CameraHOC(EL: React.FC) {
+function CameraHOC(EL: React.FC<ICameraParams>) {
     return (props: ICameraParams) => {
+        const { instance } = props;
         useEffect(() => {
-
-        })
+            instance?.attachControl(...props.attachControl!);
+        }, [props.attachControl, instance])
         return <EL {...props}/>
     }
 }
@@ -28,9 +29,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ICameraProps) {
-    const { instance, name, position, scene, setActiveOnSceneIfNoneActive } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonCamera(name, position, scene, setActiveOnSceneIfNoneActive);
+    const { init, name, position, scene, setActiveOnSceneIfNoneActive } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonCamera(name, position, scene, setActiveOnSceneIfNoneActive);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

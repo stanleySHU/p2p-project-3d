@@ -1,5 +1,5 @@
 import { RawCubeTexture as BabylonRawCubeTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './CubeTexture'
@@ -34,9 +34,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IRawCubeTextureProps) {
-    const { instance, scene, data, size, format, type, generateMipMaps, invertY, samplingMode, compression } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonRawCubeTexture(scene, data, size, format, type, generateMipMaps, invertY, samplingMode, compression);
+    const { init, scene, data, size, format, type, generateMipMaps, invertY, samplingMode, compression } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonRawCubeTexture(scene, data, size, format, type, generateMipMaps, invertY, samplingMode, compression);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

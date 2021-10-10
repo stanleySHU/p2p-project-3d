@@ -1,5 +1,5 @@
 import { RawTexture2DArray as BabylonRawTexture2DArray, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './Texture'
@@ -35,9 +35,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IRawTexture2DArrayProps) {
-    const { instance, data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonRawTexture2DArray(data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType);
+    const { init, data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonRawTexture2DArray(data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

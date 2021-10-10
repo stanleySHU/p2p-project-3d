@@ -1,5 +1,5 @@
 import { ProceduralTexture as BabylonProceduralTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './Texture'
@@ -33,9 +33,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IProceduralTextureProps) {
-    const { instance, name, size, fragment, scene, fallbackTexture, generateMipMaps, isCube, textureType } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonProceduralTexture(name, size, fragment, scene, fallbackTexture, generateMipMaps, isCube, textureType);
+    const { init, name, size, fragment, scene, fallbackTexture, generateMipMaps, isCube, textureType } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonProceduralTexture(name, size, fragment, scene, fallbackTexture, generateMipMaps, isCube, textureType);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

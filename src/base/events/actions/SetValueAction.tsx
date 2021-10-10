@@ -1,5 +1,5 @@
 import { Action, SetValueAction as BabylonSetValueAction, Condition } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
@@ -29,9 +29,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ISetValueActionProps) {
-    const { instance, triggerOptions, target, propertyPath, value, condition } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonSetValueAction(triggerOptions, target, propertyPath, value, condition);
+    const { init, triggerOptions, target, propertyPath, value, condition } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonSetValueAction(triggerOptions, target, propertyPath, value, condition);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

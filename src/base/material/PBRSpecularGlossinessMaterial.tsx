@@ -1,5 +1,5 @@
 import { PBRSpecularGlossinessMaterial as BabylonPBRSpecularGlossinessMaterial, Scene as BabylonScene } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './PBRBaseSimpleMaterial'
 
@@ -26,9 +26,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IPBRSpecularGlossinessMaterialProps) {
-    const { instance, name, scene } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonPBRSpecularGlossinessMaterial(name, scene);
+    const { init, name, scene } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonPBRSpecularGlossinessMaterial(name, scene);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

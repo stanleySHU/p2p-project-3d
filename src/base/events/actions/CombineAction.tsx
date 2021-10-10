@@ -1,5 +1,5 @@
 import { Action, CombineAction as BabylonCombineAction, Condition } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
@@ -28,9 +28,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ICombineActionProps) {
-    const { instance, triggerOptions, children, condition, enableChildrenConditions } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonCombineAction(triggerOptions, children, condition, enableChildrenConditions);
+    const { init, triggerOptions, children, condition, enableChildrenConditions } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonCombineAction(triggerOptions, children, condition, enableChildrenConditions);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

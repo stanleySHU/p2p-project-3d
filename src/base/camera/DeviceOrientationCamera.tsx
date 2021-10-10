@@ -1,6 +1,6 @@
 import { DeviceOrientationCamera as BabylonDeviceOrientationCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './FreeCamera';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { IComponentProps, P2PChildren } from '../Component';
 
 export type IDeviceOrientationCameraProps = IComponentProps<BabylonDeviceOrientationCamera> &{
@@ -27,9 +27,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IDeviceOrientationCameraProps) {
-    const { instance, name, position, scene } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonDeviceOrientationCamera(name, position, scene);
+    const { init, name, position, scene } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonDeviceOrientationCamera(name, position, scene);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

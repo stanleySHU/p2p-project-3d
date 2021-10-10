@@ -1,6 +1,6 @@
 import { VirtualJoysticksCamera as BabylonVirtualJoysticksCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './FreeCamera';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { IComponentProps, P2PChildren } from '../Component';
 
 export type IVirtualJoysticksCameraProps = IComponentProps<BabylonVirtualJoysticksCamera> &{
@@ -27,9 +27,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IVirtualJoysticksCameraProps) {
-    const { instance, name, position, scene } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonVirtualJoysticksCamera(name, position, scene );
+    const { init, name, position, scene } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonVirtualJoysticksCamera(name, position, scene );
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

@@ -1,5 +1,5 @@
 import { DynamicTexture as BabylonDynamicTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './Texture'
@@ -29,9 +29,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IDynamicTextureProps) {
-    const { instance, name, options, scene, generateMipMaps, samplingMode, format, invertY } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonDynamicTexture(name, options, scene, generateMipMaps, samplingMode, format, invertY);
+    const { init, name, options, scene, generateMipMaps, samplingMode, format, invertY } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonDynamicTexture(name, options, scene, generateMipMaps, samplingMode, format, invertY);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

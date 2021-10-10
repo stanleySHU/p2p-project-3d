@@ -1,5 +1,5 @@
 import { FramingBehavior as BabylonFramingBehavior, TransformNode } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
 
 export type IFramingBehaviorProps = IComponentProps<BabylonFramingBehavior> & {}
@@ -22,9 +22,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IFramingBehaviorProps) {
-    const { instance } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonFramingBehavior();
+    const { init } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonFramingBehavior();
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

@@ -1,5 +1,5 @@
 import { BoundingBoxGizmo as BabylonBoundingBoxGizmo, Color3, UtilityLayerRenderer } from '@babylonjs/core';
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useLayoutEffect, useReducer } from "react";
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from "../Component";
 import { buildExtends as _buildExtends  } from "./Gizmo";
@@ -23,9 +23,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IBoundingBoxGizmoProps) {
-    const { instance, color, gizmoLayer } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonBoundingBoxGizmo(color, gizmoLayer);
+    const { init, color, gizmoLayer } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonBoundingBoxGizmo(color, gizmoLayer);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

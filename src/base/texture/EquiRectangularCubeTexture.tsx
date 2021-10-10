@@ -1,5 +1,5 @@
 import { EquiRectangularCubeTexture as BabylonEquiRectangularCubeTexture, Scene as BabylonScene } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './BaseTexture'
@@ -29,9 +29,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IEquiRectangularCubeTextureProps) {
-    const { instance, url, scene, size, noMipmap, gammaSpace, onLoad, onError } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonEquiRectangularCubeTexture(url, scene, size, noMipmap, gammaSpace, onLoad, onError );
+    const { init, url, scene, size, noMipmap, gammaSpace, onLoad, onError } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonEquiRectangularCubeTexture(url, scene, size, noMipmap, gammaSpace, onLoad, onError );
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

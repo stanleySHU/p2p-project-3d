@@ -1,5 +1,5 @@
 import { MultiPointerScaleBehavior as BabylonMultiPointerScaleBehavior, TransformNode } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
 
 export type IMultiPointerScaleBehaviorProps = IComponentProps<BabylonMultiPointerScaleBehavior> & {}
@@ -22,9 +22,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IMultiPointerScaleBehaviorProps) {
-    const { instance } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonMultiPointerScaleBehavior();
+    const { init } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonMultiPointerScaleBehavior();
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

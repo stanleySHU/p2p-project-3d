@@ -16,13 +16,14 @@ export type IAssetsManagerProps = IAssetsManagerInitial<BabylonAssetsManager>;
 
 export const P2PAssetsManager = (props: IAssetsManagerProps) => {
     const { scene, loadDispatch, loaded } = props;
-    const assetContainerRef = useRef(new BabylonAssetsManager(scene));
+    const assetContainerRef = useRef<BabylonAssetsManager>();
 
     useEffect(() => {
+        assetContainerRef.current = new BabylonAssetsManager(scene);
         React.Children.forEach(props.children, (child: any) => {
             let type = child.type as string;
             let resource = resolve(type);
-            resource?.addTask(assetContainerRef.current, child.props);
+            resource?.addTask(assetContainerRef.current!, child.props);
         });
         assetContainerRef.current.onProgress = handleProgress;
         assetContainerRef.current.onTaskError = handleTaskError;
@@ -30,6 +31,9 @@ export const P2PAssetsManager = (props: IAssetsManagerProps) => {
         assetContainerRef.current.onFinish = handleFinish;
         assetContainerRef.current.load();
         loadDispatch!(load());
+        return () => {
+            assetContainerRef.current = undefined;
+        }
     }, []);
 
     function handleProgress(remainingCount: number, totalCount: number, task: AbstractAssetTask) {

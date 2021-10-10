@@ -1,5 +1,5 @@
 import { Color3, PlaneDragGizmo as BabylonPlaneDragGizmo, PositionGizmo, UtilityLayerRenderer, Vector3 } from '@babylonjs/core';
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useLayoutEffect, useReducer } from "react";
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from "../Component";
 import { buildExtends as _buildExtends  } from "./Gizmo";
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IPlaneDragGizmoProps) {
-    const { instance, dragPlaneNormal, color, gizmoLayer, parent } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonPlaneDragGizmo(dragPlaneNormal, color, gizmoLayer, parent);
+    const { init, dragPlaneNormal, color, gizmoLayer, parent } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonPlaneDragGizmo(dragPlaneNormal, color, gizmoLayer, parent);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

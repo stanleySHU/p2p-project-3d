@@ -1,13 +1,13 @@
 import { StackPanel as BabylonStackPanel} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Container'
+import { buildExtends as _buildExtends, IContainerParams } from './Container'
 
 export type IStackPanelProps = IComponentProps<BabylonStackPanel> & {
     name?: string 
 }
 
-export type IStackPanelParams = {
+export type IStackPanelParams = IContainerParams & {
 
 }
 
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IStackPanelProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonStackPanel(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonStackPanel(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

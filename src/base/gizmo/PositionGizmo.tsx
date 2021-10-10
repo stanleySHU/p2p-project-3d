@@ -1,5 +1,5 @@
 import { GizmoManager, PositionGizmo as BabylonPositionGizmo, UtilityLayerRenderer } from '@babylonjs/core';
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useLayoutEffect, useReducer } from "react";
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from "../Component";
 import { buildExtends as _buildExtends  } from "./Gizmo";
@@ -24,9 +24,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IPositionGizmoProps) {
-    const { instance, gizmoLayer, thickness, gizmoManager } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonPositionGizmo(gizmoLayer, thickness, gizmoManager);
+    const { init, gizmoLayer, thickness, gizmoManager } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonPositionGizmo(gizmoLayer, thickness, gizmoManager);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

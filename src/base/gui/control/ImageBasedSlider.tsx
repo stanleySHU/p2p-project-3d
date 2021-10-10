@@ -1,13 +1,13 @@
 import { ImageBasedSlider as BabylonImageBasedSlider} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './BaseSlider'
+import { buildExtends as _buildExtends, IBaseSliderParams } from './BaseSlider'
 
 export type IImageBasedSliderProps = IComponentProps<BabylonImageBasedSlider> & {
     name?: string
 }
 
-export type IImageBasedSliderParams = {
+export type IImageBasedSliderParams = IBaseSliderParams & {
 
 }
 
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IImageBasedSliderProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonImageBasedSlider(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonImageBasedSlider(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

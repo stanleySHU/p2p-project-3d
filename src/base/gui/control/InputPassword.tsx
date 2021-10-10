@@ -1,14 +1,14 @@
 import { InputPassword as BabylonInputPassword} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './InputText'
+import { buildExtends as _buildExtends, IInputTextParams } from './InputText'
 
 export type IInputPasswordProps = IComponentProps<BabylonInputPassword> & {
     name?: string,
     text?: string
 }
 
-export type IInputPasswordParams = {
+export type IInputPasswordParams = IInputTextParams & {
 
 }
 
@@ -26,9 +26,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IInputPasswordProps) {
-    const { instance, name, text } = props;
-    useEffect(() => {
-        instance!.current = new BabylonInputPassword(name, text);
+    const { init, name, text } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonInputPassword(name, text);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

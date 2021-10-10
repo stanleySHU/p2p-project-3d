@@ -2,7 +2,7 @@ import { TransformNode as BabylonTransformNode, Scene as BabylonScene } from '@b
 import React, { useEffect, useReducer } from 'react';
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
-import { newChildren } from '../ComponentRedux';
+
 import { buildExtends as _buildExtends } from './Node';
 
 export type ITransformNodeProps = IComponentProps<BabylonTransformNode> & {
@@ -29,9 +29,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ITransformNodeProps) {
-    const { instance, scene, name, isPure } = props;
+    const { init, scene, name, isPure } = props;
     useEffect(() => {
-        instance!.current = new BabylonTransformNode(name, scene, isPure);
+        let obj = new BabylonTransformNode(name, scene, isPure);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

@@ -1,5 +1,5 @@
 import { PointerDragBehavior as BabylonPointerDragBehavior, TransformNode, Vector3 } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
 
 export type IPointerDragBehaviorProps = IComponentProps<BabylonPointerDragBehavior> & {
@@ -27,9 +27,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IPointerDragBehaviorProps) {
-    const { instance, options } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonPointerDragBehavior(options);
+    const { init, options } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonPointerDragBehavior(options);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

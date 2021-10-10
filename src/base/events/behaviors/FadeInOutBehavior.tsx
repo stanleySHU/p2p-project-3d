@@ -1,5 +1,5 @@
 import { FadeInOutBehavior as BabylonFadeInOutBehavior } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
 
 export type IFadeInOutBehaviorProps = IComponentProps<BabylonFadeInOutBehavior> & {}
@@ -21,9 +21,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IFadeInOutBehaviorProps) {
-    const { instance } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonFadeInOutBehavior();
+    const { init } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonFadeInOutBehavior();
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

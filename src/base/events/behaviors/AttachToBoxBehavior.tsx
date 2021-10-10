@@ -1,5 +1,5 @@
 import { AttachToBoxBehavior as BabylonAttachToBoxBehavior, TransformNode } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
 
 export type IAttachToBoxBehaviorProps = IComponentProps<BabylonAttachToBoxBehavior> & {
@@ -24,9 +24,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IAttachToBoxBehaviorProps) {
-    const { instance, ui } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonAttachToBoxBehavior(ui);
+    const { init, ui } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonAttachToBoxBehavior(ui);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

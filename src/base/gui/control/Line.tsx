@@ -1,13 +1,13 @@
 import { Line as BabylonLine} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Control'
+import { buildExtends as _buildExtends, IControlParams } from './Control'
 
 export type ILineProps = IComponentProps<BabylonLine> & {
     name?: string 
 }
 
-export type ILineParams = {
+export type ILineParams = IControlParams & {
 
 }
 
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ILineProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonLine(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonLine(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

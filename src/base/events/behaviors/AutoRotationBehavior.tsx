@@ -1,5 +1,5 @@
 import { AutoRotationBehavior as BabylonAutoRotationBehavior, TransformNode } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
 
 export type IAutoRotationBehaviorProps = IComponentProps<BabylonAutoRotationBehavior> &  {}
@@ -22,9 +22,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IAutoRotationBehaviorProps) {
-    const { instance } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonAutoRotationBehavior();
+    const { init } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonAutoRotationBehavior();
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

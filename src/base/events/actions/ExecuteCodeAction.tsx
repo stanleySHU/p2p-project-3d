@@ -1,5 +1,5 @@
 import { ExecuteCodeAction as BabylonExecuteCodeAction, Condition, ActionEvent } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
@@ -27,9 +27,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IExecuteCodeActionProps) {
-    const { instance, triggerOptions, func, condition} =  props;
-    useEffect(() => {
-        instance!.current = new BabylonExecuteCodeAction(triggerOptions, func, condition);
+    const { init, triggerOptions, func, condition} =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonExecuteCodeAction(triggerOptions, func, condition);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

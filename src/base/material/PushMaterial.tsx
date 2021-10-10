@@ -1,5 +1,5 @@
 import { PushMaterial as BabylonPushMaterial, Scene as BabylonScene } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './Material'
 
@@ -26,9 +26,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IPushMaterialProps) {
-    const { instance, name, scene } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonPushMaterial(name, scene);
+    const { init, name, scene } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonPushMaterial(name, scene);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

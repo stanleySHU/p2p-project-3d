@@ -1,6 +1,6 @@
 import { AnaglyphArcRotateCamera as BabylonAnaglyphArcRotateCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './ArcRotateCamera';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { IComponentProps, P2PChildren } from '../Component';
 
 export type IAnaglyphArcRotateCameraProps = IComponentProps<BabylonAnaglyphArcRotateCamera> & {
@@ -31,9 +31,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IAnaglyphArcRotateCameraProps) {
-    const { instance, name, alpha, beta, radius, target, interaxialDistance, scene} =  props;
-    useEffect(() => {
-        instance!.current = new BabylonAnaglyphArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, scene);
+    const { init, name, alpha, beta, radius, target, interaxialDistance, scene} =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonAnaglyphArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, scene);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

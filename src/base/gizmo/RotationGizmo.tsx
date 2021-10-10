@@ -1,5 +1,5 @@
 import { GizmoManager, RotationGizmo as BabylonRotationGizmo, RotationGizmoOptions, UtilityLayerRenderer } from '@babylonjs/core';
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useLayoutEffect, useReducer } from "react";
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from "../Component";
 import { buildExtends as _buildExtends  } from "./Gizmo";
@@ -27,9 +27,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IRotationGizmoProps) {
-    const { instance, gizmoLayer, tessellation, useEulerRotation, thickness, gizmoManager, options } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonRotationGizmo(gizmoLayer, tessellation, useEulerRotation, thickness, gizmoManager, options);
+    const { init, gizmoLayer, tessellation, useEulerRotation, thickness, gizmoManager, options } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonRotationGizmo(gizmoLayer, tessellation, useEulerRotation, thickness, gizmoManager, options);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

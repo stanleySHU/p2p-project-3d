@@ -1,5 +1,5 @@
 import { Gizmo as BabylonGizmo, UtilityLayerRenderer } from '@babylonjs/core';
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useLayoutEffect, useReducer } from "react";
 import { IComponentProps, P2PChildren, buildExtends as _buildExtends } from "../Component";
 
 export type IGizmoProps = IComponentProps<BabylonGizmo> & {
@@ -20,9 +20,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IGizmoProps) {
-    const { instance, gizmoLayer } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonGizmo(gizmoLayer);
+    const { init, gizmoLayer } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonGizmo(gizmoLayer);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

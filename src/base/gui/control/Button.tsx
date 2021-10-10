@@ -1,13 +1,13 @@
 import { Button as BabylonButton} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Rectangle'
+import { buildExtends as _buildExtends, IRectangleParams } from './Rectangle'
 
 export type IButtonProps = IComponentProps<BabylonButton> & {
     name?: string 
 }
 
-export type IButtonParams = {
+export type IButtonParams = IRectangleParams & {
 
 }
 
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IButtonProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonButton(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonButton(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

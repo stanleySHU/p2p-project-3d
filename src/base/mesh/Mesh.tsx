@@ -1,8 +1,7 @@
 import { Mesh as BabylonMesh, Scene as  BabylonScene } from "@babylonjs/core";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useLayoutEffect, useReducer } from "react";
 import { Nullable } from "../../utils/customType";
 import { IComponentProps, P2PChildren } from "../Component";
-import { newChildren } from "../ComponentRedux";
 import { buildExtends as _buildExtends  } from "../node/TransformNode";
 
 export type IMeshProps = IComponentProps<BabylonMesh> & {
@@ -28,9 +27,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IMeshProps) {
-    const { instance, name, scene, parent, source, doNotCloneChildren, clonePhysicsImpostor } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonMesh(name, scene, parent as any, source, doNotCloneChildren, clonePhysicsImpostor);
+    const { init, name, scene, parent, source, doNotCloneChildren, clonePhysicsImpostor } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonMesh(name, scene, parent as any, source, doNotCloneChildren, clonePhysicsImpostor);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

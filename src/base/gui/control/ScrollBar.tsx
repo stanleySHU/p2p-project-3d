@@ -1,13 +1,13 @@
 import { ScrollBar as BabylonScrollBar} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './BaseSlider'
+import { buildExtends as _buildExtends, IBaseSliderParams } from './BaseSlider'
 
 export type IScrollBarProps = IComponentProps<BabylonScrollBar> & {
     name?: string
 }
 
-export type IScrollBarParams = {
+export type IScrollBarParams = IBaseSliderParams & {
 
 }
 
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IScrollBarProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonScrollBar(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonScrollBar(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

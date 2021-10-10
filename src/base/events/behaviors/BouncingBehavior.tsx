@@ -1,5 +1,5 @@
 import { BouncingBehavior as BabylonBouncingBehavior } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
 
 export type IBouncingBehaviorProps = IComponentProps<BabylonBouncingBehavior> & {}
@@ -22,9 +22,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IBouncingBehaviorProps) {
-    const { instance } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonBouncingBehavior();
+    const { init } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonBouncingBehavior();
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

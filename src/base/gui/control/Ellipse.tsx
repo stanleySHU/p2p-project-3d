@@ -1,13 +1,13 @@
 import { Ellipse as BabylonEllipse} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Container'
+import { buildExtends as _buildExtends, IContainerParams } from './Container'
 
 export type IEllipseProps = IComponentProps<BabylonEllipse> & {
     name?: string 
 }
 
-export type IEllipseParams = {
+export type IEllipseParams = IContainerParams & {
 
 }
 
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IEllipseProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonEllipse(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonEllipse(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

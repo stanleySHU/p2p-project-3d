@@ -1,6 +1,6 @@
 import { SpotLight as BabylonSpotLight, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './ShadowLight';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { IComponentProps, P2PChildren } from '../Component';
 
 export type ISpotLightProps = IComponentProps<BabylonSpotLight> &  {
@@ -30,9 +30,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ISpotLightProps) {
-    const { instance, name, position, direction, angle, exponent, scene } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonSpotLight(name, position, direction, angle, exponent, scene);
+    const { init, name, position, direction, angle, exponent, scene } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonSpotLight(name, position, direction, angle, exponent, scene);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

@@ -1,5 +1,5 @@
 import { ShaderMaterial as BabylonShaderMaterial, Scene as BabylonScene, IShaderMaterialOptions } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './Material'
 
@@ -28,9 +28,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IShaderMaterialProps) {
-    const { instance, name, scene, shaderPath, options } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonShaderMaterial(name, scene, shaderPath, options);
+    const { init, name, scene, shaderPath, options } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonShaderMaterial(name, scene, shaderPath, options);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

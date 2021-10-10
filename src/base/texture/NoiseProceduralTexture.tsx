@@ -1,5 +1,5 @@
 import { NoiseProceduralTexture as BabylonNoiseProceduralTexture, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './ProceduralTexture'
@@ -30,9 +30,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: INoiseProceduralTextureProps) {
-    const { instance, name, size, scene, fallbackTexture, generateMipMaps } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonNoiseProceduralTexture(name, size, scene, fallbackTexture, generateMipMaps );
+    const { init, name, size, scene, fallbackTexture, generateMipMaps } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonNoiseProceduralTexture(name, size, scene, fallbackTexture, generateMipMaps );
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

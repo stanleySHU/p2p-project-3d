@@ -1,6 +1,6 @@
 import { UniversalCamera as BabylonUniversalCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './TouchCamera';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { IComponentProps, P2PChildren } from '../Component';
 
 export type IUniversalCameraProps = IComponentProps<BabylonUniversalCamera> &{
@@ -27,9 +27,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IUniversalCameraProps) {
-    const { instance, name, position, scene } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonUniversalCamera(name, position, scene);
+    const { init, name, position, scene } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonUniversalCamera(name, position, scene);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

@@ -1,5 +1,5 @@
 import { Action, PlayAnimationAction as BabylonPlayAnimationAction, Condition } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
@@ -30,9 +30,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IPlayAnimationActionProps) {
-    const { instance, triggerOptions, target, from, to, loop, condition } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonPlayAnimationAction(triggerOptions, target, from, to, loop, condition);
+    const { init, triggerOptions, target, from, to, loop, condition } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonPlayAnimationAction(triggerOptions, target, from, to, loop, condition);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

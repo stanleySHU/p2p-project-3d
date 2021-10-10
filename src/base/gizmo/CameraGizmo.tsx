@@ -1,5 +1,5 @@
 import { CameraGizmo as BabylonCameraGizmo, UtilityLayerRenderer } from '@babylonjs/core';
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useLayoutEffect, useReducer } from "react";
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from "../Component";
 import { buildExtends as _buildExtends  } from "./Gizmo";
@@ -22,9 +22,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ICameraGizmoProps) {
-    const { instance, gizmoLayer} =  props;
-    useEffect(() => {
-        instance!.current = new BabylonCameraGizmo(gizmoLayer);
+    const { init, gizmoLayer} =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonCameraGizmo(gizmoLayer);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

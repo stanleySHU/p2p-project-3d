@@ -1,5 +1,5 @@
 import { Action, SetStateAction as BabylonSetStateAction, Condition } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
@@ -28,9 +28,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ISetStateActionProps) {
-    const { instance, triggerOptions, target, value, condition } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonSetStateAction(triggerOptions, target, value, condition);
+    const { init, triggerOptions, target, value, condition } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonSetStateAction(triggerOptions, target, value, condition);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

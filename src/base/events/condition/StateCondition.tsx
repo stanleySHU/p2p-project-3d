@@ -1,5 +1,5 @@
 import { ActionManager, StateCondition as BabylonStateCondition } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Condition'
 
@@ -27,9 +27,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IStateConditionProps) {
-    const { instance, actionManager, target, value } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonStateCondition(actionManager, target, value );
+    const { init, actionManager, target, value } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonStateCondition(actionManager, target, value );
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

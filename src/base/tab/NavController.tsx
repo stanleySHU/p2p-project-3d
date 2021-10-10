@@ -36,7 +36,6 @@ export const NavController = (props: INavControllerOptions) => {
     return <NavControllerContext.Provider value={{navDispath: dispath}}>
         {
             state.sceneIds.map(id => {
-                console.log(state.sceneIds)
                 return children.filter((child: any) => {
                     return child.props.id == id;
                 })

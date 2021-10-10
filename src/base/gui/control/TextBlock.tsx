@@ -1,14 +1,14 @@
 import { TextBlock as BabylonTextBlock} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Control'
+import { buildExtends as _buildExtends, IControlParams } from './Control'
 
 export type ITextBlockProps = IComponentProps<BabylonTextBlock> & {
     name?: string,
     text?: string
 }
 
-export type ITextBlockParams = {
+export type ITextBlockParams = IControlParams & {
 
 }
 
@@ -26,9 +26,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ITextBlockProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonTextBlock(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonTextBlock(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

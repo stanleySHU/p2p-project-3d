@@ -1,13 +1,13 @@
 import { RadioButton as BabylonRadioButton} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Control'
+import { buildExtends as _buildExtends, IControlParams } from './Control'
 
 export type IRadioButtonProps = IComponentProps<BabylonRadioButton> & {
     name?: string 
 }
 
-export type IRadioButtonParams = {
+export type IRadioButtonParams = IControlParams & {
 
 }
 
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IRadioButtonProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonRadioButton(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonRadioButton(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

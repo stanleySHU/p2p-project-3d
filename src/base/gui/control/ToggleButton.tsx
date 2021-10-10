@@ -1,13 +1,13 @@
 import { ToggleButton as BabylonToggleButton} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Rectangle'
+import { buildExtends as _buildExtends, IRectangleParams } from './Rectangle'
 
 export type IToggleButtonProps = IComponentProps<BabylonToggleButton> &  {
     name?: string 
 }
 
-export type IToggleButtonParams = {
+export type IToggleButtonParams = IRectangleParams & {
 
 }
 
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IToggleButtonProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonToggleButton(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonToggleButton(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

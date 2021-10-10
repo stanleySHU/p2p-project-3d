@@ -1,5 +1,5 @@
 import { ColorGradingTexture as BabylonColorGradingTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './BaseTexture'
@@ -23,9 +23,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IColorGradingTextureProps) {
-    const { instance, url, sceneOrEngine, onLoad } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonColorGradingTexture(url, sceneOrEngine, onLoad);
+    const { init, url, sceneOrEngine, onLoad } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonColorGradingTexture(url, sceneOrEngine, onLoad);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

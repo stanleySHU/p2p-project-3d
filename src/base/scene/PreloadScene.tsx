@@ -1,6 +1,6 @@
 import { Scene, Vector3 } from "@babylonjs/core";
 import React, { ReactElement, useContext, useEffect, useReducer } from "react";
-import { P2PAssetsManager, P2PDirectionalLight, P2PFreeCamera, P2PNode, P2PScene } from "..";
+import { P2PAssetsManager, P2PDirectionalLight, P2PFreeCamera, P2PGround, P2PNode, P2PScene } from "..";
 import { Nullable } from "../../utils/customType";
 import { NavControllerContext } from "../tab/NavController";
 import { initialState, InitialState, reducer } from "./PreloadRedux";
@@ -32,10 +32,10 @@ export function P2PPreloadPage(props: IPreloadSceneProps) {
     return <P2PScene {...props}>
         <SceneContext.Consumer>
             {
-                ({ sceneInstance }) => sceneInstance &&
+                ({ sceneInstance }) =>
                     <>
                         <P2PNode name="preView" scene={sceneInstance}>
-                            <P2PFreeCamera name="camera" scene={sceneInstance} position={new Vector3(0, 5, -10)} />
+                            <P2PFreeCamera name="camera" scene={sceneInstance} position={new Vector3(0, 5, -10)} attachControl={[sceneInstance, true]} setTarget={Vector3.Zero()}/>
                             <P2PDirectionalLight name="light" scene={sceneInstance} direction={Vector3.Zero()} />
                             {
                                 React.cloneElement(props.Preview!, {

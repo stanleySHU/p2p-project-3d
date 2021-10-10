@@ -1,5 +1,5 @@
 import { DoNothingAction as BabylonDoNothingAction, Condition } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
@@ -26,9 +26,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IDoNothingActionProps) {
-    const { instance, triggerOptions, condition } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonDoNothingAction(triggerOptions, condition);
+    const { init, triggerOptions, condition } =  props;
+    useLayoutEffect(() => {
+        let obj  = new BabylonDoNothingAction(triggerOptions, condition);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

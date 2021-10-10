@@ -1,5 +1,5 @@
 import { VideoTexture as BabylonVideoTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine, VideoTextureSettings } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './Texture'
@@ -33,9 +33,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IVideoTextureProps) {
-    const { instance, name, src, scene, generateMipMaps, invertY, samplingMode, settings, onError } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonVideoTexture(name, src, scene, generateMipMaps, invertY, samplingMode, settings, onError );
+    const { init, name, src, scene, generateMipMaps, invertY, samplingMode, settings, onError } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonVideoTexture(name, src, scene, generateMipMaps, invertY, samplingMode, settings, onError );
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

@@ -1,6 +1,6 @@
 import { WebVRFreeCamera as BabylonWebVRFreeCamera, Scene as BabylinScene, Vector3, WebVROptions } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './FreeCamera';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { IComponentProps, P2PChildren } from '../Component';
 
 export type IWebVRFreeCameraProps = IComponentProps<BabylonWebVRFreeCamera> &{
@@ -28,9 +28,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IWebVRFreeCameraProps) {
-    const { instance, name, position, scene, webVROptions } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonWebVRFreeCamera(name, position, scene, webVROptions);
+    const { init, name, position, scene, webVROptions } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonWebVRFreeCamera(name, position, scene, webVROptions);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

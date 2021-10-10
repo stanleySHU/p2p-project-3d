@@ -1,6 +1,6 @@
 import { AbstractMesh, FlyCamera as BabylonFlyCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './TargetCamera';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 
@@ -29,9 +29,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IFlyCameraProps) {
-    const { instance, name, position, scene, setActiveOnSceneIfNoneActive } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonFlyCamera(name, position, scene, setActiveOnSceneIfNoneActive);
+    const { init, name, position, scene, setActiveOnSceneIfNoneActive } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonFlyCamera(name, position, scene, setActiveOnSceneIfNoneActive);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

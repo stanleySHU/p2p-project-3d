@@ -1,13 +1,13 @@
 import { Rectangle as BabylonRectangle} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Container'
+import { buildExtends as _buildExtends, IContainerParams } from './Container'
 
 export type IRectangleProps = IComponentProps<BabylonRectangle> & {
     name?: string
 }
 
-export type IRectangleParams = {
+export type IRectangleParams = IContainerParams & {
 
 }
 
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IRectangleProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonRectangle(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonRectangle(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

@@ -5,7 +5,6 @@ import { IPreloadSceneProps, IPreviewProps, P2PPreloadPage } from '../base/scene
 const PreView = (props: IPreviewProps) => {
     return <P2PAdvancedDynamicTexture scene={null} {...props} name="preView">
         <P2PTextBlock text="1111"/>
-        <P2PRectangle />
     </P2PAdvancedDynamicTexture>
 }
 

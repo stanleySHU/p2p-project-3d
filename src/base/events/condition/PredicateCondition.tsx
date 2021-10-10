@@ -1,5 +1,5 @@
 import { ActionManager, PredicateCondition as BabylonPredicateCondition } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Condition'
 
@@ -26,9 +26,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IPredicateConditionProps) {
-    const { instance, actionManager, predicate } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonPredicateCondition(actionManager, predicate);
+    const { init, actionManager, predicate } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonPredicateCondition(actionManager, predicate);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

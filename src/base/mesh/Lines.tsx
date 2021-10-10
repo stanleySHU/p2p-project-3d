@@ -1,6 +1,6 @@
 import { Color4, LinesMesh, MeshBuilder, Scene as BabylonScene, Vector3, Mesh as BabylonMesh } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './Mesh';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 
@@ -31,9 +31,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ILinesProps) {
-    const { instance, name, options, scene } =  props;
-    useEffect(() => {
-        instance!.current = MeshBuilder.CreateLines(name, options, scene);
+    const { init, name, options, scene } =  props;
+    useLayoutEffect(() => {
+        let obj = MeshBuilder.CreateLines(name, options, scene);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

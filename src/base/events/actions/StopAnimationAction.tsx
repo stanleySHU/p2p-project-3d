@@ -1,5 +1,5 @@
 import { Action, StopAnimationAction as BabylonStopAnimationAction, Condition } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
 import { buildExtends as _buildExtends } from './Action'
 
@@ -27,9 +27,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IStopAnimationActionProps) {
-    const { instance, triggerOptions, target, condition } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonStopAnimationAction(triggerOptions, target, condition);
+    const { init, triggerOptions, target, condition } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonStopAnimationAction(triggerOptions, target, condition);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

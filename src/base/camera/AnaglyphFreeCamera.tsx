@@ -1,6 +1,6 @@
 import { AnaglyphFreeCamera as BabylonAnaglyphFreeCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './FreeCamera';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { IComponentProps, P2PChildren } from '../Component';
 
 export type IAnaglyphFreeCameraProps = IComponentProps<BabylonAnaglyphFreeCamera> & {
@@ -28,9 +28,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IAnaglyphFreeCameraProps) {
-    const { instance, name, position, interaxialDistance, scene } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonAnaglyphFreeCamera(name, position, interaxialDistance, scene );
+    const { init, name, position, interaxialDistance, scene } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonAnaglyphFreeCamera(name, position, interaxialDistance, scene );
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

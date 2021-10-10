@@ -1,14 +1,14 @@
 import { InputText as BabylonInputText} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Control'
+import { buildExtends as _buildExtends, IControlParams } from './Control'
 
 export type IInputTextProps = IComponentProps<BabylonInputText> & {
     name?: string,
     text?: string
 }
 
-export type IInputTextParams = {
+export type IInputTextParams = IControlParams & {
 
 }
 
@@ -26,9 +26,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IInputTextProps) {
-    const { instance, name, text } = props;
-    useEffect(() => {
-        instance!.current = new BabylonInputText(name, text);
+    const { init, name, text } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonInputText(name, text);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

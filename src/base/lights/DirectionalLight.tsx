@@ -1,6 +1,6 @@
 import { DirectionalLight as BabylonDirectionalLight, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './ShadowLight';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer, useState } from "react"
 import { IComponentProps, P2PChildren } from '../Component';
 
 export type IDirectionalLightProps = IComponentProps<BabylonDirectionalLight> &  {
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IDirectionalLightProps) {
-    const { instance, name, direction, scene } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonDirectionalLight (name, direction, scene);
+    const { init, name, direction, scene } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonDirectionalLight (name, direction, scene);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

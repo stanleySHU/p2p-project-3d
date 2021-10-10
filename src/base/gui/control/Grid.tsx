@@ -1,13 +1,13 @@
 import { Grid as BabylonGrid} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Container'
+import { buildExtends as _buildExtends, IContainerParams } from './Container'
 
 export type IGridProps = IComponentProps<BabylonGrid> & {
     name?: string 
 }
 
-export type IGridParams = {
+export type IGridParams = IContainerParams & {
 
 }
 
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IGridProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonGrid(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonGrid(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

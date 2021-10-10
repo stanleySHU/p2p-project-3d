@@ -1,6 +1,6 @@
 import { VRDeviceOrientationArcRotateCamera as BabylonVRDeviceOrientationArcRotateCamera, Scene as BabylinScene, Vector3, VRCameraMetrics } from '@babylonjs/core';
 import { buildExtends as _buildExtends } from './ArcRotateCamera';
-import { useEffect, useReducer } from "react"
+import { useEffect, useLayoutEffect, useReducer } from "react"
 import { IComponentProps, P2PChildren } from '../Component';
 
 export type IVRDeviceOrientationArcRotateCameraProps = IComponentProps<BabylonVRDeviceOrientationArcRotateCamera> &{
@@ -32,9 +32,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IVRDeviceOrientationArcRotateCameraProps) {
-    const { instance, name, alpha, beta, radius, target, scene, compensateDistortion, vrCameraMetrics } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonVRDeviceOrientationArcRotateCamera(name, alpha, beta, radius, target, scene, compensateDistortion, vrCameraMetrics);
+    const { init, name, alpha, beta, radius, target, scene, compensateDistortion, vrCameraMetrics } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonVRDeviceOrientationArcRotateCamera(name, alpha, beta, radius, target, scene, compensateDistortion, vrCameraMetrics);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

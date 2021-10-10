@@ -1,5 +1,5 @@
 import { BaseTexture as BabylonBaseTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { IComponentProps, P2PChildren } from '../Component';
 import { buildExtends as _buildExtends } from './ThinTexture'
@@ -21,9 +21,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IBaseTextureProps) {
-    const { instance, sceneOrEngine } =  props;
-    useEffect(() => {
-        instance!.current = new BabylonBaseTexture(sceneOrEngine);
+    const { init, sceneOrEngine } =  props;
+    useLayoutEffect(() => {
+        let obj = new BabylonBaseTexture(sceneOrEngine);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }

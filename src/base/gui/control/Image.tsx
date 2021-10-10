@@ -1,13 +1,13 @@
 import { Image as BabylonImage} from '@babylonjs/gui';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Control'
+import { buildExtends as _buildExtends, IControlParams } from './Control'
 
 export type IImageProps = IComponentProps<BabylonImage> & {
     name?: string 
 }
 
-export type IImageParams = {
+export type IImageParams = IControlParams & {
 
 }
 
@@ -25,9 +25,10 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: IImageProps) {
-    const { instance, name } = props;
-    useEffect(() => {
-        instance!.current = new BabylonImage(name);
+    const { init, name } = props;
+    useLayoutEffect(() => {
+        let obj = new BabylonImage(name);
+        init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }
