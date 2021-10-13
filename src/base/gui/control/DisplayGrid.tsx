@@ -7,12 +7,12 @@ export type IDisplayGridProps = IComponentProps<BabylonDisplayGrid> & {
     name?: string 
 }
 
-export type IDisplayGridParams = IControlParams & {
+export type IDisplayGridParams<T> = IControlParams<T> & {
 
 }
 
 function DisplayGridHOC(EL: React.FC) {
-    return (props: IDisplayGridParams) => {
+    return (props: IDisplayGridParams<BabylonDisplayGrid>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IDisplayGridProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PDisplayGrid = buildExtends<IDisplayGridProps & IDisplayGridParams>(_); 
+export const P2PDisplayGrid = buildExtends<IDisplayGridProps & IDisplayGridParams<BabylonDisplayGrid>>(_); 

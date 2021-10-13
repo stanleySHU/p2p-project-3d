@@ -1,8 +1,8 @@
 import { FadeInOutBehavior as BabylonFadeInOutBehavior } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component'
 
-export type IFadeInOutBehaviorProps = IComponentProps<BabylonFadeInOutBehavior> & {}
+export type IFadeInOutBehaviorProps = IComponentProps& {}
 export type IFadeInOutBehaviorParams = {
 
 }
@@ -16,10 +16,6 @@ function FadeInOutBehaviorHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(FadeInOutBehaviorHOC(e));
-}
-
 function _(props: IFadeInOutBehaviorProps) {
     const { init } =  props;
     useLayoutEffect(() => {
@@ -29,4 +25,7 @@ function _(props: IFadeInOutBehaviorProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PFadeInOutBehavior = buildExtends<IFadeInOutBehaviorProps & IFadeInOutBehaviorParams>(_);
+export const P2PFadeInOutBehavior = getEL<IFadeInOutBehaviorParams>(_, [
+    FadeInOutBehaviorHOC,
+    ComponentHOC
+])

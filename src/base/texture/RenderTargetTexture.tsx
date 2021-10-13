@@ -1,10 +1,12 @@
 import { RenderTargetTexture as BabylonRenderTargetTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './Texture'
+import { IComponentProps, P2PChildren, getEL, ComponentHOC } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { TextureHOC } from './Texture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IRenderTargetTextureProps = IComponentProps<BabylonRenderTargetTexture> & {
+export type IRenderTargetTextureProps = IComponentProps & {
     name: string, 
     size: number | {
         width: number;
@@ -32,17 +34,13 @@ export type IRenderTargetTextureParams = {
 
 }
 
-function RenderTargetTextureHOC(EL: React.FC) {
+export function RenderTargetTextureHOC(EL: React.FC) {
     return (props: IRenderTargetTextureParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(RenderTargetTextureHOC(e));
 }
 
 function _(props: IRenderTargetTextureProps) {
@@ -54,4 +52,10 @@ function _(props: IRenderTargetTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PRenderTargetTexture = buildExtends<IRenderTargetTextureProps & IRenderTargetTextureParams>(_);
+export const P2PRenderTargetTexture = getEL<IRenderTargetTextureParams>(_, [
+    RenderTargetTextureHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

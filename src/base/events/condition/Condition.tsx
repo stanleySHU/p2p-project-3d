@@ -1,8 +1,8 @@
 import { ActionManager, Condition as BabylonCondition, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component'
 
-export type IConditionProps = IComponentProps<BabylonCondition> & {
+export type IConditionProps = IComponentProps & {
     actionManager: ActionManager
 }
 
@@ -10,17 +10,13 @@ export type IConditionParams = {
 
 }
 
-function ConditionHOC(EL: React.FC) {
+export function ConditionHOC(EL: React.FC) {
     return (props: IConditionParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ConditionHOC(e));
 }
 
 function _(props: IConditionProps) {
@@ -32,4 +28,7 @@ function _(props: IConditionProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PCondition = buildExtends<IConditionProps & IConditionParams>(_);
+export const P2PCondition = getEL<IConditionParams>(_, [
+    ConditionHOC,
+    ComponentHOC
+])

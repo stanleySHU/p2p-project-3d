@@ -1,5 +1,5 @@
 import { BinaryFileAssetTask as BabylonBinaryFileAssetTask } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IAbstractAssetTaskProps, buildExtends as _buildExtends } from './AbstractAssetTask';
 
 export type IBinaryFileAssetTaskInitial<T> = IAbstractAssetTaskProps<T> & {
@@ -10,12 +10,11 @@ export type IBinaryFileAssetTaskProps = IBinaryFileAssetTaskInitial<BabylonBinar
 
 function BinaryFileAssetTaskHOC<T>(EL: React.FC<T>) {
     return (props: T & IBinaryFileAssetTaskProps) => {
-        const { name, instance, url } = props;
+        const { init, name, url } = props;
 
-        useEffect(() => {
-            if (instance && !instance!.current) {
-                instance!.current = new BabylonBinaryFileAssetTask(name, url);
-            }
+        useLayoutEffect(() => {
+            let obj = new BabylonBinaryFileAssetTask(name, url);
+            init!(obj);
         }, []);
         return <EL {...props}/>
     };

@@ -8,11 +8,11 @@ export type IContainerProps = IComponentProps<BabylonContainer> & {
     name?: string 
 }
 
-export type IContainerParams = IControlParams & {
+export type IContainerParams<T> = IControlParams<T> & {
 }
 
 function ContainerHOC(EL: React.FC) {
-    return (props: IContainerParams) => { 
+    return (props: IContainerParams<BabylonContainer>) => { 
         const { instance } = props;
         return <EL {...props}/>
     }
@@ -31,4 +31,4 @@ function _(props: IContainerProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PContainer = buildExtends<IContainerProps & IContainerParams>(_); 
+export const P2PContainer = buildExtends<IContainerProps & IContainerParams<BabylonContainer>>(_); 

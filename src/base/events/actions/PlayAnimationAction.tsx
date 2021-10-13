@@ -1,9 +1,9 @@
 import { Action, PlayAnimationAction as BabylonPlayAnimationAction, Condition } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Action'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ActionHOC } from './Action';
 
-export type IPlayAnimationActionProps = IComponentProps<BabylonPlayAnimationAction> & {
+export type IPlayAnimationActionProps = IComponentProps& {
     triggerOptions: any, 
     target: any, 
     from: number, 
@@ -25,10 +25,6 @@ function PlayAnimationActionHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(PlayAnimationActionHOC(e));
-}
-
 function _(props: IPlayAnimationActionProps) {
     const { init, triggerOptions, target, from, to, loop, condition } =  props;
     useLayoutEffect(() => {
@@ -38,4 +34,8 @@ function _(props: IPlayAnimationActionProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PPlayAnimationAction = buildExtends<IPlayAnimationActionProps & IPlayAnimationActionParams>(_);
+export const P2PPlayAnimationAction = getEL<IPlayAnimationActionParams>(_, [
+    PlayAnimationActionHOC,
+    ActionHOC,
+    ComponentHOC
+]);

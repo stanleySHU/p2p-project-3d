@@ -1,9 +1,12 @@
 import { StereoscopicFreeCamera as BabylonStereoscopicFreeCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './FreeCamera';
+import { FreeCameraHOC } from './FreeCamera';
 import { useEffect, useLayoutEffect, useReducer } from "react"
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { TargetCameraHOC } from './TargetCamera';
+import { CameraHOC } from './Camera';
+import { NodeHOC } from '../node/Node';
 
-export type IStereoscopicFreeCameraProps = IComponentProps<BabylonStereoscopicFreeCamera> & {
+export type IStereoscopicFreeCameraProps = IComponentProps & {
     name: string, 
     position: Vector3, 
     interaxialDistance: number, 
@@ -24,10 +27,6 @@ function StereoscopicFreeCameraHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(StereoscopicFreeCameraHOC(e));
-}
-
 function _(props: IStereoscopicFreeCameraProps) {
     const { init, name, position, interaxialDistance, isStereoscopicSideBySide, scene } =  props;
     useLayoutEffect(() => {
@@ -37,4 +36,11 @@ function _(props: IStereoscopicFreeCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PStereoscopicFreeCamera = buildExtends<IStereoscopicFreeCameraProps & IStereoscopicFreeCameraParams>(_);
+export const P2PStereoscopicFreeCamera = getEL<IStereoscopicFreeCameraParams>(_, [
+    StereoscopicFreeCameraHOC,
+    FreeCameraHOC,
+    TargetCameraHOC,
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

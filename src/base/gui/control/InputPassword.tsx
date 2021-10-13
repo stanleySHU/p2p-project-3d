@@ -8,12 +8,12 @@ export type IInputPasswordProps = IComponentProps<BabylonInputPassword> & {
     text?: string
 }
 
-export type IInputPasswordParams = IInputTextParams & {
+export type IInputPasswordParams<T> = IInputTextParams<T> & {
 
 }
 
 function InputPasswordHOC(EL: React.FC) {
-    return (props: IInputPasswordParams) => {
+    return (props: IInputPasswordParams<BabylonInputPassword>) => {
         useEffect(() => {
 
         });
@@ -34,4 +34,4 @@ function _(props: IInputPasswordProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PInputPassword = buildExtends<IInputPasswordProps & IInputPasswordParams>(_); 
+export const P2PInputPassword = buildExtends<IInputPasswordProps & IInputPasswordParams<BabylonInputPassword>>(_); 

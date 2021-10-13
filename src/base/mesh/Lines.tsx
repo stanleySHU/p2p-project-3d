@@ -1,10 +1,10 @@
 import { Color4, LinesMesh, MeshBuilder, Scene as BabylonScene, Vector3, Mesh as BabylonMesh } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MeshHOC } from './Mesh';
 
-export type ILinesProps = IComponentProps<BabylonMesh> & {
+export type ILinesProps = IComponentProps & {
     name: string, 
     options: {
         points: Vector3[];
@@ -26,10 +26,6 @@ function LinesHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(LinesHOC(e));
-}
-
 function _(props: ILinesProps) {
     const { init, name, options, scene } =  props;
     useLayoutEffect(() => {
@@ -39,4 +35,8 @@ function _(props: ILinesProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PLines = buildExtends<ILinesProps & ILinesParams>(_);
+export const P2PLines = getEL<ILinesParams>(_, [
+    LinesHOC,
+    MeshHOC,
+    ComponentHOC
+]);

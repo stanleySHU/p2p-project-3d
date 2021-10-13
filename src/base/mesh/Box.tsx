@@ -1,10 +1,10 @@
 import { Color4, MeshBuilder, Scene as BabylonScene, Vector4, Mesh as BabylonMesh } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MeshHOC } from './Mesh';
 
-export type IBoxProps = IComponentProps<BabylonMesh> & {
+export type IBoxProps = IComponentProps & {
     name: string, 
     options: {
         size?: number;
@@ -28,14 +28,10 @@ export type IBoxParams = {
 
 }
 
-function BoxHOC(EL: React.FC) {
+export function BoxHOC(EL: React.FC) {
     return (props: IBoxParams) => {
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(BoxHOC(e));
 }
 
 function _(props: IBoxProps) {
@@ -47,4 +43,8 @@ function _(props: IBoxProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PBox = buildExtends<IBoxProps & IBoxParams>(_);
+export const P2PBox = getEL<IBoxParams>(_, [
+    BoxHOC,
+    MeshHOC,
+    ComponentHOC
+]);

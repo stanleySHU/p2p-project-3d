@@ -1,10 +1,9 @@
 import { GizmoManager, PositionGizmo as BabylonPositionGizmo, UtilityLayerRenderer } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect, useReducer } from "react";
-import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from "../Component";
-import { buildExtends as _buildExtends  } from "./Gizmo";
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from "../Component";
+import { GizmoHOC } from './Gizmo';
 
-export type IPositionGizmoProps = IComponentProps<BabylonPositionGizmo> & {
+export type IPositionGizmoProps = IComponentProps & {
     gizmoLayer?: UtilityLayerRenderer, 
     thickness?: number, 
     gizmoManager?: GizmoManager
@@ -19,9 +18,6 @@ function PositionGizmoHOC(EL: React.FC) {
         return <EL {...props}/>
     }
 }
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(PositionGizmoHOC(e));
-}
 
 function _(props: IPositionGizmoProps) {
     const { init, gizmoLayer, thickness, gizmoManager } =  props;
@@ -32,4 +28,8 @@ function _(props: IPositionGizmoProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PPositionGizmo = buildExtends<IPositionGizmoProps & IPositionGizmoParams>(_);
+export const P2PPositionGizmo = getEL<IPositionGizmoParams>(_, [
+    PositionGizmoHOC,
+    GizmoHOC,
+    ComponentHOC
+]);

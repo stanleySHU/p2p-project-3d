@@ -1,9 +1,10 @@
 import { INodeMaterialOptions, NodeMaterial as BabylonNodeMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './PushMaterial'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MaterialHOC } from './Material';
+import { PushMaterialHOC } from './PushMaterial';
 
-export type INodeMaterialProps = IComponentProps<BabylonNodeMaterial> & {
+export type INodeMaterialProps = IComponentProps & {
     name: string, 
     scene?: BabylonScene, 
     options?: Partial<INodeMaterialOptions>
@@ -22,10 +23,6 @@ function NodeMaterialHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(NodeMaterialHOC(e));
-}
-
 function _(props: INodeMaterialProps) {
     const { init, name, scene, options } =  props;
     useLayoutEffect(() => {
@@ -35,4 +32,9 @@ function _(props: INodeMaterialProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PNodeMaterial = buildExtends<INodeMaterialProps & INodeMaterialParams>(_);
+export const P2PNodeMaterial = getEL<INodeMaterialParams>(_, [
+    NodeMaterialHOC,
+    PushMaterialHOC,
+    MaterialHOC,
+    ComponentHOC
+]);

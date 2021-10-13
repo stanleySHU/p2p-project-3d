@@ -1,11 +1,10 @@
 import { TransformNode as BabylonTransformNode, Scene as BabylonScene } from '@babylonjs/core';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { NodeHOC } from './Node';
 
-import { buildExtends as _buildExtends } from './Node';
-
-export type ITransformNodeProps = IComponentProps<BabylonTransformNode> & {
+export type ITransformNodeProps = IComponentProps & {
     name: string, 
     scene?: Nullable<BabylonScene>, 
     isPure?: boolean
@@ -15,17 +14,10 @@ export type ITransformNodeParams = {
 
 }
 
-function TransformNodeHOC(EL: React.FC) {
+export function TransformNodeHOC(EL: React.FC) {
     return (props: ITransformNodeParams) => {
-        useEffect(() => {
-            
-        });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(TransformNodeHOC(e))
 }
 
 function _(props: ITransformNodeProps) {
@@ -37,4 +29,8 @@ function _(props: ITransformNodeProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PTransformNode = buildExtends<ITransformNodeProps & ITransformNodeParams>(_);
+export const P2PTransformNode = getEL<ITransformNodeParams>(_, [
+    TransformNodeHOC,
+    NodeHOC,
+    ComponentHOC
+]);

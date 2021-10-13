@@ -1,10 +1,13 @@
 import { NoiseProceduralTexture as BabylonNoiseProceduralTexture, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './ProceduralTexture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { ProceduralTextureHOC } from './ProceduralTexture';
+import { TextureHOC } from './Texture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type INoiseProceduralTextureProps =  IComponentProps<BabylonNoiseProceduralTexture> & {
+export type INoiseProceduralTextureProps =  IComponentProps & {
     name: string, 
     size?: number, 
     scene?: Nullable<BabylonScene>, 
@@ -25,10 +28,6 @@ function NoiseProceduralTextureHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(NoiseProceduralTextureHOC(e));
-}
-
 function _(props: INoiseProceduralTextureProps) {
     const { init, name, size, scene, fallbackTexture, generateMipMaps } =  props;
     useLayoutEffect(() => {
@@ -38,4 +37,11 @@ function _(props: INoiseProceduralTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PNoiseProceduralTexture = buildExtends<INoiseProceduralTextureProps & INoiseProceduralTextureParams>(_);
+export const P2PNoiseProceduralTexture = getEL<INoiseProceduralTextureParams>(_, [
+    NoiseProceduralTextureHOC,
+    ProceduralTextureHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

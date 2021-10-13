@@ -1,10 +1,10 @@
 import { MeshBuilder, Scene as BabylonScene, Vector4, Mesh as BabylonMesh } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MeshHOC } from './Mesh';
 
-export type ISphereProps = IComponentProps<BabylonMesh> & {
+export type ISphereProps = IComponentProps & {
     name: string, 
     options: {
         segments?: number;
@@ -32,10 +32,6 @@ function SphereHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(SphereHOC(e));
-}
-
 function _(props: ISphereProps) {
     const { init, name, options, scene } =  props;
     useLayoutEffect(() => {
@@ -45,4 +41,8 @@ function _(props: ISphereProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PSphere = buildExtends<ISphereProps & ISphereParams>(_);
+export const P2PSphere = getEL<ISphereParams>(_, [
+    SphereHOC,
+    MeshHOC,
+    ComponentHOC
+]);

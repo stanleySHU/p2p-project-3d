@@ -1,10 +1,13 @@
 import { IMultiRenderTargetOptions, MultiRenderTarget as BabylonMultiRenderTarget, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './RenderTargetTexture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { RenderTargetTextureHOC } from './RenderTargetTexture';
+import { TextureHOC } from './Texture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IMultiRenderTargetProps = IComponentProps<BabylonMultiRenderTarget> & {
+export type IMultiRenderTargetProps = IComponentProps & {
     name: string, 
     size: any, 
     count: number, 
@@ -26,10 +29,6 @@ function MultiRenderTargetHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(MultiRenderTargetHOC(e));
-}
-
 function _(props: IMultiRenderTargetProps) {
     const { init, name, size, count, scene, options, textureNames } =  props;
     useLayoutEffect(() => {
@@ -39,4 +38,11 @@ function _(props: IMultiRenderTargetProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PMultiRenderTarget = buildExtends<IMultiRenderTargetProps & IMultiRenderTargetParams>(_);
+export const P2PMultiRenderTarget = getEL<IMultiRenderTargetParams>(_, [
+    MultiRenderTargetHOC,
+    RenderTargetTextureHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

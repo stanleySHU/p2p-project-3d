@@ -1,8 +1,8 @@
 import { Gizmo as BabylonGizmo, UtilityLayerRenderer } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect, useReducer } from "react";
-import { IComponentProps, P2PChildren, buildExtends as _buildExtends } from "../Component";
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from "../Component";
 
-export type IGizmoProps = IComponentProps<BabylonGizmo> & {
+export type IGizmoProps = IComponentProps & {
     gizmoLayer?: UtilityLayerRenderer
 }
 
@@ -10,13 +10,10 @@ export type IGizmoParams = {
 
 }
 
-function GizmoHOC(EL: React.FC) {
+export function GizmoHOC(EL: React.FC) {
     return (props: IGizmoParams) => {
         return <EL {...props}/>
     }
-}
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(GizmoHOC(e));
 }
 
 function _(props: IGizmoProps) {
@@ -28,4 +25,7 @@ function _(props: IGizmoProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PGizmo = buildExtends<IGizmoProps & IGizmoParams>(_);
+export const P2PGizmo = getEL<IGizmoParams>(_, [
+    GizmoHOC,
+    ComponentHOC
+])

@@ -7,12 +7,12 @@ export type IMultiLineProps = IComponentProps<BabylonMultiLine> & {
     name?: string
 }
 
-export type IMultiLineParams = IControlParams & {
+export type IMultiLineParams<T> = IControlParams<T> & {
 
 }
 
 function MultiLineHOC(EL: React.FC) {
-    return (props: IMultiLineParams) => {
+    return (props: IMultiLineParams<BabylonMultiLine>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IMultiLineProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PMultiLine = buildExtends<IMultiLineProps & IMultiLineParams>(_); 
+export const P2PMultiLine = buildExtends<IMultiLineProps & IMultiLineParams<BabylonMultiLine>>(_); 

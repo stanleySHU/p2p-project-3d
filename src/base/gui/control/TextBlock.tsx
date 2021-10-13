@@ -8,15 +8,17 @@ export type ITextBlockProps = IComponentProps<BabylonTextBlock> & {
     text?: string
 }
 
-export type ITextBlockParams = IControlParams & {
-
+export type ITextBlockParams<T> = IControlParams<T> & {
+    text?: string,
+    color?: string
 }
 
 function TextBlockHOC(EL: React.FC) {
-    return (props: ITextBlockParams) => {
+    return (props: ITextBlockParams<BabylonTextBlock>) => {
+        const { instance } = props;
         useEffect(() => {
-
-        });
+            if (instance) instance.text = props.text || '';
+        }, [props.text, instance]);
         return <EL {...props}/>
     }
 }
@@ -26,12 +28,12 @@ export function buildExtends<T>(e: any) {
 }
 
 function _(props: ITextBlockProps) {
-    const { init, name } = props;
+    const { init, name, text } = props;
     useLayoutEffect(() => {
-        let obj = new BabylonTextBlock(name);
+        let obj = new BabylonTextBlock(name, text);
         init!(obj);
     }, []);
     return <P2PChildren {...props}/>;
 }
 
-export const P2PTextBlock = buildExtends<ITextBlockProps & ITextBlockParams>(_); 
+export const P2PTextBlock = buildExtends<ITextBlockProps & ITextBlockParams<BabylonTextBlock>>(_); 

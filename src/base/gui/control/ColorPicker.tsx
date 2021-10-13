@@ -7,12 +7,12 @@ export type IColorPickerProps = IComponentProps<BabylonColorPicker> & {
     name?: string 
 }
 
-export type IColorPickerParams = IControlParams & {
+export type IColorPickerParams<T> = IControlParams<T> & {
 
 }
 
 function ColorPickerHOC(EL: React.FC) {
-    return (props: IColorPickerParams) => {
+    return (props: IColorPickerParams<BabylonColorPicker>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IColorPickerProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PColorPicker = buildExtends<IColorPickerProps & IColorPickerParams>(_); 
+export const P2PColorPicker = buildExtends<IColorPickerProps & IColorPickerParams<BabylonColorPicker>>(_); 

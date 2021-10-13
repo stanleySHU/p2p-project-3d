@@ -1,32 +1,29 @@
 import { Camera as BabylonCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from '../node/Node';
 import { useEffect, useLayoutEffect, useReducer } from "react"
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { NodeHOC } from '../node/Node';
 
-export type ICameraProps = IComponentProps<BabylonCamera> & {
+export type ICameraProps = IComponentProps & {
     name: string, 
     position: Vector3, 
     scene: BabylinScene, 
     setActiveOnSceneIfNoneActive?: boolean
 }
 
-export type ICameraParams = IComponentProps<any> & {
+export type ICameraParams = {
     attachControl?: [any, boolean]
 }
 
-function CameraHOC(EL: React.FC<ICameraParams>) {
+export function CameraHOC(EL: React.FC<ICameraParams>) {
     return (props: ICameraParams) => {
-        const { instance } = props;
+        const instance: BabylonCamera = (props as any).instance;
         useEffect(() => {
-            instance?.attachControl(...props.attachControl!);
+            instance && props.attachControl && instance.attachControl(...props.attachControl!);
         }, [props.attachControl, instance])
         return <EL {...props}/>
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(CameraHOC(e));
-}
 
 function _(props: ICameraProps) {
     const { init, name, position, scene, setActiveOnSceneIfNoneActive } =  props;
@@ -37,4 +34,8 @@ function _(props: ICameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PCamera = buildExtends<ICameraProps & ICameraParams>(_);
+export const P2PCamera = getEL<ICameraParams>(_, [
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

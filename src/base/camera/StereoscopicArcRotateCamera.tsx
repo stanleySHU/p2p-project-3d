@@ -1,9 +1,12 @@
 import { StereoscopicArcRotateCamera as BabylonStereoscopicArcRotateCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './ArcRotateCamera';
+import { ArcRotateCameraHOC} from './ArcRotateCamera';
 import { useEffect, useLayoutEffect, useReducer } from "react"
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { TargetCameraHOC } from './TargetCamera';
+import { CameraHOC } from './Camera';
+import { NodeHOC } from '../node/Node';
 
-export type IStereoscopicArcRotateCameraProps = IComponentProps<BabylonStereoscopicArcRotateCamera> & {
+export type IStereoscopicArcRotateCameraProps = IComponentProps & {
     name: string, 
     alpha: number, 
     beta: number, 
@@ -26,11 +29,6 @@ function StereoscopicArcRotateCameraHOC(EL: React.FC) {
         return <EL {...props}/>
     }
 }
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(StereoscopicArcRotateCameraHOC(e));
-}
-
 function _(props: IStereoscopicArcRotateCameraProps) {
     const { init, name, alpha, beta, radius, target, interaxialDistance, isStereoscopicSideBySide, scene} =  props;
     useLayoutEffect(() => {
@@ -40,4 +38,11 @@ function _(props: IStereoscopicArcRotateCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PStereoscopicArcRotateCamera = buildExtends<IStereoscopicArcRotateCameraProps & IStereoscopicArcRotateCameraParams>(_);
+export const P2PStereoscopicArcRotateCamera = getEL<IStereoscopicArcRotateCameraParams>(_, [
+    StereoscopicArcRotateCameraHOC,
+    ArcRotateCameraHOC,
+    TargetCameraHOC,
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

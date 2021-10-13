@@ -1,10 +1,10 @@
 import { ICreateCapsuleOptions, MeshBuilder, Scene as BabylonScene, Mesh as BabylonMesh } from "@babylonjs/core";
-import { buildExtends as _buildExtends } from './Mesh';
-import { useEffect, useLayoutEffect, useReducer } from "react"
+import { useLayoutEffect } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from "../Component";
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from "../Component";
+import { MeshHOC } from "./Mesh";
 
-export type ICapsuleProps = IComponentProps<BabylonMesh> & {
+export type ICapsuleProps = IComponentProps & {
     name: string, 
     options?: ICreateCapsuleOptions, 
     scene?: Nullable<BabylonScene>
@@ -14,14 +14,10 @@ export type ICapsuleParams = {
 
 }
 
-function CapsuleHOC(EL: React.FC) {
+export function CapsuleHOC(EL: React.FC) {
     return (props: ICapsuleParams) => {
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(CapsuleHOC(e));
 }
 
 function _(props: ICapsuleProps) {
@@ -33,4 +29,8 @@ function _(props: ICapsuleProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PCapsule = buildExtends<ICapsuleProps & ICapsuleParams>(_);
+export const P2PCapsule = getEL<ICapsuleParams>(_, [
+    CapsuleHOC,
+    MeshHOC,
+    ComponentHOC
+]);

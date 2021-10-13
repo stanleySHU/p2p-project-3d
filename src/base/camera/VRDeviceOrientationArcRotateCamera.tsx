@@ -1,9 +1,12 @@
 import { VRDeviceOrientationArcRotateCamera as BabylonVRDeviceOrientationArcRotateCamera, Scene as BabylinScene, Vector3, VRCameraMetrics } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './ArcRotateCamera';
+import { ArcRotateCameraHOC } from './ArcRotateCamera';
 import { useEffect, useLayoutEffect, useReducer } from "react"
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { TargetCameraHOC } from './TargetCamera';
+import { CameraHOC } from './Camera';
+import { NodeHOC } from '../node/Node';
 
-export type IVRDeviceOrientationArcRotateCameraProps = IComponentProps<BabylonVRDeviceOrientationArcRotateCamera> &{
+export type IVRDeviceOrientationArcRotateCameraProps = IComponentProps&{
     name: string, 
     alpha: number, 
     beta: number, 
@@ -27,10 +30,6 @@ function VRDeviceOrientationArcRotateCameraHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(VRDeviceOrientationArcRotateCameraHOC(e));
-}
-
 function _(props: IVRDeviceOrientationArcRotateCameraProps) {
     const { init, name, alpha, beta, radius, target, scene, compensateDistortion, vrCameraMetrics } =  props;
     useLayoutEffect(() => {
@@ -40,4 +39,11 @@ function _(props: IVRDeviceOrientationArcRotateCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PVRDeviceOrientationArcRotateCamera = buildExtends<IVRDeviceOrientationArcRotateCameraProps & IVRDeviceOrientationArcRotateCameraParams>(_);
+export const P2PVRDeviceOrientationArcRotateCamera = getEL<IVRDeviceOrientationArcRotateCameraParams>(_, [
+    VRDeviceOrientationArcRotateCameraHOC,
+    ArcRotateCameraHOC,
+    TargetCameraHOC,
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

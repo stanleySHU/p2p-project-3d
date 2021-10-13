@@ -1,4 +1,4 @@
-import { AbstractAssetTask, AssetsManager, ImageAssetTask, TextureAssetTask } from "@babylonjs/core";
+import { AssetsManager, TextureAssetTask } from "@babylonjs/core";
 import { IResourceInitial, Resource } from "./Resource";
 
 export type ITextureResourceInitial = IResourceInitial & {
@@ -7,9 +7,10 @@ export type ITextureResourceInitial = IResourceInitial & {
     samplingMode?: number
 };
 
-export class ImageResource extends Resource {
+export class TextureResource extends Resource {
     getTask(loader: AssetsManager, props: ITextureResourceInitial): TextureAssetTask {
-        return loader.addTextureTask(props.taskName, props.url);
+        const { taskName, url, noMipmap, invertY, samplingMode } = props;
+        return loader.addTextureTask(props.taskName, props.url, noMipmap, invertY, samplingMode);
     }
 
     onSuccess(task: TextureAssetTask) {

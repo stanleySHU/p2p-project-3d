@@ -14,12 +14,11 @@ export type ICubeTextureAssetTaskProps = ICubeTextureAssetTaskInitial<BabylonCub
 
 function CubeTextureAssetTaskHOC<T>(EL: React.FC<T>) {
     return (props: T & ICubeTextureAssetTaskProps) => {
-        const { name, instance, url, extensions, noMipmap, files, prefiltered } = props;
+        const { init, name, url, extensions, noMipmap, files, prefiltered } = props;
 
         useEffect(() => {
-            if (instance && !instance!.current) {
-                instance!.current = new BabylonCubeTextureAssetTask(name, url, extensions, noMipmap, files, prefiltered);
-            }
+            let obj = new BabylonCubeTextureAssetTask(name, url, extensions, noMipmap, files, prefiltered);
+            init!(obj);
         }, []);
         return <EL {...props}/>
     };

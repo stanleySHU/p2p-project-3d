@@ -1,10 +1,12 @@
 import { RawTexture as BabylonRawTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './Texture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { TextureHOC } from './Texture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IRawTextureProps = IComponentProps<BabylonRawTexture> & {
+export type IRawTextureProps = IComponentProps & {
     data: Nullable<ArrayBufferView>, 
     width: number, 
     height: number, 
@@ -30,10 +32,6 @@ function RawTextureHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(RawTextureHOC(e));
-}
-
 function _(props: IRawTextureProps) {
     const { init, data, width, height, format, sceneOrEngine, generateMipMaps, invertY, samplingMode, type, creationFlags } =  props;
     useLayoutEffect(() => {
@@ -43,4 +41,10 @@ function _(props: IRawTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PRawTexture = buildExtends<IRawTextureProps & IRawTextureParams>(_);
+export const P2PRawTexture = getEL<IRawTextureParams>(_, [
+    RawTextureHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

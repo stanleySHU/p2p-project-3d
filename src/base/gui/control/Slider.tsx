@@ -7,12 +7,12 @@ export type ISliderProps = IComponentProps<BabylonSlider> & {
     name?: string
 }
 
-export type ISliderParams = IBaseSliderParams & {
+export type ISliderParams<T> = IBaseSliderParams<T> & {
 
 }
 
 function SliderHOC(EL: React.FC) {
-    return (props: ISliderParams) => {
+    return (props: ISliderParams<BabylonSlider>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: ISliderProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PSlider = buildExtends<ISliderProps & ISliderParams>(_); 
+export const P2PSlider = buildExtends<ISliderProps & ISliderParams<BabylonSlider>>(_); 

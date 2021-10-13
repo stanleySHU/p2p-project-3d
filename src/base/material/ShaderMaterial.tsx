@@ -1,9 +1,9 @@
 import { ShaderMaterial as BabylonShaderMaterial, Scene as BabylonScene, IShaderMaterialOptions } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './Material'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MaterialHOC } from './Material';
 
-export type IShaderMaterialProps = IComponentProps<BabylonShaderMaterial> &{
+export type IShaderMaterialProps = IComponentProps&{
     name: string, 
     scene: BabylonScene, 
     shaderPath: any, 
@@ -14,17 +14,13 @@ export type IShaderMaterialParams = {
 
 }
 
-function ShaderMaterialHOC(EL: React.FC) {
+export function ShaderMaterialHOC(EL: React.FC) {
     return (props: IShaderMaterialParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ShaderMaterialHOC(e));
 }
 
 function _(props: IShaderMaterialProps) {
@@ -36,4 +32,8 @@ function _(props: IShaderMaterialProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PShaderMaterial = buildExtends<IShaderMaterialProps & IShaderMaterialParams>(_);
+export const P2PShaderMaterial = getEL<IShaderMaterialParams>(_, [
+    ShaderMaterialHOC,
+    MaterialHOC,
+    ComponentHOC
+])

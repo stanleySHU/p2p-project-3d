@@ -7,12 +7,12 @@ export type IStackPanelProps = IComponentProps<BabylonStackPanel> & {
     name?: string 
 }
 
-export type IStackPanelParams = IContainerParams & {
+export type IStackPanelParams<T> = IContainerParams<T> & {
 
 }
 
 function StackPanelHOC(EL: React.FC) {
-    return (props: IStackPanelParams) => {
+    return (props: IStackPanelParams<BabylonStackPanel>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IStackPanelProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PStackPanel = buildExtends<IStackPanelProps & IStackPanelParams>(_); 
+export const P2PStackPanel = buildExtends<IStackPanelProps & IStackPanelParams<BabylonStackPanel>>(_); 

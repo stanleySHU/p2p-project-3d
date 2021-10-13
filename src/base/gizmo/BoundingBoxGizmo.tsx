@@ -1,10 +1,9 @@
 import { BoundingBoxGizmo as BabylonBoundingBoxGizmo, Color3, UtilityLayerRenderer } from '@babylonjs/core';
-import React, { useEffect, useLayoutEffect, useReducer } from "react";
-import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from "../Component";
-import { buildExtends as _buildExtends  } from "./Gizmo";
+import React, { useLayoutEffect } from "react";
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from "../Component";
+import { GizmoHOC } from './Gizmo';
 
-export type IBoundingBoxGizmoProps = IComponentProps<BabylonBoundingBoxGizmo> & {
+export type IBoundingBoxGizmoProps = IComponentProps & {
     color?: Color3, 
     gizmoLayer?: UtilityLayerRenderer
 }
@@ -18,9 +17,6 @@ function BoundingBoxGizmoHOC(EL: React.FC) {
         return <EL {...props}/>
     }
 }
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(BoundingBoxGizmoHOC(e));
-}
 
 function _(props: IBoundingBoxGizmoProps) {
     const { init, color, gizmoLayer } =  props;
@@ -31,4 +27,8 @@ function _(props: IBoundingBoxGizmoProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PBoundingBoxGizmo = buildExtends<IBoundingBoxGizmoProps & IBoundingBoxGizmoParams>(_);
+export const P2PBoundingBoxGizmo = getEL<IBoundingBoxGizmoParams>(_, [
+    BoundingBoxGizmoHOC,
+    GizmoHOC,
+    ComponentHOC
+])

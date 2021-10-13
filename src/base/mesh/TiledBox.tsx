@@ -1,10 +1,10 @@
 import { Color4, MeshBuilder, Scene as BabylonScene, Vector4, Mesh as BabylonMesh } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MeshHOC } from './Mesh';
 
-export type ITiledBoxProps = IComponentProps<BabylonMesh> & {
+export type ITiledBoxProps = IComponentProps & {
     name: string,
     options: {
         pattern?: number;
@@ -35,10 +35,6 @@ function TiledBoxHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(TiledBoxHOC(e));
-}
-
 function _(props: ITiledBoxProps) {
     const { init, name, options, scene } =  props;
     useLayoutEffect(() => {
@@ -48,4 +44,8 @@ function _(props: ITiledBoxProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PTiledBox = buildExtends<ITiledBoxProps & ITiledBoxParams>(_);
+export const P2PTiledBox = getEL<ITiledBoxParams>(_, [
+    TiledBoxHOC,
+    MeshHOC,
+    ComponentHOC
+])

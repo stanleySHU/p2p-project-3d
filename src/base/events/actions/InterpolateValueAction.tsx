@@ -1,9 +1,9 @@
 import { Action, InterpolateValueAction as BabylonInterpolateValueAction, Condition } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Action'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ActionHOC } from './Action';
 
-export type IInterpolateValueActionProps = IComponentProps<BabylonInterpolateValueAction> & {
+export type IInterpolateValueActionProps = IComponentProps & {
     triggerOptions: any, 
     target: any, 
     propertyPath: string, 
@@ -27,10 +27,6 @@ function InterpolateValueActionHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(InterpolateValueActionHOC(e));
-}
-
 function _(props: IInterpolateValueActionProps) {
     const { init, triggerOptions, target, propertyPath, value, duration, condition, stopOtherAnimations, onInterpolationDone } =  props;
     useLayoutEffect(() => {
@@ -40,4 +36,8 @@ function _(props: IInterpolateValueActionProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PInterpolateValueAction = buildExtends<IInterpolateValueActionProps & IInterpolateValueActionParams>(_);
+export const P2PInterpolateValueAction = getEL<IInterpolateValueActionParams>(_, [
+    InterpolateValueActionHOC,
+    ActionHOC,
+    ComponentHOC
+]);

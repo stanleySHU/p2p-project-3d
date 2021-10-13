@@ -7,12 +7,12 @@ export type IImageScrollBarProps = IComponentProps<BabylonImageScrollBar> & {
     name?: string 
 }
 
-export type IImageScrollBarParams = IBaseSliderParams & {
+export type IImageScrollBarParams<T> = IBaseSliderParams<T> & {
 
 }
 
 function ImageScrollBarHOC(EL: React.FC) {
-    return (props: IImageScrollBarParams) => {
+    return (props: IImageScrollBarParams<BabylonImageScrollBar>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IImageScrollBarProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PImageScrollBar = buildExtends<IImageScrollBarProps & IImageScrollBarParams>(_); 
+export const P2PImageScrollBar = buildExtends<IImageScrollBarProps & IImageScrollBarParams<BabylonImageScrollBar>>(_); 

@@ -1,9 +1,12 @@
 import { VirtualJoysticksCamera as BabylonVirtualJoysticksCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './FreeCamera';
+import { FreeCameraHOC } from './FreeCamera';
 import { useEffect, useLayoutEffect, useReducer } from "react"
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { TargetCameraHOC } from './TargetCamera';
+import { CameraHOC } from './Camera';
+import { NodeHOC } from '../node/Node';
 
-export type IVirtualJoysticksCameraProps = IComponentProps<BabylonVirtualJoysticksCamera> &{
+export type IVirtualJoysticksCameraProps = IComponentProps&{
     name: string, 
     position: Vector3, 
     scene: BabylinScene
@@ -22,10 +25,6 @@ function VirtualJoysticksCameraHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(VirtualJoysticksCameraHOC(e));
-}
-
 function _(props: IVirtualJoysticksCameraProps) {
     const { init, name, position, scene } =  props;
     useLayoutEffect(() => {
@@ -35,4 +34,11 @@ function _(props: IVirtualJoysticksCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PVirtualJoysticksCamera = buildExtends<IVirtualJoysticksCameraProps & IVirtualJoysticksCameraParams>(_);
+export const P2PVirtualJoysticksCamera = getEL<IVirtualJoysticksCameraParams>(_, [
+    VirtualJoysticksCameraHOC,
+    FreeCameraHOC,
+    TargetCameraHOC,
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

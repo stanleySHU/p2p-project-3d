@@ -1,10 +1,10 @@
 import { MeshBuilder, Scene as BabylonScene, Vector4, Mesh as BabylonMesh } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MeshHOC } from './Mesh';
 
-export type ITiledPlaneProps = IComponentProps<BabylonMesh> &  {
+export type ITiledPlaneProps = IComponentProps &  {
     name: string, 
     options: {
         pattern?: number;
@@ -34,10 +34,6 @@ function TiledPlaneHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(TiledPlaneHOC(e));
-}
-
 function _(props: ITiledPlaneProps) {
     const { init, name, options, scene } =  props;
     useLayoutEffect(() => {
@@ -47,4 +43,8 @@ function _(props: ITiledPlaneProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PTiledPlane = buildExtends<ITiledPlaneProps & ITiledPlaneParams>(_);
+export const P2PTiledPlane = getEL<ITiledPlaneParams>(_, [
+    TiledPlaneHOC,
+    MeshHOC,
+    ComponentHOC
+]);

@@ -1,5 +1,5 @@
 import { HDRCubeTextureAssetTask as BabylonHDRCubeTextureAssetTask } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IAbstractAssetTaskProps, buildExtends as _buildExtends } from './AbstractAssetTask';
 
 export type IHDRCubeTextureAssetTaskInitial<T> = IAbstractAssetTaskProps<T> & {
@@ -15,12 +15,11 @@ export type IHDRCubeTextureAssetTaskProps = IHDRCubeTextureAssetTaskInitial<Baby
 
 function HDRCubeTextureAssetTaskHOC<T>(EL: React.FC<T>) {
     return (props: T & IHDRCubeTextureAssetTaskProps) => {
-        const { name, instance, url, size, noMipmap, generateHarmonics, gammaSpace, reserved } = props;
+        const { init, name, url, size, noMipmap, generateHarmonics, gammaSpace, reserved } = props;
 
-        useEffect(() => {
-            if (instance && !instance!.current) {
-                instance!.current = new BabylonHDRCubeTextureAssetTask(name, url, size, noMipmap, generateHarmonics, gammaSpace, reserved);
-            }
+        useLayoutEffect(() => {
+            let obj = new BabylonHDRCubeTextureAssetTask(name, url, size, noMipmap, generateHarmonics, gammaSpace, reserved);
+            init!(obj);
         }, []);
         return <EL {...props}/>
     };

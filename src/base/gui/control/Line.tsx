@@ -7,12 +7,12 @@ export type ILineProps = IComponentProps<BabylonLine> & {
     name?: string 
 }
 
-export type ILineParams = IControlParams & {
+export type ILineParams<T> = IControlParams<T> & {
 
 }
 
 function LineHOC(EL: React.FC) {
-    return (props: ILineParams) => {
+    return (props: ILineParams<BabylonLine>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: ILineProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PLine = buildExtends<ILineProps & ILineParams>(_); 
+export const P2PLine = buildExtends<ILineProps & ILineParams<BabylonLine>>(_); 

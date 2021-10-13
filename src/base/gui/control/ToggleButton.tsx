@@ -7,12 +7,12 @@ export type IToggleButtonProps = IComponentProps<BabylonToggleButton> &  {
     name?: string 
 }
 
-export type IToggleButtonParams = IRectangleParams & {
+export type IToggleButtonParams<T> = IRectangleParams<T> & {
 
 }
 
 function ToggleButtonHOC(EL: React.FC) {
-    return (props: IToggleButtonParams) => {
+    return (props: IToggleButtonParams<BabylonToggleButton>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IToggleButtonProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PToggleButton = buildExtends<IToggleButtonProps & IToggleButtonParams>(_); 
+export const P2PToggleButton = buildExtends<IToggleButtonProps & IToggleButtonParams<BabylonToggleButton>>(_); 

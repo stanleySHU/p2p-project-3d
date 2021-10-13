@@ -1,10 +1,10 @@
 import { Color3, PlaneRotationGizmo as BabylonPlaneRotationGizmo, RotationGizmo, UtilityLayerRenderer, Vector3 } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect, useReducer } from "react";
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from "../Component";
-import { buildExtends as _buildExtends  } from "./Gizmo";
+import { IComponentProps, P2PChildren, getEL, ComponentHOC } from "../Component";
+import { GizmoHOC } from './Gizmo';
 
-export type IPlaneRotationGizmoProps = IComponentProps<BabylonPlaneRotationGizmo> & {
+export type IPlaneRotationGizmoProps = IComponentProps & {
     planeNormal: Vector3, 
     color?: Color3, 
     gizmoLayer?: UtilityLayerRenderer, 
@@ -23,9 +23,6 @@ function PlaneRotationGizmoHOC(EL: React.FC) {
         return <EL {...props}/>
     }
 }
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(PlaneRotationGizmoHOC(e));
-}
 
 function _(props: IPlaneRotationGizmoProps) {
     const { init, planeNormal, color, gizmoLayer, tessellation, parent, useEulerRotation, thickness } =  props;
@@ -36,4 +33,8 @@ function _(props: IPlaneRotationGizmoProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PPlaneRotationGizmo = buildExtends<IPlaneRotationGizmoProps & IPlaneRotationGizmoParams>(_);
+export const P2PPlaneRotationGizmo = getEL<IPlaneRotationGizmoParams>(_, [
+    PlaneRotationGizmoHOC,
+    GizmoHOC,
+    ComponentHOC
+]);

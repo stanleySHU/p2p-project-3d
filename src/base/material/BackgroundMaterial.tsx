@@ -1,9 +1,10 @@
 import { BackgroundMaterial as BabylonBackgroundMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './PushMaterial'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MaterialHOC } from './Material';
+import { PushMaterialHOC } from './PushMaterial'
 
-export type IBackgroundMaterialProps = IComponentProps<BabylonBackgroundMaterial> & {
+export type IBackgroundMaterialProps = IComponentProps & {
     name: string, 
     scene: BabylonScene
 }
@@ -21,10 +22,6 @@ function BackgroundMaterialHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(BackgroundMaterialHOC(e));
-}
-
 function _(props: IBackgroundMaterialProps) {
     const { init, name, scene } =  props;
     useLayoutEffect(() => {
@@ -34,4 +31,9 @@ function _(props: IBackgroundMaterialProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PBackgroundMaterial = buildExtends<IBackgroundMaterialProps & IBackgroundMaterialParams>(_);
+export const P2PBackgroundMaterial = getEL<IBackgroundMaterialParams>(_, [
+    BackgroundMaterialHOC,
+    PushMaterialHOC,
+    MaterialHOC,
+    ComponentHOC
+]);

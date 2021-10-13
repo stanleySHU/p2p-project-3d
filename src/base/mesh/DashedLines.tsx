@@ -1,10 +1,10 @@
 import { LinesMesh, MeshBuilder, Scene as BabylonScene, Vector3, Mesh as BabylonMesh } from "@babylonjs/core";
-import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from "../Component";
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from "../Component";
+import { MeshHOC } from "./Mesh";
 
-export type IDashedLinesProps = IComponentProps<BabylonMesh> & {
+export type IDashedLinesProps = IComponentProps & {
     name: string, 
     options: {
         points: Vector3[];
@@ -20,14 +20,10 @@ export type IDashedLinesParams = {
 
 }
 
-function DashedLinesHOC(EL: React.FC) {
+export function DashedLinesHOC(EL: React.FC) {
     return (props: IDashedLinesParams) => {
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(DashedLinesHOC(e));
 }
 
 function _(props: IDashedLinesProps) {
@@ -39,4 +35,8 @@ function _(props: IDashedLinesProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PDashedLines = buildExtends<IDashedLinesProps & IDashedLinesParams>(_);
+export const P2PDashedLines = getEL<IDashedLinesParams>(_, [
+    DashedLinesHOC,
+    MeshHOC,
+    ComponentHOC
+]);

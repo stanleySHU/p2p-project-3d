@@ -2,42 +2,67 @@ import { Scene as BabylonScene } from '@babylonjs/core';
 import { AdvancedDynamicTexture as BabylonAdvancedDynamicTexture} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { Nullable } from '../../utils/customType';
-import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../Component'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component'
+import { BaseTextureHOC } from '../texture/BaseTexture';
+import { DynamicTextureHOC } from '../texture/DynamicTexture';
+import { TextureHOC } from '../texture/Texture';
+import { ThinTextureHOC } from '../texture/ThinTexture';
 
-export type IAdvancedDynamicTextureProps = IComponentProps<BabylonAdvancedDynamicTexture> & {
+export type IAdvancedDynamicTextureProps = IComponentProps & {
     name: string, 
-    width?: number, 
-    height?: number, 
-    scene: Nullable<BabylonScene>, 
-    generateMipMaps?: boolean, 
-    samplingMode?: number, 
-    BabylonSceneinvertY?: boolean
+    foreground?: boolean, 
+    scene?: Nullable<BabylonScene>, 
+    sampling?: number
 }
 
-export type IAdvancedDynamicTextureParams = IComponentProps<any> & {
-
+export type IAdvancedDynamicTextureParams = {
+    background?: string,
+    idealWidth?: number,
+    idealHeight?: number,
 }
 
-function AdvancedDynamicTextureHOC(EL: React.FC) {
+export type IAdvancedDynamicTextureContextOptions = {
+    ADTexture: BabylonAdvancedDynamicTexture
+}
+
+export const AdvancedDynamicTextureContext = React.createContext<IAdvancedDynamicTextureContextOptions>({} as any);
+
+function AdvancedDynamicTextureHOC(EL: React.FC<IAdvancedDynamicTextureParams>) {
     return (props: IAdvancedDynamicTextureParams) => {
-        const { instance } = props;
+        const instance: BabylonAdvancedDynamicTexture = (props as any).instance;
+        useEffect(() => {   
+            if (instance) instance.background = props.background || '#000000';
+        }, [props.background, instance]);
         useEffect(() => {
-        }, [props.children, instance]);
+            if (instance) instance.idealWidth = props.idealWidth || 960;
+        }, [props.idealWidth, instance]);
+        useEffect(() => {
+            if (instance) instance.idealHeight = props.idealHeight || 540;
+        }, [props.idealHeight, instance])
         return <EL {...props}/>
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(AdvancedDynamicTextureHOC(e));
-}
-
 function _(props: IAdvancedDynamicTextureProps) {
-    const { init, name, width, height, scene, generateMipMaps, samplingMode, BabylonSceneinvertY } = props;
+    const { instance, init, name, foreground, scene, sampling } = props;
     useLayoutEffect(() => {
-        let obj = new BabylonAdvancedDynamicTexture(name, width, height, scene, generateMipMaps, samplingMode, BabylonSceneinvertY );
+        let obj = BabylonAdvancedDynamicTexture.CreateFullscreenUI(name, foreground, scene, sampling )
         init!(obj);
+        return () => {
+            obj.dispose();
+        }
     }, []);
-    return <P2PChildren {...props}/>;
+    return <AdvancedDynamicTextureContext.Provider value={{ADTexture: instance!}}>
+        <P2PChildren {...props}/>
+    </AdvancedDynamicTextureContext.Provider>;
 }
 
-export const P2PAdvancedDynamicTexture = buildExtends<IAdvancedDynamicTextureProps & IAdvancedDynamicTextureParams>(_); 
+export const P2PAdvancedDynamicTexture = getEL(_, [
+    AdvancedDynamicTextureHOC,
+    DynamicTextureHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);
+

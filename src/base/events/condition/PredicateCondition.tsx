@@ -1,9 +1,9 @@
 import { ActionManager, PredicateCondition as BabylonPredicateCondition } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Condition'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ConditionHOC } from './Condition';
 
-export type IPredicateConditionProps = IComponentProps<BabylonPredicateCondition> & {
+export type IPredicateConditionProps = IComponentProps & {
     actionManager: ActionManager, 
     predicate: () => boolean
 }
@@ -21,10 +21,6 @@ function PredicateConditionHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(PredicateConditionHOC(e));
-}
-
 function _(props: IPredicateConditionProps) {
     const { init, actionManager, predicate } =  props;
     useLayoutEffect(() => {
@@ -34,4 +30,8 @@ function _(props: IPredicateConditionProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PPredicateCondition = buildExtends<IPredicateConditionProps & IPredicateConditionParams>(_);
+export const P2PPredicateCondition = getEL<IPredicateConditionParams>(_, [
+    PredicateConditionHOC,
+    ConditionHOC,
+    ComponentHOC
+]);

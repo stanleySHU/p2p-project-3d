@@ -1,23 +1,21 @@
-import { Vector3 } from '@babylonjs/core';
-import { P2PDirectionalLight, P2PFreeCamera, P2PGround, P2PNode, P2PStandardMaterial, P2PTexture } from '../base';
-import { ISceneProps, P2PScene, SceneContext } from '../base/scene/Scene'
+import { P2PAdvancedDynamicTexture, P2PImage, P2PTextBlock } from '../base';
+import { IPreloadSceneProps, IPreviewProps, P2PPreloadPage } from '../base/scene/PreloadScene';
 
+const PreView = (props: IPreviewProps) => {
+    return <P2PAdvancedDynamicTexture scene={null} background="black" {...props} name="preView">
+        <P2PImage url="/assets/img/main_bg.jpg" />
+        <P2PTextBlock text={`${props.process! * 100}%`} color="white" />
+    </P2PAdvancedDynamicTexture>
+}
 
-export const StartUpPage = (props: ISceneProps) => {
-    return <P2PScene {...props}>
-        <SceneContext.Consumer >
-            {
-                ({ sceneInstance }) => sceneInstance && 
-                <P2PNode name="view" scene={sceneInstance}>
-                    <P2PFreeCamera name="camera" scene={sceneInstance} position={new Vector3(0, 5, -10)} />
-                    <P2PDirectionalLight name="light" scene={sceneInstance} direction={Vector3.Zero()} />
-                    <P2PGround name="bg" scene={sceneInstance} options={ {width: 9.6, height: 5.4} } >
-                        <P2PStandardMaterial name="material" scene={sceneInstance}>
-                            <P2PTexture url="" sceneOrEngine={sceneInstance}/>
-                        </P2PStandardMaterial>
-                    </P2PGround>
-                </P2PNode>
-            }
-        </SceneContext.Consumer>
-    </P2PScene>
+export const StartUpPage = (props: IPreloadSceneProps) => {
+    let preView = <PreView></PreView>;
+
+    return <P2PPreloadPage {...props} Preview={preView}>
+        <taskTexture taskName="@atlas/bg" url="/assets/img/bg@1x.png"/>
+        <taskTextFile taskName="@json/bg" url="/assets/img/bg@1x.json"/>
+
+        <taskTexture taskName="@atlas/components-bg" url="/assets/img/component@1x.png" />
+        <taskTextFile taskName="@atlas/components-bg" url="/assets/img/component@1x.json" />
+    </P2PPreloadPage>
 }

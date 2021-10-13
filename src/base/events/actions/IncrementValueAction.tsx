@@ -1,9 +1,9 @@
 import { Action, IncrementValueAction as BabylonIncrementValueAction, Condition } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Action'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ActionHOC } from './Action';
 
-export type IIncrementValueActionProps = IComponentProps<BabylonIncrementValueAction> & {
+export type IIncrementValueActionProps = IComponentProps & {
     triggerOptions: any, 
     target: any, 
     propertyPath: string, 
@@ -24,10 +24,6 @@ function IncrementValueActionHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(IncrementValueActionHOC(e));
-}
-
 function _(props: IIncrementValueActionProps) {
     const { init, triggerOptions, target, propertyPath, value, condition } =  props;
     useLayoutEffect(() => {
@@ -37,4 +33,8 @@ function _(props: IIncrementValueActionProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PIncrementValueAction = buildExtends<IIncrementValueActionProps & IIncrementValueActionParams>(_);
+export const P2PIncrementValueAction = getEL<IIncrementValueActionParams>(_, [
+    IncrementValueActionHOC,
+    ActionHOC,
+    ComponentHOC
+])

@@ -1,5 +1,5 @@
 import { TextFileAssetTask as BabylonTextFileAssetTask } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IAbstractAssetTaskProps, buildExtends as _buildExtends } from './AbstractAssetTask';
 
 export type ITextFileAssetTaskInitial<T> = IAbstractAssetTaskProps<T> & {
@@ -10,12 +10,11 @@ export type ITextFileAssetTaskProps = ITextFileAssetTaskInitial<BabylonTextFileA
 
 function TextFileAssetTaskHOC<T>(EL: React.FC<T>) {
     return (props: T & ITextFileAssetTaskProps) => {
-        const { name, instance, url } = props;
+        const { init, name, url } = props;
 
-        useEffect(() => {
-            if (instance && !instance!.current) {
-                instance!.current = new BabylonTextFileAssetTask(name, url);
-            }
+        useLayoutEffect(() => {
+            let obj = new BabylonTextFileAssetTask(name, url);
+            init!(obj);
         }, []);
         return <EL {...props}/>
     };

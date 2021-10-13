@@ -1,10 +1,11 @@
 import { HDRCubeTexture as BabylonHDRCubeTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './BaseTexture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IHDRCubeTextureProps = IComponentProps<BabylonHDRCubeTexture> & {
+export type IHDRCubeTextureProps = IComponentProps & {
     url: string, 
     sceneOrEngine: BabylonScene | ThinEngine, 
     size: number, 
@@ -26,10 +27,6 @@ function HDRCubeTextureHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(HDRCubeTextureHOC(e));
-}
-
 function _(props: IHDRCubeTextureProps) {
     const { init, url, sceneOrEngine, size, noMipmap, generateHarmonics, gammaSpace, prefilterOnLoad, onLoad, onError } =  props;
     useLayoutEffect(() => {
@@ -39,4 +36,9 @@ function _(props: IHDRCubeTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PHDRCubeTexture = buildExtends<IHDRCubeTextureProps & IHDRCubeTextureParams>(_);
+export const P2PHDRCubeTexture = getEL<IHDRCubeTextureParams>(_, [
+    HDRCubeTextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

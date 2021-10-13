@@ -1,22 +1,23 @@
-import React, { ReactNode, Ref, useEffect, useReducer, useRef, useState } from "react";
-import { Nullable } from "../utils/customType";
+import React, { ReactNode, useState } from "react";
 
-export type IComponentProps<T> = {
+export type IComponentProps = {
     name?: string,
     key?: string,
     children?: ReactNode
 } & {
-    parentInstance?: any
+    instance?,
+    parentInstance?,
+    init?: React.Dispatch<any>
 };
 
-function ComponentHOC<T>(EL: React.FC<T>) {
-    return (props: T & IComponentProps<any>) => {
-        const ref = useRef();
-        return <EL {...props} ref={ref}/>
+export function ComponentHOC(EL: React.FC<IComponentProps>) {
+    return (props: IComponentProps) => {
+        const [ instance, setInstance ] = useState<any>();
+        return <EL {...props} instance={instance} init={setInstance}/>
     }
 }
 
-export function P2PChildren(props: IComponentProps<any>) {
+export function P2PChildren(props: IComponentProps, a?) {
     const { instance } = props;
     let children = React.Children.map(props.children, child => (React.cloneElement(child as any, { 
         parentInstance: instance
@@ -24,6 +25,9 @@ export function P2PChildren(props: IComponentProps<any>) {
     return <>{instance && children}</>
 }
 
-export function buildExtends<T>(e: any) {
-    return ComponentHOC<T>(e);
+export function getEL<T>(el: React.FC<T>, hocs: any[]) {
+    for (let hoc of hocs) {
+        el = hoc(el);
+    }    
+    return el;
 }

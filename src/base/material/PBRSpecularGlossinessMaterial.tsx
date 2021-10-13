@@ -1,9 +1,12 @@
 import { PBRSpecularGlossinessMaterial as BabylonPBRSpecularGlossinessMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './PBRBaseSimpleMaterial'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MaterialHOC } from './Material';
+import { PBRBaseMaterialHOC } from './PBRBaseMaterial';
+import { PBRBaseSimpleMaterialHOC } from './PBRBaseSimpleMaterial';
+import { PushMaterialHOC } from './PushMaterial';
 
-export type IPBRSpecularGlossinessMaterialProps = IComponentProps<BabylonPBRSpecularGlossinessMaterial> &{
+export type IPBRSpecularGlossinessMaterialProps = IComponentProps & {
     name: string, 
     scene: BabylonScene
 }
@@ -21,10 +24,6 @@ function PBRSpecularGlossinessMaterialHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(PBRSpecularGlossinessMaterialHOC(e));
-}
-
 function _(props: IPBRSpecularGlossinessMaterialProps) {
     const { init, name, scene } =  props;
     useLayoutEffect(() => {
@@ -34,4 +33,11 @@ function _(props: IPBRSpecularGlossinessMaterialProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PPBRSpecularGlossinessMaterial = buildExtends<IPBRSpecularGlossinessMaterialProps & IPBRSpecularGlossinessMaterialParams>(_);
+export const P2PPBRSpecularGlossinessMaterial = getEL<IPBRSpecularGlossinessMaterialParams>(_, [
+    PBRSpecularGlossinessMaterialHOC,
+    PBRBaseSimpleMaterialHOC,
+    PBRBaseMaterialHOC,
+    PushMaterialHOC,
+    MaterialHOC,
+    ComponentHOC
+]);

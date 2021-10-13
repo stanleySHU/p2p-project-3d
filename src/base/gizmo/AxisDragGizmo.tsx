@@ -1,10 +1,10 @@
 import { AxisDragGizmo as BabylonAxisDragGizmo, Color3, PositionGizmo, UtilityLayerRenderer, Vector3 } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect, useReducer } from "react";
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from "../Component";
-import { buildExtends as _buildExtends  } from "./Gizmo";
+import { IComponentProps, P2PChildren, getEL, ComponentHOC } from "../Component";
+import { GizmoHOC } from './Gizmo';
 
-export type IAxisDragGizmoProps = IComponentProps<BabylonAxisDragGizmo> & {
+export type IAxisDragGizmoProps = IComponentProps & {
     dragAxis: Vector3, 
     color?: Color3, 
     gizmoLayer?: UtilityLayerRenderer, 
@@ -21,9 +21,6 @@ function AxisDragGizmoHOC(EL: React.FC) {
         return <EL {...props}/>
     }
 }
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(AxisDragGizmoHOC(e));
-}
 
 function _(props: IAxisDragGizmoProps) {
     const { init, dragAxis, color, gizmoLayer, parent, thickness } =  props;
@@ -34,4 +31,8 @@ function _(props: IAxisDragGizmoProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PAxisDragGizmo = buildExtends<IAxisDragGizmoProps & IAxisDragGizmoParams>(_);
+export const P2PAxisDragGizmo = getEL<IAxisDragGizmoParams>(_, [
+    AxisDragGizmoHOC,
+    GizmoHOC,
+    ComponentHOC
+]);

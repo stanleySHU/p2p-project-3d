@@ -1,5 +1,5 @@
 import { ImageAssetTask as BabylonImageAssetTask } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IAbstractAssetTaskProps, buildExtends as _buildExtends } from './AbstractAssetTask';
 
 export type IImageAssetTaskInitial<T> = IAbstractAssetTaskProps<T> & {
@@ -10,12 +10,11 @@ export type IImageAssetTaskProps = IImageAssetTaskInitial<BabylonImageAssetTask>
 
 function ImageAssetTaskHOC<T>(EL: React.FC<T>) {
     return (props: T & IImageAssetTaskProps) => {
-        const { name, instance, url } = props;
+        const { init, name, url } = props;
 
-        useEffect(() => {
-            if (instance && !instance!.current) {
-                instance!.current = new BabylonImageAssetTask(name, url);
-            }
+        useLayoutEffect(() => {
+            let obj = new BabylonImageAssetTask(name, url);
+            init!(obj);
         }, []);
         return <EL {...props}/>
     };

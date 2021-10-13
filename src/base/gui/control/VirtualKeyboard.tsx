@@ -7,12 +7,12 @@ export type IVirtualKeyboardProps = IComponentProps<BabylonVirtualKeyboard>  & {
     name?: string 
 }
 
-export type IVirtualKeyboardParams = IStackPanelParams & {
+export type IVirtualKeyboardParams<T> = IStackPanelParams<T> & {
 
 }
 
 function VirtualKeyboardHOC(EL: React.FC) {
-    return (props: IVirtualKeyboardParams) => {
+    return (props: IVirtualKeyboardParams<BabylonVirtualKeyboard>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IVirtualKeyboardProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PVirtualKeyboard = buildExtends<IVirtualKeyboardProps & IVirtualKeyboardParams>(_); 
+export const P2PVirtualKeyboard = buildExtends<IVirtualKeyboardProps & IVirtualKeyboardParams<BabylonVirtualKeyboard>>(_); 

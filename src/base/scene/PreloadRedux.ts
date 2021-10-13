@@ -2,12 +2,12 @@ type ActionType = "processUpdate" |  "load" | "loadSucces" | "loadFail" | "loadF
 
 export type InitialState = {
     readonly process: number,
-    readonly loading: false
+    readonly loading: boolean
 };
 
 export type Action = {
     type: ActionType,
-    payload?: {
+    payload: {
         loading?: boolean,
         process?: number,
         detail?: string
@@ -19,9 +19,17 @@ export const initialState: InitialState = {
     loading: false
 }
 
-export function reducer(state: InitialState, action: Action) {
+export function reducer(state: InitialState, action: Action): InitialState {
     switch(action.type) {
-        
+        case 'processUpdate': {
+            return {...state, process: action.payload.process!}
+        }
+        case 'loadFinish': {
+            return {...state, loading: action.payload.loading!}
+        }
+        default: {
+
+        }
     }
     return state;
 }

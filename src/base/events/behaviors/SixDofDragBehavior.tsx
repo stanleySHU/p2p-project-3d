@@ -1,8 +1,8 @@
 import { SixDofDragBehavior as BabylonSixDofDragBehavior, TransformNode } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component'
 
-export type ISixDofDragBehaviorProps = IComponentProps<BabylonSixDofDragBehavior> & {}
+export type ISixDofDragBehaviorProps = IComponentProps & {}
 
 export type ISixDofDragBehaviorParams = {
 
@@ -17,10 +17,6 @@ function SixDofDragBehaviorHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(SixDofDragBehaviorHOC(e));
-}
-
 function _(props: ISixDofDragBehaviorProps) {
     const { init } =  props;
     useLayoutEffect(() => {
@@ -30,4 +26,7 @@ function _(props: ISixDofDragBehaviorProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PSixDofDragBehavior = buildExtends<ISixDofDragBehaviorProps & ISixDofDragBehaviorParams>(_);
+export const P2PSixDofDragBehavior = getEL<ISixDofDragBehaviorParams>(_, [
+    SixDofDragBehaviorHOC,
+    ComponentHOC
+]);

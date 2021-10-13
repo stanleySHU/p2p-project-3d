@@ -1,10 +1,13 @@
 import { CustomProceduralTexture as BabylonCustomProceduralTexture, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './ProceduralTexture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { ProceduralTextureHOC } from './ProceduralTexture';
+import { TextureHOC } from './Texture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type ICustomProceduralTextureProps = IComponentProps<BabylonCustomProceduralTexture> & {
+export type ICustomProceduralTextureProps = IComponentProps & {
     name: string, 
     texturePath: string, 
     size: number, 
@@ -24,10 +27,6 @@ function CustomProceduralTextureHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(CustomProceduralTextureHOC(e));
-}
-
 function _(props: ICustomProceduralTextureProps) {
     const { init, name, texturePath, size, scene, fallbackTexture, generateMipMaps} =  props;
     useLayoutEffect(() => {
@@ -37,4 +36,11 @@ function _(props: ICustomProceduralTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PCustomProceduralTexture = buildExtends<ICustomProceduralTextureProps & ICustomProceduralTextureParams>(_);
+export const P2PCustomProceduralTexture = getEL<ICustomProceduralTextureParams>(_, [
+    CustomProceduralTextureHOC,
+    ProceduralTextureHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

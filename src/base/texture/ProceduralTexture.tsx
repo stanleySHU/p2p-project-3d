@@ -1,10 +1,12 @@
 import { ProceduralTexture as BabylonProceduralTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './Texture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { TextureHOC } from './Texture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IProceduralTextureProps = IComponentProps<BabylonProceduralTexture> & {
+export type IProceduralTextureProps = IComponentProps & {
     name: string, 
     size: RenderTargetTextureSize, 
     fragment: any, 
@@ -19,17 +21,13 @@ export type IProceduralTextureParams = {
 
 }
 
-function ProceduralTextureHOC(EL: React.FC) {
+export function ProceduralTextureHOC(EL: React.FC) {
     return (props: IProceduralTextureParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ProceduralTextureHOC(e));
 }
 
 function _(props: IProceduralTextureProps) {
@@ -41,4 +39,10 @@ function _(props: IProceduralTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PProceduralTexture = buildExtends<IProceduralTextureProps & IProceduralTextureParams>(_);
+export const P2PProceduralTexture = getEL<IProceduralTextureParams>(_, [
+    ProceduralTextureHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

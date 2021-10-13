@@ -1,10 +1,11 @@
 import { CubeTexture as BabylonCubeTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './BaseTexture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type ICubeTextureProps = IComponentProps<BabylonCubeTexture> & {
+export type ICubeTextureProps = IComponentProps & {
     rootUrl: string, 
     sceneOrEngine: BabylonScene | ThinEngine, 
     extensions?: Nullable<string[]>, 
@@ -24,14 +25,10 @@ export type ICubeTextureProps = IComponentProps<BabylonCubeTexture> & {
 
 export type ICubeTextureParams = {}
 
-function CubeTextureHOC(EL: React.FC) {
+export function CubeTextureHOC(EL: React.FC) {
     return (props: ICubeTextureParams) => {
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(CubeTextureHOC(e));
 }
 
 function _(props: ICubeTextureProps) {
@@ -43,4 +40,9 @@ function _(props: ICubeTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PCubeTexture = buildExtends<ICubeTextureProps & ICubeTextureParams>(_);
+export const P2PCubeTexture = getEL<ICubeTextureParams>(_, [
+    CubeTextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

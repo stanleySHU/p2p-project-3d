@@ -8,12 +8,12 @@ export type IInputTextProps = IComponentProps<BabylonInputText> & {
     text?: string
 }
 
-export type IInputTextParams = IControlParams & {
+export type IInputTextParams<T> = IControlParams<T> & {
 
 }
 
 function InputTextHOC(EL: React.FC) {
-    return (props: IInputTextParams) => {
+    return (props: IInputTextParams<BabylonInputText>) => {
         useEffect(() => {
 
         });
@@ -34,4 +34,4 @@ function _(props: IInputTextProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PInputText = buildExtends<IInputTextProps & IInputTextParams>(_); 
+export const P2PInputText = buildExtends<IInputTextProps & IInputTextParams<BabylonInputText>>(_); 

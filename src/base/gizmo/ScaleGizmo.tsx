@@ -1,10 +1,10 @@
 import { GizmoManager, ScaleGizmo as BabylonScaleGizmo, UtilityLayerRenderer } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect, useReducer } from "react";
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from "../Component";
-import { buildExtends as _buildExtends  } from "./Gizmo";
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from "../Component";
+import { GizmoHOC } from './Gizmo';
 
-export type IScaleGizmoProps = IComponentProps<BabylonScaleGizmo> & {
+export type IScaleGizmoProps = IComponentProps & {
     gizmoLayer?: UtilityLayerRenderer, 
     thickness?: number, 
     gizmoManager?: GizmoManager
@@ -19,9 +19,6 @@ function ScaleGizmoHOC(EL: React.FC) {
         return <EL {...props}/>
     }
 }
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ScaleGizmoHOC(e));
-}
 
 function _(props: IScaleGizmoProps) {
     const { init, gizmoLayer, thickness, gizmoManager } =  props;
@@ -32,4 +29,8 @@ function _(props: IScaleGizmoProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PScaleGizmo = buildExtends<IScaleGizmoProps & IScaleGizmoParams>(_);
+export const P2PScaleGizmo = getEL<IScaleGizmoParams>(_, [
+    ScaleGizmoHOC,
+    GizmoHOC,
+    ComponentHOC
+]);

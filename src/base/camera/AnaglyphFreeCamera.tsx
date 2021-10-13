@@ -1,9 +1,12 @@
 import { AnaglyphFreeCamera as BabylonAnaglyphFreeCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './FreeCamera';
 import { useEffect, useLayoutEffect, useReducer } from "react"
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { NodeHOC } from '../node/Node';
+import { CameraHOC } from './Camera';
+import { FreeCameraHOC } from './FreeCamera';
+import { TargetCameraHOC } from './TargetCamera';
 
-export type IAnaglyphFreeCameraProps = IComponentProps<BabylonAnaglyphFreeCamera> & {
+export type IAnaglyphFreeCameraProps = IComponentProps & {
     name: string, 
     position: Vector3, 
     interaxialDistance: number, 
@@ -14,17 +17,13 @@ export type IAnaglyphFreeCameraParams = {
 
 }
 
-function AnaglyphFreeCameraHOC(EL: React.FC) {
+export function AnaglyphFreeCameraHOC(EL: React.FC) {
     return (props: IAnaglyphFreeCameraParams) => {
         useEffect(() => {
 
         })
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(AnaglyphFreeCameraHOC(e));
 }
 
 function _(props: IAnaglyphFreeCameraProps) {
@@ -36,4 +35,11 @@ function _(props: IAnaglyphFreeCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PAnaglyphFreeCamera = buildExtends<IAnaglyphFreeCameraProps & IAnaglyphFreeCameraParams>(_);
+export const P2PAnaglyphFreeCamera = getEL<IAnaglyphFreeCameraParams>(_, [
+    AnaglyphFreeCameraHOC,
+    FreeCameraHOC,
+    TargetCameraHOC,
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

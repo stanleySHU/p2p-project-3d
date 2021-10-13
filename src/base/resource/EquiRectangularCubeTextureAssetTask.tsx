@@ -1,5 +1,5 @@
 import { EquiRectangularCubeTextureAssetTask as BabylonEquiRectangularCubeTextureAssetTask } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IAbstractAssetTaskProps, buildExtends as _buildExtends } from './AbstractAssetTask';
 
 export type IEquiRectangularCubeTextureAssetTaskInitial<T> = IAbstractAssetTaskProps<T> & {
@@ -13,12 +13,11 @@ export type IEquiRectangularCubeTextureAssetTaskProps = IEquiRectangularCubeText
 
 function EquiRectangularCubeTextureAssetTaskHOC<T>(EL: React.FC<T>) {
     return (props: T & IEquiRectangularCubeTextureAssetTaskProps) => {
-        const { name, instance, url, size, noMipmap, gammaSpace } = props;
+        const { init, name, url, size, noMipmap, gammaSpace } = props;
 
-        useEffect(() => {
-            if (instance && !instance!.current) {
-                instance!.current = new BabylonEquiRectangularCubeTextureAssetTask(name, url, size, noMipmap, gammaSpace);
-            }
+        useLayoutEffect(() => {
+            let obj = new BabylonEquiRectangularCubeTextureAssetTask(name, url, size, noMipmap, gammaSpace);
+            init!(obj);
         }, []);
         return <EL {...props}/>
     };

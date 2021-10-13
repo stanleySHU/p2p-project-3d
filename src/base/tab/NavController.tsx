@@ -16,17 +16,11 @@ type INavControllerContextOptions = {
 export const NavControllerContext = React.createContext<INavControllerContextOptions>({} as any);
 
 export const NavController = (props: INavControllerOptions) => {
-    const { engine } = useContext(EngineContext);
     const [ state, dispath ] = useReducer(reducer, initialState);
 
     useEffect(() => {
         const enterId = props.enter || 'preload';
         dispath(push(enterId));
-
-        engine!.runRenderLoop(() => {
-            // if (engine?.scenes.length) console.log(engine?.scenes)
-        });
-
         return () => {
 
         };

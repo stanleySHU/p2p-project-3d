@@ -1,8 +1,8 @@
 import { PointerDragBehavior as BabylonPointerDragBehavior, TransformNode, Vector3 } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component'
 
-export type IPointerDragBehaviorProps = IComponentProps<BabylonPointerDragBehavior> & {
+export type IPointerDragBehaviorProps = IComponentProps & {
     options?: {
         dragAxis?: Vector3;
         dragPlaneNormal?: Vector3;
@@ -22,10 +22,6 @@ function PointerDragBehaviorHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(PointerDragBehaviorHOC(e));
-}
-
 function _(props: IPointerDragBehaviorProps) {
     const { init, options } =  props;
     useLayoutEffect(() => {
@@ -35,4 +31,7 @@ function _(props: IPointerDragBehaviorProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PPointerDragBehavior = buildExtends<IPointerDragBehaviorProps & IPointerDragBehaviorParams>(_);
+export const P2PPointerDragBehavior = getEL<IPointerDragBehaviorParams>(_, [
+    PointerDragBehaviorHOC,
+    ComponentHOC
+]);

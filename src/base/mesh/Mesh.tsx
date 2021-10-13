@@ -1,10 +1,9 @@
 import { Mesh as BabylonMesh, Scene as  BabylonScene } from "@babylonjs/core";
-import React, { useEffect, useLayoutEffect, useReducer } from "react";
+import React, { useLayoutEffect, useReducer } from "react";
 import { Nullable } from "../../utils/customType";
-import { IComponentProps, P2PChildren } from "../Component";
-import { buildExtends as _buildExtends  } from "../node/TransformNode";
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from "../Component";
 
-export type IMeshProps = IComponentProps<BabylonMesh> & {
+export type IMeshProps = IComponentProps & {
     name: string, 
     scene?: Nullable<BabylonScene>, 
     parent?: Nullable<Node>, 
@@ -17,13 +16,10 @@ export type IMeshParams = {
 
 }
 
-function MeshHOC(EL: React.FC) {
+export function MeshHOC(EL: React.FC) {
     return (props: IMeshParams) => {
         return <EL {...props}/>
     }
-}
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(MeshHOC(e));
 }
 
 function _(props: IMeshProps) {
@@ -35,4 +31,7 @@ function _(props: IMeshProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PMesh = buildExtends<IMeshProps & IMeshParams>(_);
+export const P2PMesh = getEL<IMeshParams>(_, [
+    MeshHOC,
+    ComponentHOC
+]);

@@ -7,12 +7,12 @@ export type IFocusableButtonProps = IComponentProps<BabylonFocusableButton> &{
     name?: string
 }
 
-export type IFocusableButtonParams = IButtonParams & {
+export type IFocusableButtonParams<T> = IButtonParams<T> & {
 
 }
 
 function FocusableButtonHOC(EL: React.FC) {
-    return (props: IFocusableButtonParams) => {
+    return (props: IFocusableButtonParams<BabylonFocusableButton>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IFocusableButtonProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PFocusableButton = buildExtends<IFocusableButtonProps & IFocusableButtonParams>(_); 
+export const P2PFocusableButton = buildExtends<IFocusableButtonProps & IFocusableButtonParams<BabylonFocusableButton>>(_); 

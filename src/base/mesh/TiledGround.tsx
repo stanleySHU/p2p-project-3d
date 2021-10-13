@@ -1,10 +1,10 @@
 import { MeshBuilder, Scene as BabylonScene, Mesh as BabylonMesh } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MeshHOC } from './Mesh';
 
-export type ITiledGroundProps = IComponentProps<BabylonMesh> & {
+export type ITiledGroundProps = IComponentProps & {
     name: string, 
     options: {
         xmin: number;
@@ -34,10 +34,6 @@ function TiledGroundHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(TiledGroundHOC(e));
-}
-
 function _(props: ITiledGroundProps) {
     const { init, name, options, scene } =  props;
     useLayoutEffect(() => {
@@ -47,4 +43,8 @@ function _(props: ITiledGroundProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PTiledGround = buildExtends<ITiledGroundProps & ITiledGroundParams>(_);
+export const P2PTiledGround = getEL<ITiledGroundParams>(_, [
+    TiledGroundHOC,
+    MeshHOC,
+    ComponentHOC
+])

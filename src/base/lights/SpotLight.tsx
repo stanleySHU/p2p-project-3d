@@ -1,9 +1,10 @@
 import { SpotLight as BabylonSpotLight, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './ShadowLight';
-import { useEffect, useLayoutEffect, useReducer } from "react"
-import { IComponentProps, P2PChildren } from '../Component';
+import { Component, useEffect, useLayoutEffect, useReducer } from "react"
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { LightHOC } from './Light';
+import { ShadowLightHOC } from './ShadowLight';
 
-export type ISpotLightProps = IComponentProps<BabylonSpotLight> &  {
+export type ISpotLightProps = IComponentProps &  {
     name: string, 
     position: Vector3, 
     direction: Vector3, 
@@ -25,10 +26,6 @@ function SpotLightHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(SpotLightHOC(e));
-}
-
 function _(props: ISpotLightProps) {
     const { init, name, position, direction, angle, exponent, scene } =  props;
     useLayoutEffect(() => {
@@ -38,4 +35,9 @@ function _(props: ISpotLightProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PSpotLight = buildExtends<ISpotLightProps & ISpotLightParams>(_);
+export const P2PSpotLight = getEL<ISpotLightParams>(_, [
+    SpotLightHOC,
+    ShadowLightHOC,
+    LightHOC,
+    ComponentHOC
+]);

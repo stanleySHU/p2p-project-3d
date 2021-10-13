@@ -7,12 +7,12 @@ export type IRectangleProps = IComponentProps<BabylonRectangle> & {
     name?: string
 }
 
-export type IRectangleParams = IContainerParams & {
+export type IRectangleParams<T> = IContainerParams<T> & {
 
 }
 
 function RectangleHOC(EL: React.FC) {
-    return (props: IRectangleParams) => {
+    return (props: IRectangleParams<BabylonRectangle>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IRectangleProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PRectangle = buildExtends<IRectangleProps & IRectangleParams>(_); 
+export const P2PRectangle = buildExtends<IRectangleProps & IRectangleParams<BabylonRectangle>>(_); 

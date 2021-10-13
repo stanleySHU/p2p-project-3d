@@ -1,10 +1,12 @@
 import { AbstractMesh, ArcFollowCamera as BabylonArcFollowCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './TargetCamera';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { NodeHOC } from '../node/Node';
+import { CameraHOC } from './Camera';
+import { TargetCameraHOC } from './TargetCamera';
 
-export type IArcFollowCameraProps = IComponentProps<BabylonArcFollowCamera> & {
+export type IArcFollowCameraProps = IComponentProps & {
     name: string, 
     alpha: number, 
     beta: number, 
@@ -17,17 +19,13 @@ export type IArcFollowCameraParams = {
 
 }
 
-function ArcFollowCameraHOC(EL: React.FC) {
+export function ArcFollowCameraHOC(EL: React.FC) {
     return (props: IArcFollowCameraParams) => {
         useEffect(() => {
 
         })
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ArcFollowCameraHOC(e));
 }
 
 function _(props: IArcFollowCameraProps) {
@@ -39,4 +37,10 @@ function _(props: IArcFollowCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PArcFollowCamera = buildExtends<IArcFollowCameraProps & IArcFollowCameraParams>(_);
+export const P2PArcFollowCamera = getEL<IArcFollowCameraParams>(_, [
+    ArcFollowCameraHOC,
+    TargetCameraHOC,
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

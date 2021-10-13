@@ -7,12 +7,12 @@ export type IImageBasedSliderProps = IComponentProps<BabylonImageBasedSlider> & 
     name?: string
 }
 
-export type IImageBasedSliderParams = IBaseSliderParams & {
+export type IImageBasedSliderParams<T> = IBaseSliderParams<T> & {
 
 }
 
 function ImageBasedSliderHOC(EL: React.FC) {
-    return (props: IImageBasedSliderParams) => {
+    return (props: IImageBasedSliderParams<BabylonImageBasedSlider>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IImageBasedSliderProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PImageBasedSlider = buildExtends<IImageBasedSliderProps & IImageBasedSliderParams>(_); 
+export const P2PImageBasedSlider = buildExtends<IImageBasedSliderProps & IImageBasedSliderParams<BabylonImageBasedSlider>>(_); 

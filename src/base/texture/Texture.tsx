@@ -1,10 +1,11 @@
 import { Texture as BabylonTexture, Scene as BabylonScene, ThinEngine, ITextureCreationOptions } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './BaseTexture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type ITextureProps = IComponentProps<BabylonTexture> & {
+export type ITextureProps = IComponentProps & {
     url: Nullable<string>, 
     sceneOrEngine: Nullable<BabylonScene | ThinEngine>, 
     noMipmapOrOptions?: boolean | ITextureCreationOptions, 
@@ -24,17 +25,13 @@ export type ITextureParams = {
 
 }
 
-function TextureHOC(EL: React.FC) {
+export function TextureHOC(EL: React.FC) {
     return (props: ITextureParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(TextureHOC(e));
 }
 
 function _(props: ITextureProps) {
@@ -46,4 +43,9 @@ function _(props: ITextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PTexture = buildExtends<ITextureProps & ITextureParams>(_);
+export const P2PTexture = getEL<ITextureParams>(_, [
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

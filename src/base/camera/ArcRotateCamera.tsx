@@ -1,9 +1,11 @@
 import { ArcRotateCamera as BabylonArcRotateCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './TargetCamera';
 import { useEffect, useLayoutEffect, useReducer } from "react"
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { NodeHOC } from '../node/Node';
+import { CameraHOC } from './Camera';
+import { TargetCameraHOC } from './TargetCamera';
 
-export type IArcRotateCameraProps = IComponentProps<BabylonArcRotateCamera> & {
+export type IArcRotateCameraProps = IComponentProps& {
     name: string, 
     alpha: number, 
     beta: number, 
@@ -17,17 +19,13 @@ export type IArcRotateCameraParams = {
 
 }
 
-function ArcRotateCameraHOC(EL: React.FC) {
+export function ArcRotateCameraHOC(EL: React.FC) {
     return (props: IArcRotateCameraParams) => {
         useEffect(() => {
 
         })
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ArcRotateCameraHOC(e));
 }
 
 function _(props: IArcRotateCameraProps) {
@@ -39,4 +37,10 @@ function _(props: IArcRotateCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PArcRotateCamera = buildExtends<IArcRotateCameraProps & IArcRotateCameraParams>(_);
+export const P2PArcRotateCamera = getEL<IArcRotateCameraParams>(_, [
+    ArcRotateCameraHOC,
+    TargetCameraHOC,
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

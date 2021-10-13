@@ -1,10 +1,12 @@
 import { VideoTexture as BabylonVideoTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine, VideoTextureSettings } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './Texture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { TextureHOC } from './Texture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IVideoTextureProps = IComponentProps<BabylonVideoTexture> & {
+export type IVideoTextureProps = IComponentProps & {
     name: Nullable<string>, 
     src: string | string[] | HTMLVideoElement, 
     scene: Nullable<BabylonScene>, 
@@ -28,10 +30,6 @@ function VideoTextureHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(VideoTextureHOC(e));
-}
-
 function _(props: IVideoTextureProps) {
     const { init, name, src, scene, generateMipMaps, invertY, samplingMode, settings, onError } =  props;
     useLayoutEffect(() => {
@@ -41,4 +39,10 @@ function _(props: IVideoTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PVideoTexture = buildExtends<IVideoTextureProps & IVideoTextureParams>(_);
+export const P2PVideoTexture = getEL<IVideoTextureParams>(_, [
+    VideoTextureHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

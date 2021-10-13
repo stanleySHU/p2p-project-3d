@@ -7,12 +7,12 @@ export type IScrollViewerProps = IComponentProps<BabylonScrollViewer> & {
     name?: string 
 }
 
-export type IScrollViewerParams = IRectangleParams & {
+export type IScrollViewerParams<T> = IRectangleParams<T> & {
 
 }
 
 function ScrollViewerHOC(EL: React.FC) {
-    return (props: IScrollViewerParams) => {
+    return (props: IScrollViewerParams<BabylonScrollViewer>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IScrollViewerProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PScrollViewer = buildExtends<IScrollViewerProps & IScrollViewerParams>(_); 
+export const P2PScrollViewer = buildExtends<IScrollViewerProps & IScrollViewerParams<BabylonScrollViewer>>(_); 

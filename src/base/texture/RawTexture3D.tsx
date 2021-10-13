@@ -1,10 +1,12 @@
 import { RawTexture3D as BabylonRawTexture3D, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './Texture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { TextureHOC } from './Texture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IRawTexture3DProps = IComponentProps<BabylonRawTexture3D> & {
+export type IRawTexture3DProps = IComponentProps & {
     data: ArrayBufferView, 
     width: number, 
     height: number, 
@@ -27,10 +29,6 @@ function RawTexture3DHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(RawTexture3DHOC(e));
-}
-
 function _(props: IRawTexture3DProps) {
     const { init, data, width, height, depth, format, scene, generateMipMaps, invertY, samplingMode, textureType } =  props;
     useLayoutEffect(() => {
@@ -40,4 +38,10 @@ function _(props: IRawTexture3DProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PRawTexture3D = buildExtends<IRawTexture3DProps & IRawTexture3DParams>(_);
+export const P2PRawTexture3D = getEL<IRawTexture3DParams>(_, [
+    RawTexture3DHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

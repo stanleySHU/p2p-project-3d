@@ -7,12 +7,12 @@ export type ICheckboxProps = IComponentProps<BabylonCheckbox> & {
     name?: string
 }
 
-export type ICheckboxParams = IControlParams & {
+export type ICheckboxParams<T> = IControlParams<T> & {
 
 }
 
 function CheckboxHOC(EL: React.FC) {
-    return (props: ICheckboxParams) => {
+    return (props: ICheckboxParams<BabylonCheckbox>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: ICheckboxProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PCheckbox = buildExtends<ICheckboxProps & ICheckboxParams>(_); 
+export const P2PCheckbox = buildExtends<ICheckboxProps & ICheckboxParams<BabylonCheckbox>>(_); 

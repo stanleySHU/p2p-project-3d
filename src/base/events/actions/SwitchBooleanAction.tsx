@@ -1,9 +1,9 @@
 import { Action, SwitchBooleanAction as BabylonSwitchBooleanAction, Condition } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Action'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ActionHOC } from './Action';
 
-export type ISwitchBooleanActionProps = IComponentProps<BabylonSwitchBooleanAction> & {
+export type ISwitchBooleanActionProps = IComponentProps & {
     triggerOptions: any, 
     target: any, 
     propertyPath: string, 
@@ -23,10 +23,6 @@ function SwitchBooleanActionHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(SwitchBooleanActionHOC(e));
-}
-
 function _(props: ISwitchBooleanActionProps) {
     const { init, triggerOptions, target, propertyPath, condition } =  props;
     useLayoutEffect(() => {
@@ -36,4 +32,8 @@ function _(props: ISwitchBooleanActionProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PSwitchBooleanAction = buildExtends<ISwitchBooleanActionProps & ISwitchBooleanActionParams>(_);
+export const P2PSwitchBooleanAction = getEL<ISwitchBooleanActionParams>(_, [
+    SwitchBooleanActionHOC,
+    ActionHOC,
+    ComponentHOC
+]);

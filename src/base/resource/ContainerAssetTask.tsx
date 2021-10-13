@@ -1,5 +1,5 @@
 import { ContainerAssetTask as BabylonContainerAssetTask } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IAbstractAssetTaskProps, buildExtends as _buildExtends } from './AbstractAssetTask';
 
 export type IContainerAssetTaskInitial<T> = IAbstractAssetTaskProps<T> & {
@@ -12,12 +12,11 @@ export type IContainerAssetTaskProps = IContainerAssetTaskInitial<BabylonContain
 
 function ContainerAssetTaskHOC<T>(EL: React.FC<T>) {
     return (props: T & IContainerAssetTaskProps) => {
-        const { name, instance, meshesNames, rootUrl, sceneFilename } = props;
+        const { init, name, meshesNames, rootUrl, sceneFilename } = props;
 
-        useEffect(() => {
-            if (instance && !instance!.current) {
-                instance!.current = new BabylonContainerAssetTask(name, meshesNames, rootUrl, sceneFilename );
-            }
+        useLayoutEffect(() => {
+            let obj = new BabylonContainerAssetTask(name, meshesNames, rootUrl, sceneFilename );
+            init!(obj);
         }, []);
         return <EL {...props}/>
     };

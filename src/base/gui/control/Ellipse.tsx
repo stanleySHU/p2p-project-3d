@@ -7,12 +7,12 @@ export type IEllipseProps = IComponentProps<BabylonEllipse> & {
     name?: string 
 }
 
-export type IEllipseParams = IContainerParams & {
+export type IEllipseParams<T> = IContainerParams<T> & {
 
 }
 
 function EllipseHOC(EL: React.FC) {
-    return (props: IEllipseParams) => {
+    return (props: IEllipseParams<BabylonEllipse>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IEllipseProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PEllipse = buildExtends<IEllipseProps & IEllipseParams>(_); 
+export const P2PEllipse = buildExtends<IEllipseProps & IEllipseParams<BabylonEllipse>>(_); 

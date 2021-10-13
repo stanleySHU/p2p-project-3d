@@ -7,12 +7,12 @@ export type IGridProps = IComponentProps<BabylonGrid> & {
     name?: string 
 }
 
-export type IGridParams = IContainerParams & {
+export type IGridParams<T> = IContainerParams<T> & {
 
 }
 
 function GridHOC(EL: React.FC) {
-    return (props: IGridParams) => {
+    return (props: IGridParams<BabylonGrid>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IGridProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PGrid = buildExtends<IGridProps & IGridParams>(_); 
+export const P2PGrid = buildExtends<IGridProps & IGridParams<BabylonGrid>>(_); 

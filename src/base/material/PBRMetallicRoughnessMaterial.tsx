@@ -1,9 +1,12 @@
 import { PBRMetallicRoughnessMaterial as BabylonPBRMetallicRoughnessMaterial, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './PBRBaseSimpleMaterial'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MaterialHOC } from './Material';
+import { PBRBaseMaterialHOC } from './PBRBaseMaterial';
+import { PBRBaseSimpleMaterialHOC } from './PBRBaseSimpleMaterial';
+import { PushMaterialHOC } from './PushMaterial';
 
-export type IPBRMetallicRoughnessMaterialProps = IComponentProps<BabylonPBRMetallicRoughnessMaterial> & {
+export type IPBRMetallicRoughnessMaterialProps = IComponentProps & {
     name: string, 
     scene: BabylonScene
 }
@@ -21,10 +24,6 @@ function PBRMetallicRoughnessMaterialHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(PBRMetallicRoughnessMaterialHOC(e));
-}
-
 function _(props: IPBRMetallicRoughnessMaterialProps) {
     const { init, name, scene } =  props;
     useLayoutEffect(() => {
@@ -34,4 +33,11 @@ function _(props: IPBRMetallicRoughnessMaterialProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PPBRMetallicRoughnessMaterial = buildExtends<IPBRMetallicRoughnessMaterialProps & IPBRMetallicRoughnessMaterialParams>(_);
+export const P2PPBRMetallicRoughnessMaterial= getEL<IPBRMetallicRoughnessMaterialParams>(_, [
+    PBRMetallicRoughnessMaterialHOC,
+    PBRBaseSimpleMaterialHOC,
+    PBRBaseMaterialHOC,
+    PushMaterialHOC,
+    MaterialHOC,
+    ComponentHOC
+]);

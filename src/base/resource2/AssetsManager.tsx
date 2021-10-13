@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { AbstractAssetTask, AssetsManager as BabylonAssetsManager, Scene as BabylonScene} from '@babylonjs/core';
 import { ImageResource } from "./ImageResource";
+import { TextureResource } from "./TextureResource";
+import { TextFileResource } from './TextFileResource';
 import { Resource } from "./Resource";
 import { Nullable, UndefinedAble } from "../../utils/customType";
 import { Action, processUpdate, loadFinish, load } from "../scene/PreloadRedux";
@@ -37,22 +39,20 @@ export const P2PAssetsManager = (props: IAssetsManagerProps) => {
     }, []);
 
     function handleProgress(remainingCount: number, totalCount: number, task: AbstractAssetTask) {
-        loadDispatch!(processUpdate(1- (remainingCount / totalCount)));
-        console.log('process', remainingCount, totalCount, task);
+        console.log('process', `${(totalCount - remainingCount) / totalCount * 100}%`);
+        loadDispatch!(processUpdate((totalCount - remainingCount) / totalCount));
     }
 
     function handleTaskError(task: AbstractAssetTask) {
-        console.log('error', task);
     }
 
     function handleTaskSuccess(task: AbstractAssetTask) {
-        console.log('success', task);
     }
 
     function handleFinish(tasks: AbstractAssetTask[]) {
+        console.log('finish', tasks);
         loadDispatch!(loadFinish());
         loaded();
-        console.log('finish', tasks);
     }
 
     function resolve(type: string): UndefinedAble<Resource> {
@@ -61,7 +61,7 @@ export const P2PAssetsManager = (props: IAssetsManagerProps) => {
                 break;
             }
             case "taskTextFile": {
-                break;
+                return new TextFileResource();
             }
             case "taskBinaryFile": {
                 break;
@@ -70,7 +70,7 @@ export const P2PAssetsManager = (props: IAssetsManagerProps) => {
                 return new ImageResource();
             }
             case "taskTexture": {
-                break;
+                return new TextureResource();
             }
             case "taskCubeTexture": {
                 break;

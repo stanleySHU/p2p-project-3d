@@ -1,9 +1,12 @@
 import { DeviceOrientationCamera as BabylonDeviceOrientationCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './FreeCamera';
 import { useEffect, useLayoutEffect, useReducer } from "react"
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { NodeHOC } from '../node/Node';
+import { CameraHOC } from './Camera';
+import { FreeCameraHOC } from './FreeCamera';
+import { TargetCameraHOC } from './TargetCamera';
 
-export type IDeviceOrientationCameraProps = IComponentProps<BabylonDeviceOrientationCamera> &{
+export type IDeviceOrientationCameraProps = IComponentProps &{
     name: string, 
     position: Vector3, 
     scene: BabylinScene
@@ -13,17 +16,13 @@ export type IDeviceOrientationCameraParams = {
 
 }
 
-function DeviceOrientationCameraHOC(EL: React.FC) {
+export function DeviceOrientationCameraHOC(EL: React.FC) {
     return (props: IDeviceOrientationCameraParams) => {
         useEffect(() => {
 
         })
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(DeviceOrientationCameraHOC(e));
 }
 
 function _(props: IDeviceOrientationCameraProps) {
@@ -35,4 +34,12 @@ function _(props: IDeviceOrientationCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PDeviceOrientationCamera = buildExtends<IDeviceOrientationCameraProps & IDeviceOrientationCameraParams>(_);
+
+export const P2PDeviceOrientationCamera = getEL<IDeviceOrientationCameraParams>(_, [
+    DeviceOrientationCameraHOC,
+    FreeCameraHOC,
+    TargetCameraHOC,
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

@@ -1,9 +1,12 @@
 import { TouchCamera as BabylonTouchCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './FreeCamera';
+import { FreeCameraHOC } from './FreeCamera';
 import { useEffect, useLayoutEffect, useReducer } from "react"
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { TargetCameraHOC } from './TargetCamera';
+import { CameraHOC } from './Camera';
+import { NodeHOC } from '../node/Node';
 
-export type ITouchCameraProps = IComponentProps<BabylonTouchCamera> &{
+export type ITouchCameraProps = IComponentProps &{
     name: string, 
     position: Vector3, 
     scene: BabylinScene
@@ -13,17 +16,13 @@ export type ITouchCameraParams = {
 
 }
 
-function TouchCameraHOC(EL: React.FC) {
+export function TouchCameraHOC(EL: React.FC) {
     return (props: ITouchCameraParams) => {
         useEffect(() => {
 
         })
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(TouchCameraHOC(e));
 }
 
 function _(props: ITouchCameraProps) {
@@ -35,4 +34,11 @@ function _(props: ITouchCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PTouchCamera = buildExtends<ITouchCameraProps & ITouchCameraParams>(_);
+export const P2PTouchCamera = getEL<ITouchCameraParams>(_, [
+    TouchCameraHOC,
+    FreeCameraHOC,
+    TargetCameraHOC,
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

@@ -1,10 +1,12 @@
 import { AbstractMesh, FollowCamera as BabylonFollowCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './TargetCamera';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { NodeHOC } from '../node/Node';
+import { CameraHOC } from './Camera';
+import { TargetCameraHOC } from './TargetCamera';
 
-export type IFollowCameraProps = IComponentProps<BabylonFollowCamera> &{
+export type IFollowCameraProps = IComponentProps &{
     name: string, 
     position: Vector3, 
     scene: BabylinScene, 
@@ -24,10 +26,6 @@ function FollowCameraHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(FollowCameraHOC(e));
-}
-
 function _(props: IFollowCameraProps) {
     const { init, name, position, scene, lockedTarget } =  props;
     useLayoutEffect(() => {
@@ -37,4 +35,10 @@ function _(props: IFollowCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PFollowCamera = buildExtends<IFollowCameraProps & IFollowCameraParams>(_);
+export const P2PFollowCamera = getEL<IFollowCameraParams>(_, [
+    FollowCameraHOC,
+    TargetCameraHOC,
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

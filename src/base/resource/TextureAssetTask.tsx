@@ -1,5 +1,5 @@
 import { TextureAssetTask as BabylonTextureAssetTask } from '@babylonjs/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { IAbstractAssetTaskProps, buildExtends as _buildExtends } from './AbstractAssetTask';
 
 export type ITextureAssetTaskInitial<T> = IAbstractAssetTaskProps<T> & {
@@ -13,12 +13,11 @@ export type ITextureAssetTaskProps = ITextureAssetTaskInitial<BabylonTextureAsse
 
 function TextureAssetTaskHOC<T>(EL: React.FC<T>) {
     return (props: T & ITextureAssetTaskProps) => {
-        const { name, instance, url, noMipmap, invertY, samplingMode } = props;
+        const { init, name, url, noMipmap, invertY, samplingMode } = props;
 
-        useEffect(() => {
-            if (instance && !instance!.current) {
-                instance!.current = new BabylonTextureAssetTask(name, url, noMipmap, invertY, samplingMode);
-            }
+        useLayoutEffect(() => {
+            let obj = new BabylonTextureAssetTask(name, url, noMipmap, invertY, samplingMode);
+            init!(obj);
         }, []);
         return <EL {...props}/>
     };

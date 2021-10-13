@@ -1,9 +1,12 @@
 import { WebXRCamera as BabylonWebXRCamera, Scene as BabylinScene, WebXRSessionManager } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './FreeCamera';
 import { useEffect, useLayoutEffect, useReducer } from "react"
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { NodeHOC } from '../node/Node';
+import { CameraHOC } from './Camera';
+import { FreeCameraHOC } from './FreeCamera';
+import { TargetCameraHOC } from './TargetCamera';
 
-export type IWebXRCameraProps = IComponentProps<BabylonWebXRCamera> &{
+export type IWebXRCameraProps = IComponentProps &{
     name: string, 
     scene: BabylinScene, 
     _xrSessionManager: WebXRSessionManager
@@ -22,10 +25,6 @@ function WebXRCameraHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(WebXRCameraHOC(e));
-}
-
 function _(props: IWebXRCameraProps) {
     const { init, name, scene, _xrSessionManager } =  props;
     useLayoutEffect(() => {
@@ -35,4 +34,11 @@ function _(props: IWebXRCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PWebXRCamera = buildExtends<IWebXRCameraProps & IWebXRCameraParams>(_);
+export const P2PWebXRCamera = getEL<IWebXRCameraParams>(_, [
+    WebXRCameraHOC,
+    FreeCameraHOC,
+    TargetCameraHOC,
+    CameraHOC,
+    NodeHOC,
+    ComponentHOC
+]);

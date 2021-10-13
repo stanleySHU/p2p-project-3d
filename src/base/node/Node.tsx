@@ -1,28 +1,19 @@
 import { Node as BabylonNode, Scene as BabylonScene } from '@babylonjs/core';
-import React, { useEffect, useLayoutEffect, useReducer } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../Component'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component'
 
-export type INodeProps = IComponentProps<BabylonNode> & {
+export type INodeProps = IComponentProps & {
     name: string, 
     scene?: Nullable<BabylonScene>
 }
 
-export type INodeParams = {
+export type INodeParams = {}
 
-}
-
-function NodeHOC(EL: React.FC) {
+export function NodeHOC(EL: React.FC) {
     return (props: INodeParams) => {
-        useEffect(() => {
-
-        });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(NodeHOC(e));
 }
 
 function _(props: INodeProps) {
@@ -34,4 +25,7 @@ function _(props: INodeProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PNode = buildExtends<INodeProps & INodeParams>(_); 
+export const P2PNode = getEL(_, [
+    NodeHOC,
+    ComponentHOC
+]);

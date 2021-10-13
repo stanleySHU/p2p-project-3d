@@ -8,12 +8,12 @@ export type ISelectionPanelProps = IComponentProps<BabylonSelectionPanel> & {
     groups?: SelectorGroup[]
 }
 
-export type ISelectionPanelParams = IRectangleParams & {
+export type ISelectionPanelParams<T> = IRectangleParams<T> & {
 
 }
 
 function SelectionPanelHOC(EL: React.FC) {
-    return (props: ISelectionPanelParams) => {
+    return (props: ISelectionPanelParams<BabylonSelectionPanel>) => {
         useEffect(() => {
 
         });
@@ -34,4 +34,4 @@ function _(props: ISelectionPanelProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PSelectionPanel = buildExtends<ISelectionPanelProps & ISelectionPanelParams>(_); 
+export const P2PSelectionPanel = buildExtends<ISelectionPanelProps & ISelectionPanelParams<BabylonSelectionPanel>>(_); 

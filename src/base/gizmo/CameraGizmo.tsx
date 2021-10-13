@@ -1,10 +1,10 @@
 import { CameraGizmo as BabylonCameraGizmo, UtilityLayerRenderer } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect, useReducer } from "react";
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from "../Component";
-import { buildExtends as _buildExtends  } from "./Gizmo";
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from "../Component";
+import { GizmoHOC } from './Gizmo';
 
-export type ICameraGizmoProps = IComponentProps<BabylonCameraGizmo> & {
+export type ICameraGizmoProps = IComponentProps & {
     gizmoLayer?: UtilityLayerRenderer
 }
 
@@ -17,9 +17,6 @@ function CameraGizmoHOC(EL: React.FC) {
         return <EL {...props}/>
     }
 }
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(CameraGizmoHOC(e));
-}
 
 function _(props: ICameraGizmoProps) {
     const { init, gizmoLayer} =  props;
@@ -30,4 +27,8 @@ function _(props: ICameraGizmoProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PCameraGizmo = buildExtends<ICameraGizmoProps & ICameraGizmoParams>(_);
+export const P2PCameraGizmo = getEL<ICameraGizmoParams>(_, [
+    CameraGizmoHOC,
+    GizmoHOC,
+    ComponentHOC
+]);

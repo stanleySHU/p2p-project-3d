@@ -1,9 +1,9 @@
 import { Action, SetStateAction as BabylonSetStateAction, Condition } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Action'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ActionHOC } from './Action';
 
-export type ISetStateActionProps = IComponentProps<BabylonSetStateAction> & {
+export type ISetStateActionProps = IComponentProps & {
     triggerOptions: any, 
     target: any, 
     value: string, 
@@ -23,10 +23,6 @@ function SetStateActionHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(SetStateActionHOC(e));
-}
-
 function _(props: ISetStateActionProps) {
     const { init, triggerOptions, target, value, condition } =  props;
     useLayoutEffect(() => {
@@ -36,4 +32,8 @@ function _(props: ISetStateActionProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PSetStateAction = buildExtends<ISetStateActionProps & ISetStateActionParams>(_);
+export const P2PSetStateAction = getEL<ISetStateActionParams>(_, [
+    SetStateActionHOC,
+    ActionHOC,
+    ComponentHOC
+]);

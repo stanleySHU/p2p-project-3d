@@ -1,10 +1,10 @@
 import { MeshBuilder, Scene as BabylonScene, Mesh as BabylonMesh } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MeshHOC } from './Mesh';
 
-export type IGroundProps = IComponentProps<BabylonMesh> & {
+export type IGroundProps = IComponentProps & {
     name: string, 
     options: {
         width?: number;
@@ -27,10 +27,6 @@ function GroundHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(GroundHOC(e));
-}
-
 function _(props: IGroundProps) {
     const { init, name, options, scene } =  props;
     useLayoutEffect(() => {
@@ -40,4 +36,8 @@ function _(props: IGroundProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PGround = buildExtends<IGroundProps & IGroundParams>(_);
+export const P2PGround = getEL<IGroundParams>(_, [
+    GroundHOC,
+    MeshHOC,
+    ComponentHOC
+])

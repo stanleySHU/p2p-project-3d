@@ -7,12 +7,12 @@ export type IRadioButtonProps = IComponentProps<BabylonRadioButton> & {
     name?: string 
 }
 
-export type IRadioButtonParams = IControlParams & {
+export type IRadioButtonParams<T> = IControlParams<T> & {
 
 }
 
 function RadioButtonHOC(EL: React.FC) {
-    return (props: IRadioButtonParams) => {
+    return (props: IRadioButtonParams<BabylonRadioButton>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IRadioButtonProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PRadioButton = buildExtends<IRadioButtonProps & IRadioButtonParams>(_); 
+export const P2PRadioButton = buildExtends<IRadioButtonProps & IRadioButtonParams<BabylonRadioButton>>(_); 

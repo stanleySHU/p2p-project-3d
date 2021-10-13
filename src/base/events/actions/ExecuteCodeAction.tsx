@@ -1,9 +1,9 @@
 import { ExecuteCodeAction as BabylonExecuteCodeAction, Condition, ActionEvent } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Action'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ActionHOC } from './Action';
 
-export type IExecuteCodeActionProps = IComponentProps<BabylonExecuteCodeAction> & {
+export type IExecuteCodeActionProps = IComponentProps & {
     triggerOptions: any, 
     func: (evt: ActionEvent) => void, 
     condition?: Condition
@@ -22,10 +22,6 @@ function ExecuteCodeActionHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ExecuteCodeActionHOC(e));
-}
-
 function _(props: IExecuteCodeActionProps) {
     const { init, triggerOptions, func, condition} =  props;
     useLayoutEffect(() => {
@@ -35,4 +31,8 @@ function _(props: IExecuteCodeActionProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PExecuteCodeAction = buildExtends<IExecuteCodeActionProps & IExecuteCodeActionParams>(_);
+export const P2PExecuteCodeAction = getEL<IExecuteCodeActionParams>(_, [
+    ExecuteCodeActionHOC,
+    ActionHOC,
+    ComponentHOC
+])

@@ -1,10 +1,12 @@
 import { DynamicTexture as BabylonDynamicTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './Texture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { TextureHOC } from './Texture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IDynamicTextureProps = IComponentProps<BabylonDynamicTexture> &{
+export type IDynamicTextureProps = IComponentProps &{
     name: string, 
     options: any, 
     scene?: Nullable<BabylonScene>, 
@@ -18,14 +20,10 @@ export type IDynamicTextureParams = {
 
 }
 
-function DynamicTextureHOC(EL: React.FC) {
+export function DynamicTextureHOC(EL: React.FC) {
     return (props: IDynamicTextureParams) => {
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(DynamicTextureHOC(e));
 }
 
 function _(props: IDynamicTextureProps) {
@@ -37,4 +35,11 @@ function _(props: IDynamicTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PDynamicTexture = buildExtends<IDynamicTextureProps & IDynamicTextureParams>(_);
+export const P2PDynamicTexture = getEL<IDynamicTextureParams>(_, [
+    DynamicTextureHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);
+

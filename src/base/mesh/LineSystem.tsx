@@ -1,10 +1,10 @@
 import { Color4, LinesMesh, MeshBuilder, Scene as BabylonScene, Vector3, Mesh as BabylonMesh } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './Mesh';
+import { MeshHOC } from './Mesh';
 import { useEffect, useReducer, useLayoutEffect } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
 
-export type ILineSystemProps = IComponentProps<BabylonMesh> & {
+export type ILineSystemProps = IComponentProps & {
     name: string, 
     options: {
         lines: Vector3[][];
@@ -26,10 +26,6 @@ function LineSystemHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(LineSystemHOC(e));
-}
-
 function _(props: ILineSystemProps) {
     const { init, name, options, scene } =  props;
     useLayoutEffect(() => {
@@ -39,4 +35,8 @@ function _(props: ILineSystemProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PLineSystem = buildExtends<ILineSystemProps & ILineSystemParams>(_);
+export const P2PLineSystem = getEL<ILineSystemParams>(_, [
+    LineSystemHOC,
+    MeshHOC,
+    ComponentHOC
+]);

@@ -1,10 +1,11 @@
 import { ColorGradingTexture as BabylonColorGradingTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './BaseTexture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IColorGradingTextureProps = IComponentProps<BabylonColorGradingTexture> & {
+export type IColorGradingTextureProps = IComponentProps & {
     url: string, 
     sceneOrEngine: BabylonScene | ThinEngine, 
     onLoad?: Nullable<() => void>
@@ -18,10 +19,6 @@ function ColorGradingTextureHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ColorGradingTextureHOC(e));
-}
-
 function _(props: IColorGradingTextureProps) {
     const { init, url, sceneOrEngine, onLoad } =  props;
     useLayoutEffect(() => {
@@ -31,4 +28,9 @@ function _(props: IColorGradingTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PColorGradingTexture = buildExtends<IColorGradingTextureProps & IColorGradingTextureParams>(_);
+export const P2PColorGradingTexture = getEL<IColorGradingTextureParams>(_, [
+    ColorGradingTextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

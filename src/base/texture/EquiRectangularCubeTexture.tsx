@@ -1,10 +1,13 @@
 import { EquiRectangularCubeTexture as BabylonEquiRectangularCubeTexture, Scene as BabylonScene } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './BaseTexture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { ProceduralTextureHOC } from './ProceduralTexture';
+import { TextureHOC } from './Texture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IEquiRectangularCubeTextureProps = IComponentProps<BabylonEquiRectangularCubeTexture> & {
+export type IEquiRectangularCubeTextureProps = IComponentProps & {
     url: string, 
     scene: BabylonScene, 
     size: number, 
@@ -24,10 +27,6 @@ function EquiRectangularCubeTextureHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(EquiRectangularCubeTextureHOC(e));
-}
-
 function _(props: IEquiRectangularCubeTextureProps) {
     const { init, url, scene, size, noMipmap, gammaSpace, onLoad, onError } =  props;
     useLayoutEffect(() => {
@@ -37,4 +36,11 @@ function _(props: IEquiRectangularCubeTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PEquiRectangularCubeTexture = buildExtends<IEquiRectangularCubeTextureProps & IEquiRectangularCubeTextureParams>(_);
+export const P2PEquiRectangularCubeTexture = getEL<IEquiRectangularCubeTextureParams>(_, [
+    EquiRectangularCubeTextureHOC,
+    ProceduralTextureHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

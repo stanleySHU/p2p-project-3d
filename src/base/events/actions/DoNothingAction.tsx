@@ -1,9 +1,9 @@
 import { DoNothingAction as BabylonDoNothingAction, Condition } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends } from './Action'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ActionHOC } from './Action';
 
-export type IDoNothingActionProps = IComponentProps<BabylonDoNothingAction> & {
+export type IDoNothingActionProps = IComponentProps & {
     triggerOptions?: any, 
     condition?: Condition
 }
@@ -21,10 +21,6 @@ function DoNothingActionHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(DoNothingActionHOC(e));
-}
-
 function _(props: IDoNothingActionProps) {
     const { init, triggerOptions, condition } =  props;
     useLayoutEffect(() => {
@@ -34,4 +30,8 @@ function _(props: IDoNothingActionProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PDoNothingAction = buildExtends<IDoNothingActionProps & IDoNothingActionParams>(_);
+export const P2PDoNothingAction = getEL<IDoNothingActionParams>(_, [
+    DoNothingActionHOC,
+    ActionHOC,
+    ComponentHOC
+]);

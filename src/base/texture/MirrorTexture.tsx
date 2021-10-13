@@ -1,10 +1,13 @@
 import { MirrorTexture as BabylonMirrorTexture, RenderTargetTextureSize, Scene as BabylonScene, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './RenderTargetTexture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { RenderTargetTextureHOC } from './RenderTargetTexture';
+import { TextureHOC } from './Texture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IMirrorTextureProps = IComponentProps<BabylonMirrorTexture> & {
+export type IMirrorTextureProps = IComponentProps & {
     name: string, 
     size: number | {
         width: number;
@@ -32,10 +35,6 @@ function MirrorTextureHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(MirrorTextureHOC(e));
-}
-
 function _(props: IMirrorTextureProps) {
     const { init, name, size, scene, generateMipMaps, type, samplingMode, generateDepthBuffer } =  props;
     useLayoutEffect(() => {
@@ -45,4 +44,11 @@ function _(props: IMirrorTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PMirrorTexture = buildExtends<IMirrorTextureProps & IMirrorTextureParams>(_);
+export const P2PMirrorTexture = getEL<IMirrorTextureParams>(_, [
+    MirrorTextureHOC,
+    RenderTargetTextureHOC,
+    TextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);

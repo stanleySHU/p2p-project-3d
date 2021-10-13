@@ -7,12 +7,12 @@ export type IButtonProps = IComponentProps<BabylonButton> & {
     name?: string 
 }
 
-export type IButtonParams = IRectangleParams & {
+export type IButtonParams<T> = IRectangleParams<T> & {
 
 }
 
 function ButtonHOC(EL: React.FC) {
-    return (props: IButtonParams) => {
+    return (props: IButtonParams<BabylonButton>) => {
         useEffect(() => {
 
         });
@@ -33,4 +33,4 @@ function _(props: IButtonProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PButton = buildExtends<IButtonProps & IButtonParams>(_); 
+export const P2PButton = buildExtends<IButtonProps & IButtonParams<BabylonButton>>(_); 

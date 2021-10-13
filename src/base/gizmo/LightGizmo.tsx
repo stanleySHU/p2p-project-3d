@@ -1,10 +1,9 @@
 import { LightGizmo as BabylonLightGizmo, UtilityLayerRenderer } from '@babylonjs/core';
-import React, { useEffect, useLayoutEffect, useReducer } from "react";
-import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from "../Component";
-import { buildExtends as _buildExtends  } from "./Gizmo";
+import React, { useLayoutEffect } from "react";
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from "../Component";
+import { GizmoHOC } from './Gizmo';
 
-export type ILightGizmoProps = IComponentProps<BabylonLightGizmo> & {
+export type ILightGizmoProps = IComponentProps & {
     gizmoLayer?: UtilityLayerRenderer
 }
 
@@ -17,9 +16,6 @@ function LightGizmoHOC(EL: React.FC) {
         return <EL {...props}/>
     }
 }
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(LightGizmoHOC(e));
-}
 
 function _(props: ILightGizmoProps) {
     const { init, gizmoLayer } =  props;
@@ -30,4 +26,8 @@ function _(props: ILightGizmoProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PLightGizmo = buildExtends<ILightGizmoProps & ILightGizmoParams>(_);
+export const P2PLightGizmo = getEL<ILightGizmoParams>(_, [
+    LightGizmoHOC,
+    GizmoHOC,
+    ComponentHOC
+]);

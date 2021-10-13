@@ -1,8 +1,8 @@
 import { AttachToBoxBehavior as BabylonAttachToBoxBehavior, TransformNode } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component'
 
-export type IAttachToBoxBehaviorProps = IComponentProps<BabylonAttachToBoxBehavior> & {
+export type IAttachToBoxBehaviorProps = IComponentProps & {
     ui: TransformNode
 }
 
@@ -19,10 +19,6 @@ function AttachToBoxBehaviorHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(AttachToBoxBehaviorHOC(e));
-}
-
 function _(props: IAttachToBoxBehaviorProps) {
     const { init, ui } =  props;
     useLayoutEffect(() => {
@@ -32,4 +28,7 @@ function _(props: IAttachToBoxBehaviorProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PAttachToBoxBehavior = buildExtends<IAttachToBoxBehaviorProps & IAttachToBoxBehaviorParams>(_);
+export const P2PAttachToBoxBehavior = getEL<IAttachToBoxBehaviorParams>(_, [
+    AttachToBoxBehaviorHOC,
+    ComponentHOC
+])

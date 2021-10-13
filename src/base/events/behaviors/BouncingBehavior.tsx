@@ -1,8 +1,8 @@
 import { BouncingBehavior as BabylonBouncingBehavior } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../../Component'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component'
 
-export type IBouncingBehaviorProps = IComponentProps<BabylonBouncingBehavior> & {}
+export type IBouncingBehaviorProps = IComponentProps & {}
 
 export type IBouncingBehaviorParams = {
 
@@ -17,10 +17,6 @@ function BouncingBehaviorHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(BouncingBehaviorHOC(e));
-}
-
 function _(props: IBouncingBehaviorProps) {
     const { init } =  props;
     useLayoutEffect(() => {
@@ -30,4 +26,7 @@ function _(props: IBouncingBehaviorProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PBouncingBehavior = buildExtends<IBouncingBehaviorProps & IBouncingBehaviorParams>(_);
+export const P2PBouncingBehavior = getEL<IBouncingBehaviorParams>(_, [
+    BouncingBehaviorHOC,
+    ComponentHOC
+])

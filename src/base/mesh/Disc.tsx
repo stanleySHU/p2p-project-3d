@@ -1,10 +1,10 @@
 import { MeshBuilder, Scene as BabylonScene, Vector4, Mesh as BabylonMesh } from '@babylonjs/core';
-import { buildExtends as _buildExtends } from './Mesh';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { MeshHOC } from './Mesh';
 
-export type IDiscProps = IComponentProps<BabylonMesh> & {
+export type IDiscProps = IComponentProps & {
     name: string, 
     options: {
         radius?: number;
@@ -28,10 +28,6 @@ function DiscHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(DiscHOC(e));
-}
-
 function _(props: IDiscProps) {
     const { init, name, options, scene } =  props;
     useLayoutEffect(() => {
@@ -41,4 +37,8 @@ function _(props: IDiscProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PDisc = buildExtends<IDiscProps & IDiscParams>(_);
+export const P2PDisc = getEL<IDiscParams>(_, [
+    DiscHOC,
+    MeshHOC,
+    ComponentHOC
+]);

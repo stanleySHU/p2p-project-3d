@@ -1,10 +1,11 @@
 import { HtmlElementTexture as BabylonHtmlElementTexture, IHtmlElementTextureOptions, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
-import { IComponentProps, P2PChildren } from '../Component';
-import { buildExtends as _buildExtends } from './BaseTexture'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
+import { BaseTextureHOC } from './BaseTexture';
+import { ThinTextureHOC } from './ThinTexture';
 
-export type IHtmlElementTextureProps = IComponentProps<BabylonHtmlElementTexture> & {
+export type IHtmlElementTextureProps = IComponentProps & {
     name: string, 
     element: HTMLVideoElement | HTMLCanvasElement, 
     options: IHtmlElementTextureOptions
@@ -20,10 +21,6 @@ function HtmlElementTextureHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(HtmlElementTextureHOC(e));
-}
-
 function _(props: IHtmlElementTextureProps) {
     const { init, name, element, options } =  props;
     useLayoutEffect(() => {
@@ -33,4 +30,9 @@ function _(props: IHtmlElementTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PHtmlElementTexture = buildExtends<IHtmlElementTextureProps & IHtmlElementTextureParams>(_);
+export const P2PHtmlElementTexture = getEL<IHtmlElementTextureParams>(_, [
+    HtmlElementTextureHOC,
+    BaseTextureHOC,
+    ThinTextureHOC,
+    ComponentHOC
+]);
