@@ -1,27 +1,24 @@
 import { ImageBasedSlider as BabylonImageBasedSlider} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IBaseSliderParams } from './BaseSlider'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { BaseSliderHOC, IBaseSliderParams } from './BaseSlider'
+import { ControlHOC } from './Control';
 
-export type IImageBasedSliderProps = IComponentProps<BabylonImageBasedSlider> & {
+export type IImageBasedSliderProps = IComponentProps & {
     name?: string
 }
 
-export type IImageBasedSliderParams<T> = IBaseSliderParams<T> & {
+export type IImageBasedSliderParams = {
 
 }
 
 function ImageBasedSliderHOC(EL: React.FC) {
-    return (props: IImageBasedSliderParams<BabylonImageBasedSlider>) => {
+    return (props: IImageBasedSliderParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ImageBasedSliderHOC(e));
 }
 
 function _(props: IImageBasedSliderProps) {
@@ -33,4 +30,9 @@ function _(props: IImageBasedSliderProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PImageBasedSlider = buildExtends<IImageBasedSliderProps & IImageBasedSliderParams<BabylonImageBasedSlider>>(_); 
+export const P2PImageBasedSlider = getEL<IImageBasedSliderParams>(_, [
+    ImageBasedSliderHOC,
+    BaseSliderHOC,
+    ControlHOC,
+    ComponentHOC
+])

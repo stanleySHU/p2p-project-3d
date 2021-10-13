@@ -1,27 +1,25 @@
 import { Button as BabylonButton} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IRectangleParams } from './Rectangle'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ContainerHOC, IContainerParams } from './Container';
+import { ControlHOC, IControlParams } from './Control';
+import { IRectangleParams, RectangleHOC } from './Rectangle'
 
-export type IButtonProps = IComponentProps<BabylonButton> & {
+export type IButtonProps = IComponentProps & {
     name?: string 
 }
 
-export type IButtonParams<T> = IRectangleParams<T> & {
+export type IButtonParams = {
 
 }
 
-function ButtonHOC(EL: React.FC) {
-    return (props: IButtonParams<BabylonButton>) => {
+export function ButtonHOC(EL: React.FC) {
+    return (props: IButtonParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ButtonHOC(e));
 }
 
 function _(props: IButtonProps) {
@@ -33,4 +31,10 @@ function _(props: IButtonProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PButton = buildExtends<IButtonProps & IButtonParams<BabylonButton>>(_); 
+export const P2PButton = getEL<IControlParams & IContainerParams & IRectangleParams & IButtonParams & IButtonProps>(_, [
+    ButtonHOC,
+    RectangleHOC,
+    ContainerHOC,
+    ControlHOC,
+    ComponentHOC
+])

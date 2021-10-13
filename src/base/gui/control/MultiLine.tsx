@@ -1,27 +1,23 @@
 import { MultiLine as BabylonMultiLine} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IControlParams } from './Control'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ControlHOC, IControlParams } from './Control'
 
-export type IMultiLineProps = IComponentProps<BabylonMultiLine> & {
+export type IMultiLineProps = IComponentProps & {
     name?: string
 }
 
-export type IMultiLineParams<T> = IControlParams<T> & {
+export type IMultiLineParams = {
 
 }
 
 function MultiLineHOC(EL: React.FC) {
-    return (props: IMultiLineParams<BabylonMultiLine>) => {
+    return (props: IMultiLineParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(MultiLineHOC(e));
 }
 
 function _(props: IMultiLineProps) {
@@ -33,4 +29,8 @@ function _(props: IMultiLineProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PMultiLine = buildExtends<IMultiLineProps & IMultiLineParams<BabylonMultiLine>>(_); 
+export const P2PMultiLine = getEL<IMultiLineParams>(_, [
+    MultiLineHOC,
+    ControlHOC,
+    ComponentHOC
+])

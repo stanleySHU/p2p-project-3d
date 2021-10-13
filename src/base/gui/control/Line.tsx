@@ -1,27 +1,23 @@
 import { Line as BabylonLine} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IControlParams } from './Control'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ControlHOC, IControlParams } from './Control'
 
-export type ILineProps = IComponentProps<BabylonLine> & {
+export type ILineProps = IComponentProps & {
     name?: string 
 }
 
-export type ILineParams<T> = IControlParams<T> & {
+export type ILineParams = {
 
 }
 
 function LineHOC(EL: React.FC) {
-    return (props: ILineParams<BabylonLine>) => {
+    return (props: ILineParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(LineHOC(e));
 }
 
 function _(props: ILineProps) {
@@ -33,4 +29,8 @@ function _(props: ILineProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PLine = buildExtends<ILineProps & ILineParams<BabylonLine>>(_); 
+export const P2PLine = getEL<ILineParams>(_, [
+    LineHOC,
+    ControlHOC,
+    ComponentHOC
+])

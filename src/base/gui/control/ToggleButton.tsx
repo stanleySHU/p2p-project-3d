@@ -1,27 +1,25 @@
 import { ToggleButton as BabylonToggleButton} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IRectangleParams } from './Rectangle'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ContainerHOC } from './Container';
+import { ControlHOC } from './Control';
+import { IRectangleParams, RectangleHOC } from './Rectangle'
 
-export type IToggleButtonProps = IComponentProps<BabylonToggleButton> &  {
+export type IToggleButtonProps = IComponentProps & {
     name?: string 
 }
 
-export type IToggleButtonParams<T> = IRectangleParams<T> & {
+export type IToggleButtonParams = {
 
 }
 
 function ToggleButtonHOC(EL: React.FC) {
-    return (props: IToggleButtonParams<BabylonToggleButton>) => {
+    return (props: IToggleButtonParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ToggleButtonHOC(e));
 }
 
 function _(props: IToggleButtonProps) {
@@ -33,4 +31,10 @@ function _(props: IToggleButtonProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PToggleButton = buildExtends<IToggleButtonProps & IToggleButtonParams<BabylonToggleButton>>(_); 
+export const P2PToggleButton = getEL<IToggleButtonParams>(_, [
+    ToggleButtonHOC,
+    RectangleHOC,
+    ContainerHOC,
+    ControlHOC,
+    ComponentHOC
+])

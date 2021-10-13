@@ -1,28 +1,26 @@
 import { SelectionPanel as BabylonSelectionPanel, SelectorGroup} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IRectangleParams } from './Rectangle'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ContainerHOC } from './Container';
+import { ControlHOC } from './Control';
+import { IRectangleParams, RectangleHOC } from './Rectangle'
 
-export type ISelectionPanelProps = IComponentProps<BabylonSelectionPanel> & {
+export type ISelectionPanelProps = IComponentProps & {
     name: string,
     groups?: SelectorGroup[]
 }
 
-export type ISelectionPanelParams<T> = IRectangleParams<T> & {
+export type ISelectionPanelParams = {
 
 }
 
 function SelectionPanelHOC(EL: React.FC) {
-    return (props: ISelectionPanelParams<BabylonSelectionPanel>) => {
+    return (props: ISelectionPanelParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(SelectionPanelHOC(e));
 }
 
 function _(props: ISelectionPanelProps) {
@@ -34,4 +32,10 @@ function _(props: ISelectionPanelProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PSelectionPanel = buildExtends<ISelectionPanelProps & ISelectionPanelParams<BabylonSelectionPanel>>(_); 
+export const P2PSelectionPanel = getEL<ISelectionPanelParams>(_, [
+    SelectionPanelHOC,
+    RectangleHOC,
+    ContainerHOC,
+    ControlHOC,
+    ComponentHOC
+])

@@ -33,7 +33,7 @@ export type IControlParams = {
     style?: Style;
 }
 
-function ControlHOC(EL: React.FC<IControlParams>) {
+export function ControlHOC(EL: React.FC<IControlParams>) {
     return (props: IControlParams) => {
         const { instance, parentInstance } = props as any;
         useEffect(() => {
@@ -81,3 +81,8 @@ function _(props: IControlProps) {
     }, []);
     return <P2PChildren {...props}/>;
 }
+
+export const P2PControl = getEL<IControlParams>(_, [
+    ControlHOC,
+    ComponentHOC
+])

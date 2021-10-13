@@ -1,25 +1,20 @@
 import { Container as BabylonContainer, Control as BabylonControl} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { Nullable } from '../../../utils/customType';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IControlParams } from './Control'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ControlHOC, IControlParams } from './Control'
 
-export type IContainerProps = IComponentProps<BabylonContainer> & {
+export type IContainerProps = IComponentProps & {
     name?: string 
 }
 
-export type IContainerParams<T> = IControlParams<T> & {
+export type IContainerParams = {
 }
 
-function ContainerHOC(EL: React.FC) {
-    return (props: IContainerParams<BabylonContainer>) => { 
-        const { instance } = props;
+export function ContainerHOC(EL: React.FC) {
+    return (props: IContainerParams) => { 
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ContainerHOC(e));
 }
 
 function _(props: IContainerProps) {
@@ -31,4 +26,8 @@ function _(props: IContainerProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PContainer = buildExtends<IContainerProps & IContainerParams<BabylonContainer>>(_); 
+export const P2PContainer = getEL<IControlParams & IContainerParams & IContainerProps>(_, [
+    ContainerHOC,
+    ControlHOC,
+    ComponentHOC
+])

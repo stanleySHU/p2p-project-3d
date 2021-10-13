@@ -1,27 +1,24 @@
 import { ScrollBar as BabylonScrollBar} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IBaseSliderParams } from './BaseSlider'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { BaseSliderHOC, IBaseSliderParams } from './BaseSlider'
+import { ControlHOC } from './Control';
 
-export type IScrollBarProps = IComponentProps<BabylonScrollBar> & {
+export type IScrollBarProps = IComponentProps & {
     name?: string
 }
 
-export type IScrollBarParams<T> = IBaseSliderParams<T> & {
+export type IScrollBarParams = {
 
 }
 
 function ScrollBarHOC(EL: React.FC) {
-    return (props: IScrollBarParams<BabylonScrollBar>) => {
+    return (props: IScrollBarParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ScrollBarHOC(e));
 }
 
 function _(props: IScrollBarProps) {
@@ -33,4 +30,9 @@ function _(props: IScrollBarProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PScrollBar = buildExtends<IScrollBarProps & IScrollBarParams<BabylonScrollBar>>(_); 
+export const P2PScrollBar = getEL<IScrollBarParams>(_, [
+    ScrollBarHOC,
+    BaseSliderHOC,
+    ControlHOC,
+    ComponentHOC
+])

@@ -1,27 +1,23 @@
 import { ColorPicker as BabylonColorPicker} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IControlParams } from './Control'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ControlHOC, IControlParams } from './Control'
 
-export type IColorPickerProps = IComponentProps<BabylonColorPicker> & {
+export type IColorPickerProps = IComponentProps & {
     name?: string 
 }
 
-export type IColorPickerParams<T> = IControlParams<T> & {
+export type IColorPickerParams = {
 
 }
 
 function ColorPickerHOC(EL: React.FC) {
-    return (props: IColorPickerParams<BabylonColorPicker>) => {
+    return (props: IColorPickerParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ColorPickerHOC(e));
 }
 
 function _(props: IColorPickerProps) {
@@ -33,4 +29,8 @@ function _(props: IColorPickerProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PColorPicker = buildExtends<IColorPickerProps & IColorPickerParams<BabylonColorPicker>>(_); 
+export const P2PColorPicker = getEL<IColorPickerParams>(_, [
+    ColorPickerHOC,
+    ControlHOC,
+    ComponentHOC
+])

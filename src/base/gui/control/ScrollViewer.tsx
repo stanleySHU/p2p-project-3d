@@ -1,27 +1,25 @@
 import { ScrollViewer as BabylonScrollViewer} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IRectangleParams } from './Rectangle'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ContainerHOC } from './Container';
+import { ControlHOC } from './Control';
+import { IRectangleParams, RectangleHOC } from './Rectangle'
 
-export type IScrollViewerProps = IComponentProps<BabylonScrollViewer> & {
+export type IScrollViewerProps = IComponentProps & {
     name?: string 
 }
 
-export type IScrollViewerParams<T> = IRectangleParams<T> & {
+export type IScrollViewerParams = {
 
 }
 
 function ScrollViewerHOC(EL: React.FC) {
-    return (props: IScrollViewerParams<BabylonScrollViewer>) => {
+    return (props: IScrollViewerParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(ScrollViewerHOC(e));
 }
 
 function _(props: IScrollViewerProps) {
@@ -33,4 +31,10 @@ function _(props: IScrollViewerProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PScrollViewer = buildExtends<IScrollViewerProps & IScrollViewerParams<BabylonScrollViewer>>(_); 
+export const P2PScrollViewer = getEL<IScrollViewerParams>(_, [
+    ScrollViewerHOC,
+    RectangleHOC,
+    ContainerHOC,
+    ControlHOC,
+    ComponentHOC
+])

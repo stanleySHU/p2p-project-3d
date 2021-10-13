@@ -8,15 +8,14 @@ import { Nullable, UndefinedAble } from "../../utils/customType";
 import { Action, processUpdate, loadFinish, load } from "../scene/PreloadRedux";
 import { IComponentProps } from '../Component'
 
-export type IAssetsManagerInitial<T> = IComponentProps<T> & {
+export type IAssetsManagerInitial= IComponentProps & {
     scene: BabylonScene,
     children: any | any[], 
     loadDispatch: React.Dispatch<Action>,
     loaded: () => void
 }
-export type IAssetsManagerProps = IAssetsManagerInitial<BabylonAssetsManager>;
 
-export const P2PAssetsManager = (props: IAssetsManagerProps) => {
+export const P2PAssetsManager = (props: IAssetsManagerInitial) => {
     const { scene, loadDispatch, loaded } = props;
     const assetContainerRef = useRef<BabylonAssetsManager>();
 

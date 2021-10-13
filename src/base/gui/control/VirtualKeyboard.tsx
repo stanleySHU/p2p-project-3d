@@ -1,27 +1,25 @@
 import { VirtualKeyboard as BabylonVirtualKeyboard} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IStackPanelParams } from './StackPanel'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ContainerHOC } from './Container';
+import { ControlHOC } from './Control';
+import { IStackPanelParams, StackPanelHOC } from './StackPanel'
 
-export type IVirtualKeyboardProps = IComponentProps<BabylonVirtualKeyboard>  & {
+export type IVirtualKeyboardProps = IComponentProps & {
     name?: string 
 }
 
-export type IVirtualKeyboardParams<T> = IStackPanelParams<T> & {
+export type IVirtualKeyboardParams = {
 
 }
 
 function VirtualKeyboardHOC(EL: React.FC) {
-    return (props: IVirtualKeyboardParams<BabylonVirtualKeyboard>) => {
+    return (props: IVirtualKeyboardParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(VirtualKeyboardHOC(e));
 }
 
 function _(props: IVirtualKeyboardProps) {
@@ -33,4 +31,10 @@ function _(props: IVirtualKeyboardProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PVirtualKeyboard = buildExtends<IVirtualKeyboardProps & IVirtualKeyboardParams<BabylonVirtualKeyboard>>(_); 
+export const P2PVirtualKeyboard = getEL<IVirtualKeyboardParams>(_, [
+    VirtualKeyboardHOC,
+    StackPanelHOC,
+    ContainerHOC,
+    ControlHOC,
+    ComponentHOC
+])

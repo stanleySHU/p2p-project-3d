@@ -1,8 +1,8 @@
-import { buildExtends as _buildExtends, IComponentProps, P2PChildren } from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
 import { AdvancedDynamicTexture, Style as BabylonStyle } from '@babylonjs/gui';
 import { Component, useLayoutEffect } from 'react';
 
-export type IStyleProps = IComponentProps<BabylonStyle> &  {
+export type IStyleProps = IComponentProps&  {
     host: AdvancedDynamicTexture
 }
 
@@ -22,10 +22,6 @@ function StyleHOC(EL: React.FC<IStyleParams>) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(StyleHOC(e));
-}
-
 function _(props: IStyleProps) {
     const { init, host } = props;
     useLayoutEffect(() => {
@@ -35,4 +31,7 @@ function _(props: IStyleProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PStyle = buildExtends<IStyleProps & IStyleParams>(_); 
+export const P2PStyle = getEL<IStyleParams>(_, [
+    StyleHOC,
+    ComponentHOC
+]);

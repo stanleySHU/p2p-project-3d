@@ -1,28 +1,25 @@
 import { InputPassword as BabylonInputPassword} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IInputTextParams } from './InputText'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ControlHOC } from './Control';
+import { IInputTextParams, InputTextHOC } from './InputText'
 
-export type IInputPasswordProps = IComponentProps<BabylonInputPassword> & {
+export type IInputPasswordProps = IComponentProps & {
     name?: string,
     text?: string
 }
 
-export type IInputPasswordParams<T> = IInputTextParams<T> & {
+export type IInputPasswordParams = {
 
 }
 
 function InputPasswordHOC(EL: React.FC) {
-    return (props: IInputPasswordParams<BabylonInputPassword>) => {
+    return (props: IInputPasswordParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(InputPasswordHOC(e));
 }
 
 function _(props: IInputPasswordProps) {
@@ -34,4 +31,9 @@ function _(props: IInputPasswordProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PInputPassword = buildExtends<IInputPasswordProps & IInputPasswordParams<BabylonInputPassword>>(_); 
+export const P2PInputPassword = getEL<IInputPasswordParams>(_, [
+    InputPasswordHOC,
+    InputTextHOC,
+    ControlHOC,
+    ComponentHOC
+])

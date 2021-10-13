@@ -1,27 +1,23 @@
 import { Checkbox as BabylonCheckbox} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IControlParams } from './Control'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ControlHOC, IControlParams } from './Control'
 
-export type ICheckboxProps = IComponentProps<BabylonCheckbox> & {
+export type ICheckboxProps = IComponentProps & {
     name?: string
 }
 
-export type ICheckboxParams<T> = IControlParams<T> & {
+export type ICheckboxParams = {
 
 }
 
 function CheckboxHOC(EL: React.FC) {
-    return (props: ICheckboxParams<BabylonCheckbox>) => {
+    return (props: ICheckboxParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(CheckboxHOC(e));
 }
 
 function _(props: ICheckboxProps) {
@@ -33,4 +29,8 @@ function _(props: ICheckboxProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PCheckbox = buildExtends<ICheckboxProps & ICheckboxParams<BabylonCheckbox>>(_); 
+export const P2PCheckbox = getEL<ICheckboxParams>(_, [
+    CheckboxHOC,
+    ControlHOC,
+    ComponentHOC
+])

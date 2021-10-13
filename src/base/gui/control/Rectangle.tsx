@@ -1,27 +1,24 @@
 import { Rectangle as BabylonRectangle} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IContainerParams } from './Container'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ContainerHOC, IContainerParams } from './Container'
+import { ControlHOC } from './Control';
 
-export type IRectangleProps = IComponentProps<BabylonRectangle> & {
+export type IRectangleProps = IComponentProps & {
     name?: string
 }
 
-export type IRectangleParams<T> = IContainerParams<T> & {
+export type IRectangleParams = {
 
 }
 
-function RectangleHOC(EL: React.FC) {
-    return (props: IRectangleParams<BabylonRectangle>) => {
+export function RectangleHOC(EL: React.FC) {
+    return (props: IRectangleParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(RectangleHOC(e));
 }
 
 function _(props: IRectangleProps) {
@@ -33,4 +30,9 @@ function _(props: IRectangleProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PRectangle = buildExtends<IRectangleProps & IRectangleParams<BabylonRectangle>>(_); 
+export const P2PRectangle = getEL<IRectangleParams>(_, [
+    RectangleHOC,
+    ContainerHOC,
+    ControlHOC,
+    ComponentHOC
+])

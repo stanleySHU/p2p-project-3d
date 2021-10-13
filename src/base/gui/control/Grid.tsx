@@ -1,27 +1,25 @@
 import { Grid as BabylonGrid} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IContainerParams } from './Container'
+import { IComponentProps, P2PChildren, getEL, ComponentHOC} from '../../Component';
+import { IContainerParams } from './Container'
+import { ContainerHOC } from './Container'
+import { ControlHOC } from './Control';
 
-export type IGridProps = IComponentProps<BabylonGrid> & {
+export type IGridProps = IComponentProps & {
     name?: string 
 }
 
-export type IGridParams<T> = IContainerParams<T> & {
+export type IGridParams = {
 
 }
 
 function GridHOC(EL: React.FC) {
-    return (props: IGridParams<BabylonGrid>) => {
+    return (props: IGridParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(GridHOC(e));
 }
 
 function _(props: IGridProps) {
@@ -33,4 +31,9 @@ function _(props: IGridProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PGrid = buildExtends<IGridProps & IGridParams<BabylonGrid>>(_); 
+export const P2PGrid = getEL<IGridParams>(_, [
+    GridHOC,
+    ContainerHOC,
+    ControlHOC,
+    ComponentHOC
+])

@@ -111,16 +111,6 @@ import { P2PVideoTexture } from './texture/VideoTexture';
 
 //resource
 import { P2PAssetsManager } from './resource2/AssetsManager';
-import { P2PBinaryFileAssetTask } from './resource/BinaryFileAssetTask';
-import { P2PContainerAssetTask } from './resource/ContainerAssetTask';
-import { P2PCubeTextureAssetTask } from './resource/CubeTextureManager';
-import { P2PEquiRectangularCubeTextureAssetTask } from './resource/EquiRectangularCubeTextureAssetTask';
-import { P2PHDRCubeTextureAssetTask } from './resource/HDRCubeTextureAssetTask';
-import { P2PImageAssetTask } from './resource/ImageAssetTask';
-import { P2PMeshAssetTask } from './resource/MeshAssetTask';
-import { P2PTextFileAssetTask } from './resource/TextFileAssetTask';
-import { P2PTextureAssetTask } from './resource/TextureAssetTask';
-
 //gui
 //control
 import { P2PBaseSlider } from './gui/control/BaseSlider';
@@ -216,9 +206,8 @@ export {
     P2PBaseTexture, P2PColorGradingTexture, P2PCubeTexture, P2PCustomProceduralTexture, P2PDynamicTexture, P2PEquiRectangularCubeTexture, P2PHDRCubeTexture, P2PHtmlElementTexture,
     P2PMirrorTexture, P2PMultiRenderTarget, P2PNoiseProceduralTexture, P2PProceduralTexture, P2PRawTexture, P2PRawTexture2DArray, P2PRawTexture3D, P2PRefractionTexture,
     P2PRenderTargetTexture, P2PTexture, P2PVideoTexture,
-    //task
-    P2PAssetsManager, P2PBinaryFileAssetTask, P2PContainerAssetTask, P2PCubeTextureAssetTask, P2PEquiRectangularCubeTextureAssetTask, P2PHDRCubeTextureAssetTask, P2PImageAssetTask,
-    P2PMeshAssetTask, P2PTextFileAssetTask, P2PTextureAssetTask,
+    //
+    P2PAssetsManager,
     //control 2d
     P2PBaseSlider, P2PButton, P2PCheckbox, P2PColorPicker, P2PContainer, P2PControl, P2PDisplayGrid, P2PEllipse, P2PFocusableButton, P2PGrid, P2PImage, P2PImageBasedSlider, P2PImageScrollBar,
     P2PInputPassword, P2PInputText, P2PLine, P2PMultiLine, P2PRadioButton, P2PRectangle, P2PScrollBar, P2PScrollViewer, P2PSelectionPanel, P2PSlider, P2PStackPanel, P2PTextBlock, P2PToggleButton,

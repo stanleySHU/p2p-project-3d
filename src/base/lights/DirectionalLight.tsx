@@ -1,5 +1,5 @@
 import { DirectionalLight as BabylonDirectionalLight, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
-import { useEffect, useLayoutEffect, useReducer, useState } from "react"
+import { useEffect, useLayoutEffect } from "react"
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
 import { LightHOC } from './Light';
 import { ShadowLightHOC } from './ShadowLight';
@@ -30,7 +30,7 @@ function _(props: IDirectionalLightProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PDirectionalLight = getEL<IDirectionalLightParams>(_, [
+export const P2PDirectionalLight = getEL<IDirectionalLightParams & IDirectionalLightProps>(_, [
     DirectionalLightHOC,
     ShadowLightHOC,
     LightHOC,

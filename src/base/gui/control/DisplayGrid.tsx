@@ -1,27 +1,23 @@
 import { DisplayGrid as BabylonDisplayGrid} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IControlParams } from './Control'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ControlHOC, IControlParams } from './Control'
 
-export type IDisplayGridProps = IComponentProps<BabylonDisplayGrid> & {
+export type IDisplayGridProps = IComponentProps & {
     name?: string 
 }
 
-export type IDisplayGridParams<T> = IControlParams<T> & {
+export type IDisplayGridParams = {
 
 }
 
 function DisplayGridHOC(EL: React.FC) {
-    return (props: IDisplayGridParams<BabylonDisplayGrid>) => {
+    return (props: IDisplayGridParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(DisplayGridHOC(e));
 }
 
 function _(props: IDisplayGridProps) {
@@ -33,4 +29,8 @@ function _(props: IDisplayGridProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PDisplayGrid = buildExtends<IDisplayGridProps & IDisplayGridParams<BabylonDisplayGrid>>(_); 
+export const P2PDisplayGrid = getEL<IDisplayGridParams>(_, [
+    DisplayGridHOC,
+    ControlHOC,
+    ComponentHOC
+])

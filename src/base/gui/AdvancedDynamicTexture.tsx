@@ -3,10 +3,10 @@ import { AdvancedDynamicTexture as BabylonAdvancedDynamicTexture} from '@babylon
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component'
-import { BaseTextureHOC } from '../texture/BaseTexture';
-import { DynamicTextureHOC } from '../texture/DynamicTexture';
-import { TextureHOC } from '../texture/Texture';
-import { ThinTextureHOC } from '../texture/ThinTexture';
+import { BaseTextureHOC, IBaseTextureParams } from '../texture/BaseTexture';
+import { DynamicTextureHOC, IDynamicTextureParams } from '../texture/DynamicTexture';
+import { ITextureParams, TextureHOC } from '../texture/Texture';
+import { IThinTextureParams, ThinTextureHOC } from '../texture/ThinTexture';
 
 export type IAdvancedDynamicTextureProps = IComponentProps & {
     name: string, 
@@ -57,7 +57,7 @@ function _(props: IAdvancedDynamicTextureProps) {
     </AdvancedDynamicTextureContext.Provider>;
 }
 
-export const P2PAdvancedDynamicTexture = getEL(_, [
+export const P2PAdvancedDynamicTexture = getEL<IThinTextureParams & IBaseTextureParams & ITextureParams & IDynamicTextureParams & IAdvancedDynamicTextureParams & IAdvancedDynamicTextureProps>(_, [
     AdvancedDynamicTextureHOC,
     DynamicTextureHOC,
     TextureHOC,

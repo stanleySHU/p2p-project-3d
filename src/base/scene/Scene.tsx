@@ -1,9 +1,9 @@
 import { Scene as BabylonScene, SceneOptions } from "@babylonjs/core";
 import React, { useContext, useEffect, useLayoutEffect } from "react";
-import { IComponentProps, buildExtends as _buildExtends, P2PChildren} from '../Component';
+import { ComponentHOC, getEL, IComponentProps, P2PChildren} from '../Component';
 import { EngineContext } from "../Engine";
 
-export type ISceneProps= IComponentProps<BabylonScene> & {
+export type ISceneProps= IComponentProps & {
     id: string,
     next?: string,
     options?: SceneOptions
@@ -24,10 +24,6 @@ function SceneHOC(EL: React.FC) {
     }
 }
 
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(SceneHOC(e));
-}
-
 function _(props: ISceneProps) {
     const { engine } = useContext(EngineContext);
     const { instance, init, options } = props;
@@ -41,4 +37,7 @@ function _(props: ISceneProps) {
     </SceneContext.Provider>;
 }
 
-export const P2PScene = buildExtends<ISceneProps & ISceneParams>(_);
+export const P2PScene = getEL<ISceneParams>(_, [
+    SceneHOC,
+    ComponentHOC
+])

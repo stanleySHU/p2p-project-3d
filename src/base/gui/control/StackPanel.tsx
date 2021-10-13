@@ -1,27 +1,24 @@
 import { StackPanel as BabylonStackPanel} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IContainerParams } from './Container'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ContainerHOC, IContainerParams } from './Container'
+import { ControlHOC } from './Control';
 
-export type IStackPanelProps = IComponentProps<BabylonStackPanel> & {
+export type IStackPanelProps = IComponentProps & {
     name?: string 
 }
 
-export type IStackPanelParams<T> = IContainerParams<T> & {
+export type IStackPanelParams = {
 
 }
 
-function StackPanelHOC(EL: React.FC) {
-    return (props: IStackPanelParams<BabylonStackPanel>) => {
+export function StackPanelHOC(EL: React.FC) {
+    return (props: IStackPanelParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(StackPanelHOC(e));
 }
 
 function _(props: IStackPanelProps) {
@@ -33,4 +30,9 @@ function _(props: IStackPanelProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PStackPanel = buildExtends<IStackPanelProps & IStackPanelParams<BabylonStackPanel>>(_); 
+export const P2PStackPanel = getEL<IStackPanelParams>(_, [
+    StackPanelHOC,
+    ContainerHOC,
+    ControlHOC,
+    ComponentHOC
+])

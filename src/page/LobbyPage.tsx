@@ -29,29 +29,6 @@ const tableItemDatas = [
 ];
 
 export const LobbyPage = (props: ISceneProps) => {
-
-
-    // <P2PButton left={62} top={449} width={80/960} height={80/540}>
-    //                                 <P2PImage url="/assets/img/gpi_lobby.png" left={8} top={0} height={64 / 80} width={64 / 80} />
-    //                                 <P2PTextBlock text="GPI Lobby" color="#f5f5f5" top={66} height={13.4 / 80} />
-    //                             </P2PButton>
-    //                             <P2PButton>
-    //                                 <P2PImage url="/assets/img/announcements.png" height={64} />
-    //                                 <P2PTextBlock text="News" color="#f5f5f5" />
-    //                             </P2PButton>
-    //                             <P2PButton>
-    //                                 <P2PImage url="/assets/img/leaderboard.png" height={64} />
-    //                                 <P2PTextBlock text="Ranking" color="#f5f5f5" />
-    //                             </P2PButton>
-    //                             <P2PButton>
-    //                                 <P2PImage url="/assets/img/gamerules.png" height={64} />
-    //                                 <P2PTextBlock text="Help" color="#f5f5f5" />
-    //                             </P2PButton>
-    //                             <P2PButton>
-    //                                 <P2PImage url="/assets/img/settings.png" height={64} />
-    //                                 <P2PTextBlock text="Settings" color="#f5f5f5" />
-    //                             </P2PButton>
-
     return <P2PScene {...props}>
         <SceneContext.Consumer >
             {

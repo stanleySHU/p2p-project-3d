@@ -1,27 +1,23 @@
 import { RadioButton as BabylonRadioButton} from '@babylonjs/gui';
 import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { IComponentProps, P2PChildren } from '../../Component';
-import { buildExtends as _buildExtends, IControlParams } from './Control'
+import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
+import { ControlHOC, IControlParams } from './Control'
 
-export type IRadioButtonProps = IComponentProps<BabylonRadioButton> & {
+export type IRadioButtonProps = IComponentProps& {
     name?: string 
 }
 
-export type IRadioButtonParams<T> = IControlParams<T> & {
+export type IRadioButtonParams = {
 
 }
 
 function RadioButtonHOC(EL: React.FC) {
-    return (props: IRadioButtonParams<BabylonRadioButton>) => {
+    return (props: IRadioButtonParams) => {
         useEffect(() => {
 
         });
         return <EL {...props}/>
     }
-}
-
-export function buildExtends<T>(e: any) {
-    return _buildExtends<T>(RadioButtonHOC(e));
 }
 
 function _(props: IRadioButtonProps) {
@@ -33,4 +29,8 @@ function _(props: IRadioButtonProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PRadioButton = buildExtends<IRadioButtonProps & IRadioButtonParams<BabylonRadioButton>>(_); 
+export const P2PRadioButton = getEL<IRadioButtonParams>(_, [
+    RadioButtonHOC,
+    ControlHOC,
+    ComponentHOC
+])
