@@ -34,10 +34,10 @@ function AdvancedDynamicTextureHOC(EL: React.FC<IAdvancedDynamicTextureParams>) 
             if (instance) instance.background = props.background || '#000000';
         }, [props.background, instance]);
         useEffect(() => {
-            if (instance) instance.idealWidth = props.idealWidth || 960;
+            if (instance && props.idealWidth) instance.idealWidth = props.idealWidth;
         }, [props.idealWidth, instance]);
         useEffect(() => {
-            if (instance) instance.idealHeight = props.idealHeight || 540;
+            if (instance && props.idealHeight) instance.idealHeight = props.idealHeight;
         }, [props.idealHeight, instance])
         return <EL {...props}/>
     }
@@ -46,11 +46,8 @@ function AdvancedDynamicTextureHOC(EL: React.FC<IAdvancedDynamicTextureParams>) 
 function _(props: IAdvancedDynamicTextureProps) {
     const { instance, init, name, foreground, scene, sampling } = props;
     useLayoutEffect(() => {
-        let obj = BabylonAdvancedDynamicTexture.CreateFullscreenUI(name, foreground, scene, sampling )
+        let obj = BabylonAdvancedDynamicTexture.CreateFullscreenUI(name, foreground, scene, sampling );
         init!(obj);
-        return () => {
-            obj.dispose();
-        }
     }, []);
     return <AdvancedDynamicTextureContext.Provider value={{ADTexture: instance!}}>
         <P2PChildren {...props}/>

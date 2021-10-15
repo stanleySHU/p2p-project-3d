@@ -30,7 +30,9 @@
       "no-throw-literal": "off",
       "warn": "off",
       "react-hooks/rules-of-hooks": "off",
-      "react/jsx-pascal-case": "off"
+      "react/jsx-pascal-case": "off",
+      "no-unused-expressions": "off",
+      "@typescript-eslint/no-unused-expressions": ["error"]
     }
   },
   "browserslist": {

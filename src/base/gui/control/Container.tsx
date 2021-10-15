@@ -1,6 +1,5 @@
 import { Container as BabylonContainer, Control as BabylonControl} from '@babylonjs/gui';
-import React, { useEffect, useLayoutEffect, useReducer } from 'react';
-import { Nullable } from '../../../utils/customType';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
 import { ControlHOC, IControlParams } from './Control'
 

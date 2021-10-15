@@ -1,3 +1,4 @@
+import { P2PLayer } from './Component';
 //scene
 import { P2PScene } from './scene/Scene';
 
@@ -156,6 +157,9 @@ import { P2PPositionGizmo } from './gizmo/PositionGizmo';
 import { P2PRotationGizmo } from './gizmo/RotationGizmo';
 import { P2PScaleGizmo } from './gizmo/ScaleGizmo';
 
+//other
+import { P2PStyle } from './other/Style';
+
 //resource2
 import { IBinaryResourceInitial } from './resource2/BinaryFileResource';
 import { ICubeTextureResourceInitial } from './resource2/CubeTextureManager';
@@ -182,6 +186,7 @@ declare global {
 }
 
 export {
+    P2PLayer,
     //scene
     P2PScene,
     //node
@@ -215,4 +220,6 @@ export {
     P2PAdvancedDynamicTexture,
     //gizmo
     P2PAxisDragGizmo, P2PAxisScaleGizmo, P2PBoundingBoxGizmo, P2PCameraGizmo, P2PGizmo, P2PLightGizmo, P2PPlaneDragGizmo, P2PPlaneRotationGizmo, P2PPositionGizmo, P2PRotationGizmo, P2PScaleGizmo,
+    //util
+    P2PStyle
 }

@@ -5,15 +5,20 @@ import { ContainerHOC, IContainerParams } from './Container';
 import { ControlHOC, IControlParams } from './Control';
 import { IRectangleParams, RectangleHOC } from './Rectangle'
 
+type ButtonType = 'ImageButton' | 'ImageOnlyButton' | 'SimpleButton' | 'ImageWithCenterTextButton';
+
 export type IButtonProps = IComponentProps & {
-    name?: string 
+    type?: ButtonType,
+    name?: string,
+    image?: string
+    text?: string
 }
 
 export type IButtonParams = {
 
 }
 
-export function ButtonHOC(EL: React.FC) {
+export function ButtonHOC(EL: React.FC<IButtonParams>) {
     return (props: IButtonParams) => {
         useEffect(() => {
 
@@ -22,10 +27,17 @@ export function ButtonHOC(EL: React.FC) {
     }
 }
 
-function _(props: IButtonProps) {
-    const { init, name } = props;
+function _(props: IButtonProps & IButtonParams) {
+    const { init, name, type, image, text } = props;
     useLayoutEffect(() => {
-        let obj = new BabylonButton(name);
+        let obj: BabylonButton;
+        switch(type) {
+            case 'ImageButton': obj = BabylonButton.CreateImageButton(name, text, image); break;
+            case 'ImageOnlyButton': obj = BabylonButton.CreateImageOnlyButton(name, image); break;
+            case 'SimpleButton': obj = BabylonButton.CreateSimpleButton(name, text); break;
+            case 'ImageWithCenterTextButton': obj = BabylonButton.CreateImageWithCenterTextButton(name, text, image); break;
+            default: obj = new BabylonButton(name);
+        }
         init!(obj);
     }, []);
     return <P2PChildren {...props}/>;

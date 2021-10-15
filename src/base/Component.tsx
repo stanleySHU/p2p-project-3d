@@ -17,12 +17,22 @@ export function ComponentHOC(EL: React.FC<IComponentProps>) {
     }
 }
 
-export function P2PChildren(props: IComponentProps, a?) {
-    const { instance } = props;
-    let children = React.Children.map(props.children, child => (React.cloneElement(child as any, { 
+function addChildrenProps(children, instance) {
+    return React.Children.map(children, child => (React.cloneElement(child as any, { 
         parentInstance: instance
     })));
+}
+
+export function P2PChildren(props: IComponentProps) {
+    const { instance } = props;
+    let children = addChildrenProps(props.children, instance);
     return <>{instance && children}</>
+}
+ 
+export function P2PLayer(props: IComponentProps) {
+    const { parentInstance } = props;
+    let children = addChildrenProps(props.children, parentInstance);
+    return <>{children}</>;
 }
 
 export function getEL<T>(el: React.FC<T>, hocs: any[]) {
