@@ -1,9 +1,10 @@
-import { StandardMaterial as BabylonStandardMaterial, Scene as BabylonScene } from '@babylonjs/core';
+import { StandardMaterial as BabylonStandardMaterial, Scene as BabylonScene, BaseTexture, Mesh } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { compileFunction } from 'vm';
+import { Nullable } from '../../utils/customType';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
-import { MaterialHOC } from './Material';
-import { PushMaterialHOC } from './PushMaterial';
+import { IMaterialParams, MaterialHOC } from './Material';
+import { IPushMaterialParams, PushMaterialHOC } from './PushMaterial';
 
 export type IStandardMaterialProps = IComponentProps & {
     name: string, 
@@ -11,10 +12,10 @@ export type IStandardMaterialProps = IComponentProps & {
 }
 
 export type IStandardMaterialParams = {
-
+   
 }
 
-function StandardMaterialHOC(EL: React.FC) {
+function StandardMaterialHOC(EL: React.FC<IStandardMaterialParams>) {
     return (props: IStandardMaterialParams) => {
         useEffect(() => {
 
@@ -24,7 +25,7 @@ function StandardMaterialHOC(EL: React.FC) {
 }
 
 function _(props: IStandardMaterialProps) {
-    const { init, name, scene } =  props;
+    const { init, name, scene, parentInstance } =  props;
     useLayoutEffect(() => {
         let obj = new BabylonStandardMaterial(name, scene);
         init!(obj);
@@ -32,7 +33,7 @@ function _(props: IStandardMaterialProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PStandardMaterial = getEL<IStandardMaterialParams>(_, [
+export const P2PStandardMaterial = getEL<IMaterialParams & IPushMaterialParams & IStandardMaterialParams & IStandardMaterialProps>(_, [
     StandardMaterialHOC,
     PushMaterialHOC,
     MaterialHOC,

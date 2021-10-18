@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>json</string>
         <key>textureFileName</key>
-        <filename>../../texture/bg@1x.png</filename>
+        <filename>../../texture/bg.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../texture/bg@1x.json</filename>
+                <filename>../../texture/bg.json</filename>
             </struct>
         </map>
         <key>multiPack</key>

@@ -2,7 +2,7 @@ import { Color4, MeshBuilder, Scene as BabylonScene, Vector4, Mesh as BabylonMes
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
-import { MeshHOC } from './Mesh';
+import { IMeshParams, MeshHOC } from './Mesh';
 
 export type IBoxProps = IComponentProps & {
     name: string, 
@@ -43,7 +43,7 @@ function _(props: IBoxProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PBox = getEL<IBoxParams>(_, [
+export const P2PBox = getEL<IMeshParams & IBoxParams & IBoxProps>(_, [
     BoxHOC,
     MeshHOC,
     ComponentHOC

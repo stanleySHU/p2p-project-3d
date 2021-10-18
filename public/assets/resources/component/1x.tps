@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>pixijs4</string>
         <key>textureFileName</key>
-        <filename>../../texture/component@1x.png</filename>
+        <filename>../../texture/component.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../texture/component@1x.json</filename>
+                <filename>../../texture/component.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -182,12 +182,9 @@
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">announcements.png</key>
-            <key type="filename">daily_login.png</key>
             <key type="filename">gamerules.png</key>
             <key type="filename">gpi_lobby.png</key>
             <key type="filename">leaderboard.png</key>
-            <key type="filename">refresh.png</key>
-            <key type="filename">settings.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -196,9 +193,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>24,24,48,48</rect>
+                <rect>32,32,64,64</rect>
                 <key>scale9Paddings</key>
-                <rect>24,24,48,48</rect>
+                <rect>32,32,64,64</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -227,9 +224,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>56,56,112,112</rect>
+                <rect>48,48,96,96</rect>
                 <key>scale9Paddings</key>
-                <rect>56,56,112,112</rect>
+                <rect>48,48,96,96</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -288,9 +285,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>7,7,14,14</rect>
+                <rect>23,23,46,46</rect>
                 <key>scale9Paddings</key>
-                <rect>7,7,14,14</rect>
+                <rect>23,23,46,46</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -342,6 +339,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">daily_login.png</key>
+            <key type="filename">refresh.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>24,24,48,48</rect>
+                <key>scale9Paddings</key>
+                <rect>24,24,48,48</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">dealer.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -351,9 +364,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>186,230,373,460</rect>
+                <rect>157,194,314,388</rect>
                 <key>scale9Paddings</key>
-                <rect>186,230,373,460</rect>
+                <rect>157,194,314,388</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -492,6 +505,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">settings.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,32,65,64</rect>
+                <key>scale9Paddings</key>
+                <rect>32,32,65,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">slider_bg_short.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -501,9 +529,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>148,16,296,32</rect>
+                <rect>123,16,245,32</rect>
                 <key>scale9Paddings</key>
-                <rect>148,16,296,32</rect>
+                <rect>123,16,245,32</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -516,9 +544,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>144,12,288,24</rect>
+                <rect>119,12,237,24</rect>
                 <key>scale9Paddings</key>
-                <rect>144,12,288,24</rect>
+                <rect>119,12,237,24</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

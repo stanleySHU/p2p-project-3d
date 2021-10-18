@@ -1,9 +1,9 @@
 import { ArcRotateCamera as BabylonArcRotateCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
-import { NodeHOC } from '../node/Node';
-import { CameraHOC } from './Camera';
-import { TargetCameraHOC } from './TargetCamera';
+import { INodeParams, NodeHOC } from '../node/Node';
+import { CameraHOC, ICameraParams } from './Camera';
+import { ITargetCameraParams, TargetCameraHOC } from './TargetCamera';
 
 export type IArcRotateCameraProps = IComponentProps& {
     name: string, 
@@ -37,7 +37,7 @@ function _(props: IArcRotateCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PArcRotateCamera = getEL<IArcRotateCameraParams>(_, [
+export const P2PArcRotateCamera = getEL<INodeParams & ICameraParams & ITargetCameraParams & IArcRotateCameraParams & IArcRotateCameraProps>(_, [
     ArcRotateCameraHOC,
     TargetCameraHOC,
     CameraHOC,

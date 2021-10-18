@@ -1,9 +1,9 @@
-import { CubeTexture as BabylonCubeTexture, Scene as BabylonScene, ThinEngine } from '@babylonjs/core';
+import { Color3, CubeTexture as BabylonCubeTexture, Material, Scene as BabylonScene, StandardMaterial, Texture, ThinEngine } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
-import { BaseTextureHOC } from './BaseTexture';
-import { ThinTextureHOC } from './ThinTexture';
+import { BaseTextureHOC, IBaseTextureParams } from './BaseTexture';
+import { IThinTextureParams, ThinTextureHOC } from './ThinTexture';
 
 export type ICubeTextureProps = IComponentProps & {
     rootUrl: string, 
@@ -32,7 +32,7 @@ export function CubeTextureHOC(EL: React.FC) {
 }
 
 function _(props: ICubeTextureProps) {
-    const { init, rootUrl, sceneOrEngine, extensions, noMipmap, files, onLoad, onError, format, prefiltered, forcedExtension, createPolynomials, lodScale, lodOffset, loaderOptions, useSRGBBuffer } =  props;
+    const { init, parentInstance, rootUrl, sceneOrEngine, extensions, noMipmap, files, onLoad, onError, format, prefiltered, forcedExtension, createPolynomials, lodScale, lodOffset, loaderOptions, useSRGBBuffer } =  props;
     useLayoutEffect(() => {
         let obj = new BabylonCubeTexture(rootUrl, sceneOrEngine, extensions, noMipmap, files, onLoad, onError, format, prefiltered, forcedExtension, createPolynomials, lodScale, lodOffset, loaderOptions, useSRGBBuffer);
         init!(obj);
@@ -40,7 +40,7 @@ function _(props: ICubeTextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PCubeTexture = getEL<ICubeTextureParams>(_, [
+export const P2PCubeTexture = getEL< IThinTextureParams & IBaseTextureParams & ICubeTextureParams & ICubeTextureProps>(_, [
     CubeTextureHOC,
     BaseTextureHOC,
     ThinTextureHOC,

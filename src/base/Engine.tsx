@@ -12,7 +12,8 @@ type IEngineInitial = {
 
 type IEngineContextOptions = {
     engine?: BabylonEngine,
-    canvas?: HTMLCanvasElement
+    canvas?: HTMLCanvasElement,
+    resourceManager?: any;
 };
 export const EngineContext = React.createContext<IEngineContextOptions>({});
 

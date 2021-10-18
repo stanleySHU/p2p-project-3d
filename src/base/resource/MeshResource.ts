@@ -11,10 +11,6 @@ export class MeshResource extends Resource {
         return loader.addMeshTask(props.taskName, props.meshName, props.url, props.sceneFileName);
     }
 
-    onSuccess(task: MeshAssetTask) {
-        
-    }
-
     onError(task: MeshAssetTask, message?: string, exception?: any) {
         super.onError(task, message, exception);
     }

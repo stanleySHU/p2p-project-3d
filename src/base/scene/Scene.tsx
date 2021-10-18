@@ -1,4 +1,4 @@
-import { Scene as BabylonScene, SceneOptions } from "@babylonjs/core";
+import { Scene as BabylonScene, SceneOptions, SceneLoader, Mesh } from "@babylonjs/core";
 import React, { useContext, useEffect, useLayoutEffect } from "react";
 import { ComponentHOC, getEL, IComponentProps, P2PChildren} from '../Component';
 import { EngineContext } from "../Engine";
@@ -26,10 +26,16 @@ function SceneHOC(EL: React.FC) {
 
 function _(props: ISceneProps) {
     const { engine } = useContext(EngineContext);
-    const { instance, init, options } = props;
+    const { instance, init, options, id } = props;
     useLayoutEffect(() => {
         let obj = new BabylonScene(engine!, options);
-        init!(obj)
+        init!(obj);  
+        if (id == 'game') SceneLoader.ImportMeshAsync(null, '/assets/gltf/', 'hetun.gltf', obj, (event) => {
+            
+        }).then((e) => {
+            console.log(11, e)
+            let t = new Mesh('', null, null, e.meshes[1] as Mesh);
+        })
     }, []);
 
     return <SceneContext.Provider value={{sceneInstance: instance!}}>

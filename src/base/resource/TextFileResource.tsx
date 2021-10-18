@@ -10,7 +10,7 @@ export class TextFileResource extends Resource {
     }
 
     onSuccess(task: TextFileAssetTask) {
-        
+       
     }
 
     onError(task: TextFileAssetTask, message?: string, exception?: any) {

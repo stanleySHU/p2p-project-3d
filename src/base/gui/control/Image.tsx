@@ -15,10 +15,11 @@ export type IImageParams = {
     cellId?: number, //https://playground.babylonjs.com/#K60448#10
     cellWidth?: number,
     cellHeight?: number,
-    sourceLeft?: number,
-    sourceTop?: number,
-    sourceWidth?: number,
-    sourceHeight?: number
+    // sourceLeft?: number,
+    // sourceTop?: number,
+    // sourceWidth?: number,
+    // sourceHeight?: number,
+    sourceName?: string
 }
 
 function CellHOC(EL: React.FC<IImageParams>) {
@@ -41,19 +42,24 @@ function CellHOC(EL: React.FC<IImageParams>) {
 function SourceHOC(EL: React.FC<IImageParams>) {
     return (props: IImageParams) => {
         const instance:BabylonImage = (props as any).instance;
-        const { sourceLeft, sourceTop, sourceWidth, sourceHeight } = props;
+        const { sourceName/*, sourceLeft, sourceTop, sourceWidth, sourceHeight*/ } = props;
+        // useEffect(() => {
+        //     isAllPresent(instance, sourceLeft) && (instance.sourceLeft = sourceLeft);
+        // }, [sourceLeft, instance]);
+        // useEffect(() => {
+        //     isAllPresent(instance, sourceTop) && (instance.sourceTop = sourceTop);
+        // }, [sourceTop, instance]);
+        // useEffect(() => {
+        //     isAllPresent(instance, sourceWidth) && (instance.sourceWidth = sourceWidth);
+        // }, [sourceWidth, instance]);
+        // useEffect(() => {
+        //     isAllPresent(instance, sourceHeight) && (instance.sourceHeight = sourceHeight);
+        // }, [sourceHeight, instance]);
         useEffect(() => {
-            isAllPresent(instance, sourceLeft) && (instance.sourceLeft = sourceLeft);
-        }, [sourceLeft, instance]);
-        useEffect(() => {
-            isAllPresent(instance, sourceTop) && (instance.sourceTop = sourceTop);
-        }, [sourceTop, instance]);
-        useEffect(() => {
-            isAllPresent(instance, sourceWidth) && (instance.sourceWidth = sourceWidth);
-        }, [sourceWidth, instance]);
-        useEffect(() => {
-            isAllPresent(instance, sourceHeight) && (instance.sourceHeight = sourceHeight);
-        }, [sourceHeight, instance]);
+            if (isAllPresent(sourceName)) {
+                //
+            }
+        }, [sourceName, instance])
         return <EL {...props}/>
     }
 }

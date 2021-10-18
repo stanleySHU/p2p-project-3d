@@ -2,8 +2,8 @@ import { Texture as BabylonTexture, Scene as BabylonScene, ThinEngine, ITextureC
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
-import { BaseTextureHOC } from './BaseTexture';
-import { ThinTextureHOC } from './ThinTexture';
+import { BaseTextureHOC, IBaseTextureParams } from './BaseTexture';
+import { IThinTextureParams, ThinTextureHOC } from './ThinTexture';
 
 export type ITextureProps = IComponentProps & {
     url: Nullable<string>, 
@@ -43,7 +43,7 @@ function _(props: ITextureProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PTexture = getEL<ITextureParams>(_, [
+export const P2PTexture = getEL<IThinTextureParams & IBaseTextureParams & ITextureParams & ITextureProps>(_, [
     TextureHOC,
     BaseTextureHOC,
     ThinTextureHOC,

@@ -1,5 +1,6 @@
 import { TargetCamera as BabylonTargetCamera, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { useEffect, useLayoutEffect, useReducer } from "react"
+import { isAllPresent } from '../../utils/lang';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
 import { NodeHOC } from '../node/Node';
 import { CameraHOC } from './Camera';
@@ -18,8 +19,10 @@ export type ITargetCameraParams = {
 export function TargetCameraHOC(EL: React.FC<ITargetCameraParams>) {
     return (props: ITargetCameraParams) => {
         const instance: BabylonTargetCamera = (props as any).instance;
+        const { setTarget } = props;
         useEffect(() => {
             instance && props.setTarget && instance.setTarget(props.setTarget);
+            isAllPresent(instance, setTarget) && (instance.setTarget(props.setTarget));
         }, [props.setTarget, instance])
         return <EL {...props}/>
     }

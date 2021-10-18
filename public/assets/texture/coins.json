@@ -291,10 +291,10 @@
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
-	"image": "coins@1x.png",
+	"image": "coins.png",
 	"format": "RGBA8888",
 	"size": {"w":911,"h":32},
 	"scale": "0.35",
-	"smartupdate": "$TexturePacker:SmartUpdate:ddca4deb692eeb186a0038d2e465c3d1:e616f3b908e2a23688b736dac66998f5:4435b639891202c114619abe5f1ec491$"
+	"smartupdate": "$TexturePacker:SmartUpdate:0d2b33a01fd069d8711db6178b09db85:e616f3b908e2a23688b736dac66998f5:51f960d29b2cb2ae0010061540f14fb7$"
 }
 }

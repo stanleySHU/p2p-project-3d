@@ -5,6 +5,7 @@
   "dependencies": {
     "@babylonjs/core": "^5.0.0-alpha.48",
     "@babylonjs/gui": "^5.0.0-alpha.48",
+    "@babylonjs/loaders": "^5.0.0-alpha.48",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -32,7 +33,9 @@
       "react-hooks/rules-of-hooks": "off",
       "react/jsx-pascal-case": "off",
       "no-unused-expressions": "off",
-      "@typescript-eslint/no-unused-expressions": ["error"]
+      "@typescript-eslint/no-unused-expressions": [
+        "error"
+      ]
     }
   },
   "browserslist": {

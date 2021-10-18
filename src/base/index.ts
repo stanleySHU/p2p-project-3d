@@ -111,7 +111,7 @@ import { P2PTexture } from './texture/Texture';
 import { P2PVideoTexture } from './texture/VideoTexture';
 
 //resource
-import { P2PAssetsManager } from './resource2/AssetsManager';
+import { P2PAssetsManager } from './resource/AssetsManager';
 //gui
 //control
 import { P2PBaseSlider } from './gui/control/BaseSlider';
@@ -161,14 +161,14 @@ import { P2PScaleGizmo } from './gizmo/ScaleGizmo';
 import { P2PStyle } from './other/Style';
 
 //resource2
-import { IBinaryResourceInitial } from './resource2/BinaryFileResource';
-import { ICubeTextureResourceInitial } from './resource2/CubeTextureManager';
-import { IEquiRectangularCubeTextureResourceInitial } from './resource2/EquiRectangularCubeTextureResource';
-import { IHDRCubeTextureResourceInitial } from './resource2/HDRCubeTextureResource';
-import { IImageResourceInitial } from './resource2/ImageResource';
-import { IMeshResourceInitial } from './resource2/MeshResource';
-import { ITextFileResourceInitial } from './resource2/TextFileResource';
-import { ITextureResourceInitial } from './resource2/TextureResource';
+import { IBinaryResourceInitial } from './resource/BinaryFileResource';
+import { ICubeTextureResourceInitial } from './resource/CubeTextureManager';
+import { IEquiRectangularCubeTextureResourceInitial } from './resource/EquiRectangularCubeTextureResource';
+import { IHDRCubeTextureResourceInitial } from './resource/HDRCubeTextureResource';
+import { IImageResourceInitial } from './resource/ImageResource';
+import { IMeshResourceInitial } from './resource/MeshResource';
+import { ITextFileResourceInitial } from './resource/TextFileResource';
+import { ITextureResourceInitial } from './resource/TextureResource';
 
 declare global {
     namespace JSX {

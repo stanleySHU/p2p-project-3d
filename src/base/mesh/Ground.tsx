@@ -36,7 +36,7 @@ function _(props: IGroundProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PGround = getEL<IGroundParams>(_, [
+export const P2PGround = getEL<IGroundParams & IGroundProps>(_, [
     GroundHOC,
     MeshHOC,
     ComponentHOC

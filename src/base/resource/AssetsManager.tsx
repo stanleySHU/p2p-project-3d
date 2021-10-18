@@ -7,6 +7,7 @@ import { Resource } from "./Resource";
 import { Nullable, UndefinedAble } from "../../utils/customType";
 import { Action, processUpdate, loadFinish, load } from "../scene/PreloadRedux";
 import { IComponentProps } from '../Component'
+import { MeshResource } from "./MeshResource";
 
 export type IAssetsManagerInitial= IComponentProps & {
     scene: BabylonScene,
@@ -20,6 +21,7 @@ export const P2PAssetsManager = (props: IAssetsManagerInitial) => {
     const assetContainerRef = useRef<BabylonAssetsManager>();
 
     useEffect(() => {
+        
         assetContainerRef.current = new BabylonAssetsManager(scene);
         React.Children.forEach(props.children, (child: any) => {
             let type = child.type as string;
@@ -57,7 +59,7 @@ export const P2PAssetsManager = (props: IAssetsManagerInitial) => {
     function resolve(type: string): UndefinedAble<Resource> {
         switch(type) {
             case "taskMesh": {
-                break;
+                return new MeshResource();
             }
             case "taskTextFile": {
                 return new TextFileResource();
