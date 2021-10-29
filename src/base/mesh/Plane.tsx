@@ -2,7 +2,7 @@ import { MeshBuilder, Plane, Scene as BabylonScene, Vector4, Mesh as BabylonMesh
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { Nullable } from '../../utils/customType';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
-import { MeshHOC } from './Mesh';
+import { IMeshParams, MeshHOC } from './Mesh';
 
 export type IPlaneProps = IComponentProps & {
     name: string, 
@@ -38,7 +38,7 @@ function _(props: IPlaneProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PPlane = getEL<IPlaneParams>(_, [
+export const P2PPlane = getEL<IMeshParams & IPlaneParams & IPlaneProps>(_, [
     PlaneHOC,
     MeshHOC,
     ComponentHOC

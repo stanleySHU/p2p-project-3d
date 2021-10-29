@@ -3,7 +3,7 @@ import React, { useEffect, useLayoutEffect } from 'react';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
 import { ActionHOC } from './Action';
 
-export type IPlayAnimationActionProps = IComponentProps& {
+export type IPlayAnimationActionProps = IComponentProps &{
     triggerOptions: any, 
     target: any, 
     from: number, 

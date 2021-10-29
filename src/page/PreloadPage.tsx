@@ -12,6 +12,6 @@ export const PreloadPage = (props: IPreloadSceneProps) => {
     let preView = <PreView></PreView>;
 
     return <P2PPreloadPage {...props} Preview={preView}>
-        <taskImg taskName="@img/main-bg" url="/assets/img/main_bg.jpg" />
+        <taskTexture taskName="@atlas/plazaBg" url="/assets/img/plazaBg.png"/>
     </P2PPreloadPage>
 }

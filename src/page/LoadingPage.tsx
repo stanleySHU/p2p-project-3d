@@ -1,11 +1,20 @@
-import { P2PAdvancedDynamicTexture, P2PImage, P2PTextBlock } from '../base';
+import { Scene } from '@babylonjs/core';
+import { P2PMesh, P2PStandardMaterial, P2PTexture, P2PVertexData } from '../base';
 import { IPreloadSceneProps, IPreviewProps, P2PPreloadPage } from '../base/scene/PreloadScene';
+import { FullBackgroundVertexData } from '../components/FullBackground';
 
 const PreView = (props: IPreviewProps) => {
-    return <P2PAdvancedDynamicTexture scene={null} background="black" {...props} name="preView">
-        <P2PImage url="/assets/img/main_bg.jpg" />
-        <P2PTextBlock text={`${props.process! * 100}%`} color="white" />
-    </P2PAdvancedDynamicTexture>
+    // return <P2PAdvancedDynamicTexture scene={null} background="black" {...props} name="preView">
+    //     <P2PImage url="/assets/img/main_bg.jpg" />
+    //     <P2PTextBlock text={`${props.process! * 100}%`} color="white" />
+    // </P2PAdvancedDynamicTexture>
+    const {scene} = props;
+    return <>
+        {getMaterial(scene)}
+        <P2PMesh name="customBg" scene={scene} >
+                {FullBackgroundVertexData()}
+        </P2PMesh>
+    </>
 }
 
 const LoadingHoc = (props: IPreloadSceneProps) => {
@@ -18,29 +27,41 @@ const LoadingHoc = (props: IPreloadSceneProps) => {
 
 export const StartUpPage = (props: IPreloadSceneProps) => {
     return <LoadingHoc {...props}>
-        <taskTexture taskName="@atlas/bg" url="/assets/texture/bg.png" />
-        <taskTextFile taskName="@json/bg" url="/assets/texture/bg.json" />
+        <taskTexture taskName="@atlas/lobby" url="/assets/img/lobby.png"/>
 
-        <taskTexture taskName="@atlas/components-bg" url="/assets/texture/component.png" />
-        <taskTextFile taskName="@json/components-bg" url="/assets/texture/component.json" />
+        <taskTexture taskName="@atlas/sky0" url="/assets/skybox/TropicalSunnyDay_nx.jpg"/>
+        <taskTexture taskName="@atlas/sky1" url="/assets/skybox/TropicalSunnyDay_ny.jpg"/>
+        <taskTexture taskName="@atlas/sky2" url="/assets/skybox/TropicalSunnyDay_nz.jpg"/>
+        <taskTexture taskName="@atlas/sky3" url="/assets/skybox/TropicalSunnyDay_px.jpg"/>
+        <taskTexture taskName="@atlas/sky4" url="/assets/skybox/TropicalSunnyDay_py.jpg"/>
+        <taskTexture taskName="@atlas/sky5" url="/assets/skybox/TropicalSunnyDay_pz.jpg"/>
+
+        <taskMesh taskName="@gltf/cheqiyu" meshName="" url="/assets/gltf/" sceneFileName="shark_simple_anim_v02.gltf"/>
     </LoadingHoc>
 }
 
 export const LoadGamePage = (props: IPreloadSceneProps) => {
     return <LoadingHoc {...props}>
-        <taskMesh taskName="@gltf/cheqiyu" url="/assets/gltf/cheqiyu.gltf" meshName="cheqiyu" sceneFileName=""/>
-        <taskMesh taskName="@gltf/denglongyu" url="/assets/gltf/denglongyu.gltf" meshName="denglongyu" sceneFileName=""/>
-        <taskMesh taskName="@gltf/dianmanyu" url="/assets/gltf/dianmanyu.gltf" meshName="dianmanyu" sceneFileName=""/>
-        <taskMesh taskName="@gltf/dinianyu" url="/assets/gltf/dinianyu.gltf" meshName="dinianyu" sceneFileName=""/>
-        <taskMesh taskName="@gltf/fangyu" url="/assets/gltf/fangyu.gltf" meshName="fangyu" sceneFileName=""/>
-        <taskMesh taskName="@gltf/haigui" url="/assets/gltf/haigui.gltf" meshName="haigui" sceneFileName=""/>
-        <taskMesh taskName="@gltf/hetun" url="/assets/gltf/hetun.gltf" meshName="hetun" sceneFileName=""/>
-        <taskMesh taskName="@gltf/jianyu" url="/assets/gltf/jianyu.gltf" meshName="jianyu" sceneFileName=""/>
-        <taskMesh taskName="@gltf/jinqianyu" url="/assets/gltf/jinqianyu.gltf" meshName="jinqianyu" sceneFileName=""/>
-        <taskMesh taskName="@gltf/shayu" url="/assets/gltf/shayu.gltf" meshName="shayu" sceneFileName=""/>
-        <taskMesh taskName="@gltf/shiziyu" url="/assets/gltf/shiziyu.gltf" meshName="shiziyu" sceneFileName=""/>
-        <taskMesh taskName="@gltf/tianshiyu" url="/assets/gltf/tianshiyu.gltf" meshName="tianshiyu" sceneFileName=""/>
-        <taskMesh taskName="@gltf/xiaohuangyu" url="/assets/gltf/xiaohuangyu.gltf" meshName="xiaohuangyu" sceneFileName=""/>
-        <taskMesh taskName="@gltf/xiaolvyu" url="/assets/gltf/xiaolvyu.gltf" meshName="xiaolvyu" sceneFileName=""/>
+        <taskMesh taskName="@gltf/cheqiyu" meshName="" url="/assets/gltf/" sceneFileName="cheqiyu.gltf"/>
+        <taskMesh taskName="@gltf/denglongyu" meshName="" url="/assets/gltf/" sceneFileName="denglongyu.gltf"/>
+        <taskMesh taskName="@gltf/dianmanyu" meshName="" url="/assets/gltf/" sceneFileName="dianmanyu.gltf"/>
+        <taskMesh taskName="@gltf/dinianyu" meshName="" url="/assets/gltf/" sceneFileName="dinianyu.gltf"/>
+        <taskMesh taskName="@gltf/fangyu" meshName="" url="/assets/gltf/" sceneFileName="fangyu.gltf"/>
+        <taskMesh taskName="@gltf/haigui" meshName="" url="/assets/gltf/" sceneFileName="haigui.gltf"/>
+        <taskMesh taskName="@gltf/hetun" meshName="" url="/assets/gltf/" sceneFileName="hetun.gltf"/>
+        <taskMesh taskName="@gltf/jianyu" meshName="" url="/assets/gltf/" sceneFileName="jianyu.gltf"/>
+        <taskMesh taskName="@gltf/jinqianyu" meshName="" url="/assets/gltf/" sceneFileName="jinqianyu.gltf"/>
+        <taskMesh taskName="@gltf/shayu" meshName="" url="/assets/gltf/" sceneFileName="shayu.gltf"/>
+        <taskMesh taskName="@gltf/tianshiyu" meshName="" url="/assets/gltf/" sceneFileName="tianshiyu.gltf"/>
+        <taskMesh taskName="@gltf/xiaohuangyu" meshName="" url="/assets/gltf/" sceneFileName="xiaohuangyu.gltf"/>
+        <taskMesh taskName="@gltf/xiaolvyu" meshName="" url="/assets/gltf/" sceneFileName="xiaolvyu.gltf"/>
     </LoadingHoc>
+}
+
+function getMaterial(scene: Scene) {
+    return <>
+        <P2PStandardMaterial name="" scene={scene} assignToMeshByName={['customBg']}>
+            <P2PTexture url="/assets/img/plazaBg.png" sceneOrEngine={scene} />
+        </P2PStandardMaterial>
+    </>
 }

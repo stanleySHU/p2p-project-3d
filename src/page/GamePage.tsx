@@ -7,8 +7,7 @@ export const GamePage = (props: ISceneProps) => {
         <SceneContext.Consumer >
             {
                 ({ sceneInstance }) => <>
-                    {/* <P2PFreeCamera name="camera" scene={sceneInstance} position={new Vector3(0, 5, 0)} attachControl={[sceneInstance, true]} setTarget={Vector3.Zero()} /> */}
-                    <P2PArcRotateCamera name="camera" alpha={-Math.PI / 2} beta={Math.PI / 2} radius={5} target={Vector3.Zero()} scene={sceneInstance} attachControl={[sceneInstance, true]}/>
+                    <P2PArcRotateCamera name="camera" alpha={-Math.PI / 2} beta={Math.PI / 2} radius={5} setTarget={Vector3.Zero()} scene={sceneInstance} attachControl={[sceneInstance, true]}/>
                     <P2PDirectionalLight name="light" scene={sceneInstance} direction={new Vector3(0, -1, 0)}/>
                     <P2PBox name="skybox" scene={sceneInstance} options={{size: 10000}}>
                         <P2PStandardMaterial name="skybox" scene={sceneInstance}>

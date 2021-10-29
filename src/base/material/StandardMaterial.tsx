@@ -1,7 +1,5 @@
-import { StandardMaterial as BabylonStandardMaterial, Scene as BabylonScene, BaseTexture, Mesh } from '@babylonjs/core';
+import { StandardMaterial as BabylonStandardMaterial, Scene as BabylonScene, Texture } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { compileFunction } from 'vm';
-import { Nullable } from '../../utils/customType';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
 import { IMaterialParams, MaterialHOC } from './Material';
 import { IPushMaterialParams, PushMaterialHOC } from './PushMaterial';

@@ -6,7 +6,7 @@ import { TargetCameraHOC } from './TargetCamera';
 import { CameraHOC } from './Camera';
 import { NodeHOC } from '../node/Node';
 
-export type IVRDeviceOrientationArcRotateCameraProps = IComponentProps&{
+export type IVRDeviceOrientationArcRotateCameraProps = IComponentProps &{
     name: string, 
     alpha: number, 
     beta: number, 

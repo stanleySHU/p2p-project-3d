@@ -1,9 +1,9 @@
 import { HemisphericLight as BabylonHemisphericLight, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
-import { LightHOC } from './Light';
+import { ILightParams, LightHOC } from './Light';
 
-export type IHemisphericLightProps = IComponentProps&  {
+export type IHemisphericLightProps = IComponentProps & {
     name: string, 
     direction: Vector3, 
     scene: BabylinScene
@@ -31,7 +31,7 @@ function _(props: IHemisphericLightProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PHemisphericLight = getEL<IHemisphericLightParams>(_, [
+export const P2PHemisphericLight = getEL<ILightParams & IHemisphericLightParams & IHemisphericLightProps>(_, [
     HemisphericLightHOC,
     LightHOC,
     ComponentHOC

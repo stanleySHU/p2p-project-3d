@@ -6,7 +6,7 @@ import { TargetCameraHOC } from './TargetCamera';
 import { CameraHOC } from './Camera';
 import { NodeHOC } from '../node/Node';
 
-export type IVirtualJoysticksCameraProps = IComponentProps&{
+export type IVirtualJoysticksCameraProps = IComponentProps &{
     name: string, 
     position: Vector3, 
     scene: BabylinScene

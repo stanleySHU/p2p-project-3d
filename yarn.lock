@@ -1162,6 +1162,14 @@
     babylonjs-gltf2interface "5.0.0-alpha.48"
     tslib "^2.3.1"
 
+"@babylonjs/materials@^5.0.0-alpha.48":
+  version "5.0.0-alpha.48"
+  resolved "https://registry.yarnpkg.com/@babylonjs/materials/-/materials-5.0.0-alpha.48.tgz#fe6debe78f2082ac13f09d00aca6609f2e95191d"
+  integrity sha512-QWjUgJYZ8h5CSiKR226WE7FahpxwCTR0MHQ8bWAkl3HYWqS3vHyohDnRFckUgO0uTf/EnTmFFbYuWSOk4mmayQ==
+  dependencies:
+    "@babylonjs/core" "5.0.0-alpha.48"
+    tslib "^2.3.1"
+
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"

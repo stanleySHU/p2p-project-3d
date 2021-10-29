@@ -3,7 +3,7 @@ import React, { useEffect, useLayoutEffect, useReducer } from 'react';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component';
 import { ControlHOC, IControlParams } from './Control'
 
-export type IRadioButtonProps = IComponentProps& {
+export type IRadioButtonProps = IComponentProps &{
     name?: string 
 }
 

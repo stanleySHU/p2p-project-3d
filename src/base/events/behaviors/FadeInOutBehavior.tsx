@@ -2,7 +2,7 @@ import { FadeInOutBehavior as BabylonFadeInOutBehavior } from '@babylonjs/core';
 import React, { useEffect, useLayoutEffect } from 'react';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../../Component'
 
-export type IFadeInOutBehaviorProps = IComponentProps& {}
+export type IFadeInOutBehaviorProps = IComponentProps &{}
 export type IFadeInOutBehaviorParams = {
 
 }

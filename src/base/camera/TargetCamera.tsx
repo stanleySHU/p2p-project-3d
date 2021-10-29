@@ -2,8 +2,8 @@ import { TargetCamera as BabylonTargetCamera, Scene as BabylinScene, Vector3 } f
 import { useEffect, useLayoutEffect, useReducer } from "react"
 import { isAllPresent } from '../../utils/lang';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
-import { NodeHOC } from '../node/Node';
-import { CameraHOC } from './Camera';
+import { INodeParams, NodeHOC } from '../node/Node';
+import { CameraHOC, ICameraParams } from './Camera';
 
 export type ITargetCameraProps = IComponentProps & {
     name: string, 
@@ -37,7 +37,7 @@ function _(props: ITargetCameraProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PTargetCamera = getEL<ITargetCameraParams>(_, [
+export const P2PTargetCamera = getEL<INodeParams & ICameraParams & ITargetCameraParams & ITargetCameraProps>(_, [
     TargetCameraHOC,
     CameraHOC,
     NodeHOC,

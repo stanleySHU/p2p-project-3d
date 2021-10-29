@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { AbstractAssetTask, AssetsManager as BabylonAssetsManager, Scene as BabylonScene} from '@babylonjs/core';
 import { ImageResource } from "./ImageResource";
 import { TextureResource } from "./TextureResource";
@@ -8,6 +8,7 @@ import { Nullable, UndefinedAble } from "../../utils/customType";
 import { Action, processUpdate, loadFinish, load } from "../scene/PreloadRedux";
 import { IComponentProps } from '../Component'
 import { MeshResource } from "./MeshResource";
+import { EngineContext } from "../Engine";
 
 export type IAssetsManagerInitial= IComponentProps & {
     scene: BabylonScene,
@@ -21,7 +22,6 @@ export const P2PAssetsManager = (props: IAssetsManagerInitial) => {
     const assetContainerRef = useRef<BabylonAssetsManager>();
 
     useEffect(() => {
-        
         assetContainerRef.current = new BabylonAssetsManager(scene);
         React.Children.forEach(props.children, (child: any) => {
             let type = child.type as string;

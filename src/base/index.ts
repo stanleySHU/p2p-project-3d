@@ -57,6 +57,7 @@ import { P2PPBRSpecularGlossinessMaterial } from './material/PBRSpecularGlossine
 import { P2PPushMaterial } from './material/PushMaterial';
 import { P2PShaderMaterial } from './material/ShaderMaterial';
 import { P2PStandardMaterial } from './material/StandardMaterial';
+import { P2PWaterMaterial } from './material/WaterMaterial';
 
 //behavior
 import { P2PAttachToBoxBehavior } from './events/behaviors/AttachToBoxBehavior';
@@ -159,6 +160,7 @@ import { P2PScaleGizmo } from './gizmo/ScaleGizmo';
 
 //other
 import { P2PStyle } from './other/Style';
+import { P2PVertexData } from './other/VertexData';
 
 //resource2
 import { IBinaryResourceInitial } from './resource/BinaryFileResource';
@@ -200,6 +202,7 @@ export {
     P2PBox, P2PCapsule, P2PCylinder, P2PDashedLines, P2PDisc, P2PGround, P2PLines, P2PLineSystem, P2PMesh, P2PPlane, P2PSphere, P2PTiledBox, P2PTiledGround, P2PTiledPlane, P2PTorus,
     //material
     P2PBackgroundMaterial, P2PMaterial, P2PMultiMaterial, P2PNodeMaterial, P2PPBRMetallicRoughnessMaterial, P2PPBRSpecularGlossinessMaterial, P2PPushMaterial, P2PShaderMaterial, P2PStandardMaterial,
+    P2PWaterMaterial,
     //behavior
     P2PAttachToBoxBehavior, P2PAutoRotationBehavior, P2PBouncingBehavior, P2PFadeInOutBehavior, P2PMultiPointerScaleBehavior, P2PPointerDragBehavior, P2PSixDofDragBehavior,
     //actions
@@ -221,5 +224,5 @@ export {
     //gizmo
     P2PAxisDragGizmo, P2PAxisScaleGizmo, P2PBoundingBoxGizmo, P2PCameraGizmo, P2PGizmo, P2PLightGizmo, P2PPlaneDragGizmo, P2PPlaneRotationGizmo, P2PPositionGizmo, P2PRotationGizmo, P2PScaleGizmo,
     //util
-    P2PStyle
+    P2PStyle, P2PVertexData
 }

@@ -5,7 +5,7 @@ import { INodeParams, NodeHOC } from '../node/Node';
 import { CameraHOC, ICameraParams } from './Camera';
 import { ITargetCameraParams, TargetCameraHOC } from './TargetCamera';
 
-export type IFreeCameraProps = IComponentProps&{
+export type IFreeCameraProps = IComponentProps &{
     name: string, 
     position: Vector3, 
     scene: BabylinScene, 

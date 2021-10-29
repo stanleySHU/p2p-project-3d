@@ -3,7 +3,7 @@ import React, { useEffect, useLayoutEffect } from 'react';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
 import { MaterialHOC } from './Material';
 
-export type IShaderMaterialProps = IComponentProps&{
+export type IShaderMaterialProps = IComponentProps &{
     name: string, 
     scene: BabylonScene, 
     shaderPath: any, 

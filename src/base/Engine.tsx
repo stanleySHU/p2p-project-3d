@@ -1,5 +1,7 @@
 import { Engine as BabylonEngine, EngineOptions } from "@babylonjs/core";
 import  React, { ReactNode, useEffect, useRef, useState } from "react";
+import { CustomLoadingScreen } from "../components/CustomLoading";
+
 
 type IEngineInitial = {
     antialias?: boolean,
@@ -27,6 +29,7 @@ export const P2PEngine = (props: IEngineInitial) => {
     useEffect(() => {
         let obj = new BabylonEngine(canvasRef.current, antialias, options, adaptToDeviceRatio );
         setInstance(obj);
+        new CustomLoadingScreen(obj);
 
         obj.runRenderLoop(() => {
             for (let scene of obj.scenes) {

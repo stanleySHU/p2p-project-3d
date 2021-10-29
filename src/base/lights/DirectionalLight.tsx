@@ -1,4 +1,4 @@
-import { DirectionalLight as BabylonDirectionalLight, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
+import { Color3, DirectionalLight as BabylonDirectionalLight, Scene as BabylinScene, Vector3 } from '@babylonjs/core';
 import { useEffect, useLayoutEffect } from "react"
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
 import { ILightParams, LightHOC } from './Light';
@@ -16,7 +16,7 @@ function DirectionalLightHOC(EL: React.FC) {
     return (props: IDirectionalLightParams) => {
         useEffect(() => {
 
-        })
+        });
         return <EL {...props}/>
     }
 }

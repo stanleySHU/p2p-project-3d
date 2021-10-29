@@ -2,7 +2,8 @@ import { TransformNode as BabylonTransformNode, Scene as BabylonScene } from '@b
 import React, { useEffect } from 'react';
 import { Nullable } from '../../utils/customType';
 import { ComponentHOC, getEL, IComponentProps, P2PChildren } from '../Component';
-import { NodeHOC } from './Node';
+import { INodeParams, NodeHOC } from './Node';
+import { LayoutHoc, ILayoutParams } from './builder/layout';
 
 export type ITransformNodeProps = IComponentProps & {
     name: string, 
@@ -10,14 +11,21 @@ export type ITransformNodeProps = IComponentProps & {
     isPure?: boolean
 }
 
-export type ITransformNodeParams = {
+export type ITransformNodeParams = ILayoutParams & {
 
 }
 
-export function TransformNodeHOC(EL: React.FC) {
+function _TransformNodeHOC(EL: React.FC<ITransformNodeParams>) {
     return (props: ITransformNodeParams) => {
         return <EL {...props}/>
     }
+}
+
+export function TransformNodeHOC(EL) {
+    return getEL(EL, [
+        _TransformNodeHOC,
+        LayoutHoc
+    ]);
 }
 
 function _(props: ITransformNodeProps) {
@@ -29,7 +37,7 @@ function _(props: ITransformNodeProps) {
     return <P2PChildren {...props}/>;
 }
 
-export const P2PTransformNode = getEL<ITransformNodeParams>(_, [
+export const P2PTransformNode = getEL<INodeParams & ITransformNodeParams & IComponentProps>(_, [
     TransformNodeHOC,
     NodeHOC,
     ComponentHOC

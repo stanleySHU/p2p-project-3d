@@ -1,12 +1,13 @@
+import { AnyMxRecord } from "dns";
 import React, { ReactNode, useState } from "react";
 
-export type IComponentProps = {
+export type IComponentProps<T = any, P = any> = {
     name?: string,
     key?: string,
     children?: ReactNode
 } & {
-    instance?,
-    parentInstance?,
+    instance?: T,
+    parentInstance?: P,
     init?: React.Dispatch<any>
 };
 
@@ -39,5 +40,5 @@ export function getEL<T>(el: React.FC<T>, hocs: any[]) {
     for (let hoc of hocs) {
         el = hoc(el);
     }    
-    return el;
+    return React.memo(el) as React.FC<T>;
 }
